@@ -1,5 +1,5 @@
 {
-  "name": "eslint-config",
+  "name": "@fabdeh/eslint-config",
   "type": "module",
   "version": "1.0.0",
   "description": "My personal eslint config preset",
@@ -54,6 +54,7 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "esbuild",
       "simple-git-hooks"
     ]
   }
