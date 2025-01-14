@@ -1,0 +1,60 @@
+{
+  "name": "eslint-config",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "My personal eslint config preset",
+  "homepage": "https://github.com/FabienDehopre/eslint-config",
+  "keywords": [
+    "eslint-config"
+  ],
+  "author": "Fabien Dehopré <fabien@dehopre.dev> (https://github.com/FabienDehopre)",
+  "license": "MIT",
+  "packageManager": "pnpm@10.0.0",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup --format cjs,esm --clean --dts",
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "is-ci || simple-git-hooks",
+    "commit": "git-cz"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@commitlint/cz-commitlint": "^19.6.1",
+    "commitizen": "^4.3.1",
+    "inquirer": "^9.3.7",
+    "is-ci": "^4.1.0",
+    "nano-staged": "^0.8.0",
+    "prettier": "^3.4.2",
+    "simple-git-hooks": "^2.11.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm nano-staged",
+    "commit-msg": "pnpm commitlint --edit ${1}"
+  },
+  "nano-staged": {
+    "*": "prettier --ignore-unknown --write"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "simple-git-hooks"
+    ]
+  }
+}

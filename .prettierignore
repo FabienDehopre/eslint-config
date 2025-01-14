@@ -1,0 +1,6 @@
+/.angular
+/.idea
+/.vscode
+/coverage
+/dist
+/pnpm-lock.yaml
