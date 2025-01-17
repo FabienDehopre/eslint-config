@@ -9,6 +9,7 @@
   ],
   "author": "Fabien Dehopré <fabien@dehopre.dev> (https://github.com/FabienDehopre)",
   "license": "MIT",
+  "repository": "github:FabienDehopre/eslint-config",
   "packageManager": "pnpm@10.0.0",
   "exports": {
     ".": {
@@ -25,15 +26,75 @@
     "build": "tsup --format cjs,esm --clean --dts",
     "preinstall": "npx only-allow pnpm",
     "prepare": "is-ci || simple-git-hooks",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "lint": "eslint . --fix",
+    "format": "prettier . --write"
+  },
+  "peerDependencies": {
+    "@ngrx/eslint-plugin": "19.0.0",
+    "@vitest/eslint-plugin": "^1.1.25",
+    "eslint": "^9.10.0",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-jest-dom": "^5.5.0",
+    "eslint-plugin-tailwindcss": "^3.17.5",
+    "eslint-plugin-testing-library": "^7.1.1"
+  },
+  "peerDependenciesMeta": {
+    "@ngrx/eslint-plugin": {
+      "optional": true
+    },
+    "@vitest/eslint-plugin": {
+      "optional": true
+    },
+    "eslint-plugin-jest": {
+      "optional": true
+    },
+    "eslint-plugin-jest-dom": {
+      "optional": true
+    },
+    "eslint-plugin-tailwindcss": {
+      "optional": true
+    },
+    "eslint-plugin-testing-library": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@angular-eslint/utils": "^19.0.2",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
+    "@eslint/js": "^9.18.0",
+    "@nx/eslint-plugin": "^20.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "@typescript-eslint/utils": "^8.20.0",
+    "angular-eslint": "^19.0.2",
+    "eslint-config-flat-gitignore": "^1.0.0",
+    "eslint-flat-config-utils": "^1.0.0",
+    "eslint-plugin-import-x": "^4.6.1",
+    "eslint-plugin-jsdoc": "^50.6.1",
+    "eslint-plugin-perfectionist": "^4.6.0",
+    "eslint-plugin-prefer-arrow-functions": "^3.6.2",
+    "eslint-plugin-unicorn": "^56.0.1",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "globals": "^15.14.0",
+    "local-pkg": "^1.0.0",
+    "typescript-eslint": "^8.20.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
     "@commitlint/cz-commitlint": "^19.6.1",
+    "@ngrx/eslint-plugin": "^19.0.0",
+    "@vitest/eslint-plugin": "^1.1.25",
     "commitizen": "^4.3.1",
+    "eslint": "^9.18.0",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-jest-dom": "^5.5.0",
+    "eslint-plugin-tailwindcss": "^3.17.5",
+    "eslint-plugin-testing-library": "^7.1.1",
     "inquirer": "^9.3.7",
     "is-ci": "^4.1.0",
+    "jiti": "^2.4.2",
     "nano-staged": "^0.8.0",
     "prettier": "^3.4.2",
     "simple-git-hooks": "^2.11.1",
@@ -51,11 +112,5 @@
     "commitizen": {
       "path": "@commitlint/cz-commitlint"
     }
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "simple-git-hooks"
-    ]
   }
 }

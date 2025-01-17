@@ -1,6 +1,9 @@
+import base from './configs/base';
+
+const configs = {
+  base,
+};
+
 export default {
-  config: {
-    one: 1,
-    two: 2,
-  },
+  configs,
 };
