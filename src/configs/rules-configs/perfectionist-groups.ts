@@ -1,6 +1,7 @@
 type GroupsOptions<T> = (T | T[] | { newlinesBetween: 'always' | 'ignore' | 'never' })[];
 
 type ImportGroup<T extends string> =
+  | T
   | 'builtin'
   | 'builtin-type'
   | 'external'
@@ -18,8 +19,7 @@ type ImportGroup<T extends string> =
   | 'side-effect-style'
   | 'style'
   | 'type'
-  | 'unknown'
-  | T;
+  | 'unknown';
 
 type UnionOrIntersectionGroup =
   | 'conditional'
@@ -64,16 +64,16 @@ export const SORT_IMPORT_GROUPS = [
 ] satisfies GroupsOptions<ImportGroup<string>>;
 
 export const SORT_UNION_OR_INTERSECTION_GROUPS = [
-  'conditional',
+  'named',
+  'keyword',
+  'operator',
+  'literal',
   'function',
   'import',
-  'intersection',
-  'keyword',
-  'literal',
-  'named',
+  'conditional',
   'object',
-  'operator',
   'tuple',
+  'intersection',
   'union',
   'nullish',
   'unknown',

@@ -3,6 +3,7 @@ import type { TSESTree } from '@typescript-eslint/utils';
 type ReadonlyType = 'readonly-field' | 'readonly-signature';
 
 type MemberKind =
+  | ReadonlyType
   | 'accessor'
   | 'call-signature'
   | 'constructor'
@@ -11,45 +12,44 @@ type MemberKind =
   | 'method'
   | 'set'
   | 'signature'
-  | 'static-initialization'
-  | ReadonlyType;
+  | 'static-initialization';
 
 type DecoratedMemberKind =
+  | Exclude<ReadonlyType, 'readonly-signature'>
   | 'accessor'
   | 'field'
   | 'get'
   | 'method'
-  | 'set'
-  | Exclude<ReadonlyType, 'readonly-signature'>;
+  | 'set';
 
 type NonCallableMemberKind = Exclude<MemberKind, 'constructor' | 'readonly-signature' | 'signature'>;
 
 type MemberScope = 'abstract' | 'instance' | 'static';
 
-type Accessibility = '#private' | TSESTree.Accessibility;
+type Accessibility = TSESTree.Accessibility | '#private';
 
 type BaseMemberType =
+  | MemberKind
   | `${Accessibility}-${Exclude<MemberKind, 'readonly-signature' | 'signature' | 'static-initialization'>}`
   | `${Accessibility}-${MemberScope}-${NonCallableMemberKind}`
   | `${Accessibility}-decorated-${DecoratedMemberKind}`
   | `${MemberScope}-${NonCallableMemberKind}`
-  | `decorated-${DecoratedMemberKind}`
-  | MemberKind;
+  | `decorated-${DecoratedMemberKind}`;
 
 type MemberType = BaseMemberType | BaseMemberType[];
 
 type AlphabeticalOrder = 'alphabetically' | 'alphabetically-case-insensitive' | 'natural' | 'natural-case-insensitive';
 
-type Order = 'as-written' | AlphabeticalOrder;
+type Order = AlphabeticalOrder | 'as-written';
 type OptionalityOrder = 'optional-first' | 'required-first';
 
 interface SortOrderConfig {
-  memberTypes?: 'never' | MemberType[];
+  memberTypes?: MemberType[] | 'never';
   optionalityOrder?: OptionalityOrder;
   order?: Order;
 }
 
-type OrderConfig = 'never' | MemberType[] | SortOrderConfig;
+type OrderConfig = MemberType[] | SortOrderConfig | 'never';
 
 interface Options {
   classes?: OrderConfig;
