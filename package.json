@@ -28,7 +28,9 @@
     "prepare": "is-ci || simple-git-hooks",
     "commit": "git-cz",
     "lint": "eslint . --fix",
-    "format": "prettier . --write"
+    "lint:check": "eslint . --quiet",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
   },
   "peerDependencies": {
     "@ngrx/eslint-plugin": "19.0.0",
