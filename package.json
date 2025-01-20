@@ -107,7 +107,8 @@
     "commit-msg": "pnpm commitlint --edit ${1}"
   },
   "nano-staged": {
-    "*": "prettier --ignore-unknown --write"
+    "*": "prettier --ignore-unknown --write",
+    "*.{js,ts}": "eslint --fix"
   },
   "config": {
     "commitizen": {
