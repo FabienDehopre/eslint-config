@@ -10,6 +10,8 @@ export default tseslint.config(
     name: 'fabdeh/angular/rules',
     files: [GLOB_TS],
     rules: {
+      'max-classes-per-file': ['error', 1],
+      'max-lines': ['error', 400],
       '@angular-eslint/component-max-inline-declarations': 'error',
       '@angular-eslint/contextual-decorator': 'error',
       '@angular-eslint/no-async-lifecycle-method': 'error',

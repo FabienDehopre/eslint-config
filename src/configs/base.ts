@@ -97,7 +97,6 @@ export default tseslint.config(
         'Undefined',
         'undefined',
       ],
-      'max-classes-per-file': ['error', 1],
       'new-cap': 'error',
       'no-alert': 'error',
       'no-array-constructor': 'error',
