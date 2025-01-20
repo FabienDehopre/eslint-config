@@ -1,4 +1,5 @@
 import process from 'node:process';
+
 import eslintComments from '@eslint-community/eslint-plugin-eslint-comments';
 import nx from '@nx/eslint-plugin';
 import * as importX from 'eslint-plugin-import-x';
@@ -9,8 +10,10 @@ import unicorn from 'eslint-plugin-unicorn';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+
 import { GLOB_EXCLUDE, GLOB_JS, GLOB_SRC, GLOB_TS } from '../globs';
 import { isInEditorEnv } from '../utils';
+
 import memberOrdering from './rules-configs/member-ordering';
 import namingConvention from './rules-configs/naming-convention';
 import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-configs/perfectionist-groups';
@@ -57,16 +60,6 @@ export default tseslint.config(
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
     },
-    // settings: {
-    //   'import-x/extensions': ['.ts', '.tsx', '.cts', '.mts', '.js', '.jsx', '.cjs', '.mjs'],
-    //   'import-x/external-module-folders': ['node_modules', 'node_modules/@types'],
-    //   'import-x/parsers': {
-    //     '@typescript-eslint/parser': ['.ts', '.tsx', '.cts', '.mts'],
-    //   },
-    //   'import-x/resolver': {
-    //     typescript: true,
-    //   },
-    // },
   },
   {
     name: 'fabdeh/base/common-rules',
@@ -212,7 +205,6 @@ export default tseslint.config(
         {
           groups: SORT_IMPORT_GROUPS,
           tsconfigRootDir: process.cwd(),
-          newlinesBetween: 'never',
           order: 'asc',
           type: 'natural',
         },

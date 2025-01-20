@@ -1,5 +1,6 @@
 import eslintConfigPrettier from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
+
 import me from './src';
 
 export default tseslint.config(
