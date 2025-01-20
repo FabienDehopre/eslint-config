@@ -1,3 +1,4 @@
+import gitignore from 'eslint-config-flat-gitignore';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
 
@@ -12,6 +13,7 @@ export default tseslint.config(
       },
     },
   },
+  gitignore(),
   me.configs.base,
   eslintConfigPrettier
 );
