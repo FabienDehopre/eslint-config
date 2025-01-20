@@ -1,36 +1,28 @@
 import type { TSESLint } from '@typescript-eslint/utils';
 import type { ConfigWithExtends } from 'typescript-eslint';
 
-function isInGitHooksOrLintStaged(): boolean {
-  return !!(
-    false ||
-    process.env.GIT_PARAMS ||
-    process.env.VSCODE_GIT_COMMAND ||
-    process.env.npm_lifecycle_script?.startsWith('lint-staged')
-  );
-}
-
 export function isInEditorEnv(): boolean {
+  // is running in a CI environment
   if (process.env.CI) {
     return false;
   }
 
-  if (isInGitHooksOrLintStaged()) {
+  const envKeys = Object.keys(process.env);
+  // is running in a git hooks ???
+  if (envKeys.some((k) => /^GIT_/i.test(k))) {
     return false;
   }
 
-  return !!(
-    false ||
-    process.env.VSCODE_PID ||
-    process.env.VSCODE_CWD ||
-    process.env.JETBRAINS_IDE ||
-    process.env.VIM ||
-    process.env.NVIM
-  );
+  const isVsCode = envKeys.some((k) => /^VSCODE_/i.test(k));
+  const isIntelliJ = envKeys.some((k) => /^INTELLIJ_/i.test(k));
+  const isJetbrains = envKeys.some((k) => /^JETBRAINS_/i.test(k));
+  const isVim = envKeys.some((k) => /^VIM$/i.test(k));
+  const isNeoVim = envKeys.some((k) => /^NVIM$/i.test(k));
+  return isVsCode || isIntelliJ || isJetbrains || isVim || isNeoVim;
 }
 
 export function dedupeTsBaseConfig(...configs: ConfigWithExtends[]): TSESLint.FlatConfig.ConfigArray {
-  return configs.filter((c) => c.name == undefined || c.name !== 'typescript-eslint/base');
+  return configs.filter((c) => !c.name || c.name !== 'typescript-eslint/base');
 }
 
 export function ensureCorrectFiles<T extends object>(files: string[]): (config: T) => T {

@@ -11,10 +11,11 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import { GLOB_EXCLUDE, GLOB_JS, GLOB_SRC, GLOB_TS } from '../globs';
 import { isInEditorEnv } from '../utils';
-import memberOrdering from './rules/member-ordering';
-import namingConvention from './rules/naming-convention';
+import memberOrdering from './rules-configs/member-ordering';
+import namingConvention from './rules-configs/naming-convention';
+import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-configs/perfectionist-groups';
 
-const isInEditor = isInEditorEnv();
+const IS_IN_EDITOR = isInEditorEnv();
 export default tseslint.config(
   {
     name: 'fabdeh/base/ignores',
@@ -56,16 +57,16 @@ export default tseslint.config(
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
     },
-    settings: {
-      'import-x/extensions': ['.ts', '.tsx', '.cts', '.mts', '.js', '.jsx', '.cjs', '.mjs'],
-      'import-x/external-module-folders': ['node_modules', 'node_modules/@types'],
-      'import-x/parsers': {
-        '@typescript-eslint/parser': ['.ts', '.tsx', '.cts', '.mts'],
-      },
-      'import-x/resolver': {
-        typescript: true,
-      },
-    },
+    // settings: {
+    //   'import-x/extensions': ['.ts', '.tsx', '.cts', '.mts', '.js', '.jsx', '.cjs', '.mjs'],
+    //   'import-x/external-module-folders': ['node_modules', 'node_modules/@types'],
+    //   'import-x/parsers': {
+    //     '@typescript-eslint/parser': ['.ts', '.tsx', '.cts', '.mts'],
+    //   },
+    //   'import-x/resolver': {
+    //     typescript: true,
+    //   },
+    // },
   },
   {
     name: 'fabdeh/base/common-rules',
@@ -173,7 +174,7 @@ export default tseslint.config(
       'spaced-comment': ['error', 'always', { markers: ['/'] }],
       'symbol-description': 'error',
       'unicode-bom': ['error', 'never'],
-      'unused-imports/no-unused-imports': isInEditor ? 'off' : 'error',
+      'unused-imports/no-unused-imports': IS_IN_EDITOR ? 'off' : 'error',
       'unused-imports/no-unused-vars': [
         'error',
         {
@@ -209,43 +210,32 @@ export default tseslint.config(
       'perfectionist/sort-imports': [
         'error',
         {
-          groups: [
-            'type',
-            'builtin-type',
-            'builtin',
-            { newlinesBetween: 'always' },
-            'external-type',
-            'external',
-            { newlinesBetween: 'always' },
-            'internal-type',
-            'internal',
-            { newlinesBetween: 'always' },
-            'parent-type',
-            'parent',
-            { newlinesBetween: 'always' },
-            'sibling-type',
-            'sibling',
-            { newlinesBetween: 'always' },
-            'index-type',
-            'index',
-            { newlinesBetween: 'always' },
-            'object',
-            { newlinesBetween: 'always' },
-            'side-effect',
-            { newlinesBetween: 'always' },
-            'unknown',
-          ],
+          groups: SORT_IMPORT_GROUPS,
           tsconfigRootDir: process.cwd(),
           newlinesBetween: 'never',
           order: 'asc',
           type: 'natural',
         },
       ],
-      'perfectionist/sort-intersection-types': ['error', { order: 'asc', type: 'natural' }],
+      'perfectionist/sort-intersection-types': [
+        'error',
+        {
+          groups: SORT_UNION_OR_INTERSECTION_GROUPS,
+          order: 'asc',
+          type: 'natural',
+        },
+      ],
       'perfectionist/sort-named-exports': ['error', { order: 'asc', type: 'natural' }],
       'perfectionist/sort-named-imports': ['error', { order: 'asc', type: 'natural' }],
       'perfectionist/sort-switch-case': ['error', { order: 'asc', type: 'natural' }],
-      'perfectionist/sort-union-types': ['error', { order: 'asc', type: 'natural' }],
+      'perfectionist/sort-union-types': [
+        'error',
+        {
+          groups: SORT_UNION_OR_INTERSECTION_GROUPS,
+          order: 'asc',
+          type: 'natural',
+        },
+      ],
       'unicorn/catch-error-name': 'error',
       'unicorn/consistent-empty-array-spread': 'error',
       'unicorn/consistent-existence-index-check': 'error',
@@ -370,7 +360,7 @@ export default tseslint.config(
         },
       ],
       '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
-      '@typescript-eslint/member-ordering': memberOrdering,
+      '@typescript-eslint/member-ordering': ['error', memberOrdering],
       '@typescript-eslint/method-signature-style': 'error',
       '@typescript-eslint/naming-convention': ['error', ...namingConvention],
       '@typescript-eslint/no-base-to-string': 'error',
@@ -401,7 +391,6 @@ export default tseslint.config(
       '@typescript-eslint/require-array-sort-compare': 'error',
       '@typescript-eslint/restrict-plus-operands': ['error', { skipCompoundAssignments: true }],
       '@typescript-eslint/restrict-template-expressions': 'off',
-      '@typescript-eslint/sort-type-constituents': 'error',
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
       '@typescript-eslint/unbound-method': ['error', { ignoreStatic: true }],
       '@typescript-eslint/unified-signatures': 'error',

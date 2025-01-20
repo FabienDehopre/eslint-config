@@ -1,16 +1,16 @@
+import eslintConfigPrettier from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
 import me from './src';
-
-const __dirname = import.meta.dirname;
 
 export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: __dirname,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
   },
-  me.configs.base
+  me.configs.base,
+  eslintConfigPrettier
 );

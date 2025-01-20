@@ -1,18 +1,12 @@
-export type PredefinedFormatsString =
+type PredefinedFormatsString =
   | 'camelCase'
   | 'PascalCase'
   | 'snake_case'
   | 'strictCamelCase'
   | 'StrictPascalCase'
   | 'UPPER_CASE';
-export type UnderscoreOptionsString =
-  | 'allow'
-  | 'allowDouble'
-  | 'allowSingleOrDouble'
-  | 'forbid'
-  | 'require'
-  | 'requireDouble';
-export type ModifiersString =
+type UnderscoreOptionsString = 'allow' | 'allowDouble' | 'allowSingleOrDouble' | 'forbid' | 'require' | 'requireDouble';
+type ModifiersString =
   | '#private'
   | 'abstract'
   | 'async'
@@ -30,7 +24,7 @@ export type ModifiersString =
   | 'requiresQuotes'
   | 'static'
   | 'unused';
-export type SelectorsString =
+type SelectorsString =
   | 'autoAccessor'
   | 'class'
   | 'classicAccessor'
@@ -50,23 +44,16 @@ export type SelectorsString =
   | 'typeParameter'
   | 'typeProperty'
   | 'variable';
-export type MetaSelectorsString =
-  | 'accessor'
-  | 'default'
-  | 'memberLike'
-  | 'method'
-  | 'property'
-  | 'typeLike'
-  | 'variableLike';
-export type IndividualAndMetaSelectorsString = MetaSelectorsString | SelectorsString;
-export type TypeModifiersString = 'array' | 'boolean' | 'function' | 'number' | 'string';
+type MetaSelectorsString = 'accessor' | 'default' | 'memberLike' | 'method' | 'property' | 'typeLike' | 'variableLike';
+type IndividualAndMetaSelectorsString = MetaSelectorsString | SelectorsString;
+type TypeModifiersString = 'array' | 'boolean' | 'function' | 'number' | 'string';
 
-export interface MatchRegex {
+interface MatchRegex {
   match: boolean;
   regex: string;
 }
 
-export interface Selector {
+interface Selector {
   custom?: MatchRegex;
   filter?: MatchRegex | string;
   // format options
@@ -84,6 +71,7 @@ export interface Selector {
 export default [
   { selector: 'default', format: ['camelCase'], leadingUnderscore: 'forbid', trailingUnderscore: 'forbid' },
   { selector: ['variableLike', 'memberLike'], format: ['camelCase'] },
+  // eslint-disable-next-line unicorn/no-null
   { selector: 'memberLike', modifiers: ['requiresQuotes'], format: null },
   { selector: 'typeLike', format: ['PascalCase'] },
   { selector: 'variable', modifiers: ['const', 'global'], format: ['UPPER_CASE'] },
