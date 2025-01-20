@@ -1,6 +1,6 @@
-type GroupsOptions<T> = (T | T[] | { newlinesBetween: 'always' | 'ignore' | 'never' })[];
+export type GroupsOptions<T> = (T | T[] | { newlinesBetween: 'always' | 'ignore' | 'never' })[];
 
-type ImportGroup<T extends string> =
+export type ImportGroup<T extends string> =
   | T
   | 'builtin'
   | 'builtin-type'
@@ -21,7 +21,7 @@ type ImportGroup<T extends string> =
   | 'type'
   | 'unknown';
 
-type UnionOrIntersectionGroup =
+export type UnionOrIntersectionGroup =
   | 'conditional'
   | 'function'
   | 'import'

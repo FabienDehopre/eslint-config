@@ -53,7 +53,7 @@ interface MatchRegex {
   regex: string;
 }
 
-interface Selector {
+export interface Selector {
   custom?: MatchRegex;
   filter?: MatchRegex | string;
   // format options

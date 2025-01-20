@@ -51,7 +51,7 @@ interface SortOrderConfig {
 
 type OrderConfig = MemberType[] | SortOrderConfig | 'never';
 
-interface Options {
+export interface MemberOrderingOptions {
   classes?: OrderConfig;
   classExpressions?: OrderConfig;
   default?: OrderConfig;
@@ -78,4 +78,4 @@ export default {
     'private-method',
     '#private-method',
   ],
-} satisfies Options;
+} satisfies MemberOrderingOptions;
