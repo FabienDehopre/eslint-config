@@ -4,7 +4,7 @@ import testingLibrary from 'eslint-plugin-testing-library';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_TESTS } from '../globs';
+import { GLOB_SRC_EXT, GLOB_TESTS } from '../globs';
 
 export default tseslint.config({
   name: 'fabdeh/jest/rules',
@@ -17,7 +17,7 @@ export default tseslint.config({
       ...globals.jest,
     },
   },
-  files: [GLOB_TESTS],
+  files: [GLOB_TESTS, `**/jest.config.${GLOB_SRC_EXT}`],
   extends: [
     jest.configs['flat/recommended'],
     jest.configs['flat/style'],
