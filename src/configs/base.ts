@@ -107,7 +107,7 @@ export default tseslint.config(
       'no-eval': 'error',
       'no-extend-native': 'error',
       'no-extra-bind': 'error',
-      'no-extra-semi': 'error',
+      // 'no-extra-semi': 'error', // deprecated -> use stylistic plugin
       'no-implied-eval': 'error',
       'no-iterator': 'error',
       'no-labels': 'error',
@@ -163,7 +163,7 @@ export default tseslint.config(
       'prefer-rest-params': 'error',
       'prefer-spread': 'error',
       'prefer-template': 'error',
-      'spaced-comment': ['error', 'always', { markers: ['/'] }],
+      // 'spaced-comment': ['error', 'always', { markers: ['/'] }],  // deprecated -> use stylistic plugin
       'symbol-description': 'error',
       'unicode-bom': ['error', 'never'],
       'unused-imports/no-unused-imports': IS_IN_EDITOR ? 'off' : 'error',
