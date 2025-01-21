@@ -30,13 +30,18 @@
   ],
   "scripts": {
     "build": "tsup && fix-tsup-cjs",
+    "build:inspector": "pnpm build && pnpm dlx @eslint/config-inspector build",
+    "dev": "pnpm dlx @eslint/config-inspector --config eslint.config.ts",
     "preinstall": "npx only-allow pnpm",
     "prepare": "is-ci || simple-git-hooks",
     "commit": "git-cz",
     "lint": "eslint . --fix",
     "lint:check": "eslint . --quiet",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "prepack": "pnpm build",
+    "release": "bumpp && npm publish",
+    "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
     "@ngrx/eslint-plugin": "19.0.0",
@@ -94,6 +99,7 @@
     "@commitlint/cz-commitlint": "^19.6.1",
     "@ngrx/eslint-plugin": "^19.0.0",
     "@vitest/eslint-plugin": "^1.1.25",
+    "bumpp": "^9.10.1",
     "commitizen": "^4.3.1",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
