@@ -36,3 +36,19 @@ declare module 'eslint-config-prettier' {
   // eslint-disable-next-line no-restricted-syntax
   export = _default;
 }
+
+declare module 'eslint-plugin-tailwindcss' {
+  import type { ESLint, Linter } from 'eslint';
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  declare const _default: {
+    rules: NonNullable<ESLint.Plugin['rules']>;
+    configs: {
+      recommended: Linter.Config;
+      ['flat/recommended']: Linter.Config;
+    };
+  };
+
+  // eslint-disable-next-line no-restricted-syntax
+  export = _default;
+}
