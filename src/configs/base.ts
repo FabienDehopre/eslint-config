@@ -322,6 +322,7 @@ export default tseslint.config(
     files: [GLOB_JS],
     extends: [nx.configs['flat/javascript'], jsdoc.configs['flat/recommended']],
     rules: {
+      '@typescript-eslint/no-empty-interface': 'off', // deprecated but included in nx
       'importx-/named': 'error',
     },
   },
@@ -360,6 +361,7 @@ export default tseslint.config(
       '@typescript-eslint/no-base-to-string': 'error',
       '@typescript-eslint/no-confusing-non-null-assertion': 'error',
       '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
+      '@typescript-eslint/no-empty-interface': 'off', // deprecated but included in nx
       '@typescript-eslint/no-extra-non-null-assertion': 'error',
       '@typescript-eslint/no-extraneous-class': ['error', { allowStaticOnly: true, allowWithDecorator: true }],
       '@typescript-eslint/no-invalid-void-type': 'error',
@@ -381,7 +383,6 @@ export default tseslint.config(
       '@typescript-eslint/prefer-reduce-type-parameter': 'error',
       '@typescript-eslint/prefer-return-this-type': 'error',
       '@typescript-eslint/prefer-string-starts-ends-with': 'error',
-      '@typescript-eslint/prefer-ts-expect-error': 'error',
       '@typescript-eslint/require-array-sort-compare': 'error',
       '@typescript-eslint/restrict-plus-operands': ['error', { skipCompoundAssignments: true }],
       '@typescript-eslint/restrict-template-expressions': 'off',
