@@ -2,6 +2,7 @@ import process from 'node:process';
 
 import eslintComments from '@eslint-community/eslint-plugin-eslint-comments';
 import nx from '@nx/eslint-plugin';
+import stylistic from '@stylistic/eslint-plugin';
 import * as importX from 'eslint-plugin-import-x';
 import jsdoc from 'eslint-plugin-jsdoc';
 import perfectionist from 'eslint-plugin-perfectionist';
@@ -34,6 +35,7 @@ export default tseslint.config(
       jsdoc,
       perfectionist,
       'prefer-arrow-functions': preferArrowFunctions,
+      '@stylistic': stylistic,
       unicorn,
       'unused-imports': unusedImports,
     },
@@ -64,6 +66,7 @@ export default tseslint.config(
   {
     name: 'fabdeh/base/common-rules',
     files: [GLOB_SRC],
+    extends: [stylistic.configs['recommended-flat']],
     rules: {
       '@eslint-community/eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],
       '@eslint-community/eslint-comments/no-aggregating-enable': 'error',
@@ -71,6 +74,7 @@ export default tseslint.config(
       '@eslint-community/eslint-comments/no-unlimited-disable': 'error',
       '@eslint-community/eslint-comments/no-unused-disable': 'error',
       '@eslint-community/eslint-comments/no-unused-enable': 'error',
+      '@stylistic/no-extra-semi': 'error',
       '@typescript-eslint/no-empty-function': 'error',
       '@typescript-eslint/no-invalid-this': 'error',
       '@typescript-eslint/no-redeclare': 'error',
@@ -107,7 +111,6 @@ export default tseslint.config(
       'no-eval': 'error',
       'no-extend-native': 'error',
       'no-extra-bind': 'error',
-      // 'no-extra-semi': 'error', // deprecated -> use stylistic plugin
       'no-implied-eval': 'error',
       'no-iterator': 'error',
       'no-labels': 'error',
@@ -163,7 +166,6 @@ export default tseslint.config(
       'prefer-rest-params': 'error',
       'prefer-spread': 'error',
       'prefer-template': 'error',
-      // 'spaced-comment': ['error', 'always', { markers: ['/'] }],  // deprecated -> use stylistic plugin
       'symbol-description': 'error',
       'unicode-bom': ['error', 'never'],
       'unused-imports/no-unused-imports': IS_IN_EDITOR ? 'off' : 'error',
