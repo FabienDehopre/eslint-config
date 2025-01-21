@@ -1,7 +1,7 @@
 {
   "name": "@fabdeh/eslint-config",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "My personal eslint config preset",
   "homepage": "https://github.com/FabienDehopre/eslint-config",
   "keywords": [
@@ -13,8 +13,14 @@
   "packageManager": "pnpm@10.0.0",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     }
   },
   "main": "./dist/index.js",
@@ -23,7 +29,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup --format cjs,esm --clean --dts",
+    "build": "tsup && fix-tsup-cjs",
     "preinstall": "npx only-allow pnpm",
     "prepare": "is-ci || simple-git-hooks",
     "commit": "git-cz",
@@ -95,6 +101,7 @@
     "eslint-plugin-jest-dom": "^5.5.0",
     "eslint-plugin-tailwindcss": "^3.18.0",
     "eslint-plugin-testing-library": "^7.1.1",
+    "fix-tsup-cjs": "^1.2.0",
     "inquirer": "^9.3.7",
     "is-ci": "^4.1.0",
     "jiti": "^2.4.2",
