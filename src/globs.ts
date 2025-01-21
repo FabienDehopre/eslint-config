@@ -29,6 +29,7 @@ export const GLOB_EXCLUDE = [
   '**/.idea',
   '**/.cache',
   '**/.output',
+  '**/.tsup',
   '**/.vite-inspect',
   '**/.yarn',
   '**/vite.config.*.timestamp-*',

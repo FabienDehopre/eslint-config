@@ -1,5 +1,6 @@
 /.angular
 /.idea
+/.tsup
 /.vscode
 /coverage
 /dist

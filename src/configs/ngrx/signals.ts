@@ -6,6 +6,11 @@ import type { Selector } from '../rules-configs/naming-convention';
 import { GLOB_TS_EXT } from '../../globs';
 import namingConvention from '../rules-configs/naming-convention';
 
+/**
+ * Updates the existing naming conventions rules to use it in signals store.
+ * @param conventions The existing naming conventions.
+ * @returns The updated naming conventions.
+ */
 function allowLeadingUnderscoreOnMemberLike(conventions: Selector[]): Selector[] {
   return [
     ...conventions.filter((c) => !Array.isArray(c.selector)),
