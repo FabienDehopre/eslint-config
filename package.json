@@ -9,7 +9,13 @@
   ],
   "author": "Fabien Dehopré <fabien@dehopre.dev> (https://github.com/FabienDehopre)",
   "license": "MIT",
-  "repository": "github:FabienDehopre/eslint-config",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FabienDehopre/eslint-config.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "packageManager": "pnpm@10.0.0",
   "exports": {
     ".": {
