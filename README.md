@@ -1,4 +1,4 @@
-# @fadeh/eslint-config
+# @fabdeh/eslint-config
 
 [![CI](https://github.com/FabienDehopre/eslint-config/actions/workflows/ci.yml/badge.svg)](https://github.com/FabienDehopre/eslint-config/actions/workflows/ci.yml)
 [![Release](https://github.com/FabienDehopre/eslint-config/actions/workflows/release.yml/badge.svg)](https://github.com/FabienDehopre/eslint-config/actions/workflows/release.yml)
