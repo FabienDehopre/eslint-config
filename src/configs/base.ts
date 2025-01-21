@@ -320,18 +320,21 @@ export default tseslint.config(
   {
     name: 'fabdeh/base/javascript-rules',
     files: [GLOB_JS],
-    extends: [nx.configs['flat/javascript']],
+    extends: [nx.configs['flat/javascript'], jsdoc.configs['flat/recommended']],
     rules: {
-      // TODO: jsdoc for JS
       'importx-/named': 'error',
     },
   },
   {
     name: 'fabdeh/base/typescript-rules',
     files: [GLOB_TS],
-    extends: [tseslint.configs.strictTypeChecked, tseslint.configs.stylisticTypeChecked, nx.configs['flat/typescript']],
+    extends: [
+      tseslint.configs.strictTypeChecked,
+      tseslint.configs.stylisticTypeChecked,
+      nx.configs['flat/typescript'],
+      jsdoc.configs['flat/recommended-typescript'],
+    ],
     rules: {
-      // TODO: jsdoc for TS
       '@typescript-eslint/array-type': ['error', { default: 'array' }],
       '@typescript-eslint/consistent-indexed-object-style': 'error',
       '@typescript-eslint/consistent-type-assertions': [
