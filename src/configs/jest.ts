@@ -17,7 +17,7 @@ export default tseslint.config({
       ...globals.jest,
     },
   },
-  files: [GLOB_TESTS, `**/jest.config.${GLOB_SRC_EXT}`],
+  files: [...GLOB_TESTS, `**/jest.config.${GLOB_SRC_EXT}`],
   extends: [
     jest.configs['flat/recommended'],
     jest.configs['flat/style'],
