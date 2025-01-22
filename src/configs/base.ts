@@ -347,7 +347,7 @@ export default tseslint.config(
     extends: [nx.configs['flat/javascript'], jsdoc.configs['flat/recommended']],
     rules: {
       '@typescript-eslint/no-empty-interface': 'off', // deprecated but included in nx
-      'importx-/named': 'error',
+      'import-x/named': 'error',
       'import-x/no-deprecated': 'error',
     },
   },
