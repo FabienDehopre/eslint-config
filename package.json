@@ -1,7 +1,7 @@
 {
   "name": "@fabdeh/eslint-config",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "My personal eslint config preset",
   "homepage": "https://github.com/FabienDehopre/eslint-config",
   "keywords": [
