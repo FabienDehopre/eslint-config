@@ -1,17 +1,7 @@
-import angular from './configs/angular';
-import base from './configs/base';
-import jest from './configs/jest';
-import * as ngrx from './configs/ngrx';
-import tailwindcss from './configs/tailwindcss';
-import vitest from './configs/vitest';
+import * as configs from './configs';
 
-export default {
-  configs: {
-    angular,
-    base,
-    jest,
-    ngrx,
-    tailwindcss,
-    vitest,
-  },
-};
+const DEFAULT = { configs };
+
+export * from './globs';
+export * from './utils';
+export default DEFAULT;
