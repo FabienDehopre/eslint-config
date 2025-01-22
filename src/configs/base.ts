@@ -1,5 +1,3 @@
-import process from 'node:process';
-
 import eslintComments from '@eslint-community/eslint-plugin-eslint-comments';
 import nx from '@nx/eslint-plugin';
 import stylistic from '@stylistic/eslint-plugin';
@@ -214,7 +212,6 @@ export default tseslint.config(
       'import-x/first': 'error',
       'import-x/newline-after-import': ['error', { considerComments: true }],
       'import-x/no-absolute-path': 'error',
-      'import-x/no-deprecated': 'warn',
       'import-x/no-duplicates': 'error',
       'import-x/no-empty-named-blocks': 'error',
       'import-x/no-extraneous-dependencies': 'error',
@@ -351,6 +348,7 @@ export default tseslint.config(
     rules: {
       '@typescript-eslint/no-empty-interface': 'off', // deprecated but included in nx
       'importx-/named': 'error',
+      'import-x/no-deprecated': 'error',
     },
   },
   {
@@ -417,6 +415,7 @@ export default tseslint.config(
       '@typescript-eslint/unbound-method': ['error', { ignoreStatic: true }],
       '@typescript-eslint/unified-signatures': 'error',
       'import-x/named': 'off',
+      'import-x/no-deprecated': 'off',
     },
   }
 );
