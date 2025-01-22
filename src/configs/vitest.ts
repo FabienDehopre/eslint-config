@@ -23,7 +23,7 @@ export default tseslint.config({
       typecheck: true,
     },
   },
-  files: [GLOB_TESTS],
+  files: [...GLOB_TESTS],
   extends: [vitest.configs.recommended, jestDom.configs['flat/recommended'], testingLibrary.configs['flat/angular']],
   rules: {
     'max-classes-per-file': 'off',
