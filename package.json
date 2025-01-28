@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.4",
   "description": "My personal eslint config preset",
-  "homepage": "https://github.com/FabienDehopre/eslint-config",
+  "homepage": "https://eslint-config.dehopre.dev/",
   "keywords": [
     "eslint-config"
   ],
@@ -25,17 +25,18 @@
       },
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "default": "./dist/index.mjs"
       }
     }
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "unbuild",
     "build:inspector": "pnpm build && pnpm dlx @eslint/config-inspector build",
     "dev": "pnpm dlx @eslint/config-inspector --config eslint.config.ts",
     "preinstall": "npx only-allow pnpm",
@@ -115,15 +116,14 @@
     "eslint-plugin-jest-dom": "^5.5.0",
     "eslint-plugin-tailwindcss": "^3.18.0",
     "eslint-plugin-testing-library": "^7.1.1",
-    "fix-tsup-cjs": "^1.2.0",
     "inquirer": "^9.3.7",
     "is-ci": "^4.1.0",
     "jiti": "^2.4.2",
     "nano-staged": "^0.8.0",
     "prettier": "^3.4.2",
     "simple-git-hooks": "^2.11.1",
-    "tsup": "^8.3.5",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "unbuild": "^3.3.1"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm nano-staged",
