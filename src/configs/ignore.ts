@@ -1,6 +1,4 @@
-import type { ConfigArray } from 'typescript-eslint';
-
-import tseslint from 'typescript-eslint';
+import type { TypedFlatConfigItem } from '../types';
 
 import { GLOB_EXCLUDE } from '../globs';
 
@@ -9,9 +7,11 @@ import { GLOB_EXCLUDE } from '../globs';
  * @param userIgnores  The user ignore glob patterns.
  * @returns  The ignore configuration.
  */
-export function ignores(userIgnores: string[] = []): ConfigArray {
-  return tseslint.config({
-    name: 'fabdeh/ignores',
-    ignores: [...GLOB_EXCLUDE, ...userIgnores],
-  });
+export function ignores(userIgnores: string[] = []): TypedFlatConfigItem[] {
+  return [
+    {
+      name: 'fabdeh/ignores',
+      ignores: [...GLOB_EXCLUDE, ...userIgnores],
+    },
+  ];
 }
