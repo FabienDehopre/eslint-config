@@ -131,3 +131,9 @@ dist
 
 # ESLint Config Inspector
 .eslint-config-inspector/
+
+# IDE
+.idea
+
+# Generated files
+src/typegen.d.ts

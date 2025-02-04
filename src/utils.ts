@@ -1,5 +1,6 @@
-import type { TSESLint } from '@typescript-eslint/utils';
-import type { ConfigWithExtends } from 'typescript-eslint';
+import type { Awaitable } from 'eslint-flat-config-utils';
+
+import type { TypedFlatConfigItem } from './types';
 
 /**
  * Detect if the program is running inside an editor environment.
@@ -26,28 +27,36 @@ export function isInEditorEnv(): boolean {
 }
 
 /**
- * Dedupe the base TS ESLint config.
- * @param configs The list of configs.
- * @returns The filtered configs.
+ * Converts a value to an array. If the value is already an array, it returns the value as is.
+ * Otherwise, it wraps the value in an array.
+ * @template T - The type of the value.
+ * @param value - The value to convert to an array.
+ * @returns The value as an array.
  */
-export function dedupeTsBaseConfig(...configs: ConfigWithExtends[]): TSESLint.FlatConfig.ConfigArray {
-  return configs.filter((c) => !c.name || c.name !== 'typescript-eslint/base');
+export function toArray<T>(value: T | T[]): T[] {
+  return Array.isArray(value) ? value : [value];
 }
 
 /**
- * Ensures that the "files" property is correctly set.
- * @param files The files property value to use.
- * @returns A function that takes the configuration and fix it.
+ * Interops the default export of a module.
+ * @template T - The type of the module.
+ * @param m - The module to interop.
+ * @returns The default export or the module itself.
  */
-export function ensureCorrectFiles<T extends object>(files: string[]): (config: T) => T {
-  return (config) => {
-    if ('rules' in config && !('files' in config)) {
-      return {
-        ...config,
-        files,
-      };
-    }
+export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { default: infer U } ? U : T> {
+  const resolved = await m;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+  return (resolved as any).default ?? resolved;
+}
 
-    return config;
-  };
+/**
+ * Combine array and non-array configs into a single array.
+ * @param configs - the configurations to combine.
+ * @returns The combined and flatted configurations.
+ */
+export async function combine(
+  ...configs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]
+): Promise<TypedFlatConfigItem[]> {
+  const resolved = await Promise.all(configs);
+  return resolved.flat();
 }
