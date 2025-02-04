@@ -11,3 +11,16 @@ updates:
       interval: 'weekly'
     commit-message:
       prefix: 'build'
+    groups:
+      typescript-eslint:
+        patterns:
+          - '@typescript-eslint/*'
+          - typescript-eslint
+      angular-eslint:
+        patterns:
+          - '@angular-eslint/*'
+          - angular-eslint
+      eslint:
+        patterns:
+          - '@eslint/*'
+          - eslint
