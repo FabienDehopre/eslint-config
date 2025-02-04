@@ -36,7 +36,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "pnpm typegen && unbuild",
+    "build": "unbuild",
     "build:inspector": "pnpm build && pnpm dlx @eslint/config-inspector build",
     "dev": "pnpm dlx @eslint/config-inspector --config eslint.config.ts",
     "preinstall": "npx only-allow pnpm",
@@ -48,8 +48,7 @@
     "format:check": "prettier . --check",
     "prepack": "pnpm build",
     "release": "bumpp && npm publish",
-    "typecheck": "tsc --noEmit",
-    "typegen": "tsx scripts/typegen.ts"
+    "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
     "@ngrx/eslint-plugin": "19.0.0",
@@ -124,7 +123,6 @@
     "nano-staged": "^0.8.0",
     "prettier": "^3.4.2",
     "simple-git-hooks": "^2.11.1",
-    "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "unbuild": "^3.3.1"
   },

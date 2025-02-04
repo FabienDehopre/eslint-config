@@ -1,6 +1,5 @@
-import type { Awaitable } from 'eslint-flat-config-utils';
 
-import type { TypedFlatConfigItem } from './types';
+import type { Awaitable } from './types';
 
 /**
  * Detect if the program is running inside an editor environment.
@@ -47,16 +46,4 @@ export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { de
   const resolved = await m;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
   return (resolved as any).default ?? resolved;
-}
-
-/**
- * Combine array and non-array configs into a single array.
- * @param configs - the configurations to combine.
- * @returns The combined and flatted configurations.
- */
-export async function combine(
-  ...configs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]
-): Promise<TypedFlatConfigItem[]> {
-  const resolved = await Promise.all(configs);
-  return resolved.flat();
 }

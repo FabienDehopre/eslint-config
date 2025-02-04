@@ -134,6 +134,3 @@ dist
 
 # IDE
 .idea
-
-# Generated files
-src/typegen.d.ts
