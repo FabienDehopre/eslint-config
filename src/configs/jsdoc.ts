@@ -1,9 +1,8 @@
 import type { ConfigArray } from 'typescript-eslint';
+import type { StylisticOptions } from '../types';
 
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 import tseslint from 'typescript-eslint';
-
-import type { StylisticOptions } from '../types';
 
 import { GLOB_SRC, GLOB_TS } from '../globs';
 

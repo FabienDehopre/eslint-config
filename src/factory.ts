@@ -1,8 +1,7 @@
 import type { ConfigArray, ConfigWithExtends } from 'typescript-eslint';
+import type { Awaitable, ConfigOptions } from './types';
 
 import tseslint from 'typescript-eslint';
-
-import type { Awaitable, ConfigOptions } from './types';
 
 import {
   comments,

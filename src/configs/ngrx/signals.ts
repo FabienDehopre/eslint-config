@@ -1,7 +1,7 @@
+import type { Selector } from '../rules-configs/naming-convention';
+
 import ngrx from '@ngrx/eslint-plugin/v9';
 import tseslint from 'typescript-eslint';
-
-import type { Selector } from '../rules-configs/naming-convention';
 
 import { GLOB_TS_EXT } from '../../globs';
 import namingConvention from '../rules-configs/naming-convention';

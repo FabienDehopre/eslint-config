@@ -1,8 +1,11 @@
 import type { ConfigArray } from 'typescript-eslint';
 
+import process from 'node:process';
+
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import tseslint from 'typescript-eslint';
 
+import { getWorkspaceRoot } from '../utils';
 import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-configs/perfectionist-groups';
 
 /**
@@ -19,11 +22,11 @@ export function perfectionist(): ConfigArray {
       'perfectionist/sort-imports': [
         'error',
         {
-          newlinesBetween: 'never',
           groups: SORT_IMPORT_GROUPS,
-          tsconfigRootDir: process.cwd(),
+          tsconfigRootDir: getWorkspaceRoot(process.cwd(), process.cwd()),
           order: 'asc',
           type: 'natural',
+          newlinesBetween: 'never',
         },
       ],
       'perfectionist/sort-intersection-types': [

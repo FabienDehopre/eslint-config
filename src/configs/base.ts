@@ -12,7 +12,6 @@ import tseslint from 'typescript-eslint';
 
 import { GLOB_EXCLUDE, GLOB_JS, GLOB_SRC, GLOB_TS } from '../globs';
 import { isInEditorEnv } from '../utils';
-
 import memberOrdering from './rules-configs/member-ordering';
 import namingConvention from './rules-configs/naming-convention';
 import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-configs/perfectionist-groups';

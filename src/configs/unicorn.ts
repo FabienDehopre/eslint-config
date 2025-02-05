@@ -1,9 +1,8 @@
 import type { ConfigArray } from 'typescript-eslint';
+import type { UnicornOptions } from '../types';
 
 import unicornPlugin from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
-
-import type { UnicornOptions } from '../types';
 
 /**
  *

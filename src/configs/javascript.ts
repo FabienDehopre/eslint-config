@@ -1,12 +1,11 @@
 import type { ConfigArray } from 'typescript-eslint';
+import type { IsInEditorOptions, OverridesOptions } from '../types';
 
 import eslint from '@eslint/js';
 import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-
-import type { IsInEditorOptions, OverridesOptions } from '../types';
 
 import { GLOB_SRC } from '../globs';
 
@@ -53,7 +52,7 @@ export function javascript(options: IsInEditorOptions & OverridesOptions = {}): 
         'prefer-arrow-functions': preferArrowFunctions,
         'unused-imports': unusedImports,
       },
-      extends: [eslint.configs.recommended.rules, ...tseslint.configs.recommended],
+      extends: [eslint.configs.recommended, ...tseslint.configs.recommended],
       rules: {
         'accessor-pairs': 'error',
         'array-callback-return': 'error',

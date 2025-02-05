@@ -1,8 +1,9 @@
-import { PathLike, statSync } from 'node:fs';
+import type { PathLike } from 'node:fs';
+import type { Awaitable } from './types';
+
+import { statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import process from 'node:process';
-
-import type { Awaitable } from './types';
 
 /**
  * Detect if the program is running inside an editor environment.

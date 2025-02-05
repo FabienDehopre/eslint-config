@@ -1,15 +1,13 @@
-import process from 'node:process';
-
 import type { ConfigArray } from 'typescript-eslint';
+import type { OverridesOptions, StylisticOptions, TypeScriptParserOptions } from '../types';
+
+import process from 'node:process';
 
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
-import type { OverridesOptions, StylisticOptions, TypeScriptParserOptions } from '../types';
-
 import { GLOB_TS } from '../globs';
 import { getWorkspaceRoot } from '../utils';
-
 import memberOrdering from './rules-configs/member-ordering';
 import namingConvention from './rules-configs/naming-convention';
 

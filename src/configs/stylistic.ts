@@ -1,8 +1,7 @@
 import type { ConfigArray } from 'typescript-eslint';
+import type { StylisticConfig, StylisticOptions } from '../types';
 
 import tseslint from 'typescript-eslint';
-
-import type { StylisticConfig, StylisticOptions } from '../types';
 
 import { GLOB_SRC } from '../globs';
 import { interopDefault } from '../utils';
