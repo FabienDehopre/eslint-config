@@ -53,6 +53,7 @@
   "peerDependencies": {
     "@ngrx/eslint-plugin": "19.0.0",
     "@vitest/eslint-plugin": "^1.1.25",
+    "angular-eslint": "^19.0.2",
     "eslint": "^9.10.0",
     "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-jest-dom": "^5.5.0",
@@ -64,6 +65,9 @@
       "optional": true
     },
     "@vitest/eslint-plugin": {
+      "optional": true
+    },
+    "angular-eslint": {
       "optional": true
     },
     "eslint-plugin-jest": {
@@ -80,7 +84,6 @@
     }
   },
   "dependencies": {
-    "@angular-eslint/utils": "^19.0.2",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@eslint/js": "^9.19.0",
     "@nx/eslint-plugin": "^20.4.0",
@@ -88,7 +91,6 @@
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
     "@typescript-eslint/utils": "^8.22.0",
-    "angular-eslint": "^19.0.2",
     "eslint-config-flat-gitignore": "^2.0.0",
     "eslint-flat-config-utils": "^2.0.0",
     "eslint-plugin-import-x": "^4.6.1",
@@ -108,6 +110,7 @@
     "@ngrx/eslint-plugin": "^19.0.0",
     "@types/node": "^22.12.0",
     "@vitest/eslint-plugin": "^1.1.25",
+    "angular-eslint": "^19.0.2",
     "bumpp": "^10.0.1",
     "commitizen": "^4.3.1",
     "eslint": "^9.19.0",

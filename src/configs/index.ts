@@ -15,5 +15,6 @@ export * from './jsdoc';
 export * from './javascript';
 export * from './perfectionist';
 export * from './stylistic';
+export * from './typescript';
 export * from './unicorn';
 /* eslint-enable perfectionist/sort-exports */

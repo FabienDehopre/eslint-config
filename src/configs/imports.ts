@@ -1,6 +1,9 @@
-import * as importX from 'eslint-plugin-import-x';
+import type { ConfigArray } from 'typescript-eslint';
 
-import type { StylisticOptions, TypedFlatConfigItem } from '../types';
+import * as importX from 'eslint-plugin-import-x';
+import tseslint from 'typescript-eslint';
+
+import type { StylisticOptions } from '../types';
 
 import { GLOB_JS, GLOB_SRC, GLOB_TS } from '../globs';
 
@@ -9,9 +12,9 @@ import { GLOB_JS, GLOB_SRC, GLOB_TS } from '../globs';
  * @param options - The stylistic options for the import rules.
  * @returns An array of configuration objects for import rules.
  */
-export function imports(options: StylisticOptions = {}): TypedFlatConfigItem[] {
+export function imports(options: StylisticOptions = {}): ConfigArray {
   const { stylistic = true } = options;
-  return [
+  return tseslint.config(
     {
       name: 'fabdeh/imports/common/rules',
       files: [GLOB_SRC],
@@ -56,6 +59,6 @@ export function imports(options: StylisticOptions = {}): TypedFlatConfigItem[] {
         'import-x/named': 'off',
         'import-x/no-deprecated': 'off',
       },
-    },
-  ];
+    }
+  );
 }

@@ -1,20 +1,11 @@
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
-import type { Linter } from 'eslint';
+import type { TSESLint } from '@typescript-eslint/utils';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 
-import type { RuleOptions } from './typegen';
-
-export type Rules = RuleOptions;
-export type { ConfigNames } from './typegen';
-
-export type TypedFlatConfigItem = Omit<Linter.Config<Linter.RulesRecord & Rules>, 'plugins'> & {
-  // Relax plugins type limitation, as most of the plugins did not have correct type info yet.
-  /**
-   * An object containing a name-value mapping of plugin names to plugin objects. When `files` is specified, these plugins are only available to the matching files.
-   * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
-   */
-  plugins?: Record<string, any>;
-};
+/**
+ * A type that can be awaited. Promise<T> or T.
+ */
+export type Awaitable<T> = Promise<T> | T;
 
 /**
  * Options for determining if the code is running in an editor environment.
@@ -33,7 +24,7 @@ export interface OverridesOptions {
   /**
    * Optional property that allows specifying custom rules to override the default ones.
    */
-  overrides?: TypedFlatConfigItem['rules'];
+  overrides?: TSESLint.FlatConfig.Config['rules'];
 }
 
 /**
@@ -62,6 +53,10 @@ export interface StylisticOptions {
   stylistic?: StylisticConfig | boolean;
 }
 
+export interface TypeScriptParserOptions {
+  parserOptions?: TSESLint.FlatConfig.ParserOptions;
+}
+
 /**
  * Options for the `fabdehConfig` function.
  * @see fabdehConfig
@@ -80,6 +75,12 @@ export interface ConfigOptions {
    * JavaScript rules overrides. Can't be disabled.
    */
   javascript?: OverridesOptions;
+
+  /**
+   * TypeScript rules overrides and parser configuration.
+   * @default auto-detected
+   */
+  typescript?: OverridesOptions & TypeScriptParserOptions;
 
   /**
    * Enable stylistic rules.

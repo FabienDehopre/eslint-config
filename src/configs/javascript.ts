@@ -1,11 +1,12 @@
-import type { Linter } from 'eslint';
+import type { ConfigArray } from 'typescript-eslint';
 
+import eslint from '@eslint/js';
 import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-import type { IsInEditorOptions, OverridesOptions, TypedFlatConfigItem } from '../types';
+import type { IsInEditorOptions, OverridesOptions } from '../types';
 
 import { GLOB_SRC } from '../globs';
 
@@ -14,10 +15,10 @@ import { GLOB_SRC } from '../globs';
  * @param options - The options for the configuration.
  * @returns The generated configuration.
  */
-export function javascript(options: IsInEditorOptions & OverridesOptions = {}): TypedFlatConfigItem[] {
+export function javascript(options: IsInEditorOptions & OverridesOptions = {}): ConfigArray {
   // TODO: support options for Angular
   const { isInEditor = false, overrides = {} } = options;
-  return [
+  return tseslint.config(
     {
       name: 'fabdeh/javascript/setup',
       languageOptions: {
@@ -30,7 +31,7 @@ export function javascript(options: IsInEditorOptions & OverridesOptions = {}): 
           navigator: 'readonly',
           window: 'readonly',
         },
-        parser: tseslint.parser as unknown as Linter.Parser, // for an unknown reason, the TSEslint parser is not recognized as a valid Parser type
+        parser: tseslint.parser,
         parserOptions: {
           ecmaFeatures: {
             jsx: true,
@@ -48,9 +49,11 @@ export function javascript(options: IsInEditorOptions & OverridesOptions = {}): 
       name: 'fabdeh/javascript/rules',
       files: [GLOB_SRC],
       plugins: {
+        '@typescript-eslint': tseslint.plugin,
         'prefer-arrow-functions': preferArrowFunctions,
         'unused-imports': unusedImports,
       },
+      extends: [eslint.configs.recommended.rules, ...tseslint.configs.recommended],
       rules: {
         'accessor-pairs': 'error',
         'array-callback-return': 'error',
@@ -99,7 +102,6 @@ export function javascript(options: IsInEditorOptions & OverridesOptions = {}): 
           // end of only when angular is enabled
         ],
         'no-alert': 'error',
-        'no-array-constructor': 'error',
         'no-caller': 'error',
         'no-cond-assign': ['error', 'always'],
         'no-console': ['error', { allow: ['warn', 'error'] }],
@@ -124,7 +126,6 @@ export function javascript(options: IsInEditorOptions & OverridesOptions = {}): 
         'no-sequences': 'error',
         'no-template-curly-in-string': 'error',
         'no-throw-literal': 'error',
-        'no-undef': 'error',
         'no-undef-init': 'error',
         'no-unmodified-loop-condition': 'error',
         'no-unneeded-ternary': ['error', { defaultAssignment: false }],
@@ -137,14 +138,12 @@ export function javascript(options: IsInEditorOptions & OverridesOptions = {}): 
             allowTernary: true,
           },
         ],
-        'no-unused-vars': 'off',
         'no-use-before-define': ['error', { classes: false, functions: false }],
         'no-useless-call': 'error',
         'no-useless-computed-key': 'error',
         'no-useless-constructor': 'error',
         'no-useless-rename': 'error',
         'no-useless-return': 'error',
-        'no-var': 'error',
         'object-shorthand': [
           'error',
           'always',
@@ -162,8 +161,6 @@ export function javascript(options: IsInEditorOptions & OverridesOptions = {}): 
         'prefer-object-spread': 'error',
         'prefer-promise-reject-errors': 'error',
         'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }],
-        'prefer-rest-params': 'error',
-        'prefer-spread': 'error',
         'prefer-template': 'error',
         'symbol-description': 'error',
         'unicode-bom': ['error', 'never'],
@@ -182,8 +179,10 @@ export function javascript(options: IsInEditorOptions & OverridesOptions = {}): 
         'valid-typeof': ['error', { requireStringLiterals: true }],
         'vars-on-top': 'error',
         yoda: ['error', 'never', { exceptRange: true }],
+        '@typescript-eslint/no-unused-vars': 'off', // superseded by unused-imports/no-unused-vars
+        // TODO: check if required to apply more nx javascript rules here
         ...overrides,
       },
-    },
-  ];
+    }
+  );
 }

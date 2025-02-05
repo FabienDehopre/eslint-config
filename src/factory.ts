@@ -1,25 +1,44 @@
-import type { Linter } from 'eslint';
+import type { ConfigArray, ConfigWithExtends } from 'typescript-eslint';
 
-import { Awaitable, FlatConfigComposer } from 'eslint-flat-config-utils';
+import tseslint from 'typescript-eslint';
 
-import type { ConfigNames, ConfigOptions, TypedFlatConfigItem } from './types';
+import type { Awaitable, ConfigOptions } from './types';
 
-import { comments, ignores, imports, javascript, jsdoc, perfectionist, unicorn } from './configs';
+import {
+  comments,
+  ignores,
+  imports,
+  javascript,
+  jsdoc,
+  perfectionist,
+  stylistic,
+  typescript,
+  unicorn,
+} from './configs';
 import { interopDefault, isInEditorEnv } from './utils';
+
+type FlatConfigProps = keyof Omit<ConfigWithExtends, 'files' | 'ignores' | 'language'>;
+const FLAT_CONFIG_PROPS = [
+  'name',
+  'languageOptions',
+  'linterOptions',
+  'processor',
+  'plugins',
+  'rules',
+  'settings',
+  'extends',
+] satisfies FlatConfigProps[];
 
 /**
  * Construct an array of ESLint flat config items.
  * @param options - The options for generating the ESLint configurations.
- * @param userConfigs - The user configurations to be merged with the generated configurations.
+ * @param userConfigs - Additional user configuration to apply.
  * @returns The merged ESLint configurations.
  */
-export function fabdehConfig(
-  options: ConfigOptions & Omit<TypedFlatConfigItem, 'files'> = {},
-  ...userConfigs: (
-    | Awaitable<Linter.Config[] | TypedFlatConfigItem | TypedFlatConfigItem[]>
-    | FlatConfigComposer<TypedFlatConfigItem, string>
-  )[]
-): FlatConfigComposer<TypedFlatConfigItem, ConfigNames> {
+export async function fabdehConfig(
+  options: ConfigOptions & ConfigWithExtends = {},
+  ...userConfigs: Awaitable<ConfigWithExtends | ConfigWithExtends[]>[]
+): Promise<ConfigArray> {
   const { gitignore: enableGitignore = true, unicorn: enableUnicorn = true, isInEditor = isInEditorEnv() } = options;
 
   if (isInEditor) {
@@ -32,25 +51,19 @@ export function fabdehConfig(
   const stylisticOptions =
     options.stylistic === false ? false : typeof options.stylistic === 'object' ? options.stylistic : {};
 
-  const configs: Awaitable<TypedFlatConfigItem[]>[] = [];
+  const configs: Awaitable<ConfigArray>[] = [];
   if (enableGitignore) {
-    if (typeof enableGitignore === 'boolean') {
+    if (typeof enableGitignore === 'object') {
       configs.push(
-        interopDefault(import('eslint-config-flat-gitignore')).then((r) => [
-          r({
-            name: 'fabdh/gitignore',
-            strict: true,
-          }),
-        ])
+        interopDefault(import('eslint-config-flat-gitignore')).then((r) =>
+          tseslint.config(r({ name: 'fabdeh/gitignore', ...enableGitignore }))
+        )
       );
     } else {
       configs.push(
-        interopDefault(import('eslint-config-flat-gitignore')).then((r) => [
-          r({
-            name: 'fabdeh/gitignore',
-            ...enableGitignore,
-          }),
-        ])
+        interopDefault(import('eslint-config-flat-gitignore')).then((r) =>
+          tseslint.config(r({ name: 'fabdeh/gitignore', strict: true }))
+        )
       );
     }
   }
@@ -58,6 +71,11 @@ export function fabdehConfig(
   configs.push(
     ignores(options.ignores),
     javascript({ isInEditor, overrides: options.javascript?.overrides }),
+    typescript({
+      stylistic: stylisticOptions,
+      parserOptions: options.typescript?.parserOptions,
+      overrides: options.typescript?.overrides,
+    }),
     comments(),
     imports({ stylistic: stylisticOptions }),
     jsdoc({ stylistic: stylisticOptions }),
@@ -65,8 +83,19 @@ export function fabdehConfig(
   );
 
   if (enableUnicorn) {
-    configs.push(unicorn(enableUnicorn === true ? {} : enableUnicorn));
+    configs.push(unicorn(typeof enableUnicorn === 'object' ? enableUnicorn : {}));
   }
 
-  return new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>().append(...configs).append(...userConfigs);
+  if (stylisticOptions) {
+    configs.push(stylistic({ stylistic: stylisticOptions }));
+  }
+
+  const fusedConfig = Object.fromEntries(
+    Object.entries(options).filter(([k]) => FLAT_CONFIG_PROPS.includes(k as FlatConfigProps))
+  ) satisfies ConfigWithExtends;
+  if (Object.keys(fusedConfig).length > 0) {
+    configs.push([fusedConfig]);
+  }
+
+  return tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs)));
 }

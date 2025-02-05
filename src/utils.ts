@@ -1,3 +1,6 @@
+import { PathLike, statSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import process from 'node:process';
 
 import type { Awaitable } from './types';
 
@@ -46,4 +49,41 @@ export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { de
   const resolved = await m;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
   return (resolved as any).default ?? resolved;
+}
+
+/**
+ *
+ * @param path
+ */
+function fileExists(path: PathLike): boolean {
+  try {
+    return statSync(path).isFile();
+  } catch {
+    return false;
+  }
+}
+
+/**
+ *
+ * @param dir
+ * @param candidateRoot
+ */
+export function getWorkspaceRoot(dir: string, candidateRoot: string): string {
+  if (process.env.NX_WORKSPACE_ROOT_PATH) {
+    return process.env.NX_WORKSPACE_ROOT_PATH;
+  }
+
+  if (dirname(dir) === dir) {
+    return candidateRoot;
+  }
+
+  const matches = [join(dir, 'nx.json'), join(dir, 'nx'), join(dir, 'nx.bat')];
+
+  if (matches.some((x) => fileExists(x))) {
+    return dir;
+  } else if (fileExists(join(dir, 'node_modules', 'nx', 'package.json'))) {
+    return getWorkspaceRoot(dirname(dir), dir);
+  } else {
+    return getWorkspaceRoot(dirname(dir), candidateRoot);
+  }
 }

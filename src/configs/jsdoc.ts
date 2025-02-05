@@ -1,6 +1,9 @@
-import jsdocPlugin from 'eslint-plugin-jsdoc';
+import type { ConfigArray } from 'typescript-eslint';
 
-import type { StylisticOptions, TypedFlatConfigItem } from '../types';
+import jsdocPlugin from 'eslint-plugin-jsdoc';
+import tseslint from 'typescript-eslint';
+
+import type { StylisticOptions } from '../types';
 
 import { GLOB_SRC, GLOB_TS } from '../globs';
 
@@ -8,9 +11,9 @@ import { GLOB_SRC, GLOB_TS } from '../globs';
  *
  * @param options
  */
-export function jsdoc(options: StylisticOptions = {}): TypedFlatConfigItem[] {
+export function jsdoc(options: StylisticOptions = {}): ConfigArray {
   const { stylistic = true } = options;
-  return [
+  return tseslint.config(
     {
       name: 'fabdeh/jsdoc/rules',
       files: [GLOB_SRC],
@@ -63,6 +66,6 @@ export function jsdoc(options: StylisticOptions = {}): TypedFlatConfigItem[] {
         'jsdoc/require-property-type': 'off',
         'jsdoc/require-returns-type': 'off',
       },
-    },
-  ];
+    }
+  );
 }
