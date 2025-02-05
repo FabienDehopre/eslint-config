@@ -1,3 +1,4 @@
+export * from './angular';
 export * from './comments';
 export * from './ignore';
 export * from './imports';

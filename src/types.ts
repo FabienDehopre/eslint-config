@@ -57,6 +57,13 @@ export interface TypeScriptParserOptions {
   parserOptions?: TSESLint.FlatConfig.ParserOptions;
 }
 
+export interface AngularOptions {
+  enableAccessibilityRules?: boolean;
+  prefix?: string[] | string;
+  tsOverrides?: TSESLint.FlatConfig.Config['rules'];
+  htmlOverrides?: TSESLint.FlatConfig.Config['rules'];
+}
+
 /**
  * Options for the `fabdehConfig` function.
  * @see fabdehConfig
@@ -94,6 +101,12 @@ export interface ConfigOptions {
    * @default true
    */
   unicorn?: UnicornOptions | boolean;
+
+  /**
+   * Options for the angular linting rules
+   * @default auto-detect based on the dependencies.
+   */
+  angular?: AngularOptions | boolean;
 
   /**
    * Control to disable some rules in editors.

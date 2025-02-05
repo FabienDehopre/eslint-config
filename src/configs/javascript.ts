@@ -14,9 +14,11 @@ import { GLOB_SRC } from '../globs';
  * @param options - The options for the configuration.
  * @returns The generated configuration.
  */
-export function javascript(options: IsInEditorOptions & OverridesOptions = {}): ConfigArray {
+export function javascript(
+  options: IsInEditorOptions & OverridesOptions & { allowAngularDecorator?: boolean } = {}
+): ConfigArray {
   // TODO: support options for Angular
-  const { isInEditor = false, overrides = {} } = options;
+  const { isInEditor = false, overrides = {}, allowAngularDecorator = false } = options;
   return tseslint.config(
     {
       name: 'fabdeh/javascript/setup',
@@ -72,34 +74,34 @@ export function javascript(options: IsInEditorOptions & OverridesOptions = {}): 
           'Undefined',
           'undefined',
         ],
-        'new-cap': [
-          'error',
-          // only when angular is enabled
-          {
-            capIsNewExceptions: [
-              'Attribute',
-              'Component',
-              'ContentChild',
-              'ContentChildren',
-              'Directive',
-              'Host',
-              'HostBinding',
-              'HostListener',
-              'Inject',
-              'Injectable',
-              'Input',
-              'NgModule',
-              'Optional',
-              'Output',
-              'Pipe',
-              'Self',
-              'SkipSelf',
-              'ViewChild',
-              'ViewChildren',
-            ],
-          },
-          // end of only when angular is enabled
-        ],
+        'new-cap': allowAngularDecorator
+          ? [
+              'error',
+              {
+                capIsNewExceptions: [
+                  'Attribute',
+                  'Component',
+                  'ContentChild',
+                  'ContentChildren',
+                  'Directive',
+                  'Host',
+                  'HostBinding',
+                  'HostListener',
+                  'Inject',
+                  'Injectable',
+                  'Input',
+                  'NgModule',
+                  'Optional',
+                  'Output',
+                  'Pipe',
+                  'Self',
+                  'SkipSelf',
+                  'ViewChild',
+                  'ViewChildren',
+                ],
+              },
+            ]
+          : 'error',
         'no-alert': 'error',
         'no-caller': 'error',
         'no-cond-assign': ['error', 'always'],

@@ -4,6 +4,7 @@ import type { Awaitable, ConfigOptions } from './types';
 import tseslint from 'typescript-eslint';
 
 import {
+  angular,
   comments,
   ignores,
   imports,
@@ -38,7 +39,12 @@ export async function fabdehConfig(
   options: ConfigOptions & ConfigWithExtends = {},
   ...userConfigs: Awaitable<ConfigWithExtends | ConfigWithExtends[]>[]
 ): Promise<ConfigArray> {
-  const { gitignore: enableGitignore = true, unicorn: enableUnicorn = true, isInEditor = isInEditorEnv() } = options;
+  const {
+    gitignore: enableGitignore = true,
+    unicorn: enableUnicorn = true,
+    angular: enableAngular = false,
+    isInEditor = isInEditorEnv(),
+  } = options;
 
   if (isInEditor) {
     // eslint-disable-next-line no-console
@@ -67,9 +73,11 @@ export async function fabdehConfig(
     }
   }
 
+  const allowAngularDecorator = options.angular !== false;
+
   configs.push(
     ignores(options.ignores),
-    javascript({ isInEditor, overrides: options.javascript?.overrides }),
+    javascript({ isInEditor, overrides: options.javascript?.overrides, allowAngularDecorator }),
     typescript({
       stylistic: stylisticOptions,
       parserOptions: options.typescript?.parserOptions,
@@ -87,6 +95,10 @@ export async function fabdehConfig(
 
   if (stylisticOptions) {
     configs.push(stylistic({ stylistic: stylisticOptions }));
+  }
+
+  if (enableAngular) {
+    configs.push(angular(typeof enableAngular === 'object' ? enableAngular : {}));
   }
 
   const fusedConfig = Object.fromEntries(
