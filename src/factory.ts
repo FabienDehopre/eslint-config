@@ -10,12 +10,14 @@ import {
   ignores,
   imports,
   javascript,
+  jest,
   jsdoc,
   ngrx,
   perfectionist,
   stylistic,
   typescript,
   unicorn,
+  vitest,
 } from './configs';
 import { interopDefault, isInEditorEnv } from './utils';
 
@@ -48,6 +50,8 @@ export async function fabdehConfig(
     unicorn: enableUnicorn = true,
     angular: enableAngular = isPackageExists('@angular/core'),
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
+    jest: enableJest = isPackageExists('jest'),
+    vitest: enableVitest = isPackageExists('vitest'),
     isInEditor = isInEditorEnv(),
   } = options;
 
@@ -55,6 +59,13 @@ export async function fabdehConfig(
     // eslint-disable-next-line no-console
     console.log(
       '[@fabdeh/eslint-config] Detected running in editor, some rules are configured as warn or completely turned off.'
+    );
+  }
+
+  if (enableJest && enableVitest) {
+    throw new Error(
+      '[@fabdeh/eslint-config] Detected that both "jest" and "vitest" are enabled which is not supported. ' +
+        'Manually disable or uninstall one of them.'
     );
   }
 
@@ -108,6 +119,20 @@ export async function fabdehConfig(
 
   if (enableNgrx) {
     configs.push(ngrx(typeof enableNgrx === 'object' ? enableNgrx : {}));
+  }
+
+  if (enableJest) {
+    configs.push(
+      jest(
+        typeof enableJest === 'object'
+          ? { ...enableJest, stylistic: stylisticOptions }
+          : { stylistic: stylisticOptions }
+      )
+    );
+  }
+
+  if (enableVitest) {
+    configs.push(vitest(typeof enableVitest === 'object' ? enableVitest : {}));
   }
 
   const fusedConfig = Object.fromEntries(

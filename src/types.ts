@@ -81,6 +81,11 @@ export interface NgrxOptions {
   signals?: boolean | (FilesOptions & NgrxOperators & OverridesOptions);
 }
 
+export interface TestingOptions {
+  useJestDom?: boolean;
+  useTestingLibrary?: boolean;
+}
+
 /**
  * Options for the `fabdehConfig` function.
  * @see fabdehConfig
@@ -130,6 +135,18 @@ export interface ConfigOptions {
    * @default auto-detect based on dependencies.
    */
   ngrx?: NgrxOptions | boolean;
+
+  /**
+   * Options for the jest linting rules. This option is mutually exclusive with vitest.
+   * @default auto-detect based on dependencies.
+   */
+  jest?: boolean | (OverridesOptions & TestingOptions);
+
+  /**
+   * Options for the vitest linting rules. This option is mutually exclusive with jest.
+   * @default auto-detect based on dependencies.
+   */
+  vitest?: boolean | (OverridesOptions & TestingOptions);
 
   /**
    * Control to disable some rules in editors.
