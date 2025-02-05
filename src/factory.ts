@@ -1,6 +1,7 @@
 import type { ConfigArray, ConfigWithExtends } from 'typescript-eslint';
 import type { Awaitable, ConfigOptions } from './types';
 
+import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
 import {
@@ -10,6 +11,7 @@ import {
   imports,
   javascript,
   jsdoc,
+  ngrx,
   perfectionist,
   stylistic,
   typescript,
@@ -29,6 +31,8 @@ const FLAT_CONFIG_PROPS = [
   'extends',
 ] satisfies FlatConfigProps[];
 
+const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/operators'];
+
 /**
  * Construct an array of ESLint flat config items.
  * @param options - The options for generating the ESLint configurations.
@@ -42,7 +46,8 @@ export async function fabdehConfig(
   const {
     gitignore: enableGitignore = true,
     unicorn: enableUnicorn = true,
-    angular: enableAngular = false,
+    angular: enableAngular = isPackageExists('@angular/core'),
+    ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
     isInEditor = isInEditorEnv(),
   } = options;
 
@@ -99,6 +104,10 @@ export async function fabdehConfig(
 
   if (enableAngular) {
     configs.push(angular(typeof enableAngular === 'object' ? enableAngular : {}));
+  }
+
+  if (enableNgrx) {
+    configs.push(ngrx(typeof enableNgrx === 'object' ? enableNgrx : {}));
   }
 
   const fusedConfig = Object.fromEntries(

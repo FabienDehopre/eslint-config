@@ -27,6 +27,13 @@ export interface OverridesOptions {
   overrides?: TSESLint.FlatConfig.Config['rules'];
 }
 
+export interface FilesOptions {
+  /**
+   * Override the `files` option to provide custom globs.
+   */
+  files?: string[];
+}
+
 /**
  * Options for configuring the behavior of the Unicorn config.
  */
@@ -62,6 +69,16 @@ export interface AngularOptions {
   prefix?: string[] | string;
   tsOverrides?: TSESLint.FlatConfig.Config['rules'];
   htmlOverrides?: TSESLint.FlatConfig.Config['rules'];
+}
+
+export interface NgrxOperators {
+  enforceOperatorsRules?: boolean;
+}
+
+export interface NgrxOptions {
+  store?: boolean | (FilesOptions & NgrxOperators & OverridesOptions);
+  effects?: boolean | (FilesOptions & NgrxOperators & OverridesOptions);
+  signals?: boolean | (FilesOptions & NgrxOperators & OverridesOptions);
 }
 
 /**
@@ -107,6 +124,12 @@ export interface ConfigOptions {
    * @default auto-detect based on the dependencies.
    */
   angular?: AngularOptions | boolean;
+
+  /**
+   * Options for the ngrx linting rules.
+   * @default auto-detect based on dependencies.
+   */
+  ngrx?: NgrxOptions | boolean;
 
   /**
    * Control to disable some rules in editors.

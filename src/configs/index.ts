@@ -4,6 +4,7 @@ export * from './ignore';
 export * from './imports';
 export * from './javascript';
 export * from './jsdoc';
+export * from './ngrx';
 export * from './perfectionist';
 export * from './stylistic';
 export * from './typescript';
