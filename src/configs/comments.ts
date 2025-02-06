@@ -6,8 +6,13 @@ import tseslint from 'typescript-eslint';
 import { GLOB_SRC } from '../globs';
 
 /**
- * Generates a configuration object for ESLint comments rules.
- * @returns An array containing the configuration object for ESLint comments rules.
+ * Generates a configuration array for ESLint comments rules.
+ *
+ * This function returns a configuration array that includes rules for managing
+ * ESLint comments in the codebase. It uses the `@eslint-community/eslint-comments`
+ * plugin to enforce best practices and prevent common issues with ESLint comments.
+ *
+ * @returns The configuration array for ESLint comments rules.
  */
 export function comments(): ConfigArray {
   return tseslint.config({

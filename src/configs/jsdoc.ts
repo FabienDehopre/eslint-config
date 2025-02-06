@@ -7,8 +7,11 @@ import tseslint from 'typescript-eslint';
 import { GLOB_SRC, GLOB_TS } from '../globs';
 
 /**
+ * Generates a configuration array for JSDoc rules.
  *
- * @param options
+ * @param options - An object containing stylistic options.
+ * @param options.stylistic - A boolean indicating whether to include stylistic rules. Defaults to true.
+ * @returns A configuration array for JSDoc rules.
  */
 export function jsdoc(options: StylisticOptions = {}): ConfigArray {
   const { stylistic = true } = options;
@@ -44,7 +47,7 @@ export function jsdoc(options: StylisticOptions = {}): ConfigArray {
         'jsdoc/require-returns-type': 'warn',
         'jsdoc/require-yields': 'warn',
         'jsdoc/require-yields-check': 'warn',
-        'jsdoc/tag-lines': 'warn',
+        'jsdoc/tag-lines': ['warn', 'never', { startLines: 1 }],
         'jsdoc/valid-types': 'warn',
         ...(stylistic
           ? {

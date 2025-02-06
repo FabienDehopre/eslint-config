@@ -5,8 +5,10 @@ import unicornPlugin from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
 
 /**
+ * Generates a configuration array for the Unicorn plugin with the specified options.
  *
- * @param options
+ * @param [options] - The options to customize the Unicorn rules.
+ * @returns The configuration array for the Unicorn plugin.
  */
 export function unicorn(options: UnicornOptions = {}): ConfigArray {
   return tseslint.config({

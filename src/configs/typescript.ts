@@ -12,8 +12,13 @@ import memberOrdering from './rules-configs/member-ordering';
 import namingConvention from './rules-configs/naming-convention';
 
 /**
+ * Generates a TypeScript ESLint configuration.
  *
- * @param options
+ * @param options - Configuration options that include overrides, stylistic preferences, and parser options.
+ * @param options.stylistic - A boolean indicating whether stylistic rules should be included. Defaults to true.
+ * @param options.parserOptions - Options for the TypeScript parser.
+ * @param options.overrides - Additional rule overrides.
+ * @returns A ConfigArray containing the TypeScript ESLint configuration.
  */
 export function typescript(options: OverridesOptions & StylisticOptions & TypeScriptParserOptions = {}): ConfigArray {
   const { stylistic = true, parserOptions, overrides } = options;

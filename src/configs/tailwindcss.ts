@@ -7,8 +7,16 @@ import { OverridesOptions } from '../types';
 import { interopDefault } from '../utils';
 
 /**
+ * Generates an ESLint configuration array for Tailwind CSS.
  *
- * @param options
+ * @param [options] - Optional overrides for the configuration.
+ * @returns  A promise that resolves to the ESLint configuration array.
+ * @example
+ * const config = await tailwindcss({
+ *   overrides: {
+ *     'tailwindcss/classnames-order': 'warn',
+ *   },
+ * });
  */
 export async function tailwindcss(options: OverridesOptions = {}): Promise<ConfigArray> {
   const tailwindcssPlugin = await interopDefault(import('eslint-plugin-tailwindcss'));

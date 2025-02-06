@@ -7,9 +7,11 @@ import tseslint from 'typescript-eslint';
 import { GLOB_JS, GLOB_SRC, GLOB_TS } from '../globs';
 
 /**
- * Generates an array of TypedFlatConfigItem objects containing import rules configurations.
- * @param options - The stylistic options for the import rules.
- * @returns An array of configuration objects for import rules.
+ * Generates an ESLint configuration array for import rules.
+ *
+ * @param options - An object containing stylistic options.
+ * @param options.stylistic - A boolean indicating whether to include stylistic rules. Defaults to true.
+ * @returns A ConfigArray object with the specified import rules.
  */
 export function imports(options: StylisticOptions = {}): ConfigArray {
   const { stylistic = true } = options;

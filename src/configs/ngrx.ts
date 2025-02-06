@@ -19,8 +19,25 @@ const DEFAULT_EFFECTS_GLOB = [`**/*.effects.${GLOB_TS_EXT}`];
 const DEFAULT_SIGNALS_GLOB = [`**/*.store.${GLOB_TS_EXT}`];
 
 /**
+ * Generates an ESLint configuration array for NgRx based on the provided options.
  *
- * @param options
+ * @param [options] - The options to configure NgRx rules.
+ * @param [options.store] - If true or an object, includes NgRx store rules.
+ * @param [options.effects] - If true or an object, includes NgRx effects rules.
+ * @param [options.signals] - If true or an object, includes NgRx signals rules.
+ * @returns A promise that resolves to the ESLint configuration array.
+ * @example
+ * // Basic usage
+ * const config = await ngrx();
+ * @example
+ * ```ts
+ * // With custom options
+ * const config = await ngrx({
+ *   store: { files: ['**\/*.store.ts'] },
+ *   effects: { files: ['**\/*.effects.ts'] },
+ *   signals: { files: ['**\/*.signals.ts'] }
+ * });
+ * ```
  */
 export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
   const ngrxPlugin = await interopDefault(import('@ngrx/eslint-plugin/v9'));

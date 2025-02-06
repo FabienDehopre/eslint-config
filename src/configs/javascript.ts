@@ -10,9 +10,21 @@ import tseslint from 'typescript-eslint';
 import { GLOB_SRC } from '../globs';
 
 /**
- * Generates a JavaScript configuration.
- * @param options - The options for the configuration.
- * @returns The generated configuration.
+ * Generates a configuration array for JavaScript projects with ESLint.
+ *
+ * This function sets up ESLint configurations for JavaScript projects, including language options,
+ * linter options, and specific rules. It supports options for Angular decorators and unused imports
+ * handling based on the environment (editor or not).
+ *
+ * @param options - Configuration options for the JavaScript setup.
+ * @param options.isInEditor - Indicates if the configuration is being used in an editor.
+ * @param options.overrides - Additional rule overrides.
+ * @param options.allowAngularDecorator - Allows specific Angular decorators to be used without new-cap errors.
+ * @returns A configuration array for ESLint.
+ * @example
+ * ```typescript
+ * const config = javascript({ isInEditor: true, allowAngularDecorator: true });
+ * ```
  */
 export function javascript(
   options: IsInEditorOptions & OverridesOptions & { allowAngularDecorator?: boolean } = {}

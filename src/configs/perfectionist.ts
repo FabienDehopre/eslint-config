@@ -9,7 +9,14 @@ import { getWorkspaceRoot } from '../utils';
 import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-configs/perfectionist-groups';
 
 /**
+ * Generates a configuration array for the "perfectionist" ESLint plugin.
  *
+ * This configuration includes rules for sorting various elements in the codebase
+ * such as exports, imports, intersection types, named exports, named imports,
+ * switch cases, and union types. The sorting order is set to ascending and the
+ * type is natural.
+ *
+ * @returns The configuration array for the "perfectionist" plugin.
  */
 export function perfectionist(): ConfigArray {
   return tseslint.config({

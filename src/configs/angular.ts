@@ -7,8 +7,14 @@ import { AngularOptions } from '../types';
 import { interopDefault } from '../utils';
 
 /**
+ * Generates an ESLint configuration for Angular projects.
  *
- * @param options
+ * @param options - Configuration options for Angular ESLint.
+ * @param options.enableAccessibilityRules - Whether to enable accessibility rules for HTML templates.
+ * @param options.tsOverrides - Additional TypeScript rule overrides.
+ * @param options.htmlOverrides - Additional HTML rule overrides.
+ * @param options.prefix - The prefix to use for Angular component and directive selectors.
+ * @returns A promise that resolves to an array of ESLint configurations.
  */
 export async function angular(options: AngularOptions = {}): Promise<ConfigArray> {
   const angularEslint = await interopDefault(import('angular-eslint'));

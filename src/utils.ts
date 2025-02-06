@@ -6,8 +6,14 @@ import { dirname, join } from 'node:path';
 import process from 'node:process';
 
 /**
- * Detect if the program is running inside an editor environment.
- * @returns `true` if the program is running inside an editor environment; `false` otherwise.
+ * Determines if the current environment is an editor environment.
+ *
+ * This function checks various environment variables to determine if the code
+ * is running within a known editor environment such as VSCode, IntelliJ, JetBrains,
+ * Vim, or NeoVim. It also ensures that the code is not running in a CI environment
+ * or within git hooks.
+ *
+ * @returns `true` if the code is running in an editor environment, otherwise `false`.
  */
 export function isInEditorEnv(): boolean {
   // is running in a CI environment
@@ -32,19 +38,24 @@ export function isInEditorEnv(): boolean {
 /**
  * Converts a value to an array. If the value is already an array, it returns the value as is.
  * Otherwise, it wraps the value in an array.
+ *
  * @template T - The type of the value.
  * @param value - The value to convert to an array.
- * @returns The value as an array.
+ * @returns The value converted to an array.
  */
 export function toArray<T>(value: T | T[]): T[] {
   return Array.isArray(value) ? value : [value];
 }
 
 /**
- * Interops the default export of a module.
+ * A utility function to handle the default export of a module.
+ *
+ * This function takes an `Awaitable` module and returns its default export if it exists,
+ * otherwise, it returns the module itself.
+ *
  * @template T - The type of the module.
- * @param m - The module to interop.
- * @returns The default export or the module itself.
+ * @param m - The module to resolve.
+ * @returns A promise that resolves to the default export of the module if it exists, otherwise the module itself.
  */
 export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { default: infer U } ? U : T> {
   const resolved = await m;
@@ -53,8 +64,10 @@ export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { de
 }
 
 /**
+ * Checks if a file exists at the given path.
  *
- * @param path
+ * @param path - The path to the file.
+ * @returns `true` if the file exists, `false` otherwise.
  */
 function fileExists(path: PathLike): boolean {
   try {
@@ -65,9 +78,16 @@ function fileExists(path: PathLike): boolean {
 }
 
 /**
+ * Retrieves the root directory of the workspace.
  *
- * @param dir
- * @param candidateRoot
+ * This function determines the root directory of the workspace by checking for specific files
+ * and directories that indicate the presence of an Nx workspace. If the `NX_WORKSPACE_ROOT_PATH`
+ * environment variable is set, it returns that value. Otherwise, it recursively checks parent
+ * directories until it finds the workspace root or reaches the filesystem root.
+ *
+ * @param dir - The current directory to start the search from.
+ * @param candidateRoot - The initial candidate root directory.
+ * @returns The root directory of the workspace.
  */
 export function getWorkspaceRoot(dir: string, candidateRoot: string): string {
   if (process.env.NX_WORKSPACE_ROOT_PATH) {

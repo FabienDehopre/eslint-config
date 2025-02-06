@@ -9,8 +9,14 @@ import { OverridesOptions, StylisticOptions, TestingOptions } from '../types';
 import { interopDefault } from '../utils';
 
 /**
+ * Generates an ESLint configuration for Jest testing environments.
  *
- * @param options
+ * @param options - Configuration options for the Jest setup.
+ * @param options.overrides - Custom rule overrides to apply.
+ * @param options.useJestDom - Whether to include `@testing-library/jest-dom` plugin. Defaults to checking if the package exists.
+ * @param options.useTestingLibrary - Whether to include `@testing-library/angular` plugin. Defaults to checking if the package exists.
+ * @param options.stylistic - Whether to include stylistic rules. Defaults to `true`.
+ * @returns A promise that resolves to a `ConfigArray` containing the ESLint configuration.
  */
 export async function jest(options: OverridesOptions & StylisticOptions & TestingOptions = {}): Promise<ConfigArray> {
   const {

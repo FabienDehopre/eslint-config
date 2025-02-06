@@ -9,8 +9,21 @@ import { GLOB_TESTS } from '../globs';
 import { interopDefault } from '../utils';
 
 /**
+ * Configures and returns an ESLint configuration array for Vitest.
  *
- * @param options
+ * @param [options] - The options to customize the configuration.
+ * @param [options.overrides] - Custom rule overrides.
+ * @param [options.useJestDom] - Whether to use the `@testing-library/jest-dom` plugin.
+ * @param [options.useTestingLibrary] - Whether to use the `@testing-library/angular` plugin.
+ * @returns A promise that resolves to the ESLint configuration array.
+ * @example
+ * const config = await vitest({
+ *   overrides: {
+ *     'no-console': 'warn',
+ *   },
+ *   useJestDom: true,
+ *   useTestingLibrary: false,
+ * });
  */
 export async function vitest(options: OverridesOptions & TestingOptions = {}): Promise<ConfigArray> {
   const {

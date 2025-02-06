@@ -1,5 +1,5 @@
 import type { ConfigArray, ConfigWithExtends } from 'typescript-eslint';
-import type { Awaitable, ConfigOptions } from './types';
+import type { Awaitable, CreateConfigOptions } from './types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -37,13 +37,19 @@ const FLAT_CONFIG_PROPS = [
 const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/operators'];
 
 /**
- * Construct an array of ESLint flat config items.
- * @param options - The options for generating the ESLint configurations.
- * @param userConfigs - Additional user configuration to apply.
- * @returns The merged ESLint configurations.
+ * Creates an ESLint configuration array based on the provided options and user configurations.
+ *
+ * @param options - Configuration options that extend `ConfigWithExtends` and `CreateConfigOptions`.
+ * @param userConfigs - Additional user configurations that can be awaited.
+ * @returns A promise that resolves to a `ConfigArray`.
+ * @throws Will throw an error if both `jest` and `vitest` are enabled.
+ * @example
+ * ```typescript
+ * const config = await createConfig({ jest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
+ * ```
  */
 export async function createConfig(
-  options: ConfigOptions & ConfigWithExtends = {},
+  options: ConfigWithExtends & CreateConfigOptions = {},
   ...userConfigs: Awaitable<ConfigWithExtends | ConfigWithExtends[]>[]
 ): Promise<ConfigArray> {
   const {

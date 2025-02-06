@@ -13,8 +13,12 @@ const DEFAULT_OPTIONS: StylisticConfig = {
 };
 
 /**
+ * Generates a stylistic ESLint configuration.
  *
- * @param options
+ * @param [options] - Optional configuration options to customize the stylistic rules.
+ * @returns A promise that resolves to an array of ESLint configurations.
+ * @example
+ * const config = await stylistic({ semi: false });
  */
 export async function stylistic(options: StylisticOptions = {}): Promise<ConfigArray> {
   const stylisticOptions = { ...DEFAULT_OPTIONS, ...options };
