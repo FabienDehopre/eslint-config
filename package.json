@@ -49,52 +49,29 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "@ngrx/eslint-plugin": "19.0.0",
-    "@vitest/eslint-plugin": "^1.1.25",
-    "angular-eslint": "^19.0.2",
-    "eslint": "^9.10.0",
-    "eslint-plugin-jest": "^28.11.0",
-    "eslint-plugin-jest-dom": "^5.5.0",
-    "eslint-plugin-tailwindcss": "^3.18.0",
-    "eslint-plugin-testing-library": "^7.1.1"
+    "eslint": "^9.10.0"
   },
-  "peerDependenciesMeta": {
-    "@ngrx/eslint-plugin": {
-      "optional": true
-    },
-    "@vitest/eslint-plugin": {
-      "optional": true
-    },
-    "angular-eslint": {
-      "optional": true
-    },
-    "eslint-plugin-jest": {
-      "optional": true
-    },
-    "eslint-plugin-jest-dom": {
-      "optional": true
-    },
-    "eslint-plugin-tailwindcss": {
-      "optional": true
-    },
-    "eslint-plugin-testing-library": {
-      "optional": true
-    }
-  },
+  "peerDependenciesMeta": {},
   "dependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@eslint/js": "^9.19.0",
-    "@nx/eslint-plugin": "^20.4.0",
+    "@ngrx/eslint-plugin": "^19.0.1",
     "@stylistic/eslint-plugin": "^3.0.1",
     "@typescript-eslint/eslint-plugin": "^8.23.0",
     "@typescript-eslint/parser": "^8.23.0",
     "@typescript-eslint/utils": "^8.23.0",
+    "@vitest/eslint-plugin": "^1.1.25",
+    "angular-eslint": "^19.0.2",
     "eslint-config-flat-gitignore": "^2.0.0",
     "eslint-flat-config-utils": "^2.0.1",
     "eslint-plugin-import-x": "^4.6.1",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-jest-dom": "^5.5.0",
     "eslint-plugin-jsdoc": "^50.6.3",
     "eslint-plugin-perfectionist": "^4.8.0",
     "eslint-plugin-prefer-arrow-functions": "^3.6.2",
+    "eslint-plugin-tailwindcss": "^3.18.0",
+    "eslint-plugin-testing-library": "^7.1.1",
     "eslint-plugin-unicorn": "^56.0.1",
     "eslint-plugin-unused-imports": "^4.1.4",
     "globals": "^15.14.0",
@@ -105,18 +82,10 @@
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
     "@commitlint/cz-commitlint": "^19.6.1",
-    "@ngrx/eslint-plugin": "^19.0.1",
     "@types/node": "^22.13.1",
-    "@vitest/eslint-plugin": "^1.1.25",
-    "angular-eslint": "^19.0.2",
     "bumpp": "^10.0.2",
     "commitizen": "^4.3.1",
     "eslint": "^9.19.0",
-    "eslint-plugin-jest": "^28.11.0",
-    "eslint-plugin-jest-dom": "^5.5.0",
-    "eslint-plugin-tailwindcss": "^3.18.0",
-    "eslint-plugin-testing-library": "^7.1.1",
-    "eslint-typegen": "^1.0.0",
     "inquirer": "^9.3.7",
     "is-ci": "^4.1.0",
     "jiti": "^2.4.2",
