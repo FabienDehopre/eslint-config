@@ -18,7 +18,7 @@ import {
   tailwindcss,
   typescript,
   unicorn,
-  vitest,
+  vitest
 } from './configs';
 import { interopDefault, isInEditorEnv } from './utils';
 
@@ -73,7 +73,7 @@ export async function createConfig(
   if (enableJest && enableVitest) {
     throw new Error(
       '[@fabdeh/eslint-config] Detected that both "jest" and "vitest" are enabled which is not supported. ' +
-        'Manually disable or uninstall one of them.'
+      'Manually disable or uninstall one of them.'
     );
   }
 
@@ -145,6 +145,10 @@ export async function createConfig(
 
   if (enableTailwind) {
     configs.push(tailwindcss(typeof enableTailwind === 'object' ? enableTailwind : {}));
+  }
+
+  if ('files' in options) {
+    throw new Error('[@fabdeh/eslint-config] The first argument should not contain the "files" property as the options are supposed to be global. Place it in the second or later config instead.');
   }
 
   const fusedConfig = Object.fromEntries(

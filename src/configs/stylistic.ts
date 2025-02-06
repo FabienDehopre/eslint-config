@@ -10,6 +10,7 @@ const DEFAULT_OPTIONS: StylisticConfig = {
   semi: true,
   arrowParens: true,
   braceStyle: '1tbs',
+  quoteProps: 'as-needed',
 };
 
 /**
@@ -33,7 +34,9 @@ export async function stylistic(options: StylisticOptions = {}): Promise<ConfigA
     },
     rules: {
       ...config.rules,
+      '@stylistic/comma-dangle': ['error', { arrays: 'always-multiline', objects: 'always-multiline' }],
       '@stylistic/no-extra-semi': 'error',
+      '@stylistic/operator-linebreak': ['error', 'after', { overrides: { '?': 'before', ':': 'before' } }],
     },
   });
 }
