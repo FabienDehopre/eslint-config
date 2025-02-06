@@ -76,6 +76,7 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
     },
     {
       name: 'fabdeh/markdown/parser',
+      language: 'markdown/gfm',
       languageOptions: {
         parser: parserPlain,
       },
@@ -91,6 +92,7 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
         },
       },
       files: [GLOB_MARKDOWN_CODE],
+      extends: [tseslint.configs.disableTypeChecked],
       rules: {
         'import-x/newline-after-import': 'off',
 
@@ -117,6 +119,7 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
         'unicode-bom': 'off',
         'unused-imports/no-unused-imports': 'off',
         'unused-imports/no-unused-vars': 'off',
+        'unicorn/filename-case': 'off',
         ...overrides,
       },
     }
