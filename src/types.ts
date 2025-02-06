@@ -149,6 +149,12 @@ export interface ConfigOptions {
   vitest?: boolean | (OverridesOptions & TestingOptions);
 
   /**
+   * Options for the TailwindCSS linting rules.
+   * @default auto-detect based on dependencies.
+   */
+  tailwindcss?: OverridesOptions | boolean;
+
+  /**
    * Control to disable some rules in editors.
    * @default auto-detect based on the process.env
    */

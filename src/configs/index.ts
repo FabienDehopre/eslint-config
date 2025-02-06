@@ -8,6 +8,7 @@ export * from './jsdoc';
 export * from './ngrx';
 export * from './perfectionist';
 export * from './stylistic';
+export * from './tailwindcss';
 export * from './typescript';
 export * from './unicorn';
 export * from './vitest';

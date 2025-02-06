@@ -15,6 +15,7 @@ import {
   ngrx,
   perfectionist,
   stylistic,
+  tailwindcss,
   typescript,
   unicorn,
   vitest,
@@ -46,13 +47,14 @@ export async function fabdehConfig(
   ...userConfigs: Awaitable<ConfigWithExtends | ConfigWithExtends[]>[]
 ): Promise<ConfigArray> {
   const {
-    gitignore: enableGitignore = true,
-    unicorn: enableUnicorn = true,
     angular: enableAngular = isPackageExists('@angular/core'),
-    ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
-    jest: enableJest = isPackageExists('jest'),
-    vitest: enableVitest = isPackageExists('vitest'),
+    gitignore: enableGitignore = true,
     isInEditor = isInEditorEnv(),
+    jest: enableJest = isPackageExists('jest'),
+    ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
+    tailwindcss: enableTailwind = isPackageExists('tailwindcss'),
+    unicorn: enableUnicorn = true,
+    vitest: enableVitest = isPackageExists('vitest'),
   } = options;
 
   if (isInEditor) {
@@ -133,6 +135,10 @@ export async function fabdehConfig(
 
   if (enableVitest) {
     configs.push(vitest(typeof enableVitest === 'object' ? enableVitest : {}));
+  }
+
+  if (enableTailwind) {
+    configs.push(tailwindcss(typeof enableTailwind === 'object' ? enableTailwind : {}));
   }
 
   const fusedConfig = Object.fromEntries(
