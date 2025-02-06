@@ -7,8 +7,22 @@ import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs';
 import { interopDefault } from '../utils';
 
 /**
+ * Generates an ESLint configuration for JSONC files.
  *
- * @param options
+ * @param options - Configuration options for the JSONC setup.
+ * @param options.files - An array of glob patterns to specify the JSONC files to lint. Defaults to `[GLOB_JSON, GLOB_JSON5, GLOB_JSONC]`.
+ * @param options.overrides - Additional rules or configurations to override the default settings.
+ * @param options.stylistic - A boolean or object to enable or configure stylistic rules. Defaults to `true`.
+ * @returns A promise that resolves to a `ConfigArray` containing the ESLint configuration.
+ * @example
+ * ```typescript
+ * const config = await jsonc({
+ *   files: ['**\/*.json'],
+ *   stylistic: {
+ *     indent: 4,
+ *   },
+ * });
+ * ```
  */
 export async function jsonc(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<ConfigArray> {
   const {

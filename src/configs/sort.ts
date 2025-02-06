@@ -3,7 +3,17 @@ import type { ConfigArray } from 'typescript-eslint';
 import tseslint from 'typescript-eslint';
 
 /**
+ * Configures ESLint rules for sorting keys and array values in `package.json` files.
  *
+ * This function returns a configuration array that enforces specific sorting rules
+ * for various sections of `package.json` files. The rules include:
+ * - Sorting array values in ascending order for the `files` field.
+ * - Sorting keys in a predefined order for the root level of `package.json`.
+ * - Sorting dependency fields (`dependencies`, `devDependencies`, `peerDependencies`, etc.) in ascending order.
+ * - Sorting specific fields within the `exports` section.
+ * - Sorting client hooks in a predefined order for `gitHooks`, `husky`, and `simple-git-hooks`.
+ *
+ * @returns The ESLint configuration array with sorting rules.
  */
 export function sortPackageJson(): ConfigArray {
   return tseslint.config({
@@ -109,7 +119,13 @@ export function sortPackageJson(): ConfigArray {
 }
 
 /**
+ * Generates a TypeScript ESLint configuration array that enforces sorting rules for `tsconfig.json` files.
  *
+ * The configuration includes rules to:
+ * - Sort the top-level keys of `tsconfig.json` files in a specific order.
+ * - Sort the keys within the `compilerOptions` section of `tsconfig.json` files in a specific order.
+ *
+ * @returns The TypeScript ESLint configuration array with sorting rules.
  */
 export function sortTsConfig(): ConfigArray {
   return tseslint.config({

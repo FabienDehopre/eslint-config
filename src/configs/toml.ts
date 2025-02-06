@@ -7,8 +7,14 @@ import { GLOB_TOML } from '../globs';
 import { interopDefault } from '../utils';
 
 /**
+ * Generates an ESLint configuration for TOML files.
  *
- * @param options
+ * @param options -  The configuration options.
+ * @param options.files - The glob patterns for the files to lint.
+ * @param options.overrides - The rules to override the default configuration.
+ * @param options.stylistic - Whether to apply stylistic rules or a configuration object for stylistic rules.
+ * @param options.stylistic.indent - The indentation style for stylistic rules.
+ * @returns A promise that resolves to the ESLint configuration array.
  */
 export async function toml(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<ConfigArray> {
   const {

@@ -7,8 +7,15 @@ import { GLOB_YAML } from '../globs';
 import { interopDefault } from '../utils';
 
 /**
+ * Generates an ESLint configuration for YAML files.
  *
- * @param options
+ * @param options - Configuration options for the YAML setup.
+ * @param options.files - An array of glob patterns to specify the YAML files to lint. Defaults to `[GLOB_YAML]`.
+ * @param options.overrides - An object containing rule overrides.
+ * @param options.stylistic - A boolean or object to specify stylistic rules. Defaults to `true`.
+ * @param options.stylistic.indent - The number of spaces for indentation or 'tab'. Defaults to `2`.
+ * @param options.stylistic.quotes - The type of quotes to use ('single', 'double', or 'backtick'). Defaults to `'single'`.
+ * @returns A promise that resolves to a `ConfigArray` containing the ESLint configuration.
  */
 export async function yaml(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<ConfigArray> {
   const {

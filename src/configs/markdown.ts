@@ -9,8 +9,24 @@ import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN } from '..
 import { interopDefault } from '../utils';
 
 /**
+ * Configures ESLint for Markdown files.
  *
- * @param options
+ * This function sets up ESLint configurations specifically for Markdown files,
+ * including custom parsers, plugins, processors, and rule overrides.
+ *
+ * @param options - An object containing file and override options.
+ * @param options.files - An array of glob patterns to specify the Markdown files to lint.
+ * @param options.overrides - An object containing rule overrides.
+ * @returns A promise that resolves to a ConfigArray containing the ESLint configurations.
+ * @example
+ * ```typescript
+ * const config = await markdown({
+ *   files: ['**\/*.md'],
+ *   overrides: {
+ *     'no-console': 'warn',
+ *   },
+ * });
+ * ```
  */
 export async function markdown(options: FilesOptions & OverridesOptions = {}): Promise<ConfigArray> {
   const {
