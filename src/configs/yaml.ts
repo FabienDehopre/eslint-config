@@ -1,9 +1,9 @@
 import type { ConfigArray } from 'typescript-eslint';
+import type { FilesOptions, OverridesOptions, StylisticOptions } from '../types';
 
 import tseslint from 'typescript-eslint';
 
 import { GLOB_YAML } from '../globs';
-import { FilesOptions, OverridesOptions, StylisticOptions } from '../types';
 import { interopDefault } from '../utils';
 
 /**

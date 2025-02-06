@@ -11,7 +11,7 @@ import {
   imports,
   javascript,
   jest,
-  jsdoc, jsonc,
+  jsdoc, jsonc, markdown,
   ngrx,
   perfectionist, sortPackageJson, sortTsConfig,
   stylistic,
@@ -170,6 +170,12 @@ export async function createConfig(
     configs.push(toml({
       overrides: typeof options.toml === 'object' ? options.toml.overrides : {},
       stylistic: stylisticOptions,
+    }));
+  }
+
+  if (options.markdown ?? true) {
+    configs.push(markdown({
+      overrides: typeof options.markdown === 'object' ? options.markdown.overrides : {},
     }));
   }
 

@@ -6,6 +6,7 @@ export * from './javascript';
 export * from './jest';
 export * from './jsdoc';
 export * from './jsonc';
+export * from './markdown';
 export * from './ngrx';
 export * from './perfectionist';
 export * from './sort';
