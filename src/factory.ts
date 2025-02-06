@@ -18,7 +18,7 @@ import {
   tailwindcss,
   typescript,
   unicorn,
-  vitest
+  vitest, yaml
 } from './configs';
 import { formatters } from './configs/formatters';
 import { interopDefault, isInEditorEnv } from './utils';
@@ -157,6 +157,13 @@ export async function createConfig(
       sortPackageJson(),
       sortTsConfig()
     );
+  }
+
+  if (options.yaml ?? true) {
+    configs.push(yaml({
+      overrides: typeof options.yaml === 'object' ? options.yaml.overrides : {},
+      stylistic: stylisticOptions,
+    }));
   }
 
   if (options.formatters) {

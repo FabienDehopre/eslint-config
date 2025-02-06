@@ -262,6 +262,13 @@ export interface CreateConfigOptions {
   jsonc?: OverridesOptions | boolean;
 
   /**
+   * Enable YAML support.
+   *
+   * @default true
+   */
+  yaml?: OverridesOptions | boolean;
+
+  /**
    * Use external formatters to format files.
    *
    * Requires installing:

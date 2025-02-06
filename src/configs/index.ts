@@ -14,3 +14,4 @@ export * from './tailwindcss';
 export * from './typescript';
 export * from './unicorn';
 export * from './vitest';
+export * from './yaml';
