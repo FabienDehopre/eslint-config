@@ -131,3 +131,6 @@ dist
 
 # ESLint Config Inspector
 .eslint-config-inspector/
+
+# IDE
+.idea

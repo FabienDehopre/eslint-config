@@ -1,7 +1,5 @@
-import * as configs from './configs';
-
-const DEFAULT = { configs };
-
-export * from './globs';
+export * from './configs';
+export * from './factory';
+export { GLOB_HTML, GLOB_JS, GLOB_SRC, GLOB_TESTS, GLOB_TS } from './globs';
+export * from './types';
 export * from './utils';
-export default DEFAULT;

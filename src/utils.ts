@@ -1,9 +1,19 @@
-import type { TSESLint } from '@typescript-eslint/utils';
-import type { ConfigWithExtends } from 'typescript-eslint';
+import type { PathLike } from 'node:fs';
+import type { Awaitable } from './types';
+
+import { statSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import process from 'node:process';
 
 /**
- * Detect if the program is running inside an editor environment.
- * @returns `true` if the program is running inside an editor environment; `false` otherwise.
+ * Determines if the current environment is an editor environment.
+ *
+ * This function checks various environment variables to determine if the code
+ * is running within a known editor environment such as VSCode, IntelliJ, JetBrains,
+ * Vim, or NeoVim. It also ensures that the code is not running in a CI environment
+ * or within git hooks.
+ *
+ * @returns `true` if the code is running in an editor environment, otherwise `false`.
  */
 export function isInEditorEnv(): boolean {
   // is running in a CI environment
@@ -26,28 +36,75 @@ export function isInEditorEnv(): boolean {
 }
 
 /**
- * Dedupe the base TS ESLint config.
- * @param configs The list of configs.
- * @returns The filtered configs.
+ * Converts a value to an array. If the value is already an array, it returns the value as is.
+ * Otherwise, it wraps the value in an array.
+ *
+ * @template T - The type of the value.
+ * @param value - The value to convert to an array.
+ * @returns The value converted to an array.
  */
-export function dedupeTsBaseConfig(...configs: ConfigWithExtends[]): TSESLint.FlatConfig.ConfigArray {
-  return configs.filter((c) => !c.name || c.name !== 'typescript-eslint/base');
+export function toArray<T>(value: T | T[]): T[] {
+  return Array.isArray(value) ? value : [value];
 }
 
 /**
- * Ensures that the "files" property is correctly set.
- * @param files The files property value to use.
- * @returns A function that takes the configuration and fix it.
+ * A utility function to handle the default export of a module.
+ *
+ * This function takes an `Awaitable` module and returns its default export if it exists,
+ * otherwise, it returns the module itself.
+ *
+ * @template T - The type of the module.
+ * @param m - The module to resolve.
+ * @returns A promise that resolves to the default export of the module if it exists, otherwise the module itself.
  */
-export function ensureCorrectFiles<T extends object>(files: string[]): (config: T) => T {
-  return (config) => {
-    if ('rules' in config && !('files' in config)) {
-      return {
-        ...config,
-        files,
-      };
-    }
+export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { default: infer U } ? U : T> {
+  const resolved = await m;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+  return (resolved as any).default ?? resolved;
+}
 
-    return config;
-  };
+/**
+ * Checks if a file exists at the given path.
+ *
+ * @param path - The path to the file.
+ * @returns `true` if the file exists, `false` otherwise.
+ */
+function fileExists(path: PathLike): boolean {
+  try {
+    return statSync(path).isFile();
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Retrieves the root directory of the workspace.
+ *
+ * This function determines the root directory of the workspace by checking for specific files
+ * and directories that indicate the presence of an Nx workspace. If the `NX_WORKSPACE_ROOT_PATH`
+ * environment variable is set, it returns that value. Otherwise, it recursively checks parent
+ * directories until it finds the workspace root or reaches the filesystem root.
+ *
+ * @param dir - The current directory to start the search from.
+ * @param candidateRoot - The initial candidate root directory.
+ * @returns The root directory of the workspace.
+ */
+export function getWorkspaceRoot(dir: string, candidateRoot: string): string {
+  if (process.env.NX_WORKSPACE_ROOT_PATH) {
+    return process.env.NX_WORKSPACE_ROOT_PATH;
+  }
+
+  if (dirname(dir) === dir) {
+    return candidateRoot;
+  }
+
+  const matches = [join(dir, 'nx.json'), join(dir, 'nx'), join(dir, 'nx.bat')];
+
+  if (matches.some((x) => fileExists(x))) {
+    return dir;
+  } else if (fileExists(join(dir, 'node_modules', 'nx', 'package.json'))) {
+    return getWorkspaceRoot(dirname(dir), dir);
+  } else {
+    return getWorkspaceRoot(dirname(dir), candidateRoot);
+  }
 }

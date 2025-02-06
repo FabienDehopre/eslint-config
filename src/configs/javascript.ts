@@ -1,0 +1,201 @@
+import type { ConfigArray } from 'typescript-eslint';
+import type { IsInEditorOptions, OverridesOptions } from '../types';
+
+import eslint from '@eslint/js';
+import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
+import unusedImports from 'eslint-plugin-unused-imports';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+
+import { GLOB_SRC } from '../globs';
+
+/**
+ * Generates a configuration array for JavaScript projects with ESLint.
+ *
+ * This function sets up ESLint configurations for JavaScript projects, including language options,
+ * linter options, and specific rules. It supports options for Angular decorators and unused imports
+ * handling based on the environment (editor or not).
+ *
+ * @param options - Configuration options for the JavaScript setup.
+ * @param options.isInEditor - Indicates if the configuration is being used in an editor.
+ * @param options.overrides - Additional rule overrides.
+ * @param options.allowAngularDecorator - Allows specific Angular decorators to be used without new-cap errors.
+ * @returns A configuration array for ESLint.
+ * @example
+ * ```typescript
+ * const config = javascript({ isInEditor: true, allowAngularDecorator: true });
+ * ```
+ */
+export function javascript(
+  options: IsInEditorOptions & OverridesOptions & { allowAngularDecorator?: boolean } = {}
+): ConfigArray {
+  // TODO: support options for Angular
+  const { isInEditor = false, overrides = {}, allowAngularDecorator = false } = options;
+  return tseslint.config(
+    {
+      name: 'fabdeh/javascript/setup',
+      languageOptions: {
+        ecmaVersion: 2022,
+        globals: {
+          ...globals.browser,
+          ...globals.es2021,
+          ...globals.node,
+          document: 'readonly',
+          navigator: 'readonly',
+          window: 'readonly',
+        },
+        parser: tseslint.parser,
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
+          ecmaVersion: 2022,
+          sourceType: 'module',
+        },
+        sourceType: 'module',
+      },
+      linterOptions: {
+        reportUnusedDisableDirectives: 'error',
+      },
+    },
+    {
+      name: 'fabdeh/javascript/rules',
+      files: [GLOB_SRC],
+      plugins: {
+        '@typescript-eslint': tseslint.plugin,
+        'prefer-arrow-functions': preferArrowFunctions,
+        'unused-imports': unusedImports,
+      },
+      extends: [eslint.configs.recommended, ...tseslint.configs.recommended],
+      rules: {
+        'accessor-pairs': 'error',
+        'array-callback-return': 'error',
+        'block-scoped-var': 'error',
+        'default-case-last': 'error',
+        'dot-notation': 'error',
+        eqeqeq: 'error',
+        'id-denylist': [
+          'error',
+          'any',
+          'Number',
+          'number',
+          'String',
+          'string',
+          'Boolean',
+          'boolean',
+          'Undefined',
+          'undefined',
+        ],
+        'new-cap': allowAngularDecorator
+          ? [
+              'error',
+              {
+                capIsNewExceptions: [
+                  'Attribute',
+                  'Component',
+                  'ContentChild',
+                  'ContentChildren',
+                  'Directive',
+                  'Host',
+                  'HostBinding',
+                  'HostListener',
+                  'Inject',
+                  'Injectable',
+                  'Input',
+                  'NgModule',
+                  'Optional',
+                  'Output',
+                  'Pipe',
+                  'Self',
+                  'SkipSelf',
+                  'ViewChild',
+                  'ViewChildren',
+                ],
+              },
+            ]
+          : 'error',
+        'no-alert': 'error',
+        'no-caller': 'error',
+        'no-cond-assign': ['error', 'always'],
+        'no-console': ['error', { allow: ['warn', 'error'] }],
+        'no-empty': ['error', { allowEmptyCatch: true }],
+        'no-eval': 'error',
+        'no-extend-native': 'error',
+        'no-extra-bind': 'error',
+        'no-implied-eval': 'error',
+        'no-iterator': 'error',
+        'no-labels': 'error',
+        'no-lone-blocks': 'error',
+        'no-lonely-if': 'error',
+        'no-multi-str': 'error',
+        'no-new': 'error',
+        'no-new-func': 'error',
+        'no-new-wrappers': 'error',
+        'no-octal-escape': 'error',
+        'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+        'no-proto': 'error',
+        'no-restricted-syntax': ['error', 'TSEnumDeclaration[const=true]', 'TSExportAssignment', 'ForInStatement'],
+        'no-self-compare': 'error',
+        'no-sequences': 'error',
+        'no-template-curly-in-string': 'error',
+        'no-throw-literal': 'error',
+        'no-undef-init': 'error',
+        'no-unmodified-loop-condition': 'error',
+        'no-unneeded-ternary': ['error', { defaultAssignment: false }],
+        'no-unreachable-loop': 'error',
+        'no-unused-expressions': [
+          'error',
+          {
+            allowShortCircuit: true,
+            allowTaggedTemplates: true,
+            allowTernary: true,
+          },
+        ],
+        'no-use-before-define': ['error', { classes: false, functions: false }],
+        'no-useless-call': 'error',
+        'no-useless-computed-key': 'error',
+        'no-useless-constructor': 'error',
+        'no-useless-rename': 'error',
+        'no-useless-return': 'error',
+        'object-shorthand': [
+          'error',
+          'always',
+          {
+            avoidQuotes: true,
+            ignoreConstructors: false,
+          },
+        ],
+        'prefer-arrow-callback': 'error',
+        'prefer-arrow-functions/prefer-arrow-functions': [
+          'error',
+          { singleReturnOnly: true, allowNamedFunctions: true },
+        ],
+        'prefer-exponentiation-operator': 'error',
+        'prefer-object-spread': 'error',
+        'prefer-promise-reject-errors': 'error',
+        'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }],
+        'prefer-template': 'error',
+        'symbol-description': 'error',
+        'unicode-bom': ['error', 'never'],
+        'unused-imports/no-unused-imports': isInEditor ? 'warn' : 'error',
+        'unused-imports/no-unused-vars': [
+          'error',
+          {
+            args: 'after-used',
+            argsIgnorePattern: '^_',
+            ignoreRestSiblings: true,
+            vars: 'all',
+            varsIgnorePattern: '^_',
+          },
+        ],
+        'use-isnan': ['error', { enforceForIndexOf: true }],
+        'valid-typeof': ['error', { requireStringLiterals: true }],
+        'vars-on-top': 'error',
+        yoda: ['error', 'never', { exceptRange: true }],
+        '@typescript-eslint/no-unused-vars': 'off', // superseded by unused-imports/no-unused-vars
+        // TODO: check if required to apply more nx javascript rules here
+        ...overrides,
+      },
+    }
+  );
+}

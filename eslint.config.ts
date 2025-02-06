@@ -1,19 +1,5 @@
-import gitignore from 'eslint-config-flat-gitignore';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import tseslint from 'typescript-eslint';
 
-import me from './src';
+import { createConfig } from './src';
 
-export default tseslint.config(
-  {
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: process.cwd(),
-      },
-    },
-  },
-  gitignore(),
-  me.configs.base,
-  eslintConfigPrettier
-);
+export default createConfig({}, { name: 'eslint-config-prettier', ...eslintConfigPrettier });
