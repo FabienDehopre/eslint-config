@@ -20,9 +20,11 @@ import { ensurePackages, interopDefault, isPackageInScope } from '../utils';
 import { STYLISTIC_CONFIG_DEFAULT } from './stylistic';
 
 /**
+ * Merges the provided Prettier options with any overrides.
  *
- * @param options
- * @param overrides
+ * @param options - The base Prettier options to merge.
+ * @param overrides - Optional overrides for the Prettier options.
+ * @returns The merged Prettier options.
  */
 function mergePrettierOptions(
   options: VendoredPrettierOptions,
