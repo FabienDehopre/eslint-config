@@ -11,9 +11,9 @@ import {
   imports,
   javascript,
   jest,
-  jsdoc,
+  jsdoc, jsonc,
   ngrx,
-  perfectionist,
+  perfectionist, sortPackageJson, sortTsConfig,
   stylistic,
   tailwindcss,
   typescript,
@@ -146,6 +146,17 @@ export async function createConfig(
 
   if (enableTailwind) {
     configs.push(tailwindcss(typeof enableTailwind === 'object' ? enableTailwind : {}));
+  }
+
+  if (options.jsonc ?? true) {
+    configs.push(
+      jsonc({
+        overrides: typeof options.jsonc === 'object' ? options.jsonc.overrides : {},
+        stylistic: stylisticOptions,
+      }),
+      sortPackageJson(),
+      sortTsConfig()
+    );
   }
 
   if (options.formatters) {

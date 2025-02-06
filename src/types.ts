@@ -255,6 +255,13 @@ export interface CreateConfigOptions {
   tailwindcss?: OverridesOptions | boolean;
 
   /**
+   * Enable JSONC support.
+   *
+   * @default true
+   */
+  jsonc?: OverridesOptions | boolean;
+
+  /**
    * Use external formatters to format files.
    *
    * Requires installing:
