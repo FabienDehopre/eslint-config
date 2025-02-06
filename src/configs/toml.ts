@@ -1,0 +1,65 @@
+import tseslint, { ConfigArray } from 'typescript-eslint';
+
+import { GLOB_TOML } from '../globs';
+import { FilesOptions, OverridesOptions, StylisticOptions } from '../types';
+import { interopDefault } from '../utils';
+
+/**
+ *
+ * @param options
+ */
+export async function toml(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<ConfigArray> {
+  const {
+    files = [GLOB_TOML],
+    overrides = {},
+    stylistic = true,
+  } = options;
+  const { indent = 2 } = typeof stylistic === 'object' ? stylistic : {};
+  const [tomlPlugin, tomlParser] = await Promise.all([
+    interopDefault(import('eslint-plugin-toml')),
+    interopDefault(import('toml-eslint-parser')),
+  ]);
+
+  return tseslint.config(
+    {
+      name: 'fabdeh/toml/setup',
+      plugins: {
+        toml: tomlPlugin,
+      },
+    },
+    {
+      name: 'fabdeh/toml/rules',
+      languageOptions: {
+        parser: tomlParser,
+      },
+      files,
+      rules: {
+        '@stylistic/spaced-comment': 'off',
+        'toml/comma-style': 'error',
+        'toml/keys-order': 'error',
+        'toml/no-space-dots': 'error',
+        'toml/no-unreadable-number-separator': 'error',
+        'toml/precision-of-fractional-seconds': 'error',
+        'toml/precision-of-integer': 'error',
+        'toml/tables-order': 'error',
+        'toml/vue-custom-block/no-parsing-error': 'error',
+        ...stylistic
+          ? {
+              'toml/array-bracket-newline': 'error',
+              'toml/array-bracket-spacing': 'error',
+              'toml/array-element-newline': 'error',
+              'toml/indent': ['error', indent === 'tab' ? 2 : indent],
+              'toml/inline-table-curly-spacing': 'error',
+              'toml/key-spacing': 'error',
+              'toml/padding-line-between-pairs': 'error',
+              'toml/padding-line-between-tables': 'error',
+              'toml/quoted-keys': 'error',
+              'toml/spaced-comment': 'error',
+              'toml/table-bracket-spacing': 'error',
+            }
+          : {},
+        ...overrides,
+      },
+    }
+  );
+}

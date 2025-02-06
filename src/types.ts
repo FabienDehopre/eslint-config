@@ -269,6 +269,13 @@ export interface CreateConfigOptions {
   yaml?: OverridesOptions | boolean;
 
   /**
+   * Enable TOML support.
+   *
+   * @default true
+   */
+  toml?: OverridesOptions | boolean;
+
+  /**
    * Use external formatters to format files.
    *
    * Requires installing:

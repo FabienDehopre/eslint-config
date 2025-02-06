@@ -15,7 +15,7 @@ import {
   ngrx,
   perfectionist, sortPackageJson, sortTsConfig,
   stylistic,
-  tailwindcss,
+  tailwindcss, toml,
   typescript,
   unicorn,
   vitest, yaml
@@ -162,6 +162,13 @@ export async function createConfig(
   if (options.yaml ?? true) {
     configs.push(yaml({
       overrides: typeof options.yaml === 'object' ? options.yaml.overrides : {},
+      stylistic: stylisticOptions,
+    }));
+  }
+
+  if (options.toml ?? true) {
+    configs.push(toml({
+      overrides: typeof options.toml === 'object' ? options.toml.overrides : {},
       stylistic: stylisticOptions,
     }));
   }

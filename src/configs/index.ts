@@ -11,6 +11,7 @@ export * from './perfectionist';
 export * from './sort';
 export * from './stylistic';
 export * from './tailwindcss';
+export * from './toml';
 export * from './typescript';
 export * from './unicorn';
 export * from './vitest';
