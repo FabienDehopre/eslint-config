@@ -42,7 +42,7 @@ const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/o
  * @param userConfigs - Additional user configuration to apply.
  * @returns The merged ESLint configurations.
  */
-export async function fabdehConfig(
+export async function createConfig(
   options: ConfigOptions & ConfigWithExtends = {},
   ...userConfigs: Awaitable<ConfigWithExtends | ConfigWithExtends[]>[]
 ): Promise<ConfigArray> {
