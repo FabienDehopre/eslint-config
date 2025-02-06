@@ -1,6 +1,7 @@
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { TSESLint } from '@typescript-eslint/utils';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
+import type { VendoredPrettierOptions } from './vendor/prettier-types';
 
 /**
  * A type that can be awaited. Promise<T> or T.
@@ -164,6 +165,17 @@ export interface TestingOptions {
   useTestingLibrary?: boolean;
 }
 
+export interface FormattersOptions {
+  css?: boolean;
+  html?: boolean;
+  xml?: boolean;
+  svg?: boolean;
+  markdown?: boolean;
+  graphql?: boolean;
+  options?: VendoredPrettierOptions;
+  slidev?: boolean | { files?: string[] };
+}
+
 /**
  * Options for creating an ESLint configuration.
  *
@@ -241,6 +253,18 @@ export interface CreateConfigOptions {
    * @default auto-detect based on dependencies.
    */
   tailwindcss?: OverridesOptions | boolean;
+
+  /**
+   * Use external formatters to format files.
+   *
+   * Requires installing:
+   * - `eslint-plugin-format`
+   *
+   * When set to `true`, it will enable all formatters.
+   *
+   * @default false
+   */
+  formatters?: FormattersOptions | boolean;
 
   /**
    * Control to disable some rules in editors.

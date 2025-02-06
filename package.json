@@ -49,10 +49,21 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "eslint": "^9.10.0"
+    "@prettier/plugin-xml": "^3.4.1",
+    "eslint": "^9.10.0",
+    "eslint-plugin-format": "^1.0.1"
   },
-  "peerDependenciesMeta": {},
+  "peerDependenciesMeta": {
+    "@prettier/plugin-xml": {
+      "optional": true
+    },
+    "eslint-plugin-format": {
+      "optional": true
+    }
+  },
   "dependencies": {
+    "@antfu/install-pkg": "^1.0.0",
+    "@clack/prompts": "^0.10.0",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@eslint/js": "^9.19.0",
     "@ngrx/eslint-plugin": "^19.0.1",
@@ -82,10 +93,12 @@
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
     "@commitlint/cz-commitlint": "^19.6.1",
+    "@prettier/plugin-xml": "^3.4.1",
     "@types/node": "^22.13.1",
     "bumpp": "^10.0.2",
     "commitizen": "^4.3.1",
     "eslint": "^9.19.0",
+    "eslint-plugin-format": "^1.0.1",
     "inquirer": "^9.3.7",
     "is-ci": "^4.1.0",
     "jiti": "^2.4.2",

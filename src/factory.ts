@@ -20,6 +20,7 @@ import {
   unicorn,
   vitest
 } from './configs';
+import { formatters } from './configs/formatters';
 import { interopDefault, isInEditorEnv } from './utils';
 
 type FlatConfigProps = keyof Omit<ConfigWithExtends, 'files' | 'ignores' | 'language'>;
@@ -145,6 +146,10 @@ export async function createConfig(
 
   if (enableTailwind) {
     configs.push(tailwindcss(typeof enableTailwind === 'object' ? enableTailwind : {}));
+  }
+
+  if (options.formatters) {
+    configs.push(formatters(options.formatters, typeof stylisticOptions === 'boolean' ? {} : stylisticOptions));
   }
 
   if ('files' in options) {

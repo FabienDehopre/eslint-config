@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 import { GLOB_SRC } from '../globs';
 import { interopDefault } from '../utils';
 
-const DEFAULT_OPTIONS: StylisticConfig = {
+export const STYLISTIC_CONFIG_DEFAULT: StylisticConfig = {
   semi: true,
   arrowParens: true,
   braceStyle: '1tbs',
@@ -22,7 +22,7 @@ const DEFAULT_OPTIONS: StylisticConfig = {
  * const config = await stylistic({ semi: false });
  */
 export async function stylistic(options: StylisticOptions = {}): Promise<ConfigArray> {
-  const stylisticOptions = { ...DEFAULT_OPTIONS, ...options };
+  const stylisticOptions = { ...STYLISTIC_CONFIG_DEFAULT, ...options };
   const stylisticPlugin = await interopDefault(import('@stylistic/eslint-plugin'));
   const config = stylisticPlugin.configs.customize({ ...stylisticOptions, flat: true });
 

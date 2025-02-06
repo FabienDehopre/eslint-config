@@ -4,6 +4,12 @@ import type { Awaitable } from './types';
 import { statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
+
+import { isPackageExists } from 'local-pkg';
+
+const SCOPE_URL = fileURLToPath(new URL('.', import.meta.url));
+const IS_CWD_IN_SCOPE = isPackageExists('@antfu/eslint-config');
 
 /**
  * Determines if the current environment is an editor environment.
@@ -106,5 +112,46 @@ export function getWorkspaceRoot(dir: string, candidateRoot: string): string {
     return getWorkspaceRoot(dirname(dir), dir);
   } else {
     return getWorkspaceRoot(dirname(dir), candidateRoot);
+  }
+}
+
+/**
+ * Checks if a package is within the specified scope.
+ *
+ * @param name - The name of the package to check.
+ * @returns A boolean indicating whether the package is in scope.
+ */
+export function isPackageInScope(name: string): boolean {
+  return isPackageExists(name, { paths: [SCOPE_URL] });
+}
+
+/**
+ * Ensures that the specified packages are installed. If running in a CI environment,
+ * or if the terminal is not interactive, or if the current working directory is not in scope,
+ * the function will return immediately without doing anything.
+ *
+ * The function filters out packages that are already in scope and prompts the user to confirm
+ * the installation of the remaining packages. If the user confirms, the packages are installed
+ * as development dependencies.
+ *
+ * @param packages - An array of package names (or undefined) to check and install if necessary.
+ * @returns A promise that resolves when the operation is complete.
+ */
+export async function ensurePackages(packages: (string | undefined)[]): Promise<void> {
+  if (process.env.CI || !process.stdout.isTTY || !IS_CWD_IN_SCOPE) {
+    return;
+  }
+
+  const nonExistingPackages = packages.filter((i) => i && !isPackageInScope(i)) as string[];
+  if (nonExistingPackages.length === 0) {
+    return;
+  }
+
+  const p = await import('@clack/prompts');
+  const result = await p.confirm({
+    message: `${nonExistingPackages.length === 1 ? 'Package is' : 'Packages are'} required for this config: ${nonExistingPackages.join(', ')}. Do you want to install them?`,
+  });
+  if (result) {
+    await import('@antfu/install-pkg').then((i) => i.installPackage(nonExistingPackages, { dev: true }));
   }
 }
