@@ -27,16 +27,6 @@ declare module '@eslint-community/eslint-plugin-eslint-comments' {
   export declare const utils: { patch: (ruleId?: string) => void };
 }
 
-declare module 'eslint-config-prettier' {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  declare const _default: {
-    rules: Record<string, 0 | 'off'>;
-  };
-
-  // eslint-disable-next-line no-restricted-syntax
-  export = _default;
-}
-
 declare module 'eslint-plugin-tailwindcss' {
   import type { ESLint, Linter } from 'eslint';
 

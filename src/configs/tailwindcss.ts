@@ -26,7 +26,7 @@ export async function tailwindcss(options: OverridesOptions = {}): Promise<Confi
     plugins: { tailwindcss: tailwindcssPlugin },
     files: [GLOB_SRC, GLOB_HTML],
     rules: {
-      'tailwindcss/classnames-order': 'error', // replace by prettier plugin ???
+      'tailwindcss/classnames-order': 'error',
       'tailwindcss/enforces-negative-arbitrary-values': 'error',
       'tailwindcss/enforces-shorthand': 'error',
       'tailwindcss/no-contradicting-classname': 'error',
