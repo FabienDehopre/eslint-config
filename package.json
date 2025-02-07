@@ -104,6 +104,7 @@
     "@prettier/plugin-xml": "^3.4.1",
     "@types/node": "^22.13.1",
     "bumpp": "^10.0.2",
+    "changelogithub": "^13.12.1",
     "commitizen": "^4.3.1",
     "eslint": "^9.19.0",
     "eslint-plugin-format": "^1.0.1",
