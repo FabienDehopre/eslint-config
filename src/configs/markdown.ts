@@ -1,4 +1,3 @@
-import type { Linter } from 'eslint';
 import type { ConfigArray } from 'typescript-eslint';
 import type { FilesOptions, OverridesOptions } from '../types';
 
@@ -33,29 +32,6 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
     files = [GLOB_MARKDOWN],
     overrides = {},
   } = options;
-  const parserPlain = {
-    meta: {
-      name: 'parser-plain',
-    },
-    parseForESLint: (code: string) => ({
-      ast: {
-        body: [],
-        comments: [],
-        loc: { end: code.length, start: 0 },
-        range: [0, code.length],
-        tokens: [],
-        type: 'Program',
-      },
-      // eslint-disable-next-line unicorn/no-null
-      scopeManager: null,
-      services: { isPlain: true },
-      visitorKeys: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        Program: [],
-      },
-    }),
-  } satisfies Linter.Parser;
-
   const markdownPlugin = await interopDefault(import('@eslint/markdown'));
 
   return tseslint.config(
@@ -73,14 +49,6 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
         markdownPlugin.processors.markdown,
         processorPassThrough,
       ]),
-    },
-    {
-      name: 'fabdeh/markdown/parser',
-      language: 'markdown/gfm',
-      languageOptions: {
-        parser: parserPlain,
-      },
-      files,
     },
     {
       name: 'fabdeh/markdown/disables',
