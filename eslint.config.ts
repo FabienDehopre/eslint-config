@@ -1,3 +1,3 @@
 import { createConfig } from './src';
 
-export default createConfig({ markdown: false });
+export default createConfig({ formatters: { markdown: true } });
