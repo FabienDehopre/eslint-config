@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { isPackageExists } from 'local-pkg';
 
 const SCOPE_URL = fileURLToPath(new URL('.', import.meta.url));
-const IS_CWD_IN_SCOPE = isPackageExists('@antfu/eslint-config');
+const IS_CWD_IN_SCOPE = isPackageExists('@fabdeh/eslint-config');
 
 /**
  * Determines if the current environment is an editor environment.
