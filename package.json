@@ -2,7 +2,7 @@
   "name": "@fabdeh/eslint-config",
   "type": "module",
   "version": "0.0.4",
-  "packageManager": "pnpm@10.2.1",
+  "packageManager": "pnpm@10.0.0",
   "description": "My personal eslint config preset",
   "author": "Fabien Dehopré <fabien@dehopre.dev> (https://github.com/FabienDehopre)",
   "license": "MIT",
