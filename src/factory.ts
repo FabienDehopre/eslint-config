@@ -13,6 +13,7 @@ import {
   jest,
   jsdoc,
   jsonc,
+  markdown,
   ngrx,
   perfectionist,
   sortPackageJson,
@@ -178,11 +179,11 @@ export async function createConfig(
     }));
   }
 
-  /* if (options.markdown ?? true) {
+  if (options.markdown ?? true) {
     configs.push(markdown({
       overrides: typeof options.markdown === 'object' ? options.markdown.overrides : {},
     }));
-  } */
+  }
 
   if (options.formatters) {
     configs.push(formatters(options.formatters, typeof stylisticOptions === 'boolean' ? {} : stylisticOptions));

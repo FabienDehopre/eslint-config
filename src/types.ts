@@ -275,14 +275,14 @@ export interface CreateConfigOptions {
    */
   toml?: OverridesOptions | boolean;
 
-  /* *
+  /**
    * Enable linting for **code snippets** in Markdown.
    *
    * For formatting Markdown content, enable also `formatters.markdown`.
    *
    * @default true
    */
-  // markdown?: OverridesOptions | boolean;
+  markdown?: OverridesOptions | boolean;
 
   /**
    * Use external formatters to format files.
