@@ -11,14 +11,19 @@ import {
   imports,
   javascript,
   jest,
-  jsdoc, jsonc, markdown,
+  jsdoc,
+  jsonc,
   ngrx,
-  perfectionist, sortPackageJson, sortTsConfig,
+  perfectionist,
+  sortPackageJson,
+  sortTsConfig,
   stylistic,
-  tailwindcss, toml,
+  tailwindcss,
+  toml,
   typescript,
   unicorn,
-  vitest, yaml
+  vitest,
+  yaml
 } from './configs';
 import { formatters } from './configs/formatters';
 import { interopDefault, isInEditorEnv } from './utils';
@@ -173,11 +178,11 @@ export async function createConfig(
     }));
   }
 
-  if (options.markdown ?? true) {
+  /* if (options.markdown ?? true) {
     configs.push(markdown({
       overrides: typeof options.markdown === 'object' ? options.markdown.overrides : {},
     }));
-  }
+  } */
 
   if (options.formatters) {
     configs.push(formatters(options.formatters, typeof stylisticOptions === 'boolean' ? {} : stylisticOptions));

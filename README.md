@@ -75,14 +75,14 @@ Add the following settings to your `.vscode/settings.json`:
   // Auto fix
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "never",
+    "source.organizeImports": "never"
   },
 
   // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [{ "rule": "@stylistic/*", "severity": "off", "fixable": true }],
 
   // Enable eslint for all supported languages
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "html"],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "html"]
 }
 ```
 
