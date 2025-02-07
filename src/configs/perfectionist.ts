@@ -5,7 +5,7 @@ import process from 'node:process';
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import tseslint from 'typescript-eslint';
 
-import { getWorkspaceRoot } from '../utils';
+import { findNearestPackageJsonName, getWorkspaceRoot } from '../utils';
 import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-configs/perfectionist-groups';
 
 /**
@@ -13,12 +13,16 @@ import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-c
  *
  * This configuration includes rules for sorting various elements in the codebase
  * such as exports, imports, intersection types, named exports, named imports,
- * switch cases, and union types. The sorting order is set to ascending and the
+ * switch cases, and union types. The sorting order is set to "ascending" and the
  * type is natural.
  *
  * @returns The configuration array for the "perfectionist" plugin.
+ * @see https://github.com/azat-io/eslint-plugin-perfectionist
  */
-export function perfectionist(): ConfigArray {
+export async function perfectionist(): Promise<ConfigArray> {
+  const tsconfigRootDir = (await findNearestPackageJsonName()) === '@fabdeh/eslint-config'
+    ? undefined
+    : getWorkspaceRoot(process.cwd(), process.cwd());
   return tseslint.config({
     name: 'fabdeh/perfectionist/rules',
     plugins: {
@@ -30,7 +34,7 @@ export function perfectionist(): ConfigArray {
         'error',
         {
           groups: SORT_IMPORT_GROUPS,
-          tsconfigRootDir: getWorkspaceRoot(process.cwd(), process.cwd()),
+          tsconfigRootDir,
           order: 'asc',
           type: 'natural',
           newlinesBetween: 'never',
