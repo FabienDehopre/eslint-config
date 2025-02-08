@@ -27,7 +27,7 @@ import {
   yaml
 } from './configs';
 import { formatters } from './configs/formatters';
-import { interopDefault, isInEditorEnv } from './utils';
+import { interopDefault } from './utils';
 
 type FlatConfigProps = keyof Omit<ConfigWithExtends, 'files' | 'ignores' | 'language'>;
 const FLAT_CONFIG_PROPS = [
@@ -62,20 +62,12 @@ export async function createConfig(
   const {
     angular: enableAngular = isPackageExists('@angular/core'),
     gitignore: enableGitignore = true,
-    isInEditor = isInEditorEnv(),
     jest: enableJest = isPackageExists('jest'),
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
     tailwindcss: enableTailwind = isPackageExists('tailwindcss'),
     unicorn: enableUnicorn = true,
     vitest: enableVitest = isPackageExists('vitest'),
   } = options;
-
-  if (isInEditor) {
-    // eslint-disable-next-line no-console
-    console.log(
-      '[@fabdeh/eslint-config] Detected running in editor, some rules are configured as warn or completely turned off.'
-    );
-  }
 
   if (enableJest && enableVitest) {
     throw new Error(
@@ -108,7 +100,7 @@ export async function createConfig(
 
   configs.push(
     ignores(options.ignores),
-    javascript({ isInEditor, overrides: options.javascript?.overrides, allowAngularDecorator }),
+    javascript({ overrides: options.javascript?.overrides, allowAngularDecorator }),
     typescript({
       stylistic: stylisticOptions,
       parserOptions: options.typescript?.parserOptions,

@@ -1,5 +1,5 @@
 import type { ConfigArray } from 'typescript-eslint';
-import type { IsInEditorOptions, OverridesOptions } from '../types';
+import type { OverridesOptions } from '../types';
 
 import eslint from '@eslint/js';
 import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
@@ -17,20 +17,18 @@ import { GLOB_SRC } from '../globs';
  * handling based on the environment (editor or not).
  *
  * @param options - Configuration options for the JavaScript setup.
- * @param options.isInEditor - Indicates if the configuration is being used in an editor.
  * @param options.overrides - Additional rule overrides.
  * @param options.allowAngularDecorator - Allows specific Angular decorators to be used without new-cap errors.
  * @returns A configuration array for ESLint.
  * @example
  * ```typescript
- * const config = javascript({ isInEditor: true, allowAngularDecorator: true });
+ * const config = javascript({ allowAngularDecorator: true });
  * ```
  */
 export function javascript(
-  options: IsInEditorOptions & OverridesOptions & { allowAngularDecorator?: boolean } = {}
+  options: OverridesOptions & { allowAngularDecorator?: boolean } = {}
 ): ConfigArray {
-  // TODO: support options for Angular
-  const { isInEditor = false, overrides = {}, allowAngularDecorator = false } = options;
+  const { overrides = {}, allowAngularDecorator = false } = options;
   return tseslint.config(
     {
       name: 'fabdeh/javascript/setup',
@@ -177,7 +175,7 @@ export function javascript(
         'prefer-template': 'error',
         'symbol-description': 'error',
         'unicode-bom': ['error', 'never'],
-        'unused-imports/no-unused-imports': isInEditor ? 'warn' : 'error',
+        'unused-imports/no-unused-imports': 'error',
         'unused-imports/no-unused-vars': [
           'error',
           {

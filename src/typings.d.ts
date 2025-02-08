@@ -23,3 +23,13 @@ declare module 'eslint-plugin-tailwindcss' {
   // eslint-disable-next-line no-restricted-syntax
   export = _default;
 }
+
+declare module 'eslint-plugin-disable-autofix' {
+  import type { ESLint } from 'eslint';
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  declare const _default: ESLint.Plugin;
+
+  // eslint-disable-next-line no-restricted-syntax
+  export = _default;
+}

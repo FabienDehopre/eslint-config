@@ -9,16 +9,6 @@ import type { VendoredPrettierOptions } from './vendor/prettier-types';
 export type Awaitable<T> = Promise<T> | T;
 
 /**
- * Options for determining if the code is running in an editor environment.
- */
-export interface IsInEditorOptions {
-  /**
-   * Optional property that allows specifying if the code is running in an editor environment.
-   */
-  isInEditor?: boolean;
-}
-
-/**
  * Interface representing options for overriding default ESLint rules.
  */
 export interface OverridesOptions {
@@ -295,11 +285,4 @@ export interface CreateConfigOptions {
    * @default false
    */
   formatters?: FormattersOptions | boolean;
-
-  /**
-   * Control to disable some rules in editors.
-   *
-   * @default auto-detect based on the process.env
-   */
-  isInEditor?: boolean;
 }

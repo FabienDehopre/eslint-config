@@ -13,36 +13,6 @@ const SCOPE_URL = fileURLToPath(new URL('.', import.meta.url));
 const IS_CWD_IN_SCOPE = isPackageExists('@fabdeh/eslint-config');
 
 /**
- * Determines if the current environment is an editor environment.
- *
- * This function checks various environment variables to determine if the code
- * is running within a known editor environment such as VSCode, IntelliJ, JetBrains,
- * Vim, or NeoVim. It also ensures that the code is not running in a CI environment
- * or within git hooks.
- *
- * @returns `true` if the code is running in an editor environment, otherwise `false`.
- */
-export function isInEditorEnv(): boolean {
-  // is running in a CI environment
-  if (process.env.CI) {
-    return false;
-  }
-
-  const envKeys = Object.keys(process.env);
-  // is running in a git hooks ???
-  if (envKeys.some((k) => /^GIT_/i.test(k))) {
-    return false;
-  }
-
-  const isVsCode = envKeys.some((k) => /^VSCODE_/i.test(k));
-  const isIntelliJ = envKeys.some((k) => /^INTELLIJ_/i.test(k));
-  const isJetbrains = envKeys.some((k) => /^JETBRAINS_/i.test(k));
-  const isVim = envKeys.some((k) => /^VIM$/i.test(k));
-  const isNeoVim = envKeys.some((k) => /^NVIM$/i.test(k));
-  return isVsCode || isIntelliJ || isJetbrains || isVim || isNeoVim;
-}
-
-/**
  * Converts a value to an array. If the value is already an array, it returns the value as is.
  * Otherwise, it wraps the value in an array.
  *
