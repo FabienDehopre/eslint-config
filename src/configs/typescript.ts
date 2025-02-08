@@ -51,6 +51,12 @@ export function typescript(options: OverridesOptions & StylisticOptions & TypeSc
           { assertionStyle: 'as', objectLiteralTypeAssertions: 'never' },
         ],
         '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+        '@typescript-eslint/consistent-type-exports': 'error',
+        '@typescript-eslint/consistent-type-imports': ['error', {
+          disallowTypeAnnotations: false,
+          fixStyle: 'separate-type-imports',
+          prefer: 'type-imports',
+        }],
         '@typescript-eslint/dot-notation': 'error',
         '@typescript-eslint/explicit-function-return-type': [
           'error',
