@@ -1,9 +1,9 @@
 import type { ConfigArray } from 'typescript-eslint';
+import type { OverridesOptions } from '../types';
 
 import tseslint from 'typescript-eslint';
 
 import { GLOB_HTML, GLOB_SRC } from '../globs';
-import { OverridesOptions } from '../types';
 import { interopDefault } from '../utils';
 
 /**

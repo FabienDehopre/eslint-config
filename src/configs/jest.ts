@@ -1,11 +1,11 @@
 import type { ConfigArray } from 'typescript-eslint';
+import type { OverridesOptions, StylisticOptions, TestingOptions } from '../types';
 
 import globals from 'globals';
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
 import { GLOB_SRC_EXT, GLOB_TESTS } from '../globs';
-import { OverridesOptions, StylisticOptions, TestingOptions } from '../types';
 import { interopDefault } from '../utils';
 
 /**

@@ -96,11 +96,9 @@ export async function createConfig(
     }
   }
 
-  const allowAngularDecorator = options.angular !== false;
-
   configs.push(
     ignores(options.ignores),
-    javascript({ overrides: options.javascript?.overrides, allowAngularDecorator }),
+    javascript({ overrides: options.javascript?.overrides, allowAngularDecorator: !!enableAngular }),
     typescript({
       stylistic: stylisticOptions,
       parserOptions: options.typescript?.parserOptions,

@@ -1,9 +1,9 @@
 import type { ConfigArray } from 'typescript-eslint';
+import type { AngularOptions } from '../types';
 
 import tseslint from 'typescript-eslint';
 
 import { GLOB_HTML, GLOB_TS } from '../globs';
-import { AngularOptions } from '../types';
 import { interopDefault } from '../utils';
 
 /**

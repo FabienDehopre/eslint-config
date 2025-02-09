@@ -29,6 +29,7 @@ export function javascript(
   options: OverridesOptions & { allowAngularDecorator?: boolean } = {}
 ): ConfigArray {
   const { overrides = {}, allowAngularDecorator = false } = options;
+
   return tseslint.config(
     {
       name: 'fabdeh/javascript/setup',
