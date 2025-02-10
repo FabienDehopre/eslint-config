@@ -89,6 +89,7 @@ export async function angular(options: AngularOptions = {}): Promise<ConfigArray
         '@angular-eslint/template/prefer-control-flow': 'error',
         '@angular-eslint/template/prefer-ngsrc': 'error',
         '@angular-eslint/template/prefer-self-closing-tags': 'error',
+        '@angular-eslint/template/prefer-static-string-properties': 'error',
         ...htmlOverrides,
       },
     }
