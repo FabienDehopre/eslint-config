@@ -102,9 +102,14 @@
     "yaml-eslint-parser": "^1.2.3"
   },
   "devDependencies": {
+    "@angular/core": "^19.1.6",
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
     "@commitlint/cz-commitlint": "^19.6.1",
+    "@ngrx/effects": "^19.0.1",
+    "@ngrx/operators": "^19.0.1",
+    "@ngrx/signals": "^19.0.1",
+    "@ngrx/store": "^19.0.1",
     "@prettier/plugin-xml": "^3.4.1",
     "@types/node": "^22.13.1",
     "bumpp": "^10.0.2",
@@ -118,8 +123,10 @@
     "nano-staged": "^0.8.0",
     "prettier-plugin-slidev": "^1.0.5",
     "simple-git-hooks": "^2.11.1",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
-    "unbuild": "^3.3.1"
+    "unbuild": "^3.3.1",
+    "vitest": "^3.0.5"
   },
   "pnpm": {
     "overrides": {
