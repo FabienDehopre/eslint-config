@@ -10,7 +10,6 @@ import {
   ignores,
   imports,
   javascript,
-  jest,
   jsdoc,
   jsonc,
   markdown,
@@ -49,10 +48,9 @@ const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/o
  * @param options - Configuration options that extend `ConfigWithExtends` and `CreateConfigOptions`.
  * @param userConfigs - Additional user configurations that can be awaited.
  * @returns A promise that resolves to a `ConfigArray`.
- * @throws Will throw an error if both `jest` and `vitest` are enabled.
  * @example
  * ```typescript
- * const config = await createConfig({ jest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
+ * const config = await createConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
  * ```
  */
 export async function createConfig(
@@ -62,19 +60,11 @@ export async function createConfig(
   const {
     angular: enableAngular = isPackageExists('@angular/core'),
     gitignore: enableGitignore = true,
-    jest: enableJest = isPackageExists('jest'),
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
     tailwindcss: enableTailwind = isPackageExists('tailwindcss'),
     unicorn: enableUnicorn = true,
     vitest: enableVitest = isPackageExists('vitest'),
   } = options;
-
-  if (enableJest && enableVitest) {
-    throw new Error(
-      '[@fabdeh/eslint-config] Detected that both "jest" and "vitest" are enabled which is not supported. ' +
-      'Manually disable or uninstall one of them.'
-    );
-  }
 
   const stylisticOptions =
     options.stylistic === false ? false : typeof options.stylistic === 'object' ? options.stylistic : {};
@@ -124,16 +114,6 @@ export async function createConfig(
 
   if (enableNgrx) {
     configs.push(ngrx(typeof enableNgrx === 'object' ? enableNgrx : {}));
-  }
-
-  if (enableJest) {
-    configs.push(
-      jest(
-        typeof enableJest === 'object'
-          ? { ...enableJest, stylistic: stylisticOptions }
-          : { stylistic: stylisticOptions }
-      )
-    );
   }
 
   if (enableVitest) {

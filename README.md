@@ -9,7 +9,7 @@
 - Designed to work with TypeScript, JSX, etc. Out-of-box.
 - Opinionated, but [very customizable](#customization)
 - [ESLint Flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new), compose easily!
-- Automatic [Angular](#angular), [NGRX](#ngrx), [TailwindCSS](#tailwindcc), [Jest](#jest), [Vitest](#vitest) support when the corresponding dependency is detected.
+- Automatic [Angular](#angular), [NGRX](#ngrx), [TailwindCSS](#tailwindcc), [Vitest](#vitest) support when the corresponding dependency is detected.
 <!--- - Optional [formatters](#formatters) support for formatting CSS, HTML, XML, etc. --->
 - **Style principle**: Minimal for reading, stable for diff, consistent
   - Sorted imports, dangling commas
@@ -121,8 +121,7 @@ export default createConfig({
   angular: true,
   ngrx: true,
 
-  // Disable jest and vitest
-  jest: false,
+  // Disable vitest
   vitest: false,
 
   // `.eslintignore` is no longer supported in Flat config, use `ignores` instead

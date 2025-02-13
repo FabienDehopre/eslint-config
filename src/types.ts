@@ -224,14 +224,7 @@ export interface CreateConfigOptions {
   ngrx?: NgrxOptions | boolean;
 
   /**
-   * Options for the jest linting rules. This option is mutually exclusive with vitest.
-   *
-   * @default auto-detect based on dependencies.
-   */
-  jest?: boolean | (OverridesOptions & TestingOptions);
-
-  /**
-   * Options for the vitest linting rules. This option is mutually exclusive with jest.
+   * Options for the vitest linting rules
    *
    * @default auto-detect based on dependencies.
    */

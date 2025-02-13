@@ -3,7 +3,6 @@ export * from './comments';
 export * from './ignore';
 export * from './imports';
 export * from './javascript';
-export * from './jest';
 export * from './jsdoc';
 export * from './jsonc';
 export * from './markdown';
