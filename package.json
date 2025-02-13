@@ -110,6 +110,8 @@
     "@ngrx/signals": "^19.0.1",
     "@ngrx/store": "^19.0.1",
     "@prettier/plugin-xml": "^3.4.1",
+    "@testing-library/angular": "^17.3.5",
+    "@testing-library/jest-dom": "^6.6.3",
     "@types/node": "^22.13.1",
     "bumpp": "^10.0.2",
     "changelogithub": "^13.12.1",
