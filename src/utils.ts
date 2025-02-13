@@ -13,18 +13,6 @@ const SCOPE_URL = fileURLToPath(new URL('.', import.meta.url));
 const IS_CWD_IN_SCOPE = isPackageExists('@fabdeh/eslint-config');
 
 /**
- * Converts a value to an array. If the value is already an array, it returns the value as is.
- * Otherwise, it wraps the value in an array.
- *
- * @template T - The type of the value.
- * @param value - The value to convert to an array.
- * @returns The value converted to an array.
- */
-export function toArray<T>(value: T | T[]): T[] {
-  return Array.isArray(value) ? value : [value];
-}
-
-/**
  * A utility function to handle the default export of a module.
  *
  * This function takes an `Awaitable` module and returns its default export if it exists,
