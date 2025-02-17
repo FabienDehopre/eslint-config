@@ -49,10 +49,15 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
         markdownPlugin.processors.markdown,
         processorPassThrough,
       ]),
+      rules: {
+        ...markdownPlugin.configs.recommended.at(0)?.rules,
+        'markdown/no-duplicate-headings': 'error',
+      },
     },
     {
       name: 'fabdeh/markdown/disables',
       languageOptions: {
+        parser: tseslint.parser,
         parserOptions: {
           ecmaFeatures: {
             impliedStrict: true,
