@@ -34,9 +34,7 @@ function mergePrettierOptions(
     ...options,
     ...overrides,
     plugins: [
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       ...(overrides.plugins ?? []),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       ...(options.plugins ?? []),
     ],
   };

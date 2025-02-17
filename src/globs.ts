@@ -69,12 +69,12 @@ export const GLOB_JSONC = '**/*.jsonc';
 export const GLOB_MARKDOWN = '**/*.md';
 
 /**
- * A glob pattern that matches all Markdown files that are nested into a Markdown file.
+ * A glob pattern that matches all Markdown blocks embedded into a Markdown file.
  */
 export const GLOB_MARKDOWN_IN_MARKDOWN = '**/*.md/*.md';
 
 /**
- * A glob pattern that matches all source code related to a markdown file.
+ * A glob pattern that matches all JavaScript/TypeScript source code block embedded in a markdown file.
  */
 export const GLOB_MARKDOWN_CODE = `${GLOB_MARKDOWN}/${GLOB_SRC}`;
 
