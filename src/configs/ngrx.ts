@@ -48,17 +48,22 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
   } = options;
 
   const configs: ConfigWithExtends[] = [];
+  let addOperatorsRules = false;
+  const ngrxOperatorsFiles = [];
   if (store) {
     const {
       files = DEFAULT_STORE_GLOB,
       enforceOperatorsRules = isPackageExists('@ngrx/operators'),
       overrides = {},
     } = typeof store === 'object' ? store : {};
+    addOperatorsRules ||= enforceOperatorsRules;
+    ngrxOperatorsFiles.push(files);
     configs.push({
       name: 'fabdeh/ngrx-store/rules',
       files,
-      extends: [...ngrxPlugin.configs.store, ...(enforceOperatorsRules ? ngrxPlugin.configs.operators : [])],
+      plugins: { '@ngrx': ngrxPlugin },
       rules: {
+        ...ngrxPlugin.configs.store.find((c) => c.name === 'ngrx/store')?.rules,
         '@typescript-eslint/naming-convention': [
           'error',
           ...namingConvention,
@@ -90,11 +95,14 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
       enforceOperatorsRules = isPackageExists('@ngrx/operators'),
       overrides = {},
     } = typeof effects === 'object' ? effects : {};
+    addOperatorsRules ||= enforceOperatorsRules;
+    ngrxOperatorsFiles.push(files);
     configs.push({
       name: 'fabdeh/ngrx-effects/rules',
       files,
-      extends: [...ngrxPlugin.configs.effects, ...(enforceOperatorsRules ? ngrxPlugin.configs.operators : [])],
+      plugins: { '@ngrx': ngrxPlugin },
       rules: {
+        ...ngrxPlugin.configs.effects.find((c) => c.name === 'ngrx/effects')?.rules,
         '@typescript-eslint/naming-convention': [
           'error',
           ...namingConvention,
@@ -123,11 +131,14 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
       { selector: 'variableLike', format: ['camelCase'] },
       { selector: 'memberLike', format: ['camelCase'], leadingUnderscore: 'allow' },
     ];
+    addOperatorsRules ||= enforceOperatorsRules;
+    ngrxOperatorsFiles.push(files);
     configs.push({
       name: 'fabdeh/ngrx-signals/rules',
       files,
-      extends: [...ngrxPlugin.configs.signals, ...(enforceOperatorsRules ? ngrxPlugin.configs.operators : [])],
+      plugins: { '@ngrx': ngrxPlugin },
       rules: {
+        ...ngrxPlugin.configs.signals.find((c) => c.name === 'ngrx/signals')?.rules,
         '@typescript-eslint/naming-convention': [
           'error',
           ...allowLeadingUnderscoreOnMemberLike(namingConvention),
@@ -140,6 +151,17 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
           },
         ],
         ...overrides,
+      },
+    });
+  }
+
+  if (addOperatorsRules) {
+    configs.push({
+      name: 'fabdeh/ngrx-operators/rules',
+      files: [...ngrxOperatorsFiles],
+      plugins: { '@ngrx': ngrxPlugin },
+      rules: {
+        ...ngrxPlugin.configs.operators.find((c) => c.name === 'ngrx/operators')?.rules,
       },
     });
   }

@@ -38,7 +38,11 @@ export async function vitest(options: OverridesOptions & TestingOptions = {}): P
   ]);
   return tseslint.config({
     name: 'fabdeh/vitest/rules',
-    plugins: { vitest: vitestPlugin },
+    plugins: {
+      vitest: vitestPlugin,
+      ...(jestDomPlugin ? { 'jest-dom': jestDomPlugin } : {}),
+      ...(testingLibraryPlugin ? { 'testing-library': testingLibraryPlugin } : {}),
+    },
     languageOptions: {
       globals: {
         ...globals.node,
@@ -52,12 +56,10 @@ export async function vitest(options: OverridesOptions & TestingOptions = {}): P
       },
     },
     files: [...GLOB_TESTS],
-    extends: [
-      vitestPlugin.configs.recommended,
-      ...(jestDomPlugin ? [jestDomPlugin.configs['flat/recommended']] : []),
-      ...(testingLibraryPlugin ? [testingLibraryPlugin.configs['flat/angular']] : []),
-    ],
     rules: {
+      ...vitestPlugin.configs.recommended.rules,
+      ...(jestDomPlugin?.configs['flat/recommended'].rules),
+      ...(testingLibraryPlugin?.configs['flat/angular'].rules),
       'max-classes-per-file': 'off',
       'max-lines': 'off',
       '@typescript-eslint/consistent-type-assertions': 'off',

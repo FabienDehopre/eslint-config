@@ -60,10 +60,9 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
         },
       },
       files: [GLOB_MARKDOWN_CODE],
-      extends: [tseslint.configs.disableTypeChecked],
       rules: {
+        ...tseslint.configs.disableTypeChecked.rules,
         'import-x/newline-after-import': 'off',
-
         'no-alert': 'off',
         'no-console': 'off',
         'no-labels': 'off',

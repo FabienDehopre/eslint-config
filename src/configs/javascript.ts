@@ -65,8 +65,8 @@ export function javascript(
         'prefer-arrow-functions': preferArrowFunctions,
         'unused-imports': unusedImports,
       },
-      extends: [eslint.configs.recommended, ...tseslint.configs.recommended],
       rules: {
+        ...eslint.configs.recommended.rules,
         'accessor-pairs': 'error',
         'array-callback-return': 'error',
         'block-scoped-var': 'error',
@@ -129,6 +129,7 @@ export function javascript(
         'no-useless-constructor': 'error',
         'no-useless-rename': 'error',
         'no-useless-return': 'error',
+        'no-var': 'error',
         'object-shorthand': [
           'error',
           'always',
@@ -142,14 +143,18 @@ export function javascript(
           'error',
           { singleReturnOnly: true, allowNamedFunctions: true },
         ],
+        'prefer-const': 'error',
         'prefer-exponentiation-operator': 'error',
         'prefer-object-spread': 'error',
         'prefer-promise-reject-errors': 'error',
         'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }],
+        'prefer-rest-params': 'error',
+        'prefer-spread': 'error',
         'prefer-template': 'error',
         'symbol-description': 'error',
         'unicode-bom': ['error', 'never'],
         'unused-imports/no-unused-imports': 'error',
+        'no-unused-vars': 'off',
         'unused-imports/no-unused-vars': [
           'error',
           {
@@ -164,8 +169,12 @@ export function javascript(
         'valid-typeof': ['error', { requireStringLiterals: true }],
         'vars-on-top': 'error',
         yoda: ['error', 'never', { exceptRange: true }],
-        '@typescript-eslint/no-unused-vars': 'off', // superseded by unused-imports/no-unused-vars
-        // TODO: check if required to apply more nx javascript rules here
+        '@typescript-eslint/ban-ts-comment': 'error',
+        '@typescript-eslint/no-extra-non-null-assertion': 'error',
+        '@typescript-eslint/no-misused-new': 'error',
+        '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
+        '@typescript-eslint/no-require-imports': ['error', { allowAsImport: true }],
+        '@typescript-eslint/no-this-alias': 'error',
         ...overrides,
       },
     }

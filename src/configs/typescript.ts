@@ -3,7 +3,7 @@ import type { OverridesOptions, StylisticOptions, TypeScriptParserOptions } from
 
 import process from 'node:process';
 
-import eslint from '@eslint/js';
+import unusedImports from 'eslint-plugin-unused-imports';
 import tseslint from 'typescript-eslint';
 
 import { GLOB_TS } from '../globs';
@@ -37,13 +37,14 @@ export function typescript(options: OverridesOptions & StylisticOptions & TypeSc
       files: [GLOB_TS],
       plugins: {
         '@typescript-eslint': tseslint.plugin,
+        'unused-imports': unusedImports,
       },
-      extends: [
-        eslint.configs.recommended,
-        ...tseslint.configs.strictTypeChecked,
-        ...(stylistic ? tseslint.configs.stylisticTypeChecked : []),
-      ],
       rules: {
+        ...tseslint.configs.stylisticTypeChecked.find((c) => c.name === 'typescript-eslint/eslint-recommended')?.rules,
+        ...tseslint.configs.stylisticTypeChecked.find((c) => c.name === 'typescript-eslint/strict-type-checked')?.rules,
+        ...(stylistic
+          ? tseslint.configs.stylisticTypeChecked.find((c) => c.name === 'typescript-eslint/stylistic-type-checked')?.rules
+          : {}),
         '@typescript-eslint/array-type': ['error', { default: 'array' }],
         '@typescript-eslint/consistent-indexed-object-style': 'error',
         '@typescript-eslint/consistent-type-assertions': [
@@ -58,6 +59,7 @@ export function typescript(options: OverridesOptions & StylisticOptions & TypeSc
           prefer: 'type-imports',
         }],
         '@typescript-eslint/dot-notation': 'error',
+        '@typescript-eslint/explicit-module-boundary-types': 'error',
         '@typescript-eslint/explicit-function-return-type': [
           'error',
           {
@@ -80,12 +82,11 @@ export function typescript(options: OverridesOptions & StylisticOptions & TypeSc
         '@typescript-eslint/no-extraneous-class': ['error', { allowStaticOnly: true, allowWithDecorator: true }],
         '@typescript-eslint/no-invalid-void-type': 'error',
         '@typescript-eslint/no-non-null-asserted-nullish-coalescing': 'error',
-        '@typescript-eslint/no-require-imports': 'error',
         '@typescript-eslint/only-throw-error': 'error',
         '@typescript-eslint/no-unnecessary-condition': 'error',
         '@typescript-eslint/no-unnecessary-type-arguments': 'error',
         '@typescript-eslint/no-unsafe-unary-minus': 'error',
-        '@typescript-eslint/parameter-properties': ['error', { prefer: 'parameter-property' }],
+        '@typescript-eslint/parameter-properties': 'error',
         '@typescript-eslint/prefer-enum-initializers': 'error',
         '@typescript-eslint/prefer-for-of': 'error',
         '@typescript-eslint/prefer-function-type': 'error',
@@ -103,6 +104,7 @@ export function typescript(options: OverridesOptions & StylisticOptions & TypeSc
         '@typescript-eslint/switch-exhaustiveness-check': 'error',
         '@typescript-eslint/unbound-method': ['error', { ignoreStatic: true }],
         '@typescript-eslint/unified-signatures': 'error',
+        '@typescript-eslint/no-unused-vars': 'off',
         ...overrides,
       },
     }

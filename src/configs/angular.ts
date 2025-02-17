@@ -27,7 +27,6 @@ export async function angular(options: AngularOptions = {}): Promise<ConfigArray
       },
       processor: angularEslint.processInlineTemplates,
       files: [GLOB_TS],
-      extends: [angularEslint.configs.tsRecommended],
       rules: {
         'max-classes-per-file': ['error', 1],
         'max-lines': ['error', 400],
@@ -57,6 +56,7 @@ export async function angular(options: AngularOptions = {}): Promise<ConfigArray
             ],
           },
         ],
+        ...angularEslint.configs.tsRecommended.find((c) => c.name === 'angular-eslint/ts-recommended')?.rules,
         '@angular-eslint/component-max-inline-declarations': 'error',
         '@angular-eslint/component-selector': [
           'error',
@@ -96,14 +96,14 @@ export async function angular(options: AngularOptions = {}): Promise<ConfigArray
     {
       name: 'fabdeh/angular-template/rules',
       plugins: {
-        '@angular-eslint': angularEslint.tsPlugin,
+        '@angular-eslint/template': angularEslint.templatePlugin,
+      },
+      languageOptions: {
+        parser: angularEslint.templateParser,
       },
       files: [GLOB_HTML],
-      extends: [
-        ...angularEslint.configs.templateRecommended,
-        ...(enableAccessibilityRules ? angularEslint.configs.templateAccessibility : []),
-      ],
       rules: {
+        ...angularEslint.configs.templateRecommended.find((c) => c.name === 'angular-eslint/template-recommended')?.rules,
         '@angular-eslint/template/attributes-order': ['error', { alphabetical: true }],
         '@angular-eslint/template/button-has-type': 'error',
         '@angular-eslint/template/conditional-complexity': 'error',
@@ -116,6 +116,9 @@ export async function angular(options: AngularOptions = {}): Promise<ConfigArray
         '@angular-eslint/template/prefer-ngsrc': 'error',
         '@angular-eslint/template/prefer-self-closing-tags': 'error',
         '@angular-eslint/template/prefer-static-string-properties': 'error',
+        ...(enableAccessibilityRules
+          ? angularEslint.configs.templateAccessibility.find((c) => c.name === 'angular-eslint/template-accessibility')?.rules
+          : {}),
         ...htmlOverrides,
       },
     }
