@@ -143,7 +143,7 @@ importers:
         version: 3.4.1(prettier@3.4.2)
       '@testing-library/angular':
         specifier: ^17.3.5
-        version: 17.3.5(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/router@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(@testing-library/dom@10.4.0)
+        version: 17.3.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/router@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(@testing-library/dom@10.4.0)
       '@testing-library/jest-dom':
         specifier: ^6.6.3
         version: 6.6.3
@@ -371,6 +371,10 @@ packages:
 
   '@babel/runtime@7.26.7':
     resolution: {integrity: sha512-AOPI3D+a8dXnja+iwsUqGRjr1BbZIe771sXdapOtYI531gSqpi92vXivKcq2asu/DFpdl1ceFAKZyRzK2PCVcQ==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/runtime@7.26.9':
+    resolution: {integrity: sha512-aA63XwOkcl4xxQa3HjPMqOP6LiK0ZDv3mUPYEFXkpHbaFjtGggE1A61FjFzJnB+p7/oy2gA8E+rcBNl/zC1tMg==}
     engines: {node: '>=6.9.0'}
 
   '@babel/standalone@7.26.7':
@@ -974,8 +978,8 @@ packages:
     peerDependencies:
       eslint: '>=8.40.0'
 
-  '@testing-library/angular@17.3.5':
-    resolution: {integrity: sha512-B79mN7kNDY9/+0Kc6cVGnVptQ03oHVL1at1tMu44wvr7Ksk10g11lZw7BA0c7rHAJQoXgiWrXmvtJxkPA1R2uA==}
+  '@testing-library/angular@17.3.6':
+    resolution: {integrity: sha512-8LxEfNtjhd6iguWus8TQngMwXfw8Y4qPMXeeCqtxbIf7gbhnPA52R8ofiqCMy+p9cD/kMOY9KZAxj18P+5vNHw==}
     peerDependencies:
       '@angular/common': '>= 17.0.0'
       '@angular/core': '>= 17.0.0'
@@ -3995,6 +3999,10 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
+  '@babel/runtime@7.26.9':
+    dependencies:
+      regenerator-runtime: 0.14.1
+
   '@babel/standalone@7.26.7': {}
 
   '@babel/template@7.25.9':
@@ -4543,7 +4551,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@testing-library/angular@17.3.5(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/router@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(@testing-library/dom@10.4.0)':
+  '@testing-library/angular@17.3.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(@angular/router@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.1.6(@angular/common@19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1))(@testing-library/dom@10.4.0)':
     dependencies:
       '@angular/common': 19.1.6(@angular/core@19.1.6(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1)
       '@angular/core': 19.1.6(rxjs@7.8.1)(zone.js@0.15.0)
@@ -4555,7 +4563,7 @@ snapshots:
   '@testing-library/dom@10.4.0':
     dependencies:
       '@babel/code-frame': 7.26.2
-      '@babel/runtime': 7.26.7
+      '@babel/runtime': 7.26.9
       '@types/aria-query': 5.0.4
       aria-query: 5.3.0
       chalk: 4.1.2
