@@ -31,6 +31,32 @@ export async function angular(options: AngularOptions = {}): Promise<ConfigArray
       rules: {
         'max-classes-per-file': ['error', 1],
         'max-lines': ['error', 400],
+        'new-cap': [
+          'error',
+          {
+            capIsNewExceptions: [
+              'Attribute',
+              'Component',
+              'ContentChild',
+              'ContentChildren',
+              'Directive',
+              'Host',
+              'HostBinding',
+              'HostListener',
+              'Inject',
+              'Injectable',
+              'Input',
+              'NgModule',
+              'Optional',
+              'Output',
+              'Pipe',
+              'Self',
+              'SkipSelf',
+              'ViewChild',
+              'ViewChildren',
+            ],
+          },
+        ],
         '@angular-eslint/component-max-inline-declarations': 'error',
         '@angular-eslint/component-selector': [
           'error',

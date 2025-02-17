@@ -26,9 +26,9 @@ import { GLOB_SRC } from '../globs';
  * ```
  */
 export function javascript(
-  options: OverridesOptions & { allowAngularDecorator?: boolean } = {}
+  options: OverridesOptions = {}
 ): ConfigArray {
-  const { overrides = {}, allowAngularDecorator = false } = options;
+  const { overrides = {} } = options;
 
   return tseslint.config(
     {
@@ -85,34 +85,7 @@ export function javascript(
           'Undefined',
           'undefined',
         ],
-        'new-cap': allowAngularDecorator
-          ? [
-              'error',
-              {
-                capIsNewExceptions: [
-                  'Attribute',
-                  'Component',
-                  'ContentChild',
-                  'ContentChildren',
-                  'Directive',
-                  'Host',
-                  'HostBinding',
-                  'HostListener',
-                  'Inject',
-                  'Injectable',
-                  'Input',
-                  'NgModule',
-                  'Optional',
-                  'Output',
-                  'Pipe',
-                  'Self',
-                  'SkipSelf',
-                  'ViewChild',
-                  'ViewChildren',
-                ],
-              },
-            ]
-          : 'error',
+        'new-cap': 'error',
         'no-alert': 'error',
         'no-caller': 'error',
         'no-cond-assign': ['error', 'always'],
