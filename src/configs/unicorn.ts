@@ -19,9 +19,10 @@ export function unicorn(options: UnicornOptions = {}): ConfigArray {
     files: [GLOB_SRC],
     rules: {
       ...(options.allRecommended
-        ? unicornPlugin.configs['flat/recommended'].rules
+        ? unicornPlugin.configs.recommended.rules
         : {
             'unicorn/catch-error-name': 'error',
+            'unicorn/consistent-date-clone': 'error',
             'unicorn/consistent-empty-array-spread': 'error',
             'unicorn/consistent-existence-index-check': 'error',
             'unicorn/consistent-function-scoping': ['error', { checkArrowFunctions: false }],
@@ -43,7 +44,7 @@ export function unicorn(options: UnicornOptions = {}): ConfigArray {
             'unicorn/no-empty-file': 'error',
             'unicorn/no-for-loop': 'error',
             'unicorn/no-hex-escape': 'error',
-            'unicorn/no-instanceof-array': 'error',
+            'unicorn/no-instanceof-builtins': 'error',
             'unicorn/no-invalid-fetch-options': 'error',
             'unicorn/no-invalid-remove-event-listener': 'error',
             'unicorn/no-length-as-slice-end': 'error',
