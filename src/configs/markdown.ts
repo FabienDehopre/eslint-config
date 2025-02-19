@@ -1,3 +1,4 @@
+import type { TSESLint } from '@typescript-eslint/utils';
 import type { ConfigArray } from 'typescript-eslint';
 import type { FilesOptions, OverridesOptions } from '../types';
 
@@ -33,6 +34,28 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
     overrides = {},
   } = options;
   const markdownPlugin = await interopDefault(import('@eslint/markdown'));
+  const parserPlain: TSESLint.FlatConfig.Parser = {
+    meta: {
+      name: 'parser-plain',
+    },
+    parseForESLint: (code: string) => ({
+      ast: {
+        body: [],
+        comments: [],
+        loc: { end: code.length, start: 0 },
+        range: [0, code.length],
+        tokens: [],
+        type: 'Program',
+      },
+      // eslint-disable-next-line unicorn/no-null
+      scopeManager: null,
+      services: { isPlain: true },
+      visitorKeys: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        Program: [],
+      },
+    }),
+  };
 
   return tseslint.config(
     {
@@ -49,15 +72,17 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
         markdownPlugin.processors.markdown,
         processorPassThrough,
       ]),
-      rules: {
-        ...markdownPlugin.configs.recommended.at(0)?.rules,
-        'markdown/no-duplicate-headings': 'error',
+    },
+    {
+      name: 'fabdeh/markdown/parser',
+      files,
+      languageOptions: {
+        parser: parserPlain,
       },
     },
     {
       name: 'fabdeh/markdown/disables',
       languageOptions: {
-        parser: tseslint.parser,
         parserOptions: {
           ecmaFeatures: {
             impliedStrict: true,
@@ -91,8 +116,15 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
         'unicode-bom': 'off',
         'unused-imports/no-unused-imports': 'off',
         'unused-imports/no-unused-vars': 'off',
-        'unicorn/filename-case': 'off',
         ...overrides,
+      },
+    },
+    {
+      name: 'fabdeh/markdown/rules',
+      files,
+      rules: {
+        ...markdownPlugin.configs.recommended.at(0)?.rules,
+        'markdown/no-duplicate-headings': 'error',
       },
     }
   );
