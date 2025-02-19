@@ -1,7 +1,7 @@
 import { createConfig } from './src';
 
 export default createConfig(
-  { formatters: true, markdown: false },
+  { formatters: true },
   {
     ignores: ['fixtures', '_fixtures'],
   }
