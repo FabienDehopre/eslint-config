@@ -33,10 +33,12 @@ function mergePrettierOptions(
   return {
     ...options,
     ...overrides,
+    /* eslint-disable @typescript-eslint/no-unsafe-assignment */
     plugins: [
       ...(overrides.plugins ?? []),
       ...(options.plugins ?? []),
     ],
+    /* eslint-enable @typescript-eslint/no-unsafe-assignment */
   };
 }
 
