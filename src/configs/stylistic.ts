@@ -3,7 +3,6 @@ import type { StylisticConfig, StylisticOptions } from '../types';
 
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC } from '../globs';
 import { interopDefault } from '../utils';
 
 export const STYLISTIC_CONFIG_DEFAULT: StylisticConfig = {
@@ -28,7 +27,6 @@ export async function stylistic(options: StylisticOptions = {}): Promise<ConfigA
 
   return tseslint.config({
     name: 'fabdeh/stylistic/rules',
-    files: [GLOB_SRC],
     plugins: {
       '@stylistic': stylisticPlugin,
     },

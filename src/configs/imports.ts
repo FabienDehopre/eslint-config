@@ -4,7 +4,7 @@ import type { StylisticOptions } from '../types';
 import * as importX from 'eslint-plugin-import-x';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_JS, GLOB_SRC, GLOB_TS } from '../globs';
+import { GLOB_TS } from '../globs';
 
 /**
  * Generates an ESLint configuration array for import rules.
@@ -17,8 +17,7 @@ export function imports(options: StylisticOptions = {}): ConfigArray {
   const { stylistic = true } = options;
   return tseslint.config(
     {
-      name: 'fabdeh/imports/common/rules',
-      files: [GLOB_SRC],
+      name: 'fabdeh/imports/rules',
       plugins: {
         'import-x': importX,
       },
@@ -27,7 +26,9 @@ export function imports(options: StylisticOptions = {}): ConfigArray {
         'import-x/default': 'error',
         'import-x/export': 'error',
         'import-x/first': 'error',
+        'import-x/named': 'error',
         'import-x/no-absolute-path': 'error',
+        'import-x/no-deprecated': 'error',
         'import-x/no-duplicates': 'error',
         'import-x/no-empty-named-blocks': 'error',
         'import-x/no-extraneous-dependencies': 'error',
@@ -46,15 +47,7 @@ export function imports(options: StylisticOptions = {}): ConfigArray {
       },
     },
     {
-      name: 'fabdeh/imports/js-only/rules',
-      files: [GLOB_JS],
-      rules: {
-        'import-x/named': 'error',
-        'import-x/no-deprecated': 'error',
-      },
-    },
-    {
-      name: 'fabdeh/imports/ts-only/rules',
+      name: 'fabdeh/imports/ts-disables',
       files: [GLOB_TS],
       rules: {
         'import-x/named': 'off',

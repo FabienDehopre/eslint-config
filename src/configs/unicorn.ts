@@ -4,8 +4,6 @@ import type { UnicornOptions } from '../types';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC } from '../globs';
-
 /**
  * Generates a configuration array for the Unicorn plugin with the specified options.
  *
@@ -16,10 +14,10 @@ export function unicorn(options: UnicornOptions = {}): ConfigArray {
   return tseslint.config({
     name: 'fabdeh/unicorn/rules',
     plugins: { unicorn: unicornPlugin },
-    files: [GLOB_SRC],
     rules: {
       ...(options.allRecommended
         ? unicornPlugin.configs.recommended.rules
+        // TODO: compare with recommended rules
         : {
             'unicorn/catch-error-name': 'error',
             'unicorn/consistent-date-clone': 'error',
@@ -30,7 +28,7 @@ export function unicorn(options: UnicornOptions = {}): ConfigArray {
             'unicorn/error-message': 'error',
             'unicorn/escape-case': 'error',
             'unicorn/explicit-length-check': 'error',
-            'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+            'unicorn/filename-case': ['error', { case: 'kebabCase', ignore: [/^[A-Z0-9_-]+\.md$/] }],
             'unicorn/new-for-builtins': 'error',
             'unicorn/no-abusive-eslint-disable': 'error',
             'unicorn/no-anonymous-default-export': 'error',

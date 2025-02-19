@@ -3,8 +3,6 @@ import type { ConfigArray } from 'typescript-eslint';
 import eslintComments from '@eslint-community/eslint-plugin-eslint-comments';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC } from '../globs';
-
 /**
  * Generates a configuration array for ESLint comments rules.
  *
@@ -17,7 +15,6 @@ import { GLOB_SRC } from '../globs';
 export function comments(): ConfigArray {
   return tseslint.config({
     name: 'fabdeh/comments/rules',
-    files: [GLOB_SRC],
     plugins: {
       '@eslint-community/eslint-comments': eslintComments,
     },

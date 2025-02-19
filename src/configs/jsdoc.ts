@@ -4,7 +4,7 @@ import type { StylisticOptions } from '../types';
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC, GLOB_TS } from '../globs';
+import { GLOB_TS } from '../globs';
 
 /**
  * Generates a configuration array for JSDoc rules.
@@ -18,7 +18,6 @@ export function jsdoc(options: StylisticOptions = {}): ConfigArray {
   return tseslint.config(
     {
       name: 'fabdeh/jsdoc/rules',
-      files: [GLOB_SRC],
       plugins: { jsdoc: jsdocPlugin },
       rules: {
         'jsdoc/check-access': 'warn',
