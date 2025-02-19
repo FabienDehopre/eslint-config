@@ -26,7 +26,7 @@ import {
   yaml
 } from './configs';
 import { formatters } from './configs/formatters';
-import { interopDefault } from './utils';
+import { interopDefault, resolveSubOptions } from './utils';
 
 type FlatConfigProps = keyof Omit<ConfigWithExtends, 'files' | 'ignores' | 'language'>;
 const FLAT_CONFIG_PROPS = [
@@ -62,6 +62,7 @@ export async function createConfig(
     gitignore: enableGitignore = true,
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
     tailwindcss: enableTailwind = isPackageExists('tailwindcss'),
+    typescript: enableTypescript = isPackageExists('typescript'),
     unicorn: enableUnicorn = true,
     vitest: enableVitest = isPackageExists('vitest'),
   } = options;
@@ -89,19 +90,24 @@ export async function createConfig(
   configs.push(
     ignores(options.ignores),
     javascript({ overrides: options.javascript?.overrides }),
-    typescript({
-      stylistic: stylisticOptions,
-      parserOptions: options.typescript?.parserOptions,
-      overrides: options.typescript?.overrides,
-    }),
     comments(),
-    imports({ stylistic: stylisticOptions }),
+    // TODO: add node rules ???
     jsdoc({ stylistic: stylisticOptions }),
+    imports({ stylistic: stylisticOptions }),
     perfectionist()
   );
 
   if (enableUnicorn) {
-    configs.push(unicorn(typeof enableUnicorn === 'object' ? enableUnicorn : {}));
+    const unicornOptions = resolveSubOptions(options, 'unicorn');
+    configs.push(unicorn(unicornOptions));
+  }
+
+  if (enableTypescript) {
+    const typescriptOptions = resolveSubOptions(options, 'typescript');
+    configs.push(typescript({
+      ...typescriptOptions,
+      stylistic: stylisticOptions,
+    }));
   }
 
   if (stylisticOptions) {
@@ -109,25 +115,30 @@ export async function createConfig(
   }
 
   if (enableAngular) {
-    configs.push(angular(typeof enableAngular === 'object' ? enableAngular : {}));
+    const angularOptions = resolveSubOptions(options, 'angular');
+    configs.push(angular(angularOptions));
   }
 
   if (enableNgrx) {
-    configs.push(ngrx(typeof enableNgrx === 'object' ? enableNgrx : {}));
+    const ngrxOptions = resolveSubOptions(options, 'ngrx');
+    configs.push(ngrx(ngrxOptions));
   }
 
   if (enableVitest) {
-    configs.push(vitest(typeof enableVitest === 'object' ? enableVitest : {}));
+    const vitestOptions = resolveSubOptions(options, 'vitest');
+    configs.push(vitest(vitestOptions));
   }
 
   if (enableTailwind) {
-    configs.push(tailwindcss(typeof enableTailwind === 'object' ? enableTailwind : {}));
+    const tailwindcssOptions = resolveSubOptions(options, 'tailwindcss');
+    configs.push(tailwindcss(tailwindcssOptions));
   }
 
   if (options.jsonc ?? true) {
+    const jsoncOptions = resolveSubOptions(options, 'jsonc');
     configs.push(
       jsonc({
-        overrides: typeof options.jsonc === 'object' ? options.jsonc.overrides : {},
+        ...jsoncOptions,
         stylistic: stylisticOptions,
       }),
       sortPackageJson(),
@@ -136,23 +147,24 @@ export async function createConfig(
   }
 
   if (options.yaml ?? true) {
+    const yamlOptions = resolveSubOptions(options, 'yaml');
     configs.push(yaml({
-      overrides: typeof options.yaml === 'object' ? options.yaml.overrides : {},
+      ...yamlOptions,
       stylistic: stylisticOptions,
     }));
   }
 
   if (options.toml ?? true) {
+    const tomlOptions = resolveSubOptions(options, 'toml');
     configs.push(toml({
-      overrides: typeof options.toml === 'object' ? options.toml.overrides : {},
+      ...tomlOptions,
       stylistic: stylisticOptions,
     }));
   }
 
   if (options.markdown ?? true) {
-    configs.push(markdown({
-      overrides: typeof options.markdown === 'object' ? options.markdown.overrides : {},
-    }));
+    const markdownOptions = resolveSubOptions(options, 'markdown');
+    configs.push(markdown(markdownOptions));
   }
 
   if (options.formatters) {

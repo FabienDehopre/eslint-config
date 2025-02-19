@@ -60,7 +60,7 @@ export interface StylisticOptions {
  */
 export interface TypeScriptParserOptions {
   /**
-   * Optional parser options to be used by the TypeScript parser.
+   * Additional parser options for TypeScript.
    */
   parserOptions?: TSESLint.FlatConfig.ParserOptions;
 }
@@ -192,7 +192,7 @@ export interface CreateConfigOptions {
    *
    * @default auto-detected
    */
-  typescript?: OverridesOptions & TypeScriptParserOptions;
+  typescript?: boolean | (OverridesOptions & TypeScriptParserOptions);
 
   /**
    * Enable stylistic rules.

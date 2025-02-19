@@ -1,5 +1,5 @@
 import type { PathLike } from 'node:fs';
-import type { Awaitable } from './types';
+import type { Awaitable, CreateConfigOptions } from './types';
 
 import { statSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
@@ -25,6 +25,7 @@ const IS_CWD_IN_SCOPE = isPackageExists('@fabdeh/eslint-config');
 export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { default: infer U } ? U : T> {
   const resolved = await m;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-return
   return (resolved as any).default ?? resolved;
 }
 
@@ -134,4 +135,25 @@ export async function findNearestPackageJsonName(directoryPath: string = resolve
 
     return findNearestPackageJsonName(parentDir);
   }
+}
+
+export type ResolvedOptions<T> = T extends boolean ? never : NonNullable<T>;
+
+/**
+ * Returns the object representation of the configuration or an empty object if it is a boolean.
+ *
+ * @param options - The {@link CreateConfigOptions} object to extract the sub-options from.
+ * @param key - The property name.
+ * @returns An object representing the required options.
+ */
+export function resolveSubOptions<K extends keyof CreateConfigOptions>(
+  options: CreateConfigOptions,
+  key: K
+): ResolvedOptions<CreateConfigOptions[K]> {
+  if (typeof options[key] === 'boolean') {
+    return {} as unknown as never;
+  }
+
+  // @ts-expect-error -- options[key] is a NonNullable<CreatedConfigOptions[K]>
+  return options[key] ?? {};
 }
