@@ -6,7 +6,7 @@ import process from 'node:process';
 import unusedImports from 'eslint-plugin-unused-imports';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_TS } from '../globs';
+import { GLOB_MARKDOWN, GLOB_TS } from '../globs';
 import { getWorkspaceRoot } from '../utils';
 import memberOrdering from './rules-configs/member-ordering';
 import namingConvention from './rules-configs/naming-convention';
@@ -21,27 +21,37 @@ import namingConvention from './rules-configs/naming-convention';
  * @returns A ConfigArray containing the TypeScript ESLint configuration.
  */
 export function typescript(options: OverridesOptions & StylisticOptions & TypeScriptParserOptions = {}): ConfigArray {
-  const { stylistic = true, parserOptions, overrides } = options;
+  const { stylistic = true, parserOptions = {}, overrides = {} } = options;
+
   return tseslint.config(
     {
       name: 'fabdeh/typescript/setup',
+      files: [GLOB_TS],
+      ignores: [`${GLOB_MARKDOWN}/**`],
       languageOptions: {
-        parserOptions: parserOptions ?? {
-          projectService: true,
+        parser: tseslint.parser,
+        parserOptions: {
+          sourceType: 'module',
+          projectService: {
+            allowDefaultProject: ['*.js'],
+            defaultProject: 'tsconfig.json',
+          },
           tsconfigRootDir: getWorkspaceRoot(process.cwd(), process.cwd()),
+          ...parserOptions,
         },
       },
     },
     {
       name: 'fabdeh/typescript/rules',
       files: [GLOB_TS],
+      ignores: [`${GLOB_MARKDOWN}/**`],
       plugins: {
         '@typescript-eslint': tseslint.plugin,
         'unused-imports': unusedImports,
       },
       rules: {
-        ...tseslint.configs.stylisticTypeChecked.find((c) => c.name === 'typescript-eslint/eslint-recommended')?.rules,
-        ...tseslint.configs.stylisticTypeChecked.find((c) => c.name === 'typescript-eslint/strict-type-checked')?.rules,
+        ...tseslint.configs.strictTypeChecked.find((c) => c.name === 'typescript-eslint/eslint-recommended')?.rules,
+        ...tseslint.configs.strictTypeChecked.find((c) => c.name === 'typescript-eslint/strict-type-checked')?.rules,
         ...(stylistic
           ? tseslint.configs.stylisticTypeChecked.find((c) => c.name === 'typescript-eslint/stylistic-type-checked')?.rules
           : {}),
