@@ -8,8 +8,10 @@ import tseslint from 'typescript-eslint';
 import { GLOB_SRC } from '../globs';
 
 /**
+ * Add linting rules for finding RegExp mistakes and RegExp style guide violations.
  *
- * @param options
+ * @param options - Allow to turn all the linting rules as warning if necessary and provide overrides.
+ * @returns The ESLint configuration about regexp.
  */
 export function regexp(options: OverridesOptions & RegExpOptions = {}): ConfigArray {
   const { level, overrides } = options;
