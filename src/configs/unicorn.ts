@@ -4,6 +4,8 @@ import type { UnicornOptions } from '../types';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
 
+import { GLOB_SRC } from '../globs';
+
 /**
  * Generates a configuration array for the Unicorn plugin with the specified options.
  *
@@ -13,6 +15,7 @@ import tseslint from 'typescript-eslint';
 export function unicorn(options: UnicornOptions = {}): ConfigArray {
   return tseslint.config({
     name: 'fabdeh/unicorn/rules',
+    files: [GLOB_SRC],
     plugins: { unicorn: unicornPlugin },
     rules: {
       ...(options.allRecommended

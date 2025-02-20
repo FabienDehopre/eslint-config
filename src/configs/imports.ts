@@ -4,7 +4,7 @@ import type { StylisticOptions } from '../types';
 import * as importX from 'eslint-plugin-import-x';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_TS } from '../globs';
+import { GLOB_SRC, GLOB_TS } from '../globs';
 
 /**
  * Generates an ESLint configuration array for import rules.
@@ -18,6 +18,7 @@ export function imports(options: StylisticOptions = {}): ConfigArray {
   return tseslint.config(
     {
       name: 'fabdeh/imports/rules',
+      files: [GLOB_SRC],
       plugins: {
         'import-x': importX,
       },

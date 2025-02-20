@@ -7,6 +7,8 @@ import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+import { GLOB_SRC } from '../globs';
+
 /**
  * Generates a configuration array for JavaScript projects with ESLint.
  *
@@ -56,6 +58,7 @@ export function javascript(
     },
     {
       name: 'fabdeh/javascript/rules',
+      files: [GLOB_SRC],
       plugins: {
         '@typescript-eslint': tseslint.plugin,
         'prefer-arrow-functions': preferArrowFunctions,
