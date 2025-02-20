@@ -166,6 +166,13 @@ export interface FormattersOptions {
   slidev?: boolean | { files?: string[] };
 }
 
+export interface RegExpOptions {
+  /**
+   * Override rules level.
+   */
+  level?: 'error' | 'warn';
+}
+
 /**
  * Options for creating an ESLint configuration.
  *
@@ -201,6 +208,14 @@ export interface CreateConfigOptions {
    * @default true
    */
   stylistic?: boolean | (OverridesOptions & StylisticConfig);
+
+  /**
+   * Enable regexp rules.
+   *
+   * @see https://ota-meshi.github.io/eslint-plugin-regexp/
+   * @default true
+   */
+  regexp?: boolean | (OverridesOptions & RegExpOptions);
 
   /**
    * Options for eslint-plugin-unicorn.

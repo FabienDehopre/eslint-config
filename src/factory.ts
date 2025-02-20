@@ -14,7 +14,7 @@ import {
   jsonc,
   markdown,
   ngrx,
-  perfectionist,
+  perfectionist, regexp,
   sortPackageJson,
   sortTsConfig,
   stylistic,
@@ -61,6 +61,7 @@ export async function createConfig(
     angular: enableAngular = isPackageExists('@angular/core'),
     gitignore: enableGitignore = true,
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
+    regexp: enableRegexp = true,
     tailwindcss: enableTailwind = isPackageExists('tailwindcss'),
     typescript: enableTypescript = isPackageExists('typescript'),
     unicorn: enableUnicorn = true,
@@ -112,6 +113,11 @@ export async function createConfig(
 
   if (stylisticOptions) {
     configs.push(stylistic({ stylistic: stylisticOptions }));
+  }
+
+  if (enableRegexp) {
+    const regexpOptions = resolveSubOptions(options, 'regexp');
+    configs.push(regexp(regexpOptions));
   }
 
   if (enableAngular) {
