@@ -8,6 +8,7 @@ export * from './jsonc';
 export * from './markdown';
 export * from './ngrx';
 export * from './perfectionist';
+export * from './regexp';
 export * from './sort';
 export * from './stylistic';
 export * from './tailwindcss';
