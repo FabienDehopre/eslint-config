@@ -101,15 +101,8 @@
     "yaml-eslint-parser": "^1.2.3"
   },
   "devDependencies": {
-    "@angular/core": "^19.1.7",
     "@fabdeh/eslint-config": "workspace:*",
-    "@ngrx/effects": "^19.0.1",
-    "@ngrx/operators": "^19.0.1",
-    "@ngrx/signals": "^19.0.1",
-    "@ngrx/store": "^19.0.1",
     "@prettier/plugin-xml": "^3.4.1",
-    "@testing-library/angular": "^17.3.6",
-    "@testing-library/jest-dom": "^6.6.3",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.13.4",
     "bumpp": "^10.0.3",
@@ -118,11 +111,8 @@
     "execa": "^9.5.2",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
-    "inquirer": "^9.3.7",
     "prettier-plugin-slidev": "^1.0.5",
-    "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
-    "unbuild": "^3.3.1",
-    "vitest": "^3.0.6"
+    "unbuild": "^3.3.1"
   }
 }
