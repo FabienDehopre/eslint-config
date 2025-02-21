@@ -201,6 +201,12 @@ importers:
       '@angular/compiler-cli':
         specifier: ^19.1.0
         version: 19.1.7(@angular/compiler@19.1.7(@angular/core@19.1.7(rxjs@7.8.1)(zone.js@0.15.0)))(typescript@5.7.3)
+      '@fabdeh/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      eslint:
+        specifier: ^9.20.0
+        version: 9.20.1(jiti@2.4.2)
       typescript:
         specifier: ~5.7.3
         version: 5.7.3
