@@ -211,7 +211,7 @@ importers:
         specifier: ~5.7.3
         version: 5.7.3
 
-  fixtures/angular-zoneless-app:
+  fixtures/angular-inline-app:
     dependencies:
       '@angular/animations':
         specifier: ^19.1.0
