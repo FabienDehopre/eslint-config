@@ -66,6 +66,7 @@
       "esbuild": ">=0.25.0"
     },
     "onlyBuiltDependencies": [
+      "@parcel/watcher",
       "esbuild",
       "simple-git-hooks"
     ]
