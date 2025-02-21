@@ -56,7 +56,7 @@
     "nano-staged": "^0.8.0",
     "simple-git-hooks": "^2.11.1",
     "toml-eslint-parser": "^0.10.0",
-    "typescript": "^5.7.3",
+    "typescript": "~5.7.3",
     "typescript-eslint": "^8.24.1",
     "vitest": "^3.0.6",
     "yaml-eslint-parser": "^1.2.3"
