@@ -174,7 +174,11 @@ export async function createConfig(
   }
 
   if (options.formatters) {
-    configs.push(formatters(options.formatters, typeof stylisticOptions === 'boolean' ? {} : stylisticOptions));
+    configs.push(formatters(
+      options.formatters,
+      typeof stylisticOptions === 'boolean' ? {} : stylisticOptions,
+      Boolean(enableAngular)
+    ));
   }
 
   if ('files' in options) {

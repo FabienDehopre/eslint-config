@@ -47,11 +47,13 @@ function mergePrettierOptions(
  *
  * @param options - The options for configuring the formatters. If set to `true`, default options will be used.
  * @param stylistic - The stylistic options for the formatters.
+ * @param hasAngularTemplateParser - Optional argument which indicates whether angular rules already registered the template parser or not.
  * @returns A promise that resolves to a `ConfigArray` containing the configured formatters.
  */
 export async function formatters(
   options: FormattersOptions | true = {},
-  stylistic: StylisticConfig = {}
+  stylistic: StylisticConfig = {},
+  hasAngularTemplateParser = false
 ): Promise<ConfigArray> {
   if (options === true) {
     const isPrettierPluginXmlInScope = isPackageInScope('@prettier/plugin-xml');
@@ -156,9 +158,13 @@ export async function formatters(
   if (options.html) {
     configs.push({
       name: 'fabdeh/formatter/html',
-      languageOptions: {
-        parser: formatPlugin.parserPlain,
-      },
+      ...(hasAngularTemplateParser
+        ? {}
+        : {
+            languageOptions: {
+              parser: formatPlugin.parserPlain,
+            },
+          }),
       files: [GLOB_HTML],
       rules: {
         'format/prettier': [
