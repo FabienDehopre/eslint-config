@@ -1,5 +1,5 @@
 import type { ConfigArray } from 'typescript-eslint';
-import type { OverridesOptions } from '../types';
+import type { FilesOptions, OverridesOptions } from '../types';
 
 import tseslint from 'typescript-eslint';
 
@@ -18,13 +18,13 @@ import { interopDefault } from '../utils';
  *   },
  * });
  */
-export async function tailwindcss(options: OverridesOptions = {}): Promise<ConfigArray> {
+export async function tailwindcss(options: FilesOptions & OverridesOptions = {}): Promise<ConfigArray> {
   const tailwindcssPlugin = await interopDefault(import('eslint-plugin-tailwindcss'));
-  const { overrides } = options;
+  const { files = [GLOB_SRC, GLOB_HTML], overrides = {} } = options;
   return tseslint.config({
     name: 'fabdeh/tailwindcss/rules',
     plugins: { tailwindcss: tailwindcssPlugin },
-    files: [GLOB_SRC, GLOB_HTML],
+    files,
     rules: {
       'tailwindcss/classnames-order': 'error',
       'tailwindcss/enforces-negative-arbitrary-values': 'error',

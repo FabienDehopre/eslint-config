@@ -250,7 +250,7 @@ export interface CreateConfigOptions {
    *
    * @default auto-detect based on dependencies.
    */
-  tailwindcss?: OverridesOptions | boolean;
+  tailwindcss?: boolean | (FilesOptions & OverridesOptions);
 
   /**
    * Enable JSONC support.
