@@ -1,3 +1,4 @@
+import type { TSESLint } from '@typescript-eslint/utils';
 import type { ConfigArray } from 'typescript-eslint';
 import type {
   OverridesOptions,
@@ -12,7 +13,7 @@ import unusedImports from 'eslint-plugin-unused-imports';
 import tseslint from 'typescript-eslint';
 
 import { GLOB_MARKDOWN, GLOB_TS } from '../globs';
-import { getWorkspaceRoot } from '../utils';
+import { ensurePackages, getWorkspaceRoot, interopDefault } from '../utils';
 import memberOrdering from './rules-configs/member-ordering';
 import namingConvention from './rules-configs/naming-convention';
 
@@ -25,8 +26,17 @@ import namingConvention from './rules-configs/naming-convention';
  * @param options.overrides - Additional rule overrides.
  * @returns A ConfigArray containing the TypeScript ESLint configuration.
  */
-export function typescript(options: OverridesOptions & StylisticOptions & TypeScriptErasableSyntaxOnlyOptions & TypeScriptParserOptions = {}): ConfigArray {
-  const { stylistic = true, parserOptions = {}, overrides = {} } = options;
+export async function typescript(options: OverridesOptions & StylisticOptions & TypeScriptErasableSyntaxOnlyOptions & TypeScriptParserOptions = {}): Promise<ConfigArray> {
+  const { stylistic = true, parserOptions = {}, overrides = {}, enableErasableSyntaxOnly = false } = options;
+
+  let erasableSyntaxOnlyPlugin: TSESLint.FlatConfig.Plugin | undefined;
+  let erasableSyntaxOnlyRules: TSESLint.FlatConfig.Rules | undefined;
+  if (enableErasableSyntaxOnly) {
+    await ensurePackages(['eslint-plugin-erasable-syntax-only']);
+    const erasableSyntaxOnly = await interopDefault(import('eslint-plugin-erasable-syntax-only'));
+    erasableSyntaxOnlyPlugin = erasableSyntaxOnly as TSESLint.FlatConfig.Plugin;
+    erasableSyntaxOnlyRules = erasableSyntaxOnly.configs.recommended.rules as TSESLint.FlatConfig.Rules;
+  }
 
   return tseslint.config(
     {
@@ -53,6 +63,9 @@ export function typescript(options: OverridesOptions & StylisticOptions & TypeSc
       plugins: {
         '@typescript-eslint': tseslint.plugin,
         'unused-imports': unusedImports,
+        ...(erasableSyntaxOnlyPlugin
+          ? { 'erasable-syntax-only': erasableSyntaxOnlyPlugin }
+          : {}),
       },
       rules: {
         ...tseslint.configs.strictTypeChecked.find((c) => c.name === 'typescript-eslint/eslint-recommended')?.rules,
@@ -120,6 +133,7 @@ export function typescript(options: OverridesOptions & StylisticOptions & TypeSc
         '@typescript-eslint/unbound-method': ['error', { ignoreStatic: true }],
         '@typescript-eslint/unified-signatures': 'error',
         '@typescript-eslint/no-unused-vars': 'off',
+        ...erasableSyntaxOnlyRules,
         ...overrides,
       },
     }
