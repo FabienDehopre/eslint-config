@@ -41,9 +41,9 @@ export interface UnicornOptions {
 }
 
 /**
- * An alias for the `StylisticCustomizeOptions` type without the `flat`, `name`, and `pluginName` properties.
+ * An alias for the `StylisticCustomizeOptions` type without the `pluginName` property.
  */
-export type StylisticConfig = Omit<StylisticCustomizeOptions, 'flat' | 'name' | 'pluginName'>;
+export type StylisticConfig = Omit<StylisticCustomizeOptions, 'pluginName'>;
 
 /**
  * Interface representing the stylistic options.
