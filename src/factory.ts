@@ -62,7 +62,7 @@ export async function createConfig(
     gitignore: enableGitignore = true,
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
     regexp: enableRegexp = true,
-    tailwindcss: enableTailwind = isPackageExists('tailwindcss'),
+    tailwindcss: enableTailwind = false,
     typescript: enableTypescript = isPackageExists('typescript'),
     unicorn: enableUnicorn = true,
     vitest: enableVitest = isPackageExists('vitest'),
