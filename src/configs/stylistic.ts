@@ -22,9 +22,12 @@ export const STYLISTIC_CONFIG_DEFAULT: StylisticConfig = {
  * const config = await stylistic({ semi: false });
  */
 export async function stylistic(options: StylisticOptions = {}): Promise<ConfigArray> {
-  const stylisticOptions = { ...STYLISTIC_CONFIG_DEFAULT, ...options };
+  const stylisticOptions: StylisticConfig = {
+    ...STYLISTIC_CONFIG_DEFAULT,
+    ...(typeof options.stylistic === 'boolean' ? {} : options.stylistic),
+  };
   const stylisticPlugin = await interopDefault(import('@stylistic/eslint-plugin'));
-  const config = stylisticPlugin.configs.customize({ ...stylisticOptions, flat: true });
+  const config = stylisticPlugin.configs.customize(stylisticOptions);
 
   return tseslint.config({
     name: 'fabdeh/stylistic/rules',
