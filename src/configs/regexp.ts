@@ -8,8 +8,10 @@ import tseslint from 'typescript-eslint';
 import { GLOB_SRC } from '../globs';
 
 /**
+ * Configure the recommended regexp rules.
  *
- * @param options
+ * @param options - The options
+ * @returns The ESLint configuration for regexp linting
  */
 export function regexp(options: OverridesOptions & RegExpOptions = {}): ConfigArray {
   const { level, overrides } = options;
