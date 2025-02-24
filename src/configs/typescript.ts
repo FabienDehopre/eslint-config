@@ -1,5 +1,10 @@
 import type { ConfigArray } from 'typescript-eslint';
-import type { OverridesOptions, StylisticOptions, TypeScriptParserOptions } from '../types';
+import type {
+  OverridesOptions,
+  StylisticOptions,
+  TypeScriptErasableSyntaxOnlyOptions,
+  TypeScriptParserOptions
+} from '../types';
 
 import process from 'node:process';
 
@@ -20,7 +25,7 @@ import namingConvention from './rules-configs/naming-convention';
  * @param options.overrides - Additional rule overrides.
  * @returns A ConfigArray containing the TypeScript ESLint configuration.
  */
-export function typescript(options: OverridesOptions & StylisticOptions & TypeScriptParserOptions = {}): ConfigArray {
+export function typescript(options: OverridesOptions & StylisticOptions & TypeScriptErasableSyntaxOnlyOptions & TypeScriptParserOptions = {}): ConfigArray {
   const { stylistic = true, parserOptions = {}, overrides = {} } = options;
 
   return tseslint.config(

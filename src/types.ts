@@ -65,6 +65,15 @@ export interface TypeScriptParserOptions {
   parserOptions?: TSESLint.FlatConfig.ParserOptions;
 }
 
+export interface TypeScriptErasableSyntaxOnlyOptions {
+  /**
+   * Indicates whether the erasable syntax only rules should be enabled or not.
+   *
+   * @default false
+   */
+  enableErasableSyntaxOnly?: boolean;
+}
+
 /**
  * Options for configuring Angular-specific linting rules.
  */
@@ -207,7 +216,7 @@ export interface CreateConfigOptions {
    *
    * @default auto-detected
    */
-  typescript?: boolean | (OverridesOptions & TypeScriptParserOptions);
+  typescript?: boolean | (OverridesOptions & TypeScriptErasableSyntaxOnlyOptions & TypeScriptParserOptions);
 
   /**
    * Enable stylistic rules.
