@@ -173,6 +173,14 @@ export interface RegExpOptions {
   level?: 'error' | 'warn';
 }
 
+export interface TailwindcssParserPerGlobOptions {
+  /**
+   * Provides a specific ESLint parser per glob pattern.
+   * This is only needed if you want to lint tailwindcss without using Angular and TypeScript.
+   */
+  parsers?: Record<string, TSESLint.FlatConfig.Parser>;
+}
+
 /**
  * Options for creating an ESLint configuration.
  *
@@ -248,9 +256,9 @@ export interface CreateConfigOptions {
   /**
    * Options for the TailwindCSS linting rules.
    *
-   * @default auto-detect based on dependencies.
+   * @default false
    */
-  tailwindcss?: boolean | (FilesOptions & OverridesOptions);
+  tailwindcss?: boolean | (FilesOptions & OverridesOptions) | (OverridesOptions & TailwindcssParserPerGlobOptions);
 
   /**
    * Enable JSONC support.
