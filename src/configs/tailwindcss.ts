@@ -37,8 +37,9 @@ export async function tailwindcss(options: (FilesOptions & OverridesOptions) | (
   let parserConfigs: ConfigArray;
   const { overrides = {} } = options;
   if (isTailwindcssParserPerGlobOptions(options)) {
-    files = {};
-    parserConfigs = Object.entries(options.parsers ?? {})
+    const parsers = options.parsers ?? {};
+    files = { files: [...new Set(Object.keys(parsers))] };
+    parserConfigs = Object.entries(parsers)
       .map(([glob, parser], index) => ({
         name: `fabdeh/tailwindcss/parser-${index + 1}`,
         file: [glob],
