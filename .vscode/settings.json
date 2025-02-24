@@ -9,10 +9,6 @@
     "source.organizeImports": "never"
   },
 
-  "eslint.options": {
-    "flags": ["unstable_ts_config"]
-  },
-
   "eslint.runtime": "node",
 
   // Silent the stylistic rules in you IDE, but still auto fix them
@@ -30,18 +26,20 @@
 
   // Enable eslint for all supported languages
   "eslint.validate": [
+    "css",
+    "html",
     "javascript",
     "javascriptreact",
+    "json",
+    "jsonc",
+    "json5",
+    "less",
+    "markdown",
+    "scss",
     "typescript",
     "typescriptreact",
-    "vue",
-    "html",
-    "markdown",
-    "json",
-    "json5",
-    "jsonc",
-    "yaml",
     "toml",
+    "yaml",
     "xml"
   ],
 
