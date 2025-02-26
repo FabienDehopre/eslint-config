@@ -19,7 +19,7 @@
 - Requires ESLint v9.5.0+
 
 > [!WARNING]
-> Please keep in mind that this is **_a personal config_** with a lot opinions. Changes might not always be pleased by everyone and every use cases.
+> Please keep in mind that this is **_a personal config_** with a lot of opinions. Changes might not always be pleased by everyone and every use cases.
 >
 > If you are using this config directly, I'd suggest you **review the changes everytime you update**. Or if you want more control over the rules, always feel free to fork it. Thanks!
 
@@ -33,24 +33,58 @@ Run the command in your terminal:
 pnpm add -D eslint @fabdeh/eslint-config
 ```
 
-And create an `eslint.config.mjs` in you project root:
+And create an `eslint.config.js` in you project root:
 
 ```js
-// eslint.config.mjs
+// eslint.config.js
 import { createConfig } from '@fabdeh/eslint-config';
 
 export default createConfig();
 ```
 
-### Add script for package.json
+#### Install on Angular project
+
+Run the following commands in you terminal:
+
+```bash
+pnpm ng add angular-eslint
+pnpm add -D @fabdeh/eslint-config
+```
+
+The first command will execute the `ng-add` schematic of `angular-eslint` which will do the following:
+
+- Install ESLint
+- Install `angular-eslint` and `typescript-eslint`
+- Create the `eslint.config.js` file with a default configuration.
+- Add the `lint` target to the `angular.json` file.
+
+The second command simply install this package as dev dependency.
+
+The next step is to update the `eslint.config.js` file:
+
+```js
+// eslint.config.js
+import { createConfig } from '@fabdeh/eslint-config';
+
+export default createConfig({
+  angular: {
+    // the component and directive prefix configured during project creation.
+    // see the "prefix" property inside angular.json file.
+    // only required if different from "app"
+    prefix: 'app'
+  }
+});
+```
+
+### Add script and type in package.json
 
 For example:
 
 ```json
 {
+  "type": "module",
   "scripts": {
-    "lint": "eslint . --fix",
-    "lint:ci": "eslint ."
+    "lint": "eslint . --fix"
   }
 }
 ```

@@ -85,10 +85,10 @@
     "@eslint/markdown": "^6.2.2",
     "@ngrx/eslint-plugin": "^19.0.1",
     "@stylistic/eslint-plugin": "^4.0.1",
-    "@typescript-eslint/eslint-plugin": "^8.24.1",
-    "@typescript-eslint/parser": "^8.24.1",
-    "@typescript-eslint/utils": "^8.24.1",
-    "@vitest/eslint-plugin": "^1.1.31",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "@typescript-eslint/utils": "^8.25.0",
+    "@vitest/eslint-plugin": "^1.1.33",
     "angular-eslint": "^19.1.0",
     "eslint-config-flat-gitignore": "^2.1.0",
     "eslint-flat-config-utils": "^2.0.1",
@@ -109,7 +109,7 @@
     "jsonc-eslint-parser": "^2.4.0",
     "local-pkg": "^1.0.0",
     "toml-eslint-parser": "^0.10.0",
-    "typescript-eslint": "^8.24.1",
+    "typescript-eslint": "^8.25.0",
     "yaml-eslint-parser": "^1.2.3"
   },
   "devDependencies": {
@@ -146,7 +146,7 @@
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
     "unbuild": "^3.3.1",
-    "vitest": "^3.0.6"
+    "vitest": "^3.0.7"
   },
   "pnpm": {
     "overrides": {
