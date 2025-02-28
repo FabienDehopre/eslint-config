@@ -111,7 +111,7 @@ export const GLOB_HTML = '**/*.htm?(l)';
 /**
  * A glob pattern that matches test files.
  */
-export const GLOB_TESTS = [`**/*.spec.?([cm])[jt]s`, `**/*.test.?([cm])[jt]s`, `**/test-setup.?([cm])[jt]s`];
+export const GLOB_TESTS = [`**/*.{spec,test}.?([cm])[jt]s`, `**/*.{spec,test}.[jt]sx`, `**/test-setup.?([cm])[jt]s`];
 
 /**
  * A glob pattern that matches all source files.
