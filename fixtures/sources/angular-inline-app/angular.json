@@ -106,6 +106,9 @@
               "src/**/*.html"
             ]
           }
+        },
+        "test": {
+          "builder": "@analogjs/vitest-angular:test"
         }
       }
     }
