@@ -31,7 +31,7 @@ importers:
         version: 19.0.1(@typescript-eslint/utils@8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.21.0(jiti@2.4.2))(typescript-eslint@8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3))(typescript@5.7.3)
       '@stylistic/eslint-plugin':
         specifier: ^4.0.1
-        version: 4.0.1(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)
+        version: 4.2.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.24.1
         version: 8.25.0(@typescript-eslint/parser@8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)
@@ -974,8 +974,8 @@ packages:
     resolution: {integrity: sha512-X67V4cCgM0Sz50bP8GbVzmiL8DHC2IXvdKcsN7DlxHyf+/T4d9GveeGukwha5Fx3MuYeGZWKag7TFL2ZY4w54A==}
     engines: {node: '>=18.0.0'}
 
-  '@stylistic/eslint-plugin@4.0.1':
-    resolution: {integrity: sha512-RwKkRKiDrF4ptiur54ckDhOByQYKYZ1dEmI5K8BJCmuGpauFJXzVL1UQYTA2zq702CqMFdYiJcVFJWfokIgFxw==}
+  '@stylistic/eslint-plugin@4.2.0':
+    resolution: {integrity: sha512-8hXezgz7jexGHdo5WN6JBEIPHCSFyyU4vgbxevu4YLVS5vl+sxqAAGyXSzfNDyR6xMNSH5H1x67nsXcYMOHtZA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=9.0.0'
@@ -4584,7 +4584,7 @@ snapshots:
 
   '@slidev/types@0.47.5': {}
 
-  '@stylistic/eslint-plugin@4.0.1(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)':
+  '@stylistic/eslint-plugin@4.2.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)':
     dependencies:
       '@typescript-eslint/utils': 8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)
       eslint: 9.21.0(jiti@2.4.2)
