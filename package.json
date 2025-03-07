@@ -2,7 +2,7 @@
   "name": "@fabdeh/eslint-config",
   "type": "module",
   "version": "0.3.0",
-  "packageManager": "pnpm@10.4.1",
+  "packageManager": "pnpm@10.6.1+sha512.40ee09af407fa9fbb5fbfb8e1cb40fbb74c0af0c3e10e9224d7b53c7658528615b2c92450e74cfad91e3a2dcafe3ce4050d80bda71d757756d2ce2b66213e9a3",
   "description": "My personal eslint config preset",
   "author": {
     "name": "Fabien Dehopré",
@@ -37,7 +37,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=18.18"
+    "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
   },
   "scripts": {
     "build": "unbuild",
@@ -85,10 +85,10 @@
     "@eslint/markdown": "^6.2.2",
     "@ngrx/eslint-plugin": "^19.0.1",
     "@stylistic/eslint-plugin": "^4.0.1",
-    "@typescript-eslint/eslint-plugin": "^8.24.1",
-    "@typescript-eslint/parser": "^8.24.1",
-    "@typescript-eslint/utils": "^8.24.1",
-    "@vitest/eslint-plugin": "^1.1.31",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "@typescript-eslint/utils": "^8.25.0",
+    "@vitest/eslint-plugin": "^1.1.33",
     "angular-eslint": "^19.1.0",
     "eslint-config-flat-gitignore": "^2.1.0",
     "eslint-flat-config-utils": "^2.0.1",
@@ -109,11 +109,11 @@
     "jsonc-eslint-parser": "^2.4.0",
     "local-pkg": "^1.0.0",
     "toml-eslint-parser": "^0.10.0",
-    "typescript-eslint": "^8.24.1",
+    "typescript-eslint": "^8.25.0",
     "yaml-eslint-parser": "^1.2.3"
   },
   "devDependencies": {
-    "@angular/core": "^19.1.7",
+    "@angular/core": "^19.2.1",
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
     "@commitlint/cz-commitlint": "^19.6.1",
@@ -144,9 +144,9 @@
     "prettier-plugin-slidev": "^1.0.5",
     "simple-git-hooks": "^2.11.1",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.3",
+    "typescript": "~5.7.3",
     "unbuild": "^3.3.1",
-    "vitest": "^3.0.6"
+    "vitest": "^3.0.7"
   },
   "pnpm": {
     "overrides": {

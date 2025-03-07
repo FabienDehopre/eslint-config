@@ -93,6 +93,7 @@ export async function createConfig(
     javascript({ overrides: options.javascript?.overrides }),
     comments(),
     // TODO: add node rules ???
+    // TODO: make jsdoc optional
     jsdoc({ stylistic: stylisticOptions }),
     imports({ stylistic: stylisticOptions }),
     perfectionist()
