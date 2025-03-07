@@ -1,0 +1,110 @@
+@media screen and (height <= 576px) {
+  footer.content-block {
+    margin-top: 0.25rem;
+
+    & > eq-layout-footer {
+      padding: 0.25rem 0 0.5rem;
+      border-top: none;
+    }
+  }
+}
+
+/* Responsive Spacing */
+.content-block {
+  margin-top: 1.25rem;
+  margin-right: 2.5rem;
+  margin-left: 2.5rem;
+
+  &:has(h2) {
+    margin-top: 0;
+  }
+}
+
+.screen-x-small .content-block {
+  margin-top: 0;
+  margin-right: 1.25rem;
+  margin-left: 1.25rem;
+}
+
+.responsive-paddings {
+  padding: 1.25rem;
+}
+
+.screen-large .responsive-paddings {
+  padding: 2.5rem;
+}
+
+.dx-scrollable-scrollbar {
+  z-index: 9999;
+}
+
+/* styles of the edit inventory row dialog which is rendered outside the component */
+.inventory-row-edit-dialog {
+  .dx-field-item-label-location-top {
+    -webkit-padding-start: 0;
+    padding-inline: 0;
+    -webkit-padding-end: 0;
+  }
+
+  .scrapping-cost-field .dx-field-item-required-mark {
+    display: none;
+  }
+}
+
+// overwrite the datagrid filter icon globally to use the FontAwesome funnel icon
+.dx-datagrid .dx-header-filter {
+  // stylelint-disable-next-line font-family-no-missing-generic-family-keyword -- cannot use generic family because it's an icon font
+  font: 14px/1 'Font Awesome 6 Pro';
+
+  &::before {
+    font-weight: normal;
+    content: '\f0b0'; // fa-filter
+  }
+}
+
+.layout-header > header:has(.item-requiring-vertical-spacing:not(.dx-toolbar-item-invisible)) {
+  padding: 6px 0;
+}
+
+.dx-popup-wrapper.popup-overflow-hidden .dx-popup-content-scrollable {
+  overflow: hidden;
+}
+
+.badge.request-status {
+  font-size: 13px;
+
+  &.clickable:hover {
+    cursor: pointer;
+    filter: brightness(125%);
+  }
+
+  &.submitted {
+    color: #fff;
+    background: #0059ce;
+  }
+
+  &.planned {
+    color: #fff;
+    background: #0059ce;
+  }
+
+  &.inprogress {
+    color: #000;
+    background: #ffca00;
+  }
+
+  &.executed {
+    color: #fff;
+    background: #76c512;
+  }
+
+  &.deleted {
+    color: #000;
+    background: #b1b1b1;
+  }
+
+  &.backorder {
+    color: #fff;
+    background: #ff0000;
+  }
+}
