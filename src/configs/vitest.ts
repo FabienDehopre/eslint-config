@@ -57,6 +57,7 @@ export async function vitest(options: OverridesOptions & TestingOptions = {}): P
     },
     files: [...GLOB_TESTS],
     rules: {
+      // TODO: disable all jsdoc rules
       ...vitestPlugin.configs.recommended.rules,
       ...(jestDomPlugin?.configs['flat/recommended'].rules),
       ...(testingLibraryPlugin?.configs['flat/angular'].rules),
