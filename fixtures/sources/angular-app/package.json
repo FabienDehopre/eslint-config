@@ -17,8 +17,10 @@
     "@angular/platform-browser": "^19.2.1",
     "@angular/platform-browser-dynamic": "^19.2.1",
     "@angular/router": "^19.2.1",
+    "ngxtension": "^4.3.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "type-fest": "^4.37.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
@@ -26,6 +28,8 @@
     "@angular/cli": "^19.2.1",
     "@angular/compiler-cli": "^19.2.1",
     "@total-typescript/ts-reset": "^0.6.1",
+    "devextreme": "^24.2.5",
+    "devextreme-angular": "^24.2.5",
     "typescript": "~5.7.2"
   }
 }
