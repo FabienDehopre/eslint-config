@@ -227,6 +227,13 @@ export interface CreateConfigOptions {
   stylistic?: boolean | (OverridesOptions & StylisticConfig);
 
   /**
+   * Enable or disable JSDoc rules.
+   *
+   * @default true
+   */
+  jsdoc?: boolean;
+
+  /**
    * Enable regexp rules.
    *
    * @see https://ota-meshi.github.io/eslint-plugin-regexp/
