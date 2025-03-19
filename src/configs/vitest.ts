@@ -7,6 +7,7 @@ import tseslint from 'typescript-eslint';
 
 import { GLOB_TESTS } from '../globs';
 import { interopDefault } from '../utils';
+import { getJsDocRules } from './jsdoc';
 
 /**
  * Configures and returns an ESLint configuration array for Vitest.
@@ -85,6 +86,7 @@ export async function vitest(options: OverridesOptions & TestingOptions = {}): P
       'vitest/prefer-todo': 'error',
       'vitest/prefer-vi-mocked': 'error',
       'vitest/require-top-level-describe': 'error',
+      ...getJsDocRules('off', true, 'both'),
       ...overrides,
     },
   });

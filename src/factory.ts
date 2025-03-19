@@ -60,6 +60,7 @@ export async function createConfig(
   const {
     angular: enableAngular = isPackageExists('@angular/core'),
     gitignore: enableGitignore = true,
+    jsdoc: enableJsdoc = true,
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
     regexp: enableRegexp = true,
     tailwindcss: enableTailwind = false,
@@ -92,11 +93,15 @@ export async function createConfig(
     ignores(options.ignores),
     javascript({ overrides: options.javascript?.overrides }),
     comments(),
-    // TODO: add node rules ???
-    jsdoc({ stylistic: stylisticOptions }),
     imports({ stylistic: stylisticOptions }),
     perfectionist()
   );
+
+  // TODO: add node rules as optional ???
+
+  if (enableJsdoc) {
+    configs.push(jsdoc({ stylistic: stylisticOptions }));
+  }
 
   if (enableUnicorn) {
     const unicornOptions = resolveSubOptions(options, 'unicorn');
