@@ -69,6 +69,10 @@ export async function createConfig(
     vitest: enableVitest = isPackageExists('vitest'),
   } = options;
 
+  if (enableNgrx && !enableAngular) {
+    throw new Error('NgRx rules can only be enabled if Angular rules are also enabled.');
+  }
+
   const stylisticOptions =
     options.stylistic === false ? false : typeof options.stylistic === 'object' ? options.stylistic : {};
 
