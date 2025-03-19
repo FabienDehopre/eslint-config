@@ -37,9 +37,9 @@ And create an `eslint.config.mjs` in you project root:
 
 ```js
 // eslint.config.mjs
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig();
+export default defineConfig();
 ```
 
 ### Add script for package.json
@@ -108,22 +108,22 @@ Add the following settings to your `.vscode/settings.json`:
 
 Since the beginning, we used [ESLint Flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new). It provides much better organization and composition.
 
-Normally you only need to import the `createConfig` function:
+Normally you only need to import the `defineConfig` function:
 
 ```js
 // eslint.config.js
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig();
+export default defineConfig();
 ```
 
 And that's it! Or you can configure each integration individually, for example:
 
 ```js
 // eslint.config.js
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig({
+export default defineConfig({
   // Enable stylistic formatting rules
   // stylistic: true,
 
@@ -148,13 +148,13 @@ export default createConfig({
 });
 ```
 
-The `createConfig` factory function also accepts any number of arbitrary custom config overrides:
+The `defineConfig` factory function also accepts any number of arbitrary custom config overrides:
 
 ```js
 // eslint.config.js
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig(
+export default defineConfig(
   {
     // Configure the fabdeh's config
   },
@@ -225,9 +225,9 @@ If you want to override the rules, you need to specify the file extension:
 
 ```js
 // eslint.config.js
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig(
+export default defineConfig(
   {
     typescript: true,
     vitest: true
@@ -252,9 +252,9 @@ We also provide the `overrides` option in each integration to make it easier:
 
 ```js
 // eslint.config.js
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig({
+export default defineConfig({
   typescript: {
     overrides: {
       '@typescript-eslint/consisten-type-definitions': ['error', 'interface'],
@@ -292,9 +292,9 @@ You can explicitly enable/disable TypeScript integration manually:
 
 ```js
 // eslint.config.js
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig({
+export default defineConfig({
   typescript: true,
 });
 ```
@@ -313,9 +313,9 @@ You can enable these rules as follow:
 
 ```js
 // eslint.config.js
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig({
+export default defineConfig({
   typescript: {
     enableErasableSyntaxOnly: true,
   },
@@ -335,9 +335,9 @@ Angular support is detected automatically by checking if `@angular/core` is inst
 
 ```js
 // eslint.config.js
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig({
+export default defineConfig({
   angular: true,
 });
 ```
@@ -355,9 +355,9 @@ As the Angular integration is can be explicitly enabled/disabled:
 
 ```js
 // eslint.config.js
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig({
+export default defineConfig({
   ngrx: true,
 });
 ```
@@ -370,9 +370,9 @@ The vitest integration is detected automatically by checking if `vitest` is inst
 
 ```js
 // eslint.config.js
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig({
+export default defineConfig({
   vitest: true,
 });
 ```
@@ -387,9 +387,9 @@ Use external formatters to format files that ESLint cannot handle yet (`.css`, `
 
 ```js
 // eslint.config.js
-import { createConfig } from '@fabdeh/eslint-config';
+import { defineConfig } from '@fabdeh/eslint-config';
 
-export default createConfig({
+export default defineConfig({
   formatters: {
     /**
      * Format CSS, LESS, SCSS files
