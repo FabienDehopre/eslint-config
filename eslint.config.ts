@@ -1,6 +1,6 @@
-import { createConfig } from './src';
+import { defineConfig } from './src';
 
-export default createConfig(
+export default defineConfig(
   { formatters: true, typescript: { enableErasableSyntaxOnly: true } },
   {
     ignores: ['fixtures', '_fixtures'],

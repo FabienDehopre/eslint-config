@@ -53,7 +53,7 @@ const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/o
  * const config = await createConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
  * ```
  */
-export async function createConfig(
+export async function defineConfig(
   options: ConfigWithExtends & CreateConfigOptions = {},
   ...userConfigs: Awaitable<ConfigWithExtends | ConfigWithExtends[]>[]
 ): Promise<ConfigArray> {
