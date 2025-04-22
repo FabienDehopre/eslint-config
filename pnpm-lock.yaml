@@ -43,7 +43,7 @@ importers:
         version: 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
       '@vitest/eslint-plugin':
         specifier: ^1.1.38
-        version: 1.1.42(@typescript-eslint/utils@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.0))
+        version: 1.1.43(@typescript-eslint/utils@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.0))
       angular-eslint:
         specifier: ^19.2.1
         version: 19.3.0(chokidar@4.0.3)(eslint@9.24.0(jiti@2.4.2))(typescript-eslint@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(typescript@5.8.3)
@@ -1448,8 +1448,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@vitest/eslint-plugin@1.1.42':
-    resolution: {integrity: sha512-dTGNbh/angh+hoqp5L5A8YO/29mOXDXmDQ/1fzt/jiYzLvU6FvrMqJpGqMqh5g+Fz6MDoZi0AlxefnFUg93Q5A==}
+  '@vitest/eslint-plugin@1.1.43':
+    resolution: {integrity: sha512-OLoUMO67Yg+kr7E6SjF5+Qvl2f6uNJ7ImQYnXT8WgnPiZE41ZQBsnzn70jehXrhFVadphHs2smk+yl0TFKLV5Q==}
     peerDependencies:
       '@typescript-eslint/utils': '>= 8.24.0'
       eslint: '>= 8.57.0'
@@ -1457,6 +1457,8 @@ packages:
       vitest: '*'
     peerDependenciesMeta:
       typescript:
+        optional: true
+      vitest:
         optional: true
 
   '@vitest/expect@3.1.1':
@@ -5257,13 +5259,13 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.4.1':
     optional: true
 
-  '@vitest/eslint-plugin@1.1.42(@typescript-eslint/utils@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.0))':
+  '@vitest/eslint-plugin@1.1.43(@typescript-eslint/utils@8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.0))':
     dependencies:
       '@typescript-eslint/utils': 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
       eslint: 9.24.0(jiti@2.4.2)
-      vitest: 3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.0)
     optionalDependencies:
       typescript: 5.8.3
+      vitest: 3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.0)
 
   '@vitest/expect@3.1.1':
     dependencies:
