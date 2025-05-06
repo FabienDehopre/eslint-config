@@ -5,11 +5,10 @@ import { statSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import process from 'node:process';
-import { fileURLToPath } from 'node:url';
 
 import { isPackageExists } from 'local-pkg';
 
-const SCOPE_URL = fileURLToPath(new URL('.', import.meta.url));
+const SCOPE_URL = import.meta.dirname;
 const IS_CWD_IN_SCOPE = isPackageExists('@fabdeh/eslint-config');
 
 /**
