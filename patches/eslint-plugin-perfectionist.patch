@@ -1,0 +1,36 @@
+diff --git a/dist/rules/sort-imports/read-closest-ts-config-by-path.js b/dist/rules/sort-imports/read-closest-ts-config-by-path.js
+index 3bdfccbbab3f2bc9d8365f6324879bbb642a8785..353afa726a53336dc5733c6045c537d7cc585b2d 100644
+--- a/dist/rules/sort-imports/read-closest-ts-config-by-path.js
++++ b/dist/rules/sort-imports/read-closest-ts-config-by-path.js
+@@ -37,7 +37,7 @@ let readClosestTsConfigByPath = input => {
+   let directory = path__namespace.dirname(input.filePath)
+   let checkedDirectories = [directory]
+   do {
+-    let tsconfigPath = path__namespace.join(directory, 'tsconfig.json')
++    let tsconfigPath = path__namespace.join(directory, input.tsconfigFileName)
+     let cachedDirectory = directoryCacheByPath.get(directory)
+     if (!cachedDirectory && fs__namespace.existsSync(tsconfigPath)) {
+       cachedDirectory = tsconfigPath
+diff --git a/dist/rules/sort-imports.js b/dist/rules/sort-imports.js
+index 2efa1f70842d32986edc3c43b52e17ca47a0f3a2..ee72f33c119955e4bdd8f751032b38fccbed8193 100644
+--- a/dist/rules/sort-imports.js
++++ b/dist/rules/sort-imports.js
+@@ -79,6 +79,7 @@ const sortImports = createEslintRule.createEslintRule({
+     validateSideEffectsConfiguration.validateSideEffectsConfiguration(options)
+     let tsConfigOutput = options.tsconfigRootDir
+       ? readClosestTsConfigByPath.readClosestTsConfigByPath({
++          tsconfigFileName: options.tsconfigFileName ?? 'tsconfig.json',
+           tsconfigRootDir: options.tsconfigRootDir,
+           filePath: context.physicalFilename,
+           contextCwd: context.cwd,
+@@ -386,6 +387,10 @@ const sortImports = createEslintRule.createEslintRule({
+             description: 'Specifies the tsConfig root directory.',
+             type: 'string',
+           },
++          tsconfigFileName: {
++            description: 'Specifies the tsConfig file name.',
++            type: 'string',
++          },
+           partitionByComment: commonJsonSchemas.partitionByCommentJsonSchema,
+           partitionByNewLine: commonJsonSchemas.partitionByNewLineJsonSchema,
+           newlinesBetween: commonJsonSchemas.newlinesBetweenJsonSchema,
