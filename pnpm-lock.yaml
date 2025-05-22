@@ -7,6 +7,11 @@ settings:
 overrides:
   esbuild: '>=0.25.0'
 
+patchedDependencies:
+  eslint-plugin-perfectionist:
+    hash: 8c7d278e1ffaca3a83e23ecfb4a200c30a54711b959425be588035ef795fe86c
+    path: patches/eslint-plugin-perfectionist.patch
+
 importers:
 
   .:
@@ -70,7 +75,7 @@ importers:
         version: 2.20.1(eslint@9.27.0(jiti@2.4.2))
       eslint-plugin-perfectionist:
         specifier: ^4.13.0
-        version: 4.13.0(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
+        version: 4.13.0(patch_hash=8c7d278e1ffaca3a83e23ecfb4a200c30a54711b959425be588035ef795fe86c)(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
       eslint-plugin-prefer-arrow-functions:
         specifier: ^3.6.2
         version: 3.6.2(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
@@ -5659,7 +5664,7 @@ snapshots:
     transitivePeerDependencies:
       - '@eslint/json'
 
-  eslint-plugin-perfectionist@4.13.0(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3):
+  eslint-plugin-perfectionist@4.13.0(patch_hash=8c7d278e1ffaca3a83e23ecfb4a200c30a54711b959425be588035ef795fe86c)(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3):
     dependencies:
       '@typescript-eslint/types': 8.32.1
       '@typescript-eslint/utils': 8.32.1(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)

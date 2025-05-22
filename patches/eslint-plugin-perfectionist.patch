@@ -1,0 +1,592 @@
+diff --git a/dist/rules/sort-classes.js b/dist/rules/sort-classes.js
+index dc91a0ee3dbc013486e15ebcea8562c0d792ab9e..dba3ff0e3d93cb490124d793b5a6044402dccc8c 100644
+--- a/dist/rules/sort-classes.js
++++ b/dist/rules/sort-classes.js
+@@ -18,7 +18,7 @@ const createEslintRule = require('../utils/create-eslint-rule.js')
+ const getDecoratorName = require('../utils/get-decorator-name.js')
+ const reportAllErrors = require('../utils/report-all-errors.js')
+ const shouldPartition = require('../utils/should-partition.js')
+-const getGroupNumber = require('../utils/get-group-number.js')
++const getGroupIndex = require('../utils/get-group-index.js')
+ const computeGroup = require('../utils/compute-group.js')
+ const rangeToDiff = require('../utils/range-to-diff.js')
+ const getSettings = require('../utils/get-settings.js')
+@@ -474,7 +474,7 @@ const sortClasses = createEslintRule.createEslintRule({
+         let nodesSortedByGroups = formattedNodes.flatMap(nodes2 =>
+           sortNodesByGroups.sortNodesByGroups({
+             isNodeIgnored: sortingNode =>
+-              getGroupNumber.getGroupNumber(options.groups, sortingNode) ===
++              getGroupIndex.getGroupIndex(options.groups, sortingNode) ===
+               options.groups.length,
+             getOptionsByGroupNumber:
+               getCustomGroupsCompareOptions.buildGetCustomGroupOverriddenOptionsFunction(
+diff --git a/dist/rules/sort-imports/read-closest-ts-config-by-path.js b/dist/rules/sort-imports/read-closest-ts-config-by-path.js
+index 3bdfccbbab3f2bc9d8365f6324879bbb642a8785..d916131a7273b17a0205df211d72542fda3711b2 100644
+--- a/dist/rules/sort-imports/read-closest-ts-config-by-path.js
++++ b/dist/rules/sort-imports/read-closest-ts-config-by-path.js
+@@ -29,37 +29,40 @@ const path__namespace = /* @__PURE__ */ _interopNamespaceDefault(path)
+ const fs__namespace = /* @__PURE__ */ _interopNamespaceDefault(fs)
+ let directoryCacheByPath = /* @__PURE__ */ new Map()
+ let contentCacheByPath = /* @__PURE__ */ new Map()
+-let readClosestTsConfigByPath = input => {
++let readClosestTsConfigByPath = ({
++  tsconfigFilenames,
++  tsconfigRootDir,
++  contextCwd,
++  filePath,
++}) => {
+   let typescriptImport = getTypescriptImport.getTypescriptImport()
+   if (!typescriptImport) {
+     return null
+   }
+-  let directory = path__namespace.dirname(input.filePath)
++  let directory = path__namespace.dirname(filePath)
+   let checkedDirectories = [directory]
+   do {
+-    let tsconfigPath = path__namespace.join(directory, 'tsconfig.json')
+     let cachedDirectory = directoryCacheByPath.get(directory)
+-    if (!cachedDirectory && fs__namespace.existsSync(tsconfigPath)) {
+-      cachedDirectory = tsconfigPath
++    if (!cachedDirectory) {
++      for (let tsconfigFilename of tsconfigFilenames) {
++        let tsconfigPath = path__namespace.join(directory, tsconfigFilename)
++        if (fs__namespace.existsSync(tsconfigPath)) {
++          cachedDirectory = tsconfigPath
++          break
++        }
++      }
+     }
+     if (cachedDirectory) {
+       for (let checkedDirectory of checkedDirectories) {
+         directoryCacheByPath.set(checkedDirectory, cachedDirectory)
+       }
+-      return getCompilerOptions(
+-        typescriptImport,
+-        input.contextCwd,
+-        cachedDirectory,
+-      )
++      return getCompilerOptions(typescriptImport, contextCwd, cachedDirectory)
+     }
+     directory = path__namespace.dirname(directory)
+     checkedDirectories.push(directory)
+-  } while (
+-    directory.length > 1 &&
+-    directory.length >= input.tsconfigRootDir.length
+-  )
++  } while (directory.length > 1 && directory.length >= tsconfigRootDir.length)
+   throw new Error(
+-    `Couldn't find any tsconfig.json relative to '${input.filePath}' within '${input.tsconfigRootDir}'.`,
++    `Couldn't find any tsconfig.json relative to '${filePath}' within '${tsconfigRootDir}'.`,
+   )
+ }
+ let getCompilerOptions = (typescriptImport, contextCwd, filePath) => {
+diff --git a/dist/rules/sort-imports.js b/dist/rules/sort-imports.js
+index 29f791295a284c342e6de8acc8b1a27576c3f78c..5e1ef8eca4d87659ce2f58f938743d4a661d8990 100644
+--- a/dist/rules/sort-imports.js
++++ b/dist/rules/sort-imports.js
+@@ -26,38 +26,39 @@ const getSettings = require('../utils/get-settings.js')
+ const isSortable = require('../utils/is-sortable.js')
+ const complete = require('../utils/complete.js')
+ let cachedGroupsByModifiersAndSelectors = /* @__PURE__ */ new Map()
+-let defaultGroups = [
+-  'type-import',
+-  ['value-builtin', 'value-external'],
+-  'type-internal',
+-  'value-internal',
+-  ['type-parent', 'type-sibling', 'type-index'],
+-  ['value-parent', 'value-sibling', 'value-index'],
+-  'ts-equals-import',
+-  'unknown',
+-]
++let defaultOptions = {
++  groups: [
++    'type-import',
++    ['value-builtin', 'value-external'],
++    'type-internal',
++    'value-internal',
++    ['type-parent', 'type-sibling', 'type-index'],
++    ['value-parent', 'value-sibling', 'value-index'],
++    'ts-equals-import',
++    'unknown',
++  ],
++  internalPattern: ['^~/.+', '^@/.+'],
++  fallbackSort: { type: 'unsorted' },
++  partitionByComment: false,
++  partitionByNewLine: false,
++  newlinesBetween: 'always',
++  specialCharacters: 'keep',
++  sortSideEffects: false,
++  type: 'alphabetical',
++  environment: 'node',
++  customGroups: [],
++  ignoreCase: true,
++  locales: 'en-US',
++  alphabet: '',
++  order: 'asc',
++}
+ const sortImports = createEslintRule.createEslintRule({
+   create: context => {
++    var _a, _b
+     let settings = getSettings.getSettings(context.settings)
+     let userOptions = context.options.at(0)
+     let options = getOptionsWithCleanGroups.getOptionsWithCleanGroups(
+-      complete.complete(userOptions, settings, {
+-        internalPattern: ['^~/.+', '^@/.+'],
+-        fallbackSort: { type: 'unsorted' },
+-        partitionByComment: false,
+-        partitionByNewLine: false,
+-        newlinesBetween: 'always',
+-        specialCharacters: 'keep',
+-        sortSideEffects: false,
+-        groups: defaultGroups,
+-        type: 'alphabetical',
+-        environment: 'node',
+-        customGroups: [],
+-        ignoreCase: true,
+-        locales: 'en-US',
+-        alphabet: '',
+-        order: 'asc',
+-      }),
++      complete.complete(userOptions, settings, defaultOptions),
+     )
+     validateGeneratedGroupsConfiguration.validateGeneratedGroupsConfiguration({
+       options: {
+@@ -77,11 +78,23 @@ const sortImports = createEslintRule.createEslintRule({
+       options,
+     )
+     validateSideEffectsConfiguration.validateSideEffectsConfiguration(options)
+-    let tsConfigOutput = options.tsconfigRootDir
++    let tsconfigFilenames = ['tsconfig.json']
++    if ((_a = options.tsconfig) == null ? void 0 : _a.filename) {
++      if (typeof options.tsconfig.filename === 'string') {
++        tsconfigFilenames = [options.tsconfig.filename]
++      } else {
++        tsconfigFilenames = options.tsconfig.filename
++      }
++    }
++    let tsconfigRootDirectory =
++      ((_b = options.tsconfig) == null ? void 0 : _b.rootDir) ??
++      options.tsconfigRootDir
++    let tsConfigOutput = tsconfigRootDirectory
+       ? readClosestTsConfigByPath.readClosestTsConfigByPath({
+-          tsconfigRootDir: options.tsconfigRootDir,
++          tsconfigRootDir: tsconfigRootDirectory,
+           filePath: context.physicalFilename,
+           contextCwd: context.cwd,
++          tsconfigFilenames,
+         })
+       : null
+     let { sourceCode, filename, id } = context
+@@ -322,15 +335,15 @@ const sortImports = createEslintRule.createEslintRule({
+         }
+       },
+       VariableDeclaration: node => {
+-        var _a
++        var _a2
+         if (
+           node.declarations[0].init &&
+           node.declarations[0].init.type === 'CallExpression' &&
+           node.declarations[0].init.callee.type === 'Identifier' &&
+           node.declarations[0].init.callee.name === 'require' &&
+-          ((_a = node.declarations[0].init.arguments[0]) == null
++          ((_a2 = node.declarations[0].init.arguments[0]) == null
+             ? void 0
+-            : _a.type) === 'Literal'
++            : _a2.type) === 'Literal'
+         ) {
+           registerNode(node)
+         }
+@@ -366,6 +379,31 @@ const sortImports = createEslintRule.createEslintRule({
+               }),
+             ],
+           },
++          tsconfig: {
++            properties: {
++              filename: {
++                oneOf: [
++                  {
++                    type: 'string',
++                  },
++                  {
++                    items: {
++                      type: 'string',
++                    },
++                    type: 'array',
++                  },
++                ],
++                description: 'Specifies the tsConfig filename.',
++              },
++              rootDir: {
++                description: 'Specifies the tsConfig root directory.',
++                type: 'string',
++              },
++            },
++            additionalProperties: false,
++            required: ['rootDir'],
++            type: 'object',
++          },
+           maxLineLength: {
+             description: 'Specifies the maximum line length.',
+             exclusiveMinimum: true,
+@@ -413,24 +451,7 @@ const sortImports = createEslintRule.createEslintRule({
+     type: 'suggestion',
+     fixable: 'code',
+   },
+-  defaultOptions: [
+-    {
+-      customGroups: { value: {}, type: {} },
+-      internalPattern: ['^~/.+', '^@/.+'],
+-      partitionByComment: false,
+-      partitionByNewLine: false,
+-      specialCharacters: 'keep',
+-      newlinesBetween: 'always',
+-      sortSideEffects: false,
+-      groups: defaultGroups,
+-      type: 'alphabetical',
+-      environment: 'node',
+-      ignoreCase: true,
+-      locales: 'en-US',
+-      alphabet: '',
+-      order: 'asc',
+-    },
+-  ],
++  defaultOptions: [defaultOptions],
+   name: 'sort-imports',
+ })
+ let hasContentBetweenNodes = (sourceCode, left, right) =>
+diff --git a/dist/rules/sort-modules.js b/dist/rules/sort-modules.js
+index aa4894e7bc7487086663b47ef4b36b7c8abc8f5c..b9f78589d47d987421604691cd2cfdbaab283067 100644
+--- a/dist/rules/sort-modules.js
++++ b/dist/rules/sort-modules.js
+@@ -18,8 +18,8 @@ const createEslintRule = require('../utils/create-eslint-rule.js')
+ const getDecoratorName = require('../utils/get-decorator-name.js')
+ const reportAllErrors = require('../utils/report-all-errors.js')
+ const shouldPartition = require('../utils/should-partition.js')
+-const getGroupNumber = require('../utils/get-group-number.js')
+ const getEnumMembers = require('../utils/get-enum-members.js')
++const getGroupIndex = require('../utils/get-group-index.js')
+ const computeGroup = require('../utils/compute-group.js')
+ const rangeToDiff = require('../utils/range-to-diff.js')
+ const getSettings = require('../utils/get-settings.js')
+@@ -284,7 +284,7 @@ let analyzeModule = ({
+     let nodesSortedByGroups = formattedNodes.flatMap(nodes2 =>
+       sortNodesByGroups.sortNodesByGroups({
+         isNodeIgnored: sortingNode =>
+-          getGroupNumber.getGroupNumber(options.groups, sortingNode) ===
++          getGroupIndex.getGroupIndex(options.groups, sortingNode) ===
+           options.groups.length,
+         getOptionsByGroupNumber:
+           getCustomGroupsCompareOptions.buildGetCustomGroupOverriddenOptionsFunction(
+diff --git a/dist/utils/get-comment-after.js b/dist/utils/get-comment-after.js
+deleted file mode 100644
+index ce6a652d1714a712ceef2f18a9f7b9113d6ac6f8..0000000000000000000000000000000000000000
+diff --git a/dist/utils/get-group-number.js b/dist/utils/get-group-index.js
+similarity index 83%
+rename from dist/utils/get-group-number.js
+rename to dist/utils/get-group-index.js
+index 8e3a38808c0d0f58deda59c8c1c0e68e6a047f89..481ab1168520621c1c637e2a9c2fa4c8424f60f3 100644
+--- a/dist/utils/get-group-number.js
++++ b/dist/utils/get-group-index.js
+@@ -1,6 +1,6 @@
+ 'use strict'
+ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' })
+-let getGroupNumber = (groups, node) => {
++let getGroupIndex = (groups, node) => {
+   for (let max = groups.length, i = 0; i < max; i++) {
+     let currentGroup = groups[i]
+     if (
+@@ -14,4 +14,4 @@ let getGroupNumber = (groups, node) => {
+   }
+   return groups.length
+ }
+-exports.getGroupNumber = getGroupNumber
++exports.getGroupIndex = getGroupIndex
+diff --git a/dist/utils/get-newlines-errors.js b/dist/utils/get-newlines-between-errors.js
+similarity index 87%
+rename from dist/utils/get-newlines-errors.js
+rename to dist/utils/get-newlines-between-errors.js
+index f423cd647d299c3ce31255edddb29cb123e3a8fe..41752093d5db7093cc9bea7cf2755450442595e3 100644
+--- a/dist/utils/get-newlines-errors.js
++++ b/dist/utils/get-newlines-between-errors.js
+@@ -2,13 +2,13 @@
+ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' })
+ const getNewlinesBetweenOption = require('./get-newlines-between-option.js')
+ const getLinesBetween = require('./get-lines-between.js')
+-let getNewlinesErrors = ({
++let getNewlinesBetweenErrors = ({
+   newlinesBetweenValueGetter,
+   missedSpacingError,
+   extraSpacingError,
++  rightGroupIndex,
++  leftGroupIndex,
+   sourceCode,
+-  rightNum,
+-  leftNum,
+   options,
+   right,
+   left,
+@@ -26,7 +26,7 @@ let getNewlinesErrors = ({
+           right,
+           left,
+         })) ?? newlinesBetween
+-  if (leftNum > rightNum) {
++  if (leftGroupIndex > rightGroupIndex) {
+     return []
+   }
+   let numberOfEmptyLinesBetween = getLinesBetween.getLinesBetween(
+@@ -48,4 +48,4 @@ let getNewlinesErrors = ({
+   }
+   return []
+ }
+-exports.getNewlinesErrors = getNewlinesErrors
++exports.getNewlinesBetweenErrors = getNewlinesBetweenErrors
+diff --git a/dist/utils/get-newlines-between-option.js b/dist/utils/get-newlines-between-option.js
+index e5d4cb4ae40dce1c48d6588253e55438d8f6d567..4c1dcc570546e8465dd139a2fa593b9092922da0 100644
+--- a/dist/utils/get-newlines-between-option.js
++++ b/dist/utils/get-newlines-between-option.js
+@@ -1,13 +1,10 @@
+ 'use strict'
+ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' })
+ const isNewlinesBetweenOption = require('./is-newlines-between-option.js')
+-const getGroupNumber = require('./get-group-number.js')
++const getGroupIndex = require('./get-group-index.js')
+ let getNewlinesBetweenOption = ({ nextSortingNode, sortingNode, options }) => {
+-  let nodeGroupNumber = getGroupNumber.getGroupNumber(
+-    options.groups,
+-    sortingNode,
+-  )
+-  let nextNodeGroupNumber = getGroupNumber.getGroupNumber(
++  let nodeGroupNumber = getGroupIndex.getGroupIndex(options.groups, sortingNode)
++  let nextNodeGroupNumber = getGroupIndex.getGroupIndex(
+     options.groups,
+     nextSortingNode,
+   )
+diff --git a/dist/utils/has-partition-comment.js b/dist/utils/has-partition-comment.js
+deleted file mode 100644
+index e4bc0ce03749cb218cb5c5fc71240399010efa27..0000000000000000000000000000000000000000
+diff --git a/dist/utils/make-fixes.js b/dist/utils/make-fixes.js
+index 4d43104f65c5d772a43f3004fbca35a7b65b569c..63ad45fb5984def9fb5e39b3e4516fa74817a1a8 100644
+--- a/dist/utils/make-fixes.js
++++ b/dist/utils/make-fixes.js
+@@ -1,7 +1,7 @@
+ 'use strict'
+ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' })
++const makeNewlinesBetweenFixes = require('./make-newlines-between-fixes.js')
+ const makeCommentAfterFixes = require('./make-comment-after-fixes.js')
+-const makeNewlinesFixes = require('./make-newlines-fixes.js')
+ const makeOrderFixes = require('./make-order-fixes.js')
+ let makeFixes = ({
+   ignoreFirstNodeHighestBlockComment,
+@@ -33,7 +33,7 @@ let makeFixes = ({
+   ) {
+     return [...orderFixes, ...commentAfterFixes]
+   }
+-  let newlinesFixes = makeNewlinesFixes.makeNewlinesFixes({
++  let newlinesFixes = makeNewlinesBetweenFixes.makeNewlinesBetweenFixes({
+     options: {
+       ...options,
+       newlinesBetween: options.newlinesBetween,
+diff --git a/dist/utils/make-newlines-fixes.js b/dist/utils/make-newlines-between-fixes.js
+similarity index 96%
+rename from dist/utils/make-newlines-fixes.js
+rename to dist/utils/make-newlines-between-fixes.js
+index 89adc31a6ce74c43a2ef606b32b822bb4f6c622c..6a048ccef30f78e6036bd85cfea7cdc9b4d16590 100644
+--- a/dist/utils/make-newlines-fixes.js
++++ b/dist/utils/make-newlines-between-fixes.js
+@@ -3,7 +3,7 @@ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' })
+ const getNewlinesBetweenOption = require('./get-newlines-between-option.js')
+ const getLinesBetween = require('./get-lines-between.js')
+ const getNodeRange = require('./get-node-range.js')
+-let makeNewlinesFixes = ({
++let makeNewlinesBetweenFixes = ({
+   newlinesBetweenValueGetter,
+   sortedNodes,
+   sourceCode,
+@@ -87,4 +87,4 @@ let addNewlineBeforeFirstNewline = value => {
+   return `${value.slice(0, firstNewlineIndex)}
+ ${value.slice(firstNewlineIndex)}`
+ }
+-exports.makeNewlinesFixes = makeNewlinesFixes
++exports.makeNewlinesBetweenFixes = makeNewlinesBetweenFixes
+diff --git a/dist/utils/make-single-node-comment-after-fixes.js b/dist/utils/make-single-node-comment-after-fixes.js
+index 8720282ad2ba5c2e5f011789aab163909df5f005..20b345d180b1e18b047e6796705c9a22ef371fb6 100644
+--- a/dist/utils/make-single-node-comment-after-fixes.js
++++ b/dist/utils/make-single-node-comment-after-fixes.js
+@@ -1,13 +1,12 @@
+ 'use strict'
+ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' })
+-const getCommentAfter = require('./get-comment-after.js')
+ let makeSingleNodeCommentAfterFixes = ({
+   sortedNode,
+   sourceCode,
+   fixer,
+   node,
+ }) => {
+-  let commentAfter = getCommentAfter.getCommentAfter(sortedNode, sourceCode)
++  let commentAfter = getCommentAfter(sortedNode, sourceCode)
+   let areNodesOnSameLine = node.loc.start.line === sortedNode.loc.end.line
+   if (!commentAfter || areNodesOnSameLine) {
+     return []
+@@ -28,4 +27,19 @@ let makeSingleNodeCommentAfterFixes = ({
+   )
+   return fixes
+ }
++let getCommentAfter = (node, source) => {
++  let token = source.getTokenAfter(node, {
++    filter: ({ value, type }) =>
++      type !== 'Punctuator' || ![',', ';', ':'].includes(value),
++    includeComments: true,
++  })
++  if (
++    ((token == null ? void 0 : token.type) === 'Block' ||
++      (token == null ? void 0 : token.type) === 'Line') &&
++    node.loc.end.line === token.loc.end.line
++  ) {
++    return token
++  }
++  return null
++}
+ exports.makeSingleNodeCommentAfterFixes = makeSingleNodeCommentAfterFixes
+diff --git a/dist/utils/report-all-errors.js b/dist/utils/report-all-errors.js
+index 2ff867a7f54208e438f8bccbc930fa31e9ba7d8c..78e07aa2ee604bcc19c26543e6a1e420a5c6967c 100644
+--- a/dist/utils/report-all-errors.js
++++ b/dist/utils/report-all-errors.js
+@@ -2,9 +2,9 @@
+ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' })
+ const computeNodesInCircularDependencies = require('./compute-nodes-in-circular-dependencies.js')
+ const isNodeDependentOnOtherNode = require('./is-node-dependent-on-other-node.js')
++const getNewlinesBetweenErrors = require('./get-newlines-between-errors.js')
+ const createNodeIndexMap = require('./create-node-index-map.js')
+-const getNewlinesErrors = require('./get-newlines-errors.js')
+-const getGroupNumber = require('./get-group-number.js')
++const getGroupIndex = require('./get-group-index.js')
+ const reportErrors = require('./report-errors.js')
+ const pairwise = require('./pairwise.js')
+ let reportAllErrors = ({
+@@ -28,8 +28,8 @@ let reportAllErrors = ({
+         )
+       : /* @__PURE__ */ new Set()
+   pairwise.pairwise(nodes, (left, right) => {
+-    let leftNumber = getGroupNumber.getGroupNumber(options.groups, left)
+-    let rightNumber = getGroupNumber.getGroupNumber(options.groups, right)
++    let leftGroupIndex = getGroupIndex.getGroupIndex(options.groups, left)
++    let rightGroupIndex = getGroupIndex.getGroupIndex(options.groups, right)
+     let leftIndex = nodeIndexMap.get(left)
+     let rightIndex = nodeIndexMap.get(right)
+     let indexOfRightExcludingEslintDisabled =
+@@ -53,7 +53,7 @@ let reportAllErrors = ({
+         messageIds.push(availableMessageIds.unexpectedDependencyOrder)
+       } else {
+         messageIds.push(
+-          leftNumber === rightNumber ||
++          leftGroupIndex === rightGroupIndex ||
+             !availableMessageIds.unexpectedGroupOrder
+             ? availableMessageIds.unexpectedOrder
+             : availableMessageIds.unexpectedGroupOrder,
+@@ -67,7 +67,7 @@ let reportAllErrors = ({
+     ) {
+       messageIds = [
+         ...messageIds,
+-        ...getNewlinesErrors.getNewlinesErrors({
++        ...getNewlinesBetweenErrors.getNewlinesBetweenErrors({
+           options: {
+             ...options,
+             newlinesBetween: options.newlinesBetween,
+@@ -75,8 +75,8 @@ let reportAllErrors = ({
+           missedSpacingError: availableMessageIds.missedSpacingBetweenMembers,
+           extraSpacingError: availableMessageIds.extraSpacingBetweenMembers,
+           newlinesBetweenValueGetter,
+-          rightNum: rightNumber,
+-          leftNum: leftNumber,
++          rightGroupIndex,
++          leftGroupIndex,
+           sourceCode,
+           right,
+           left,
+diff --git a/dist/utils/report-errors.js b/dist/utils/report-errors.js
+index 1549543dbe412ea4f88291e7f01bef8458112a7c..45c3bf4f049508640caf818439a3df56632cd4eb 100644
+--- a/dist/utils/report-errors.js
++++ b/dist/utils/report-errors.js
+@@ -1,6 +1,5 @@
+ 'use strict'
+ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' })
+-const toSingleLine = require('./to-single-line.js')
+ const makeFixes = require('./make-fixes.js')
+ const NODE_DEPENDENT_ON_RIGHT = 'nodeDependentOnRight'
+ const RIGHT = 'right'
+@@ -42,8 +41,8 @@ let reportErrors = ({
+           firstUnorderedNodeDependentOnRight == null
+             ? void 0
+             : firstUnorderedNodeDependentOnRight.name,
+-        [RIGHT]: toSingleLine.toSingleLine(right.name),
+-        [LEFT]: toSingleLine.toSingleLine(left.name),
++        [RIGHT]: toSingleLine(right.name),
++        [LEFT]: toSingleLine(left.name),
+         [RIGHT_GROUP]: right.group,
+         [LEFT_GROUP]: left.group,
+       },
+@@ -52,6 +51,7 @@ let reportErrors = ({
+     })
+   }
+ }
++let toSingleLine = string => string.replaceAll(/\s{2,}/gu, ' ').trim()
+ exports.DEPENDENCY_ORDER_ERROR = DEPENDENCY_ORDER_ERROR
+ exports.EXTRA_SPACING_ERROR = EXTRA_SPACING_ERROR
+ exports.GROUP_ORDER_ERROR = GROUP_ORDER_ERROR
+diff --git a/dist/utils/should-partition.js b/dist/utils/should-partition.js
+index 4f87b587dc0bc852025fe01590d5cd012dca5821..df06dd12131c935c0b55d29385145084b0a48c34 100644
+--- a/dist/utils/should-partition.js
++++ b/dist/utils/should-partition.js
+@@ -1,6 +1,6 @@
+ 'use strict'
+ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' })
+-const hasPartitionComment = require('./has-partition-comment.js')
++const isPartitionComment = require('./is-partition-comment.js')
+ const getCommentsBefore = require('./get-comments-before.js')
+ const getLinesBetween = require('./get-lines-between.js')
+ let shouldPartition = ({
+@@ -12,7 +12,7 @@ let shouldPartition = ({
+ }) => {
+   let shouldPartitionByComment =
+     options.partitionByComment &&
+-    hasPartitionComment.hasPartitionComment({
++    hasPartitionComment({
+       comments: getCommentsBefore.getCommentsBefore({
+         tokenValueToIgnoreBefore,
+         node: sortingNode.node,
+@@ -29,4 +29,11 @@ let shouldPartition = ({
+     getLinesBetween.getLinesBetween(sourceCode, lastSortingNode, sortingNode)
+   )
+ }
++let hasPartitionComment = ({ partitionByComment, comments }) =>
++  comments.some(comment =>
++    isPartitionComment.isPartitionComment({
++      partitionByComment,
++      comment,
++    }),
++  )
+ exports.shouldPartition = shouldPartition
+diff --git a/dist/utils/sort-nodes-by-groups.js b/dist/utils/sort-nodes-by-groups.js
+index affcf5c548a54cd515bb72c484341fc5f823b269..870f02a5796378acaf80629626d0761eeb16ed27 100644
+--- a/dist/utils/sort-nodes-by-groups.js
++++ b/dist/utils/sort-nodes-by-groups.js
+@@ -1,6 +1,6 @@
+ 'use strict'
+ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' })
+-const getGroupNumber = require('./get-group-number.js')
++const getGroupIndex = require('./get-group-index.js')
+ const sortNodes = require('./sort-nodes.js')
+ let sortNodesByGroups = ({
+   ignoreEslintDisabledNodes,
+@@ -20,7 +20,7 @@ let sortNodesByGroups = ({
+       ignoredNodeIndices.push(index)
+       continue
+     }
+-    let groupNumber = getGroupNumber.getGroupNumber(groups, sortingNode)
++    let groupNumber = getGroupIndex.getGroupIndex(groups, sortingNode)
+     nodesByNonIgnoredGroupNumber[groupNumber] ??
+       (nodesByNonIgnoredGroupNumber[groupNumber] = [])
+     nodesByNonIgnoredGroupNumber[groupNumber].push(sortingNode)
+diff --git a/dist/utils/to-single-line.js b/dist/utils/to-single-line.js
+deleted file mode 100644
+index 24f5256a904e17cbb08ad7a10eead2872d6e2d4b..0000000000000000000000000000000000000000
