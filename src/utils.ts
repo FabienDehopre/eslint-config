@@ -81,7 +81,7 @@ export function getWorkspaceRoot(dir: string, candidateRoot: string): string {
  * @returns The tsconfig.*.json file
  */
 export function getTsConfigFileName(dir: string): string | undefined {
-  return ['tsconfig.app.json', 'tsconfig.lib.json', 'tsconfig.spec.json', 'tsconfig.base.json', 'tsconfig.json']
+  return ['tsconfig.base.json', 'tsconfig.json']
     .map((filename) => ({ filename, path: join(dir, filename) }))
     .filter(({ path }) => fileExists(path))
     .map(({ filename }) => filename)
