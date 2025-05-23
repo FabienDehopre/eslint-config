@@ -6,7 +6,7 @@ import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import tseslint from 'typescript-eslint';
 
 import { GLOB_SRC } from '../globs';
-import { findNearestPackageJsonName, getWorkspaceRoot } from '../utils';
+import { findNearestPackageJsonName, getTsConfigFileName, getWorkspaceRoot } from '../utils';
 import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-configs/perfectionist-groups';
 
 /**
@@ -39,7 +39,7 @@ export async function perfectionist(): Promise<ConfigArray> {
           tsconfig: rootDir
             ? {
                 rootDir,
-                filename: ['tsconfig.app.json', 'tsconfig.lib.json', 'tsconfig.spec.json', 'tsconfig.json', 'tsconfig.base.json'],
+                filename: getTsConfigFileName(rootDir),
               }
             : undefined,
           order: 'asc',

@@ -75,6 +75,20 @@ export function getWorkspaceRoot(dir: string, candidateRoot: string): string {
 }
 
 /**
+ * Returns the most probable filename for the TsConfig.
+ *
+ * @param dir - The directory into which the tsconfig.json is located.
+ * @returns The tsconfig.*.json file
+ */
+export function getTsConfigFileName(dir: string): string | undefined {
+  return ['tsconfig.app.json', 'tsconfig.lib.json', 'tsconfig.spec.json', 'tsconfig.base.json', 'tsconfig.json']
+    .map((filename) => ({ filename, path: join(dir, filename) }))
+    .filter(({ path }) => fileExists(path))
+    .map(({ filename }) => filename)
+    .at(0);
+}
+
+/**
  * Checks if a package is within the specified scope.
  *
  * @param name - The name of the package to check.
