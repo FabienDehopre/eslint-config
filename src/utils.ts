@@ -55,8 +55,8 @@ function fileExists(path: PathLike): boolean {
  * @returns The root directory of the workspace.
  */
 export function getWorkspaceRoot(dir: string, candidateRoot: string): string {
-  if (process.env.NX_WORKSPACE_ROOT_PATH) {
-    return process.env.NX_WORKSPACE_ROOT_PATH;
+  if (process.env.NX_WORKSPACE_ROOT) {
+    return process.env.NX_WORKSPACE_ROOT;
   }
 
   if (dirname(dir) === dir) {
