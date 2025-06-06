@@ -18,7 +18,7 @@ import { interopDefault } from '../utils';
  */
 export async function angular(options: AngularOptions = {}): Promise<ConfigArray> {
   const angularEslint = await interopDefault(import('angular-eslint'));
-  const { enableAccessibilityRules = true, tsOverrides = {}, htmlOverrides = {}, prefix = 'app' } = options;
+  const { enableAccessibilityRules = true, tsOverrides = {}, htmlOverrides = {}, prefix = 'app', ignoreClassNamePatternForInjectableProvidedIn: ignoreClassNamePattern, componentStylesMode = 'string', preferOnPushOnly = true } = options;
   return tseslint.config(
     {
       name: 'fabdeh/angular/rules',
@@ -66,6 +66,7 @@ export async function angular(options: AngularOptions = {}): Promise<ConfigArray
             style: 'kebab-case',
           },
         ],
+        '@angular-eslint/consistent-component-styles': ['error', componentStylesMode],
         '@angular-eslint/contextual-decorator': 'error',
         '@angular-eslint/directive-selector': [
           'error',
@@ -83,12 +84,18 @@ export async function angular(options: AngularOptions = {}): Promise<ConfigArray
         '@angular-eslint/no-lifecycle-call': 'error',
         '@angular-eslint/no-pipe-impure': 'error',
         '@angular-eslint/no-queries-metadata-property': 'error',
+        '@angular-eslint/no-uncalled-signals': 'error',
+        '@angular-eslint/prefer-output-emitter-ref': 'error',
         '@angular-eslint/prefer-output-readonly': 'error',
         '@angular-eslint/prefer-signals': 'error',
+        ...(preferOnPushOnly ? { '@angular-eslint/prefer-on-push-component-change-detection': 'error' } : {}),
         '@angular-eslint/relative-url-prefix': 'error',
+        '@angular-eslint/require-lifecycle-on-prototype': 'error',
+        '@angular-eslint/sort-keys-in-type-decorator': 'error',
         '@angular-eslint/sort-lifecycle-methods': 'error',
         '@angular-eslint/use-component-selector': 'error',
         '@angular-eslint/use-component-view-encapsulation': 'error',
+        '@angular-eslint/use-injectable-provided-in': ignoreClassNamePattern ? ['error', { ignoreClassNamePattern }] : 'error',
         '@angular-eslint/use-lifecycle-interface': 'error',
         ...tsOverrides,
       },

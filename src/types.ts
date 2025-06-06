@@ -102,6 +102,25 @@ export interface AngularOptions {
    * HTML-specific linting rule overrides.
    */
   htmlOverrides?: TSESLint.FlatConfig.Config['rules'];
+
+  /**
+   * A class name pattern that allows service using `@Injectable` decorator to not use `providedIn` option.
+   */
+  ignoreClassNamePatternForInjectableProvidedIn?: string;
+
+  /**
+   * Defines whether the `styles`, `styleUrl`, `styleUrls` must be used.
+   *
+   * @default 'string'
+   */
+  componentStylesMode?: 'array' | 'string';
+
+  /**
+   * Indicates whether all component should use `OnPush` change strategy or not.
+   *
+   * @default true
+   */
+  preferOnPushOnly?: boolean;
 }
 
 /**
