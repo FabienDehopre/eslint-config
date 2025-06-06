@@ -155,10 +155,7 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "simple-git-hooks"
-    ],
-    "patchedDependencies": {
-      "eslint-plugin-perfectionist": "patches/eslint-plugin-perfectionist.patch"
-    }
+    ]
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm nano-staged",
