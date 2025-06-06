@@ -55,8 +55,8 @@ function fileExists(path: PathLike): boolean {
  * @returns The root directory of the workspace.
  */
 export function getWorkspaceRoot(dir: string, candidateRoot: string): string {
-  if (process.env.NX_WORKSPACE_ROOT_PATH) {
-    return process.env.NX_WORKSPACE_ROOT_PATH;
+  if (process.env.NX_WORKSPACE_ROOT) {
+    return process.env.NX_WORKSPACE_ROOT;
   }
 
   if (dirname(dir) === dir) {
@@ -72,6 +72,20 @@ export function getWorkspaceRoot(dir: string, candidateRoot: string): string {
   } else {
     return getWorkspaceRoot(dirname(dir), candidateRoot);
   }
+}
+
+/**
+ * Returns the most probable filename for the TsConfig.
+ *
+ * @param dir - The directory into which the tsconfig.json is located.
+ * @returns The tsconfig.*.json file
+ */
+export function getTsConfigFileName(dir: string): string | undefined {
+  return ['tsconfig.base.json', 'tsconfig.json']
+    .map((filename) => ({ filename, path: join(dir, filename) }))
+    .filter(({ path }) => fileExists(path))
+    .map(({ filename }) => filename)
+    .at(0);
 }
 
 /**

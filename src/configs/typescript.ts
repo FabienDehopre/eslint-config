@@ -13,7 +13,7 @@ import unusedImports from 'eslint-plugin-unused-imports';
 import tseslint from 'typescript-eslint';
 
 import { GLOB_MARKDOWN, GLOB_TS } from '../globs';
-import { ensurePackages, getWorkspaceRoot, interopDefault } from '../utils';
+import { ensurePackages, getTsConfigFileName, getWorkspaceRoot, interopDefault } from '../utils';
 import memberOrdering from './rules-configs/member-ordering';
 import namingConvention from './rules-configs/naming-convention';
 
@@ -38,6 +38,8 @@ export async function typescript(options: OverridesOptions & StylisticOptions & 
     erasableSyntaxOnlyRules = erasableSyntaxOnly.configs.recommended.rules as TSESLint.FlatConfig.Rules;
   }
 
+  const tsconfigRootDir = getWorkspaceRoot(process.cwd(), process.cwd());
+  const defaultProject = getTsConfigFileName(tsconfigRootDir);
   return tseslint.config(
     {
       name: 'fabdeh/typescript/setup',
@@ -49,9 +51,9 @@ export async function typescript(options: OverridesOptions & StylisticOptions & 
           sourceType: 'module',
           projectService: {
             allowDefaultProject: ['*.js'],
-            defaultProject: 'tsconfig.json',
+            defaultProject,
           },
-          tsconfigRootDir: getWorkspaceRoot(process.cwd(), process.cwd()),
+          tsconfigRootDir,
           ...parserOptions,
         },
       },
