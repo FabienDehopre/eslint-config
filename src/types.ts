@@ -210,6 +210,18 @@ export interface TailwindcssParserPerGlobOptions {
 }
 
 /**
+ * Interface for better-tailwindcss specific options.
+ */
+export interface BetterTailwindcssOptions {
+  /**
+   * Enable or disable all better-tailwindcss rules.
+   *
+   * @default true
+   */
+  enableAllRules?: boolean;
+}
+
+/**
  * Options for creating an ESLint configuration.
  *
  * @see createConfig function
@@ -293,7 +305,7 @@ export interface CreateConfigOptions {
    *
    * @default false
    */
-  tailwindcss?: boolean | (FilesOptions & OverridesOptions) | (OverridesOptions & TailwindcssParserPerGlobOptions);
+  tailwindcss?: boolean | (BetterTailwindcssOptions & FilesOptions & OverridesOptions) | (BetterTailwindcssOptions & OverridesOptions & TailwindcssParserPerGlobOptions);
 
   /**
    * Enable JSONC support.

@@ -1,5 +1,5 @@
 import type { ConfigArray } from 'typescript-eslint';
-import type { FilesOptions, OverridesOptions, TailwindcssParserPerGlobOptions } from '../types';
+import type { BetterTailwindcssOptions, FilesOptions, OverridesOptions, TailwindcssParserPerGlobOptions } from '../types';
 
 import tseslint from 'typescript-eslint';
 
@@ -19,23 +19,24 @@ function isTailwindcssParserPerGlobOptions(
 }
 
 /**
- * Generates an ESLint configuration array for Tailwind CSS.
+ * Generates an ESLint configuration array for Tailwind CSS using better-tailwindcss plugin.
  *
  * @param [options] - Optional overrides for the configuration.
  * @returns  A promise that resolves to the ESLint configuration array.
  * @example
  * const config = await tailwindcss({
+ *   enableAllRules: true,
  *   overrides: {
- *     'tailwindcss/classnames-order': 'warn',
+ *     'better-tailwindcss/recommended': 'warn',
  *   },
  * });
  */
-export async function tailwindcss(options: (FilesOptions & OverridesOptions) | (OverridesOptions & TailwindcssParserPerGlobOptions) = {}): Promise<ConfigArray> {
-  await ensurePackages(['eslint-plugin-tailwindcss']);
-  const tailwindcssPlugin = await interopDefault(import('eslint-plugin-tailwindcss'));
+export async function tailwindcss(options: (BetterTailwindcssOptions & FilesOptions & OverridesOptions) | (BetterTailwindcssOptions & OverridesOptions & TailwindcssParserPerGlobOptions) = {}): Promise<ConfigArray> {
+  await ensurePackages(['eslint-plugin-better-tailwindcss']);
+  const betterTailwindcssPlugin = await interopDefault(import('eslint-plugin-better-tailwindcss'));
   let files: { files?: string[] };
   let parserConfigs: ConfigArray;
-  const { overrides = {} } = options;
+  const { overrides = {}, enableAllRules = true } = options;
   if (isTailwindcssParserPerGlobOptions(options)) {
     const parsers = options.parsers ?? {};
     files = { files: [...new Set(Object.keys(parsers))] };
@@ -56,14 +57,12 @@ export async function tailwindcss(options: (FilesOptions & OverridesOptions) | (
     ...parserConfigs,
     {
       name: 'fabdeh/tailwindcss/rules',
-      plugins: { tailwindcss: tailwindcssPlugin },
+      plugins: { 'better-tailwindcss': betterTailwindcssPlugin },
       ...files,
       rules: {
-        'tailwindcss/classnames-order': 'error',
-        'tailwindcss/enforces-negative-arbitrary-values': 'error',
-        'tailwindcss/enforces-shorthand': 'error',
-        'tailwindcss/no-contradicting-classname': 'error',
-        'tailwindcss/no-unnecessary-arbitrary-value': 'error',
+        ...(enableAllRules && {
+          'better-tailwindcss/recommended': 'warn',
+        }),
         ...overrides,
       },
     }
