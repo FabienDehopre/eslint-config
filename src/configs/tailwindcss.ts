@@ -36,7 +36,7 @@ export async function tailwindcss(options: (BetterTailwindcssOptions & FilesOpti
   const betterTailwindcssPlugin = await interopDefault(import('eslint-plugin-better-tailwindcss'));
   let files: { files?: string[] };
   let parserConfigs: ConfigArray;
-  const { overrides = {}, enableAllRules = true } = options;
+  const { overrides = {}, enableAllRules = false } = options;
   if (isTailwindcssParserPerGlobOptions(options)) {
     const parsers = options.parsers ?? {};
     files = { files: [...new Set(Object.keys(parsers))] };

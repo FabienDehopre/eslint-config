@@ -216,7 +216,7 @@ export interface BetterTailwindcssOptions {
   /**
    * Enable or disable all better-tailwindcss rules.
    *
-   * @default true
+   * @default false
    */
   enableAllRules?: boolean;
 }
