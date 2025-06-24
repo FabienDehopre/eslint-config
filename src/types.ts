@@ -253,9 +253,9 @@ export interface TailwindCssOptions {
 
   /**
    * List of template literal tag names whose content should get linted.
+   * When using the `tags` option, it is recommended to use the strings Matcher for your tag names. This will ensure that nested expressions get linted correctly.
    *
    * @default None
-   * @remarks When using the `tags` option, it is recommended to use the strings Matcher for your tag names. This will ensure that nested expressions get linted correctly.
    */
   tags?: Tags;
 }
