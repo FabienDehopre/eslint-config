@@ -163,10 +163,11 @@ export function resolveSubOptions<K extends keyof CreateConfigOptions>(
   options: CreateConfigOptions,
   key: K
 ): ResolvedOptions<CreateConfigOptions[K]> {
-  if (typeof options[key] === 'boolean') {
-    return {} as unknown as never;
+  const option = options[key];
+  if (typeof option === 'boolean') {
+    // This branch should never be reached for valid calls
+    throw new TypeError(`Option ${String(key)} should not be boolean.`);
   }
 
-  // @ts-expect-error -- options[key] is a NonNullable<CreatedConfigOptions[K]>
-  return options[key] ?? {};
+  return (option ?? {}) as ResolvedOptions<CreateConfigOptions[K]>;
 }
