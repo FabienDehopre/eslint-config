@@ -1,6 +1,7 @@
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { TSESLint } from '@typescript-eslint/utils';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
+import type { Attributes, Callees, Tags, Variables } from 'eslint-plugin-better-tailwindcss/api/types';
 import type { VendoredPrettierOptions } from './vendor/prettier-types';
 
 /**
@@ -201,24 +202,62 @@ export interface RegExpOptions {
   level?: 'error' | 'warn';
 }
 
-export interface TailwindcssParserPerGlobOptions {
-  /**
-   * Provides a specific ESLint parser per glob pattern.
-   * This is only needed if you want to lint tailwindcss without using Angular and TypeScript.
-   */
-  parsers?: Record<string, TSESLint.FlatConfig.Parser>;
-}
-
 /**
  * Interface for better-tailwindcss specific options.
  */
-export interface BetterTailwindcssOptions {
+export interface TailwindCssOptions {
   /**
-   * Enable or disable all better-tailwindcss rules.
+   * Provides a specific ESLint parser per glob pattern.
+   */
+  parsers?: Record<string, TSESLint.FlatConfig.Parser>;
+
+  /**
+   * Use all better-tailwindcss rules or only recommended ones.
    *
    * @default false
    */
   enableAllRules?: boolean;
+
+  /**
+   * The path to the entry file of the CSS-based tailwind config (eg: `src/global.css`). If not specified, the plugin will fall back to the default configuration.
+   * The tailwind config is used to determine the sorting order.
+   */
+  entryPoint?: string;
+
+  /**
+   * The path to the `tailwind.config.js` file. If not specified, the plugin will try to find it automatically or falls back to the default configuration.
+   * The tailwind config is used to determine the sorting order.
+   */
+  tailwindConfig?: string;
+
+  /**
+   * The name of the attribute that contains the tailwind classes.
+   *
+   * @default Name for `"class"` and strings Matcher for `"class", "className"`.
+   */
+  attributes?: Attributes;
+
+  /**
+   * List of function names which arguments should also get linted.
+   *
+   * @default  Matchers for `"cc", "clb", "clsx", "cn", "cnb", "ctl", "cva", "cx", "dcnb", "objstr", "tv", "twJoin", "twMerge"`.
+   */
+  callees?: Callees;
+
+  /**
+   * List of variable names whose initializer should also get linted.
+   *
+   * @default strings Matcher for `"className", "classNames", "classes", "style", "styles"`.
+   */
+  variables?: Variables;
+
+  /**
+   * List of template literal tag names whose content should get linted.
+   *
+   * @default None
+   * @remarks When using the `tags` option, it is recommended to use the strings Matcher for your tag names. This will ensure that nested expressions get linted correctly.
+   */
+  tags?: Tags;
 }
 
 /**
@@ -305,7 +344,7 @@ export interface CreateConfigOptions {
    *
    * @default false
    */
-  tailwindcss?: boolean | (BetterTailwindcssOptions & FilesOptions & OverridesOptions) | (BetterTailwindcssOptions & OverridesOptions & TailwindcssParserPerGlobOptions);
+  tailwindcss?: boolean | (FilesOptions & OverridesOptions & TailwindCssOptions);
 
   /**
    * Enable JSONC support.
