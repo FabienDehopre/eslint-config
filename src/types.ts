@@ -260,12 +260,21 @@ export interface TailwindCssOptions {
   tags?: Tags;
 }
 
+export interface ProjectTypeOptions {
+  /**
+   * Type of the project. `lib` will enable more strict rules for libraries.
+   *
+   * @default 'app'
+   */
+  type?: 'app' | 'lib';
+}
+
 /**
  * Options for creating an ESLint configuration.
  *
  * @see createConfig function
  */
-export interface CreateConfigOptions {
+export interface CreateConfigOptions extends ProjectTypeOptions {
   /**
    * Enable gitignore support.
    *

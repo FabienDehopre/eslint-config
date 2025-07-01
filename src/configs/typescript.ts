@@ -1,7 +1,7 @@
 import type { TSESLint } from '@typescript-eslint/utils';
 import type { ConfigArray } from 'typescript-eslint';
 import type {
-  OverridesOptions,
+  OverridesOptions, ProjectTypeOptions,
   StylisticOptions,
   TypeScriptErasableSyntaxOnlyOptions,
   TypeScriptParserOptions
@@ -26,8 +26,8 @@ import namingConvention from './rules-configs/naming-convention';
  * @param options.overrides - Additional rule overrides.
  * @returns A ConfigArray containing the TypeScript ESLint configuration.
  */
-export async function typescript(options: OverridesOptions & StylisticOptions & TypeScriptErasableSyntaxOnlyOptions & TypeScriptParserOptions = {}): Promise<ConfigArray> {
-  const { stylistic = true, parserOptions = {}, overrides = {}, enableErasableSyntaxOnly = false } = options;
+export async function typescript(options: OverridesOptions & ProjectTypeOptions & StylisticOptions & TypeScriptErasableSyntaxOnlyOptions & TypeScriptParserOptions = {}): Promise<ConfigArray> {
+  const { stylistic = true, parserOptions = {}, overrides = {}, enableErasableSyntaxOnly = false, type = 'app' } = options;
 
   let erasableSyntaxOnlyPlugin: TSESLint.FlatConfig.Plugin | undefined;
   let erasableSyntaxOnlyRules: TSESLint.FlatConfig.Rules | undefined;
@@ -90,16 +90,19 @@ export async function typescript(options: OverridesOptions & StylisticOptions & 
         }],
         '@typescript-eslint/dot-notation': 'error',
         '@typescript-eslint/explicit-module-boundary-types': 'error',
-        '@typescript-eslint/explicit-function-return-type': [
-          'error',
-          {
-            allowExpressions: true,
-            allowTypedFunctionExpressions: true,
-            allowHigherOrderFunctions: true,
-            allowDirectConstAssertionInArrowFunctions: true,
-            allowConciseArrowFunctionExpressionsStartingWithVoid: true,
-          },
-        ],
+        ...(type === 'lib'
+          ? {
+              '@typescript-eslint/explicit-function-return-type': [
+                'error',
+                {
+                  allowExpressions: true,
+                  allowTypedFunctionExpressions: true,
+                  allowHigherOrderFunctions: true,
+                  allowIIFEs: true,
+                },
+              ],
+            }
+          : {}),
         '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
         '@typescript-eslint/member-ordering': ['error', memberOrdering],
         '@typescript-eslint/method-signature-style': 'error',

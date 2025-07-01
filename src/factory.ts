@@ -117,6 +117,7 @@ export async function defineConfig(
     configs.push(typescript({
       ...typescriptOptions,
       stylistic: stylisticOptions,
+      type: options.type,
     }));
   }
 
