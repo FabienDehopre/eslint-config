@@ -18,11 +18,10 @@ import { GLOB_SRC } from '../globs';
  *
  * @param options - Configuration options for the JavaScript setup.
  * @param options.overrides - Additional rule overrides.
- * @param options.allowAngularDecorator - Allows specific Angular decorators to be used without new-cap errors.
  * @returns A configuration array for ESLint.
  * @example
  * ```typescript
- * const config = javascript({ allowAngularDecorator: true });
+ * const config = javascript();
  * ```
  */
 export function javascript(
@@ -105,7 +104,27 @@ export function javascript(
         'no-octal-escape': 'error',
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
         'no-proto': 'error',
-        'no-restricted-syntax': ['error', 'TSEnumDeclaration[const=true]', 'TSExportAssignment', 'ForInStatement'],
+        /*
+        'no-restricted-syntax': [
+          'error',
+          {
+            selector: 'TSEnumDeclaration',
+            message: '',
+          },
+          {
+            selector: 'TSExportAssignment',
+            message: '',
+          },
+          {
+            selector: 'ForInStatement',
+            message: '',
+          },
+          {
+            selector: ':matches(PropertyDefinition, MethodDefinition)[accessibility="private"]',
+            message: 'Use `#private` members instead.',
+          },
+        ],
+        */
         'no-self-compare': 'error',
         'no-sequences': 'error',
         'no-template-curly-in-string': 'error',
