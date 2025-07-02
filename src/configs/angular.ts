@@ -18,7 +18,17 @@ import { interopDefault } from '../utils';
  */
 export async function angular(options: AngularOptions = {}): Promise<ConfigArray> {
   const angularEslint = await interopDefault(import('angular-eslint'));
-  const { enableAccessibilityRules = true, tsOverrides = {}, htmlOverrides = {}, prefix = 'app', ignoreClassNamePatternForInjectableProvidedIn: ignoreClassNamePattern, componentStylesMode = 'string', preferOnPushOnly = true } = options;
+  const {
+    enableAccessibilityRules = true,
+    tsOverrides = {},
+    htmlOverrides = {},
+    prefix = 'app',
+    ignoreClassNamePatternForInjectableProvidedIn: ignoreClassNamePattern,
+    componentStylesMode = 'string',
+    preferOnPushOnly = true,
+    banExperimentalApi = true,
+    banDeveloperPreviewApi = true,
+  } = options;
   return tseslint.config(
     {
       name: 'fabdeh/angular/rules',
@@ -79,7 +89,9 @@ export async function angular(options: AngularOptions = {}): Promise<ConfigArray
         '@angular-eslint/no-async-lifecycle-method': 'error',
         '@angular-eslint/no-attribute-decorator': 'error',
         '@angular-eslint/no-conflicting-lifecycle': 'error',
+        ...(banDeveloperPreviewApi ? { '@angular-eslint/no-developer-preview': 'error' } : {}),
         '@angular-eslint/no-duplicates-in-metadata-arrays': 'error',
+        ...(banExperimentalApi ? { '@angular-eslint/no-experimental': 'error' } : {}),
         '@angular-eslint/no-forward-ref': 'error',
         '@angular-eslint/no-lifecycle-call': 'error',
         '@angular-eslint/no-pipe-impure': 'error',

@@ -1,3 +1,5 @@
+/* eslint-disable max-lines -- this file contains all options objects that make it bigger than usual */
+
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { TSESLint } from '@typescript-eslint/utils';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
@@ -122,6 +124,20 @@ export interface AngularOptions {
    * @default true
    */
   preferOnPushOnly?: boolean;
+
+  /**
+   * Disallow using code which is marked as experimental.
+   *
+   * @default true
+   */
+  banExperimentalApi?: boolean;
+
+  /**
+   * Disallow using code which is marked as developer preview.
+   *
+   * @default true
+   */
+  banDeveloperPreviewApi?: boolean;
 }
 
 /**
