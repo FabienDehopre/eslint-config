@@ -20,6 +20,5 @@ declare module 'eslint-plugin-tailwindcss' {
     };
   };
 
-  // eslint-disable-next-line no-restricted-syntax
   export = _default;
 }
