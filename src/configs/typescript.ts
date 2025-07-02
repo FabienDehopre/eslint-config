@@ -89,20 +89,17 @@ export async function typescript(options: OverridesOptions & ProjectTypeOptions 
           prefer: 'type-imports',
         }],
         '@typescript-eslint/dot-notation': 'error',
-        '@typescript-eslint/explicit-module-boundary-types': 'error',
         ...(type === 'lib'
           ? {
               '@typescript-eslint/explicit-function-return-type': [
                 'error',
                 {
                   allowExpressions: true,
-                  allowTypedFunctionExpressions: true,
-                  allowHigherOrderFunctions: true,
                   allowIIFEs: true,
                 },
               ],
             }
-          : {}),
+          : { '@typescript-eslint/explicit-module-boundary-types': 'error' }),
         '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
         '@typescript-eslint/member-ordering': ['error', memberOrdering],
         '@typescript-eslint/method-signature-style': 'error',
