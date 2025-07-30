@@ -183,9 +183,6 @@ importers:
       fs-extra:
         specifier: ^11.3.0
         version: 11.3.0
-      inquirer:
-        specifier: ^9.3.7
-        version: 9.3.7
       is-ci:
         specifier: ^4.1.0
         version: 4.1.0
