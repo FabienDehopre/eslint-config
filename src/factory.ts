@@ -28,7 +28,7 @@ import {
 import { formatters } from './configs/formatters';
 import { interopDefault, resolveSubOptions } from './utils';
 
-type FlatConfigProps = keyof Omit<ConfigWithExtends, 'files' | 'ignores' | 'language'>;
+type FlatConfigProps = keyof Omit<ConfigWithExtends, 'basePath' | 'files' | 'ignores' | 'language'>;
 const FLAT_CONFIG_PROPS = [
   'name',
   'languageOptions',

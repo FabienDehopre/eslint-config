@@ -1,40 +1,40 @@
 export type GroupsOptions<T> = (T | T[] | { newlinesBetween: 'always' | 'ignore' | 'never' })[];
 
 export type ImportGroup<T extends string> =
-  | T
-  | 'builtin'
-  | 'builtin-type'
-  | 'external'
-  | 'external-type'
-  | 'index'
-  | 'index-type'
-  | 'internal'
-  | 'internal-type'
-  | 'object'
-  | 'parent'
-  | 'parent-type'
-  | 'sibling'
-  | 'sibling-type'
-  | 'side-effect'
-  | 'side-effect-style'
-  | 'style'
-  | 'type'
-  | 'unknown';
+  T |
+  'builtin' |
+  'builtin-type' |
+  'external' |
+  'external-type' |
+  'index' |
+  'index-type' |
+  'internal' |
+  'internal-type' |
+  'object' |
+  'parent' |
+  'parent-type' |
+  'sibling' |
+  'sibling-type' |
+  'side-effect' |
+  'side-effect-style' |
+  'style' |
+  'type' |
+  'unknown';
 
 export type UnionOrIntersectionGroup =
-  | 'conditional'
-  | 'function'
-  | 'import'
-  | 'intersection'
-  | 'keyword'
-  | 'literal'
-  | 'named'
-  | 'nullish'
-  | 'object'
-  | 'operator'
-  | 'tuple'
-  | 'union'
-  | 'unknown';
+  'conditional' |
+  'function' |
+  'import' |
+  'intersection' |
+  'keyword' |
+  'literal' |
+  'named' |
+  'nullish' |
+  'object' |
+  'operator' |
+  'tuple' |
+  'union' |
+  'unknown';
 
 export const SORT_IMPORT_GROUPS = [
   'type',

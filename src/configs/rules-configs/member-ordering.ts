@@ -3,24 +3,24 @@ import type { TSESTree } from '@typescript-eslint/utils';
 type ReadonlyType = 'readonly-field' | 'readonly-signature';
 
 type MemberKind =
-  | ReadonlyType
-  | 'accessor'
-  | 'call-signature'
-  | 'constructor'
-  | 'field'
-  | 'get'
-  | 'method'
-  | 'set'
-  | 'signature'
-  | 'static-initialization';
+  ReadonlyType |
+  'accessor' |
+  'call-signature' |
+  'constructor' |
+  'field' |
+  'get' |
+  'method' |
+  'set' |
+  'signature' |
+  'static-initialization';
 
 type DecoratedMemberKind =
-  | Exclude<ReadonlyType, 'readonly-signature'>
-  | 'accessor'
-  | 'field'
-  | 'get'
-  | 'method'
-  | 'set';
+  Exclude<ReadonlyType, 'readonly-signature'> |
+  'accessor' |
+  'field' |
+  'get' |
+  'method' |
+  'set';
 
 type NonCallableMemberKind = Exclude<MemberKind, 'constructor' | 'readonly-signature' | 'signature'>;
 
@@ -29,12 +29,12 @@ type MemberScope = 'abstract' | 'instance' | 'static';
 type Accessibility = TSESTree.Accessibility | '#private';
 
 type BaseMemberType =
-  | MemberKind
-  | `${Accessibility}-${Exclude<MemberKind, 'readonly-signature' | 'signature' | 'static-initialization'>}`
-  | `${Accessibility}-${MemberScope}-${NonCallableMemberKind}`
-  | `${Accessibility}-decorated-${DecoratedMemberKind}`
-  | `${MemberScope}-${NonCallableMemberKind}`
-  | `decorated-${DecoratedMemberKind}`;
+  | MemberKind |
+  `${Accessibility}-${Exclude<MemberKind, 'readonly-signature' | 'signature' | 'static-initialization'>}` |
+  `${Accessibility}-${MemberScope}-${NonCallableMemberKind}` |
+  `${Accessibility}-decorated-${DecoratedMemberKind}` |
+  `${MemberScope}-${NonCallableMemberKind}` |
+  `decorated-${DecoratedMemberKind}`;
 
 type MemberType = BaseMemberType | BaseMemberType[];
 
