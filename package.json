@@ -82,7 +82,7 @@
     "@clack/prompts": "^0.10.1",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
     "@eslint/js": "^9.32.0",
-    "@eslint/markdown": "^6.6.0",
+    "@eslint/markdown": "^7.1.0",
     "@ngrx/eslint-plugin": "^19.2.1",
     "@stylistic/eslint-plugin": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^8.38.0",

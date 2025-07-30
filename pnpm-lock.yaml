@@ -24,8 +24,8 @@ importers:
         specifier: ^9.32.0
         version: 9.32.0
       '@eslint/markdown':
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^7.1.0
+        version: 7.1.0
       '@ngrx/eslint-plugin':
         specifier: ^19.2.1
         version: 19.2.1(@typescript-eslint/utils@8.38.0(eslint@9.32.0(jiti@2.5.1))(typescript@5.8.3))(eslint@9.32.0(jiti@2.5.1))(typescript-eslint@8.38.0(eslint@9.32.0(jiti@2.5.1))(typescript@5.8.3))(typescript@5.8.3)
@@ -632,10 +632,6 @@ packages:
     resolution: {integrity: sha512-ViuymvFmcJi04qdZeDc2whTHryouGcDlaxPqarTD0ZE10ISpxGUVZGZDx4w01upyIynL3iu6IXH2bS1NhclQMw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@eslint/core@0.14.0':
-    resolution: {integrity: sha512-qIbV0/JZr7iSDjqAc60IqbLdsj9GDt16xQtWD+B78d/HAlvysGdZZ6rpJHGAc2T0FQx1X6thsSPdnoiGKdNtdg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
   '@eslint/core@0.15.1':
     resolution: {integrity: sha512-bkOp+iumZCCbt1K1CmWf0R9pM5yKpDv+ZXtvSyQpudrI9kuFLp+bM2WOPXImuD/ceQuaa8f5pj93Y7zyECIGNA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -652,8 +648,8 @@ packages:
     resolution: {integrity: sha512-BBpRFZK3eX6uMLKz8WxFOBIFFcGFJ/g8XuwjTHCqHROSIsopI+ddn/d5Cfh36+7+e5edVS8dbSHnBNhrLEX0zg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@eslint/markdown@6.6.0':
-    resolution: {integrity: sha512-IsWPy2jU3gaQDlioDC4sT4I4kG1hX1OMWs/q2sWwJrPoMASHW/Z4SDw+6Aql6EsHejGbagYuJbFq9Zvx+Y1b1Q==}
+  '@eslint/markdown@7.1.0':
+    resolution: {integrity: sha512-Y+X1B1j+/zupKDVJfkKc8uYMjQkGzfnd8lt7vK3y8x9Br6H5dBuhAfFrQ6ff7HAMm/1BwgecyEiRFkYCWPRxmA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/object-schema@2.1.6':
@@ -4201,10 +4197,6 @@ snapshots:
 
   '@eslint/config-helpers@0.3.0': {}
 
-  '@eslint/core@0.14.0':
-    dependencies:
-      '@types/json-schema': 7.0.15
-
   '@eslint/core@0.15.1':
     dependencies:
       '@types/json-schema': 7.0.15
@@ -4230,9 +4222,9 @@ snapshots:
 
   '@eslint/js@9.32.0': {}
 
-  '@eslint/markdown@6.6.0':
+  '@eslint/markdown@7.1.0':
     dependencies:
-      '@eslint/core': 0.14.0
+      '@eslint/core': 0.15.1
       '@eslint/plugin-kit': 0.3.4
       github-slugger: 2.0.0
       mdast-util-from-markdown: 2.0.2
