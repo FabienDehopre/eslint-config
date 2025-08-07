@@ -65,7 +65,7 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
         ...ngrxPlugin.configs.store.find((c) => c.name === 'ngrx/store')?.rules,
         '@typescript-eslint/naming-convention': [
           'error',
-          ...namingConvention,
+          ...namingConvention(),
           {
             selector: ['objectLiteralProperty'],
             // eslint-disable-next-line unicorn/no-null
@@ -104,7 +104,7 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
         ...ngrxPlugin.configs.effects.find((c) => c.name === 'ngrx/effects')?.rules,
         '@typescript-eslint/naming-convention': [
           'error',
-          ...namingConvention,
+          ...namingConvention(),
           {
             selector: 'variable',
             modifiers: ['const', 'global', 'exported'],
@@ -135,7 +135,7 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
         ...ngrxPlugin.configs.signals.find((c) => c.name === 'ngrx/signals')?.rules,
         '@typescript-eslint/naming-convention': [
           'error',
-          ...namingConvention,
+          ...namingConvention(),
           {
             selector: ['objectLiteralProperty', 'objectLiteralMethod'],
             format: ['camelCase'],

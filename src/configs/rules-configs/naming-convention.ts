@@ -68,21 +68,26 @@ export interface Selector {
   types?: TypeModifiersString[];
 }
 
-// @typescript-eslint/naming-convention rule configuration
-// Based on Google TypeScript Style Guide
-export default [
-  { selector: 'default', format: ['camelCase'], leadingUnderscore: 'forbid', trailingUnderscore: 'forbid' },
-  { selector: 'typeLike', format: ['PascalCase'] },
-  { selector: 'variable', format: ['camelCase', 'UPPER_CASE'] },
-  { selector: 'function', format: ['camelCase', 'PascalCase'] },
-  { selector: 'variable', modifiers: ['const', 'global'], format: ['UPPER_CASE'] },
-  { selector: 'enumMember', format: ['UPPER_CASE'] },
-  { selector: 'classProperty', modifiers: ['static', 'readonly'], format: ['UPPER_CASE'] },
-  // eslint-disable-next-line unicorn/no-null
-  { selector: 'memberLike', modifiers: ['requiresQuotes'], format: null },
-  { selector: 'parameter', modifiers: ['unused'], format: ['camelCase'], leadingUnderscore: 'allow' },
-  // eslint-disable-next-line unicorn/no-null
-  { selector: 'variable', modifiers: ['destructured'], format: null },
-  { selector: 'import', modifiers: ['default', 'namespace'], format: ['camelCase', 'PascalCase'] },
-  { selector: 'interface', format: ['PascalCase'], custom: { regex: '^I[A-Z]', match: false } },
-] satisfies Selector[];
+/**
+ * Retrieves the default @typescript-eslint/naming-convention rule configuration based on Google TypeScript Style Guide.
+ *
+ * @returns The default naming convention rule configuration.
+ */
+export default function namingConvention(): Selector[] {
+  return [
+    { selector: 'default', format: ['camelCase'], leadingUnderscore: 'forbid', trailingUnderscore: 'forbid' },
+    { selector: 'typeLike', format: ['PascalCase'] },
+    { selector: 'variable', format: ['camelCase', 'UPPER_CASE'] },
+    { selector: 'function', format: ['camelCase', 'PascalCase'] },
+    { selector: 'variable', modifiers: ['const', 'global'], format: ['UPPER_CASE'] },
+    { selector: 'enumMember', format: ['UPPER_CASE'] },
+    { selector: 'classProperty', modifiers: ['static', 'readonly'], format: ['UPPER_CASE'] },
+    // eslint-disable-next-line unicorn/no-null
+    { selector: 'memberLike', modifiers: ['requiresQuotes'], format: null },
+    { selector: 'parameter', modifiers: ['unused'], format: ['camelCase'], leadingUnderscore: 'allow' },
+    // eslint-disable-next-line unicorn/no-null
+    { selector: 'variable', modifiers: ['destructured'], format: null },
+    { selector: 'import', modifiers: ['default', 'namespace'], format: ['camelCase', 'PascalCase'] },
+    { selector: 'interface', format: ['PascalCase'], custom: { regex: '^I[A-Z]', match: false } },
+  ];
+}

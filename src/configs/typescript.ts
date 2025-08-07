@@ -103,7 +103,7 @@ export async function typescript(options: OverridesOptions & ProjectTypeOptions 
         '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
         '@typescript-eslint/member-ordering': ['error', memberOrdering],
         '@typescript-eslint/method-signature-style': 'error',
-        '@typescript-eslint/naming-convention': ['error', ...namingConvention],
+        '@typescript-eslint/naming-convention': ['error', ...namingConvention()],
         '@typescript-eslint/no-base-to-string': 'error',
         '@typescript-eslint/no-confusing-non-null-assertion': 'error',
         '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
