@@ -1,6 +1,5 @@
 import type { ConfigArray, ConfigWithExtends } from 'typescript-eslint';
 import type { NgrxOptions } from '../types';
-import type { Selector } from './rules-configs/naming-convention';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -126,11 +125,6 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
       enforceOperatorsRules = isPackageExists('@ngrx/operators'),
       overrides = {},
     } = typeof signals === 'object' ? signals : {};
-    const allowLeadingUnderscoreOnMemberLike = (conventions: Selector[]): Selector[] => [
-      ...conventions.filter((c) => !Array.isArray(c.selector)),
-      { selector: 'variableLike', format: ['camelCase'] },
-      { selector: 'memberLike', format: ['camelCase'], leadingUnderscore: 'allow' },
-    ];
     addOperatorsRules ||= enforceOperatorsRules;
     ngrxOperatorsFiles.push(files);
     configs.push({
@@ -141,13 +135,19 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
         ...ngrxPlugin.configs.signals.find((c) => c.name === 'ngrx/signals')?.rules,
         '@typescript-eslint/naming-convention': [
           'error',
-          ...allowLeadingUnderscoreOnMemberLike(namingConvention),
+          ...namingConvention,
+          {
+            selector: ['objectLiteralProperty', 'objectLiteralMethod'],
+            format: ['camelCase'],
+            leadingUnderscore: 'allow',
+          },
           {
             selector: 'variable',
             modifiers: ['const', 'global', 'exported'],
             format: ['PascalCase'],
             leadingUnderscore: 'forbid',
             trailingUnderscore: 'forbid',
+            suffix: ['Store'],
           },
         ],
         ...overrides,
