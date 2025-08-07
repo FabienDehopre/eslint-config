@@ -214,7 +214,6 @@ export async function formatters(
   }
 
   if (options.markdown) {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const GLOB_SLIDEV = options.slidev
       ? options.slidev === true
         ? ['**/.slides.md']
