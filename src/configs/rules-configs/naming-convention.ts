@@ -68,15 +68,21 @@ export interface Selector {
   types?: TypeModifiersString[];
 }
 
+// @typescript-eslint/naming-convention rule configuration
+// Based on Google TypeScript Style Guide
 export default [
   { selector: 'default', format: ['camelCase'], leadingUnderscore: 'forbid', trailingUnderscore: 'forbid' },
-  { selector: ['variableLike', 'memberLike'], format: ['camelCase'] },
-  // eslint-disable-next-line unicorn/no-null
-  { selector: 'memberLike', modifiers: ['requiresQuotes'], format: null },
   { selector: 'typeLike', format: ['PascalCase'] },
+  { selector: 'variable', format: ['camelCase', 'UPPER_CASE'] },
+  { selector: 'function', format: ['camelCase', 'PascalCase'] },
   { selector: 'variable', modifiers: ['const', 'global'], format: ['UPPER_CASE'] },
   { selector: 'enumMember', format: ['UPPER_CASE'] },
+  { selector: 'classProperty', modifiers: ['static', 'readonly'], format: ['UPPER_CASE'] },
+  // eslint-disable-next-line unicorn/no-null
+  { selector: 'memberLike', modifiers: ['requiresQuotes'], format: null },
   { selector: 'parameter', modifiers: ['unused'], format: ['camelCase'], leadingUnderscore: 'allow' },
-  { selector: 'import', modifiers: ['default'], format: ['camelCase', 'PascalCase'] },
-  { selector: 'import', modifiers: ['namespace'], format: ['camelCase', 'PascalCase'] },
+  // eslint-disable-next-line unicorn/no-null
+  { selector: 'variable', modifiers: ['destructured'], format: null },
+  { selector: 'import', modifiers: ['default', 'namespace'], format: ['camelCase', 'PascalCase'] },
+  { selector: 'interface', format: ['PascalCase'], custom: { regex: '^I[A-Z]', match: false } },
 ] satisfies Selector[];
