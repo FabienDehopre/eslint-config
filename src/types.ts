@@ -4,6 +4,7 @@ import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { TSESLint } from '@typescript-eslint/utils';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { Attributes, Callees, Tags, Variables } from 'eslint-plugin-better-tailwindcss/api/types';
+import type { ConfigArray } from 'typescript-eslint';
 import type { VendoredPrettierOptions } from './vendor/prettier-types';
 
 /**
@@ -424,3 +425,6 @@ export interface CreateConfigOptions extends ProjectTypeOptions {
    */
   formatters?: FormattersOptions | boolean;
 }
+
+export const OPTIONS_SYMBOL = Symbol('options');
+export type ConfigArrayWithOptions = ConfigArray & { [OPTIONS_SYMBOL]?: CreateConfigOptions };

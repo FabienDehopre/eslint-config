@@ -1,5 +1,5 @@
 import type { ConfigArray, ConfigWithExtends } from 'typescript-eslint';
-import type { Awaitable, CreateConfigOptions } from './types';
+import type { Awaitable, ConfigArrayWithOptions, CreateConfigOptions } from './types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -26,6 +26,7 @@ import {
   yaml
 } from './configs';
 import { formatters } from './configs/formatters';
+import { OPTIONS_SYMBOL } from './types';
 import { interopDefault, resolveSubOptions } from './utils';
 
 type FlatConfigProps = keyof Omit<ConfigWithExtends, 'basePath' | 'files' | 'ignores' | 'language'>;
@@ -56,7 +57,7 @@ const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/o
 export async function defineConfig(
   options: ConfigWithExtends & CreateConfigOptions = {},
   ...userConfigs: Awaitable<ConfigWithExtends | ConfigWithExtends[]>[]
-): Promise<ConfigArray> {
+): Promise<ConfigArrayWithOptions> {
   const {
     angular: enableAngular = isPackageExists('@angular/core'),
     gitignore: enableGitignore = true,
@@ -206,5 +207,7 @@ export async function defineConfig(
     configs.push([fusedConfig]);
   }
 
-  return tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs)));
+  const config = tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as ConfigArrayWithOptions;
+  config[OPTIONS_SYMBOL] = options;
+  return config;
 }
