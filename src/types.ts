@@ -59,22 +59,33 @@ export interface StylisticOptions {
 }
 
 /**
- * Options for configuring the TypeScript parser.
+ * Options for configuring the TypeScript rules.
  */
-export interface TypeScriptParserOptions {
+export interface TypeScriptOptions {
   /**
    * Additional parser options for TypeScript.
    */
   parserOptions?: TSESLint.FlatConfig.ParserOptions;
-}
 
-export interface TypeScriptErasableSyntaxOnlyOptions {
   /**
-   * Indicates whether the erasable syntax only rules should be enabled or not.
+   * Indicates whether the erasable syntax-only rules should be enabled or not.
    *
    * @default false
    */
   enableErasableSyntaxOnly?: boolean;
+}
+
+/**
+ * Options for configuration the naming convention rule.
+ */
+export interface NamingConventionOptions {
+  /**
+   * Indicates whether you want to relax the naming convention for both "camelCase" and "PascalCase" names.
+   * Otherwise (the default), both "camelCase" and "PascalCase" names will be treated as strict.
+   *
+   * @default false
+   */
+  useRelaxedNamingConventionForCamelAndPascalCases?: boolean;
 }
 
 /**
@@ -143,7 +154,7 @@ export interface AngularOptions {
 /**
  * Interface representing configuration options for enforcing NgRx operators rules.
  */
-export interface NgrxOperators {
+export interface NgrxOperatorsOptions {
   /**
    * Whether to enforce NgRx operators rules.
    *
@@ -162,7 +173,7 @@ export interface NgrxOptions {
    * If set to `true`, the default configuration will be used.
    * If set to an object, it should contain options for files, NGRX operators, and overrides.
    */
-  store?: boolean | (FilesOptions & NgrxOperators & OverridesOptions);
+  store?: boolean | (FilesOptions & NgrxOperatorsOptions & OverridesOptions);
 
   /**
    * Configuration for NGRX effects.
@@ -170,7 +181,7 @@ export interface NgrxOptions {
    * If set to `true`, the default configuration will be used.
    * If set to an object, it should contain options for files, NGRX operators, and overrides.
    */
-  effects?: boolean | (FilesOptions & NgrxOperators & OverridesOptions);
+  effects?: boolean | (FilesOptions & NgrxOperatorsOptions & OverridesOptions);
 
   /**
    * Configuration for NGRX signals.
@@ -178,13 +189,13 @@ export interface NgrxOptions {
    * If set to `true`, the default configuration will be used.
    * If set to an object, it should contain options for files, NGRX operators, and overrides.
    */
-  signals?: boolean | (FilesOptions & NgrxOperators & OverridesOptions);
+  signals?: boolean | (FilesOptions & NgrxOperatorsOptions & OverridesOptions);
 }
 
 /**
  * Options for configuring testing utilities.
  */
-export interface TestingOptions {
+export interface UnitTestingOptions {
   /**
    * Indicates whether to include Jest DOM matchers.
    *
@@ -311,7 +322,7 @@ export interface CreateConfigOptions extends ProjectTypeOptions {
    *
    * @default auto-detected
    */
-  typescript?: boolean | (OverridesOptions & TypeScriptErasableSyntaxOnlyOptions & TypeScriptParserOptions);
+  typescript?: boolean | (NamingConventionOptions & OverridesOptions & TypeScriptOptions);
 
   /**
    * Enable stylistic rules.
@@ -362,7 +373,7 @@ export interface CreateConfigOptions extends ProjectTypeOptions {
    *
    * @default auto-detect based on dependencies.
    */
-  vitest?: boolean | (OverridesOptions & TestingOptions);
+  vitest?: boolean | (OverridesOptions & UnitTestingOptions);
 
   /**
    * Options for the TailwindCSS linting rules.

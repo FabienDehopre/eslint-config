@@ -1,5 +1,5 @@
 import type { ConfigArray, ConfigWithExtends } from 'typescript-eslint';
-import type { NgrxOptions } from '../types';
+import type { NamingConventionOptions, NgrxOptions } from '../types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -38,12 +38,13 @@ const DEFAULT_SIGNALS_GLOB = [`**/*.store.${GLOB_TS_EXT}`];
  * });
  * ```
  */
-export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
+export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}): Promise<ConfigArray> {
   const ngrxPlugin = await interopDefault(import('@ngrx/eslint-plugin/v9'));
   const {
     store = isPackageExists('@ngrx/store'),
     effects = isPackageExists('@ngrx/effects'),
     signals = isPackageExists('@ngrx/signals'),
+    useRelaxedNamingConventionForCamelAndPascalCases = false,
   } = options;
 
   const configs: ConfigWithExtends[] = [];
@@ -65,7 +66,7 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
         ...ngrxPlugin.configs.store.find((c) => c.name === 'ngrx/store')?.rules,
         '@typescript-eslint/naming-convention': [
           'error',
-          ...namingConvention(),
+          ...namingConvention(!useRelaxedNamingConventionForCamelAndPascalCases),
           {
             selector: ['objectLiteralProperty'],
             // eslint-disable-next-line unicorn/no-null
@@ -104,7 +105,7 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
         ...ngrxPlugin.configs.effects.find((c) => c.name === 'ngrx/effects')?.rules,
         '@typescript-eslint/naming-convention': [
           'error',
-          ...namingConvention(),
+          ...namingConvention(!useRelaxedNamingConventionForCamelAndPascalCases),
           {
             selector: 'variable',
             modifiers: ['const', 'global', 'exported'],
@@ -135,7 +136,7 @@ export async function ngrx(options: NgrxOptions = {}): Promise<ConfigArray> {
         ...ngrxPlugin.configs.signals.find((c) => c.name === 'ngrx/signals')?.rules,
         '@typescript-eslint/naming-convention': [
           'error',
-          ...namingConvention(),
+          ...namingConvention(!useRelaxedNamingConventionForCamelAndPascalCases),
           {
             selector: ['objectLiteralProperty', 'objectLiteralMethod'],
             format: ['camelCase'],

@@ -136,8 +136,12 @@ export async function defineConfig(
   }
 
   if (enableNgrx) {
+    const typescriptOptions = resolveSubOptions(options, 'typescript');
     const ngrxOptions = resolveSubOptions(options, 'ngrx');
-    configs.push(ngrx(ngrxOptions));
+    configs.push(ngrx({
+      ...ngrxOptions,
+      useRelaxedNamingConventionForCamelAndPascalCases: typescriptOptions?.useRelaxedNamingConventionForCamelAndPascalCases,
+    }));
   }
 
   if (enableVitest) {

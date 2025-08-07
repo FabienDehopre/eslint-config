@@ -1,10 +1,10 @@
 import type { TSESLint } from '@typescript-eslint/utils';
 import type { ConfigArray } from 'typescript-eslint';
 import type {
+  NamingConventionOptions,
   OverridesOptions, ProjectTypeOptions,
   StylisticOptions,
-  TypeScriptErasableSyntaxOnlyOptions,
-  TypeScriptParserOptions
+  TypeScriptOptions
 } from '../types';
 
 import process from 'node:process';
@@ -26,8 +26,8 @@ import namingConvention from './rules-configs/naming-convention';
  * @param options.overrides - Additional rule overrides.
  * @returns A ConfigArray containing the TypeScript ESLint configuration.
  */
-export async function typescript(options: OverridesOptions & ProjectTypeOptions & StylisticOptions & TypeScriptErasableSyntaxOnlyOptions & TypeScriptParserOptions = {}): Promise<ConfigArray> {
-  const { stylistic = true, parserOptions = {}, overrides = {}, enableErasableSyntaxOnly = false, type = 'app' } = options;
+export async function typescript(options: NamingConventionOptions & OverridesOptions & ProjectTypeOptions & StylisticOptions & TypeScriptOptions = {}): Promise<ConfigArray> {
+  const { stylistic = true, parserOptions = {}, overrides = {}, enableErasableSyntaxOnly = false, useRelaxedNamingConventionForCamelAndPascalCases = false, type = 'app' } = options;
 
   let erasableSyntaxOnlyPlugin: TSESLint.FlatConfig.Plugin | undefined;
   let erasableSyntaxOnlyRules: TSESLint.FlatConfig.Rules | undefined;
@@ -103,7 +103,7 @@ export async function typescript(options: OverridesOptions & ProjectTypeOptions 
         '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
         '@typescript-eslint/member-ordering': ['error', memberOrdering],
         '@typescript-eslint/method-signature-style': 'error',
-        '@typescript-eslint/naming-convention': ['error', ...namingConvention()],
+        '@typescript-eslint/naming-convention': ['error', ...namingConvention(!useRelaxedNamingConventionForCamelAndPascalCases)],
         '@typescript-eslint/no-base-to-string': 'error',
         '@typescript-eslint/no-confusing-non-null-assertion': 'error',
         '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
