@@ -54,6 +54,32 @@ const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/o
  * const config = await createConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
  * ```
  */
+/**
+ * Deep merge utility for configuration options
+ */
+function deepMerge<T extends Record<string, any>>(target: T, source: Partial<T>): T {
+  const result = { ...target };
+  
+  for (const key in source) {
+    if (source[key] !== undefined) {
+      if (
+        typeof source[key] === 'object' && 
+        source[key] !== null && 
+        !Array.isArray(source[key]) &&
+        typeof result[key] === 'object' && 
+        result[key] !== null && 
+        !Array.isArray(result[key])
+      ) {
+        result[key] = deepMerge(result[key], source[key] as any);
+      } else {
+        result[key] = source[key] as any;
+      }
+    }
+  }
+  
+  return result;
+}
+
 export async function defineConfig(
   options: ConfigWithExtends & CreateConfigOptions = {},
   ...userConfigs: Awaitable<ConfigWithExtends | ConfigWithExtends[]>[]
@@ -210,4 +236,46 @@ export async function defineConfig(
   const config = tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as ConfigArrayWithOptions;
   config[OPTIONS_SYMBOL] = options;
   return config;
+}
+
+/**
+ * Creates an overridden ESLint configuration by merging new options with an existing configuration.
+ * This function is designed for Nx workspaces where you want to customize project-level configurations
+ * while preserving the base workspace configuration and its auto-detection logic.
+ * 
+ * @param config - An existing configuration created with `defineConfig()`
+ * @param options - New configuration options to merge with the original ones
+ * @param userConfigs - Additional user configurations that can be awaited
+ * @returns A promise that resolves to a new `ConfigArrayWithOptions`
+ * 
+ * @example
+ * ```typescript
+ * // Root config
+ * const rootConfig = await defineConfig({ typescript: true, angular: true });
+ * 
+ * // Project-specific override
+ * const projectConfig = await overrideConfig(rootConfig, {
+ *   typescript: { parserOptions: { project: './libs/my-lib/tsconfig.json' } },
+ *   ignores: ['**/*.spec.ts'] // additional ignores for this project
+ * });
+ * ```
+ */
+export async function overrideConfig(
+  config: Awaitable<ConfigArrayWithOptions>,
+  options: ConfigWithExtends & CreateConfigOptions,
+  ...userConfigs: Awaitable<ConfigWithExtends | ConfigWithExtends[]>[]
+): Promise<ConfigArrayWithOptions> {
+  const resolvedConfig = await config;
+  
+  // Extract original options from the config
+  const originalOptions = resolvedConfig[OPTIONS_SYMBOL];
+  if (!originalOptions) {
+    throw new Error('[@fabdeh/eslint-config] The provided config was not created with defineConfig() or does not contain original options.');
+  }
+  
+  // Deep merge the original options with the new options
+  const mergedOptions = deepMerge(originalOptions, options);
+  
+  // Create a new configuration with the merged options
+  return defineConfig(mergedOptions, ...userConfigs);
 }
