@@ -1,7 +1,7 @@
 packages:
   - fixtures/*
 
-catalogMode: prefer
+catalogMode: strict
 
 catalogs:
   dev:
@@ -80,8 +80,9 @@ onlyBuiltDependencies:
 
 overrides:
   '@eslint-community/eslint-utils': ^4.7.0
-  '@typescript-eslint/types': ^8.39.0
-  '@typescript-eslint/typescript-estree': ^8.39.0
-  '@typescript-eslint/utils': ^8.39.0
-  eslint: ^9.32.0
+  '@typescript-eslint/types': $typescript-eslint
+  '@typescript-eslint/typescript-estree': $typescript-eslint
+  '@typescript-eslint/utils': $typescript-eslint
+  eslint: $eslint
   inquirer: ^9.0.0
+  tmp: ^0.2.4
