@@ -103,8 +103,6 @@ export async function defineConfig(
     perfectionist()
   );
 
-  // TODO: add node rules as optional ???
-
   if (enableJsdoc) {
     configs.push(jsdoc({ stylistic: stylisticOptions }));
   }
