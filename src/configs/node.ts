@@ -2,6 +2,8 @@ import type { ConfigArray } from 'typescript-eslint';
 
 import nodePlugin from 'eslint-plugin-n';
 
+import { GLOB_SRC } from '../globs';
+
 /**
  * Generates an array containing configuration settings for Node.js-specific rules and plugins.
  *
@@ -11,6 +13,7 @@ export function node(): ConfigArray {
   return [
     {
       name: 'fabdeh/node/rules',
+      files: [GLOB_SRC],
       plugins: {
         n: nodePlugin,
       },
