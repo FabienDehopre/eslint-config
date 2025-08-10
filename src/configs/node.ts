@@ -1,6 +1,7 @@
 import type { ConfigArray } from 'typescript-eslint';
 
 import nodePlugin from 'eslint-plugin-n';
+import tseslint from 'typescript-eslint';
 
 import { GLOB_SRC } from '../globs';
 
@@ -10,7 +11,7 @@ import { GLOB_SRC } from '../globs';
  * @returns An array defining Node.js rules, plugins, and their configurations.
  */
 export function node(): ConfigArray {
-  return [
+  return tseslint.config(
     {
       name: 'fabdeh/node/rules',
       files: [GLOB_SRC],
@@ -30,6 +31,6 @@ export function node(): ConfigArray {
         'n/prefer-promises/fs': 'error',
         'n/process-exit-as-throw': 'error',
       },
-    },
-  ];
+    }
+  );
 }
