@@ -13,7 +13,7 @@ import {
   jsdoc,
   jsonc,
   markdown,
-  ngrx,
+  ngrx, node,
   perfectionist, regexp,
   sortPackageJson,
   sortTsConfig,
@@ -98,6 +98,7 @@ export async function defineConfig(
     ignores(options.ignores),
     javascript({ overrides: options.javascript?.overrides }),
     comments(),
+    node(),
     imports({ stylistic: stylisticOptions }),
     perfectionist()
   );
