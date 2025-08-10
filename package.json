@@ -97,6 +97,7 @@
     "eslint-plugin-jest-dom": "catalog:prod",
     "eslint-plugin-jsdoc": "catalog:prod",
     "eslint-plugin-jsonc": "catalog:prod",
+    "eslint-plugin-n": "catalog:prod",
     "eslint-plugin-perfectionist": "catalog:prod",
     "eslint-plugin-prefer-arrow-functions": "catalog:prod",
     "eslint-plugin-regexp": "catalog:prod",

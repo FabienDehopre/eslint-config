@@ -7,6 +7,7 @@ export { jsdoc } from './jsdoc';
 export * from './jsonc';
 export * from './markdown';
 export * from './ngrx';
+export * from './node';
 export * from './perfectionist';
 export * from './regexp';
 export * from './sort';
