@@ -99,6 +99,7 @@
     "eslint-plugin-jsonc": "catalog:prod",
     "eslint-plugin-n": "catalog:prod",
     "eslint-plugin-perfectionist": "catalog:prod",
+    "eslint-plugin-pnpm": "catalog:prod",
     "eslint-plugin-prefer-arrow-functions": "catalog:prod",
     "eslint-plugin-regexp": "catalog:prod",
     "eslint-plugin-testing-library": "catalog:prod",
