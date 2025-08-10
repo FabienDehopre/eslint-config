@@ -23,7 +23,7 @@ import {
   typescript,
   unicorn,
   vitest,
-  yaml,
+  yaml
 } from './configs';
 import { formatters } from './configs/formatters';
 import { OPTIONS_SYMBOL } from './types';
@@ -63,6 +63,7 @@ export async function defineConfig(
     gitignore: enableGitignore = true,
     jsdoc: enableJsdoc = true,
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
+    // eslint-disable-next-line @angular-eslint/no-experimental
     pnpm: enableCatalogs = false, // TODO: smart detect
     regexp: enableRegexp = true,
     tailwindcss: enableTailwind = false,
