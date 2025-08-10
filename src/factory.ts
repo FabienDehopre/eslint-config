@@ -14,7 +14,7 @@ import {
   jsonc,
   markdown,
   ngrx, node,
-  perfectionist, regexp,
+  perfectionist, pnpm, regexp,
   sortPackageJson,
   sortTsConfig,
   stylistic,
@@ -23,7 +23,7 @@ import {
   typescript,
   unicorn,
   vitest,
-  yaml
+  yaml,
 } from './configs';
 import { formatters } from './configs/formatters';
 import { OPTIONS_SYMBOL } from './types';
@@ -63,6 +63,7 @@ export async function defineConfig(
     gitignore: enableGitignore = true,
     jsdoc: enableJsdoc = true,
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
+    pnpm: enableCatalogs = false, // TODO: smart detect
     regexp: enableRegexp = true,
     tailwindcss: enableTailwind = false,
     typescript: enableTypescript = isPackageExists('typescript'),
@@ -164,6 +165,10 @@ export async function defineConfig(
       sortPackageJson(),
       sortTsConfig()
     );
+  }
+
+  if (enableCatalogs) {
+    configs.push(pnpm());
   }
 
   if (options.yaml ?? true) {

@@ -9,6 +9,7 @@ export * from './markdown';
 export * from './ngrx';
 export * from './node';
 export * from './perfectionist';
+export * from './pnpm';
 export * from './regexp';
 export * from './sort';
 export * from './stylistic';
