@@ -59,7 +59,7 @@ let dts = await flatConfigsToRulesDTS(configs, { includeAugmentation: false });
 
 dts += `
 // Names of all the configs
-export type ConfigName = ${configNames.map((i) => `'${i}'`).join(' | ')};
+export type ConfigNames = ${configNames.map((i) => `'${i}'`).join(' | ')};
 `;
 
 await fs.writeFile('src/typegen.d.ts', dts);
