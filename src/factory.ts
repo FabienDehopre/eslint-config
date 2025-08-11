@@ -7,14 +7,18 @@ import tseslint from 'typescript-eslint';
 import {
   angular,
   comments,
+  formatters,
   ignores,
   imports,
   javascript,
   jsdoc,
   jsonc,
   markdown,
-  ngrx, node,
-  perfectionist, pnpm, regexp,
+  ngrx,
+  node,
+  perfectionist,
+  pnpm,
+  regexp,
   sortPackageJson,
   sortTsConfig,
   stylistic,
@@ -25,7 +29,6 @@ import {
   vitest,
   yaml
 } from './configs';
-import { formatters } from './configs/formatters';
 import { OPTIONS_SYMBOL } from './types';
 import { interopDefault, resolveSubOptions } from './utils';
 
