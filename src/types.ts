@@ -7,6 +7,8 @@ import type { Attributes, Callees, Tags, Variables } from 'eslint-plugin-better-
 import type { ConfigArray } from 'typescript-eslint';
 import type { VendoredPrettierOptions } from './vendor/prettier-types';
 
+export type { ConfigNames, RuleOptions } from './typegen';
+
 /**
  * A type that can be awaited. Promise<T> or T.
  */
