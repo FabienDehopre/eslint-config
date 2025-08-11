@@ -50,7 +50,8 @@
     "lint:check": "eslint . --quiet",
     "prepack": "pnpm build",
     "release": "bumpp && npm publish",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "gen": "tsx scripts/typegen.ts"
   },
   "peerDependencies": {
     "@prettier/plugin-xml": "catalog:peer",
@@ -146,6 +147,7 @@
     "prettier-plugin-slidev": "catalog:peer",
     "simple-git-hooks": "catalog:dev",
     "tailwindcss": "catalog:dev",
+    "tsx": "catalog:dev",
     "typescript": "catalog:dev",
     "unbuild": "catalog:dev",
     "vitest": "catalog:dev"
