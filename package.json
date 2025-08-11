@@ -40,7 +40,7 @@
     "node": "^20.11.1 || ^22.11.0"
   },
   "scripts": {
-    "build": "unbuild",
+    "build": "pnpm gen && unbuild",
     "build:inspector": "pnpm build && pnpx @eslint/config-inspector build",
     "dev": "pnpx @eslint/config-inspector --config eslint.config.ts",
     "preinstall": "npx only-allow pnpm",
