@@ -136,6 +136,7 @@
     "eslint-plugin-better-tailwindcss": "catalog:peer",
     "eslint-plugin-erasable-syntax-only": "catalog:peer",
     "eslint-plugin-format": "catalog:peer",
+    "eslint-typegen": "catalog:dev",
     "execa": "catalog:dev",
     "fast-glob": "catalog:dev",
     "fs-extra": "catalog:dev",
