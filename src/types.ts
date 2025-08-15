@@ -5,14 +5,18 @@ import type { TSESLint } from '@typescript-eslint/utils';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { Attributes, Callees, Tags, Variables } from 'eslint-plugin-better-tailwindcss/api/types';
 import type { ConfigArray } from 'typescript-eslint';
+import type { RuleOptions } from './typegen';
 import type { VendoredPrettierOptions } from './vendor/prettier-types';
 
-export type { ConfigNames, RuleOptions } from './typegen';
+export type { ConfigNames } from './typegen';
 
 /**
  * A type that can be awaited. Promise<T> or T.
  */
 export type Awaitable<T> = Promise<T> | T;
+
+// eslint-disable-next-line perfectionist/sort-intersection-types
+export type Rules = TSESLint.FlatConfig.Config['rules'] & RuleOptions;
 
 /**
  * Interface representing options for overriding default ESLint rules.
@@ -21,7 +25,7 @@ export interface OverridesOptions {
   /**
    * Optional property that allows specifying custom rules to override the default ones.
    */
-  overrides?: TSESLint.FlatConfig.Config['rules'];
+  overrides?: Rules;
 }
 
 /**
@@ -113,12 +117,12 @@ export interface AngularOptions {
   /**
    * TypeScript-specific linting rule overrides.
    */
-  tsOverrides?: TSESLint.FlatConfig.Config['rules'];
+  tsOverrides?: Rules;
 
   /**
    * HTML-specific linting rule overrides.
    */
-  htmlOverrides?: TSESLint.FlatConfig.Config['rules'];
+  htmlOverrides?: Rules;
 
   /**
    * A class name pattern that allows service using `@Injectable` decorator to not use `providedIn` option.
