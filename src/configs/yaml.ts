@@ -14,7 +14,7 @@ import { interopDefault } from '../utils';
  * @param options.stylistic - A boolean or object to specify stylistic rules. Defaults to `true`.
  * @param options.stylistic.indent - The number of spaces for indentation or 'tab'. Defaults to `2`.
  * @param options.stylistic.quotes - The type of quotes to use ('single', 'double', or 'backtick'). Defaults to `'single'`.
- * @returns A promise that resolves to a `ConfigArray` containing the ESLint configuration.
+ * @returns A promise that resolves to a `TypedConfigArray` containing the ESLint configuration.
  */
 export async function yaml(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<TypedConfigArray> {
   const {

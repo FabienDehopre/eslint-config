@@ -5,7 +5,6 @@ import type { TSESLint } from '@typescript-eslint/utils';
 import type { Linter } from 'eslint';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { Attributes, Callees, Tags, Variables } from 'eslint-plugin-better-tailwindcss/api/types';
-import type { ConfigArray } from 'typescript-eslint';
 import type { RuleOptions } from './typegen';
 import type { VendoredPrettierOptions } from './vendor/prettier-types';
 
@@ -19,8 +18,10 @@ export type Awaitable<T> = Promise<T> | T;
 // eslint-disable-next-line perfectionist/sort-intersection-types
 export type Rules = TSESLint.FlatConfig.Config['rules'] & RuleOptions;
 
+export type InfiniteDepthConfigWithExtends = InfiniteDepthConfigWithExtends[] | TypedConfig;
+
 /**
- * An updated version of ESLint's `Linter.Config`, which provides autocompletion
+ * An updated version of ESLint's `TSESLint.FlatConfig.Config`, which provides autocompletion
  * for `rules` and relaxes type limitations for `plugins` and `rules`, because
  * many plugins still lack proper type definitions.
  */
@@ -30,6 +31,48 @@ export type TypedConfig = Omit<TSESLint.FlatConfig.Config, 'rules'> & {
    * specified, these rule configurations are only available to the matching files.
    */
   rules?: Rules;
+
+  /**
+   * Allows you to "extend" a set of configs similar to `extends` from the
+   * classic configs.
+   *
+   * This is just a convenience shorthand to help reduce duplication.
+   *
+   * ```js
+   * export default tseslint.config({
+   *   files: ['** /*.ts'],
+   *   extends: [
+   *     eslint.configs.recommended,
+   *     tseslint.configs.recommended,
+   *   ],
+   *   rules: {
+   *     '@typescript-eslint/array-type': 'error',
+   *     '@typescript-eslint/consistent-type-imports': 'error',
+   *   },
+   * })
+   *
+   * // expands to
+   *
+   * export default [
+   *   {
+   *     ...eslint.configs.recommended,
+   *     files: ['** /*.ts'],
+   *   },
+   *   ...tseslint.configs.recommended.map(conf => ({
+   *     ...conf,
+   *     files: ['** /*.ts'],
+   *   })),
+   *   {
+   *     files: ['** /*.ts'],
+   *     rules: {
+   *       '@typescript-eslint/array-type': 'error',
+   *       '@typescript-eslint/consistent-type-imports': 'error',
+   *     },
+   *   },
+   * ]
+   * ```
+   */
+  extends?: InfiniteDepthConfigWithExtends[];
 };
 
 export type TypedConfigArray = TypedConfig[];
@@ -329,6 +372,12 @@ export interface ProjectTypeOptions {
  */
 export interface CreateConfigOptions extends ProjectTypeOptions {
   /**
+   * An array of glob patterns indicating the files that the configuration object should not apply to.
+   * If not specified, the configuration object applies to all files matched by files.
+   */
+  ignores?: string[];
+
+  /**
    * Enable gitignore support.
    *
    * Passing an object to configure the options.
@@ -464,4 +513,4 @@ export interface CreateConfigOptions extends ProjectTypeOptions {
 }
 
 export const OPTIONS_SYMBOL = Symbol('options');
-export type ConfigArrayWithOptions = ConfigArray & { [OPTIONS_SYMBOL]?: CreateConfigOptions };
+export type ConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]?: CreateConfigOptions };

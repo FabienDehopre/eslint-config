@@ -10,7 +10,7 @@ import { GLOB_SRC, GLOB_TS } from '../globs';
  *
  * @param options - An object containing stylistic options.
  * @param options.stylistic - A boolean indicating whether to include stylistic rules. Defaults to true.
- * @returns A ConfigArray object with the specified import rules.
+ * @returns A TypedConfigArray object with the specified import rules.
  */
 export function imports(options: StylisticOptions = {}): TypedConfigArray {
   const { stylistic = true } = options;

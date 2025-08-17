@@ -24,7 +24,7 @@ import { namingConvention } from './rules-configs/naming-convention';
  * @param options.stylistic - A boolean indicating whether stylistic rules should be included. Defaults to true.
  * @param options.parserOptions - Options for the TypeScript parser.
  * @param options.overrides - Additional rule overrides.
- * @returns A ConfigArray containing the TypeScript ESLint configuration.
+ * @returns A TypedConfigArray containing the TypeScript ESLint configuration.
  */
 export async function typescript(options: NamingConventionOptions & OverridesOptions & ProjectTypeOptions & StylisticOptions & TypeScriptOptions = {}): Promise<TypedConfigArray> {
   const { stylistic = true, parserOptions = {}, overrides = {}, enableErasableSyntaxOnly = false, useRelaxedNamingConventionForCamelAndPascalCases = false, type = 'app' } = options;

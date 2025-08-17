@@ -1,5 +1,4 @@
-import type { TSESLint } from '@typescript-eslint/utils';
-import type { ConfigArray } from 'typescript-eslint';
+import type { TypedConfig, TypedConfigArray } from '../src/types';
 
 import fs from 'node:fs/promises';
 
@@ -11,7 +10,7 @@ import { angular, comments, formatters, imports, javascript, jsdoc, jsonc, markd
 type Awaitable<T> = Promise<T> | T;
 
 // eslint-disable-next-line jsdoc/require-jsdoc
-async function combine(...configs: Awaitable<ConfigArray | TSESLint.FlatConfig.Config>[]): Promise<ConfigArray> {
+async function combine(...configs: Awaitable<TypedConfig | TypedConfigArray>[]): Promise<TypedConfigArray> {
   const resolved = await Promise.all(configs);
   return resolved.flat();
 }

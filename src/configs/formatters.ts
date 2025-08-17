@@ -47,7 +47,7 @@ function mergePrettierOptions(
  * @param options - The options for configuring the formatters. If set to `true`, default options will be used.
  * @param stylistic - The stylistic options for the formatters.
  * @param hasAngularTemplateParser - Optional argument which indicates whether angular rules already registered the template parser or not.
- * @returns A promise that resolves to a `ConfigArray` containing the configured formatters.
+ * @returns A promise that resolves to a `TypedConfigArray` containing the configured formatters.
  */
 export async function formatters(
   options: FormattersOptions | true = {},

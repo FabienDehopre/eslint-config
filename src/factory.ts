@@ -1,5 +1,4 @@
-import type { ConfigArray, ConfigWithExtends } from 'typescript-eslint';
-import type { Awaitable, ConfigArrayWithOptions, CreateConfigOptions } from './types';
+import type { Awaitable, ConfigArrayWithOptions, CreateConfigOptions, TypedConfig, TypedConfigArray } from './types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -32,18 +31,6 @@ import {
 import { OPTIONS_SYMBOL } from './types';
 import { interopDefault, resolveSubOptions } from './utils';
 
-type FlatConfigProps = keyof Omit<ConfigWithExtends, 'basePath' | 'files' | 'ignores' | 'language'>;
-const FLAT_CONFIG_PROPS = [
-  'name',
-  'languageOptions',
-  'linterOptions',
-  'processor',
-  'plugins',
-  'rules',
-  'settings',
-  'extends',
-] satisfies FlatConfigProps[];
-
 const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/operators'];
 
 /**
@@ -58,8 +45,8 @@ const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/o
  * ```
  */
 export async function defineConfig(
-  options: ConfigWithExtends & CreateConfigOptions = {},
-  ...userConfigs: Awaitable<ConfigWithExtends | ConfigWithExtends[]>[]
+  options: CreateConfigOptions = {},
+  ...userConfigs: Awaitable<TypedConfig | TypedConfigArray>[]
 ): Promise<ConfigArrayWithOptions> {
   const {
     angular: enableAngular = isPackageExists('@angular/core'),
@@ -82,7 +69,7 @@ export async function defineConfig(
   const stylisticOptions =
     options.stylistic === false ? false : typeof options.stylistic === 'object' ? options.stylistic : {};
 
-  const configs: Awaitable<ConfigArray>[] = [];
+  const configs: Awaitable<TypedConfigArray>[] = [];
   if (enableGitignore) {
     if (typeof enableGitignore === 'object') {
       configs.push(
@@ -202,17 +189,6 @@ export async function defineConfig(
       typeof stylisticOptions === 'boolean' ? {} : stylisticOptions,
       Boolean(enableAngular)
     ));
-  }
-
-  if ('files' in options) {
-    throw new Error('[@fabdeh/eslint-config] The first argument should not contain the "files" property as the options are supposed to be global. Place it in the second or later config instead.');
-  }
-
-  const fusedConfig = Object.fromEntries(
-    Object.entries(options).filter(([k]) => FLAT_CONFIG_PROPS.includes(k as FlatConfigProps))
-  ) satisfies ConfigWithExtends;
-  if (Object.keys(fusedConfig).length > 0) {
-    configs.push([fusedConfig]);
   }
 
   const config = tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as ConfigArrayWithOptions;

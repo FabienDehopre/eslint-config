@@ -16,7 +16,7 @@ import { interopDefault } from '../utils';
  * @param options - An object containing file and override options.
  * @param options.files - An array of glob patterns to specify the Markdown files to lint.
  * @param options.overrides - An object containing rule overrides.
- * @returns A promise that resolves to a ConfigArray containing the ESLint configurations.
+ * @returns A promise that resolves to a TypedConfigArray containing the ESLint configurations.
  * @example
  * ```typescript
  * const config = await markdown({
