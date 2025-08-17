@@ -31,7 +31,9 @@ export type TypedConfig = Omit<TSESLint.FlatConfig.Config, 'rules'> & {
    * specified, these rule configurations are only available to the matching files.
    */
   rules?: Rules;
+};
 
+export type TypedConfigWithExtends = TypedConfig & {
   /**
    * Allows you to "extend" a set of configs similar to `extends` from the
    * classic configs.

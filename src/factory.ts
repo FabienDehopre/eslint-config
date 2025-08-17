@@ -1,4 +1,4 @@
-import type { Awaitable, ConfigArrayWithOptions, CreateConfigOptions, TypedConfig, TypedConfigArray } from './types';
+import type { Awaitable, ConfigArrayWithOptions, CreateConfigOptions, TypedConfigArray, TypedConfigWithExtends } from './types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -46,7 +46,7 @@ const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/o
  */
 export async function defineConfig(
   options: CreateConfigOptions = {},
-  ...userConfigs: Awaitable<TypedConfig | TypedConfigArray>[]
+  ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
 ): Promise<ConfigArrayWithOptions> {
   const {
     angular: enableAngular = isPackageExists('@angular/core'),
