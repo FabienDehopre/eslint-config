@@ -9,7 +9,7 @@ export type NamingConventionOptions = ExtractRuleOptionsType<Rules['@typescript-
  * @param allowJsx -- Allow or not to use "PascalCase" for functions.
  * @returns The default naming convention rule configuration.
  */
-export default function namingConvention(strict: boolean, allowJsx = false): NamingConventionOptions {
+export function namingConvention(strict: boolean, allowJsx = false): NamingConventionOptions {
   return [
     { selector: 'default', format: [strict ? 'strictCamelCase' : 'camelCase'], leadingUnderscore: 'forbid', trailingUnderscore: 'forbid' },
     { selector: 'typeLike', format: [strict ? 'StrictPascalCase' : 'PascalCase'] },

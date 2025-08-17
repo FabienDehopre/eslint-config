@@ -15,7 +15,7 @@ import tseslint from 'typescript-eslint';
 import { GLOB_MARKDOWN, GLOB_TS } from '../globs';
 import { ensurePackages, getTsConfigFileName, getWorkspaceRoot, interopDefault } from '../utils';
 import { MEMBER_ORDERING_OPTIONS } from './rules-configs/member-ordering';
-import namingConvention from './rules-configs/naming-convention';
+import { namingConvention } from './rules-configs/naming-convention';
 
 /**
  * Generates a TypeScript ESLint configuration.

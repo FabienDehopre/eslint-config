@@ -5,7 +5,7 @@ import tseslint from 'typescript-eslint';
 
 import { GLOB_TS_EXT } from '../globs';
 import { interopDefault } from '../utils';
-import namingConvention from './rules-configs/naming-convention';
+import { namingConvention } from './rules-configs/naming-convention';
 
 const DEFAULT_STORE_GLOB = [
   `**/*.actions.${GLOB_TS_EXT}`,
