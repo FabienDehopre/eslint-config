@@ -1,4 +1,4 @@
-import type { ConfigArray } from 'typescript-eslint';
+import type { TypedConfigArray } from '../types';
 
 import eslintComments from '@eslint-community/eslint-plugin-eslint-comments';
 import tseslint from 'typescript-eslint';
@@ -14,7 +14,7 @@ import { GLOB_SRC } from '../globs';
  *
  * @returns The configuration array for ESLint comments rules.
  */
-export function comments(): ConfigArray {
+export function comments(): TypedConfigArray {
   return tseslint.config({
     name: 'fabdeh/comments/rules',
     files: [GLOB_SRC],

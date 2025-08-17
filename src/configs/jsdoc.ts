@@ -1,6 +1,5 @@
 import type { TSESLint } from '@typescript-eslint/utils';
-import type { ConfigArray } from 'typescript-eslint';
-import type { StylisticOptions } from '../types';
+import type { StylisticOptions, TypedConfig, TypedConfigArray } from '../types';
 
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 import tseslint from 'typescript-eslint';
@@ -19,7 +18,7 @@ export function getJsDocRules(
   level: TSESLint.SharedConfig.RuleLevel,
   stylistic: boolean,
   mode: 'both' | 'jsOnly' | 'tsOnly'
-): TSESLint.FlatConfig.Rules {
+): TypedConfig['rules'] {
   return {
     ...(mode === 'both' || mode === 'jsOnly'
       ? {
@@ -81,7 +80,7 @@ export function getJsDocRules(
  * @param options.stylistic - A boolean indicating whether to include stylistic rules. Defaults to true.
  * @returns A configuration array for JSDoc rules.
  */
-export function jsdoc(options: StylisticOptions = {}): ConfigArray {
+export function jsdoc(options: StylisticOptions = {}): TypedConfigArray {
   const { stylistic = true } = options;
   return tseslint.config(
     {

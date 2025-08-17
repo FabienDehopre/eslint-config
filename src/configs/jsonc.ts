@@ -1,5 +1,4 @@
-import type { ConfigArray } from 'typescript-eslint';
-import type { FilesOptions, OverridesOptions, StylisticOptions } from '../types';
+import type { FilesOptions, OverridesOptions, StylisticOptions, TypedConfigArray } from '../types';
 
 import tseslint from 'typescript-eslint';
 
@@ -24,7 +23,7 @@ import { interopDefault } from '../utils';
  * });
  * ```
  */
-export async function jsonc(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<ConfigArray> {
+export async function jsonc(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<TypedConfigArray> {
   const {
     files = [GLOB_JSON, GLOB_JSON5, GLOB_JSONC],
     overrides = {},

@@ -10,10 +10,7 @@ import { angular, comments, formatters, imports, javascript, jsdoc, jsonc, markd
 
 type Awaitable<T> = Promise<T> | T;
 
-/**
- *
- * @param configs
- */
+// eslint-disable-next-line jsdoc/require-jsdoc
 async function combine(...configs: Awaitable<ConfigArray | TSESLint.FlatConfig.Config>[]): Promise<ConfigArray> {
   const resolved = await Promise.all(configs);
   return resolved.flat();

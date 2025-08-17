@@ -1,6 +1,5 @@
 import type { TSESLint } from '@typescript-eslint/utils';
-import type { ConfigArray } from 'typescript-eslint';
-import type { FilesOptions, OverridesOptions } from '../types';
+import type { FilesOptions, OverridesOptions, TypedConfigArray } from '../types';
 
 import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors';
 import tseslint from 'typescript-eslint';
@@ -28,7 +27,7 @@ import { interopDefault } from '../utils';
  * });
  * ```
  */
-export async function markdown(options: FilesOptions & OverridesOptions = {}): Promise<ConfigArray> {
+export async function markdown(options: FilesOptions & OverridesOptions = {}): Promise<TypedConfigArray> {
   const {
     files = [GLOB_MARKDOWN],
     overrides = {},

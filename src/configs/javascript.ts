@@ -1,5 +1,4 @@
-import type { ConfigArray } from 'typescript-eslint';
-import type { OverridesOptions } from '../types';
+import type { OverridesOptions, TypedConfigArray } from '../types';
 
 import eslint from '@eslint/js';
 import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
@@ -26,7 +25,7 @@ import { GLOB_SRC } from '../globs';
  */
 export function javascript(
   options: OverridesOptions = {}
-): ConfigArray {
+): TypedConfigArray {
   const { overrides = {} } = options;
 
   return tseslint.config(

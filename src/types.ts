@@ -2,6 +2,7 @@
 
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { TSESLint } from '@typescript-eslint/utils';
+import type { Linter } from 'eslint';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { Attributes, Callees, Tags, Variables } from 'eslint-plugin-better-tailwindcss/api/types';
 import type { ConfigArray } from 'typescript-eslint';
@@ -19,13 +20,31 @@ export type Awaitable<T> = Promise<T> | T;
 export type Rules = TSESLint.FlatConfig.Config['rules'] & RuleOptions;
 
 /**
+ * An updated version of ESLint's `Linter.Config`, which provides autocompletion
+ * for `rules` and relaxes type limitations for `plugins` and `rules`, because
+ * many plugins still lack proper type definitions.
+ */
+export type TypedConfig = Omit<TSESLint.FlatConfig.Config, 'rules'> & {
+  /**
+   * An object containing the configured rules. When `files` or `ignores` are
+   * specified, these rule configurations are only available to the matching files.
+   */
+  rules?: Rules;
+};
+
+export type TypedConfigArray = TypedConfig[];
+
+export type ExtractRuleOptionsType<RuleEntry> = RuleEntry extends Linter.RuleSeverityAndOptions<infer Options> ? Options : never;
+export type ArrayItemType<T> = T extends (infer U)[] ? U : never;
+
+/**
  * Interface representing options for overriding default ESLint rules.
  */
 export interface OverridesOptions {
   /**
    * Optional property that allows specifying custom rules to override the default ones.
    */
-  overrides?: Rules;
+  overrides?: TypedConfig['rules'];
 }
 
 /**
@@ -117,12 +136,12 @@ export interface AngularOptions {
   /**
    * TypeScript-specific linting rule overrides.
    */
-  tsOverrides?: Rules;
+  tsOverrides?: TypedConfig['rules'];
 
   /**
    * HTML-specific linting rule overrides.
    */
-  htmlOverrides?: Rules;
+  htmlOverrides?: TypedConfig['rules'];
 
   /**
    * A class name pattern that allows service using `@Injectable` decorator to not use `providedIn` option.
