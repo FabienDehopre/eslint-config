@@ -132,7 +132,7 @@ export async function defineConfig(
     const ngrxOptions = resolveSubOptions(options, 'ngrx');
     configs.push(ngrx({
       ...ngrxOptions,
-      useRelaxedNamingConventionForCamelAndPascalCases: typescriptOptions?.useRelaxedNamingConventionForCamelAndPascalCases,
+      useRelaxedNamingConventionForCamelAndPascalCases: typescriptOptions.useRelaxedNamingConventionForCamelAndPascalCases,
     }));
   }
 

@@ -150,7 +150,7 @@ export async function findNearestPackageJsonName(directoryPath: string = resolve
   }
 }
 
-export type ResolvedOptions<T> = T extends boolean ? never : T;
+export type ResolvedOptions<T> = T extends boolean ? never : NonNullable<T>;
 
 /**
  * Returns the object representation of the configuration or an empty object if it is a boolean.
@@ -165,7 +165,7 @@ export function resolveSubOptions<K extends keyof CreateConfigOptions>(
 ): ResolvedOptions<CreateConfigOptions[K]> {
   const option = options[key];
   if (typeof option === 'boolean') {
-    return undefined as ResolvedOptions<CreateConfigOptions[K]>;
+    return {} as unknown as ResolvedOptions<CreateConfigOptions[K]>;
   }
 
   return (option ?? {}) as ResolvedOptions<CreateConfigOptions[K]>;
