@@ -150,7 +150,6 @@
     "tailwindcss": "catalog:dev",
     "tsx": "catalog:dev",
     "typescript": "catalog:dev",
-    "unbuild": "catalog:dev",
     "vitest": "catalog:dev"
   },
   "resolutions": {
