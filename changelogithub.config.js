@@ -1,5 +1,4 @@
-import type { ChangelogenOptions } from 'changelogithub';
-
+/** @type {Partial<import('changelogithub').ChangelogenOptions>} */
 export default {
   types: {
     feat: { title: '🚀 Features' },
@@ -7,4 +6,4 @@ export default {
     perf: { title: '🏎 Performance' },
     refactor: { title: '💅 Refactor' },
   },
-} satisfies Partial<ChangelogenOptions>;
+};

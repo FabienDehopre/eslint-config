@@ -4,8 +4,8 @@ export default {
   ...configConventional,
   rules: {
     ...configConventional.rules,
-    'body-max-line-length': [0, 'always', 100] as const,
-    'footer-max-line-length': [0, 'always', 100] as const,
+    'body-max-line-length': [0, 'always', 100],
+    'footer-max-line-length': [0, 'always', 100],
     'scope-case': [2, 'always', 'lower-case'],
     'scope-empty': [2, 'always'],
   },
