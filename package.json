@@ -28,11 +28,11 @@
   },
   "sideEffects": false,
   "exports": {
-    ".": "./dist/index.mjs"
+    ".": "./dist/index.js"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -43,12 +43,12 @@
     "build": "pnpm gen && tsdown",
     "build:ci": "tsdown",
     "build:inspector": "pnpm build && pnpx @eslint/config-inspector build",
-    "dev": "pnpx @eslint/config-inspector --config eslint.config.ts",
+    "dev": "pnpx @eslint/config-inspector --config eslint.config.js",
     "preinstall": "npx only-allow pnpm",
     "prepare": "is-ci || simple-git-hooks",
     "commit": "git-cz",
-    "lint": "eslint . --fix",
-    "lint:check": "eslint . --quiet",
+    "lint": "pnpm build && eslint . --fix",
+    "lint:ci": "eslint . --quiet",
     "prepack": "pnpm build",
     "release": "bumpp && npm publish",
     "typecheck": "tsc --noEmit",

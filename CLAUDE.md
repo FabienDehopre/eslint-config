@@ -70,14 +70,14 @@ The package uses a factory pattern with the `defineConfig()` function that:
 
 ## Build System
 
-- **unbuild** for building the package
-- **build.config.ts** - Build configuration with TypeScript declaration generation
+- **tsdown** for building the package
+- **tsdown.config.js** - Build configuration with TypeScript declaration generation
 - Outputs to `dist/` directory with ESM format
 
 ## Commit Conventions
 
 - Uses conventional commits with commitizen
-- **commitlint.config.ts** - Custom commit message rules
+- **commitlint.config.js** - Custom commit message rules
 - Scopes are disabled (scope-empty rule enforced)
 
 ## Development Notes
