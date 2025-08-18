@@ -514,5 +514,5 @@ export interface CreateConfigOptions extends ProjectTypeOptions {
   pnpm?: boolean;
 }
 
-export const OPTIONS_SYMBOL = Symbol('options');
+export const OPTIONS_SYMBOL: unique symbol = Symbol('options');
 export type ConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]?: CreateConfigOptions };

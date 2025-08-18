@@ -111,12 +111,12 @@ export const GLOB_HTML = '**/*.htm?(l)';
 /**
  * A glob pattern that matches test files.
  */
-export const GLOB_TESTS = [`**/*.spec.?([cm])[jt]s`, `**/*.test.?([cm])[jt]s`, `**/test-setup.?([cm])[jt]s`];
+export const GLOB_TESTS: string[] = [`**/*.spec.?([cm])[jt]s`, `**/*.test.?([cm])[jt]s`, `**/test-setup.?([cm])[jt]s`];
 
 /**
  * A glob pattern that matches all source files.
  */
-export const GLOB_ALL_SRC = [
+export const GLOB_ALL_SRC: string[] = [
   GLOB_SRC,
   GLOB_STYLE,
   GLOB_JSON,
@@ -130,7 +130,7 @@ export const GLOB_ALL_SRC = [
 /**
  * A glob pattern that matches files to exclude from linting.
  */
-export const GLOB_EXCLUDE = [
+export const GLOB_EXCLUDE: string[] = [
   '**/node_modules',
   '**/dist',
   '**/package-lock.json',
