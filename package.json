@@ -148,6 +148,7 @@
     "prettier-plugin-slidev": "catalog:peer",
     "simple-git-hooks": "catalog:dev",
     "tailwindcss": "catalog:dev",
+    "tsdown": "catalog:dev",
     "tsx": "catalog:dev",
     "typescript": "catalog:dev",
     "vitest": "catalog:dev"
