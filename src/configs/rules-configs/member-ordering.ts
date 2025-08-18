@@ -1,65 +1,8 @@
-import type { TSESTree } from '@typescript-eslint/utils';
+import type { ArrayItemType, ExtractRuleOptionsType, Rules } from '../../types';
 
-type ReadonlyType = 'readonly-field' | 'readonly-signature';
+export type MemberOrderingOptions = ArrayItemType<ExtractRuleOptionsType<Rules['member-ordering']>>;
 
-type MemberKind =
-  ReadonlyType |
-  'accessor' |
-  'call-signature' |
-  'constructor' |
-  'field' |
-  'get' |
-  'method' |
-  'set' |
-  'signature' |
-  'static-initialization';
-
-type DecoratedMemberKind =
-  Exclude<ReadonlyType, 'readonly-signature'> |
-  'accessor' |
-  'field' |
-  'get' |
-  'method' |
-  'set';
-
-type NonCallableMemberKind = Exclude<MemberKind, 'constructor' | 'readonly-signature' | 'signature'>;
-
-type MemberScope = 'abstract' | 'instance' | 'static';
-
-type Accessibility = TSESTree.Accessibility | '#private';
-
-type BaseMemberType =
-  | MemberKind |
-  `${Accessibility}-${Exclude<MemberKind, 'readonly-signature' | 'signature' | 'static-initialization'>}` |
-  `${Accessibility}-${MemberScope}-${NonCallableMemberKind}` |
-  `${Accessibility}-decorated-${DecoratedMemberKind}` |
-  `${MemberScope}-${NonCallableMemberKind}` |
-  `decorated-${DecoratedMemberKind}`;
-
-type MemberType = BaseMemberType | BaseMemberType[];
-
-type AlphabeticalOrder = 'alphabetically' | 'alphabetically-case-insensitive' | 'natural' | 'natural-case-insensitive';
-
-type Order = AlphabeticalOrder | 'as-written';
-type OptionalityOrder = 'optional-first' | 'required-first';
-
-interface SortOrderConfig {
-  memberTypes?: MemberType[] | 'never';
-  optionalityOrder?: OptionalityOrder;
-  order?: Order;
-}
-
-type OrderConfig = MemberType[] | SortOrderConfig | 'never';
-
-export interface MemberOrderingOptions {
-  classes?: OrderConfig;
-  classExpressions?: OrderConfig;
-  default?: OrderConfig;
-  interfaces?: OrderConfig;
-  typeLiterals?: OrderConfig;
-}
-
-export default {
+export const MEMBER_ORDERING_OPTIONS: MemberOrderingOptions = {
   default: [
     'signature',
     '#private-field',
@@ -78,4 +21,4 @@ export default {
     'private-method',
     '#private-method',
   ],
-} satisfies MemberOrderingOptions;
+};

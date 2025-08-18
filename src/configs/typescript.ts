@@ -1,9 +1,9 @@
 import type { TSESLint } from '@typescript-eslint/utils';
-import type { ConfigArray } from 'typescript-eslint';
 import type {
   NamingConventionOptions,
   OverridesOptions, ProjectTypeOptions,
   StylisticOptions,
+  TypedConfigArray,
   TypeScriptOptions
 } from '../types';
 
@@ -14,8 +14,8 @@ import tseslint from 'typescript-eslint';
 
 import { GLOB_MARKDOWN, GLOB_TS } from '../globs';
 import { ensurePackages, getTsConfigFileName, getWorkspaceRoot, interopDefault } from '../utils';
-import memberOrdering from './rules-configs/member-ordering';
-import namingConvention from './rules-configs/naming-convention';
+import { MEMBER_ORDERING_OPTIONS } from './rules-configs/member-ordering';
+import { namingConvention } from './rules-configs/naming-convention';
 
 /**
  * Generates a TypeScript ESLint configuration.
@@ -24,9 +24,9 @@ import namingConvention from './rules-configs/naming-convention';
  * @param options.stylistic - A boolean indicating whether stylistic rules should be included. Defaults to true.
  * @param options.parserOptions - Options for the TypeScript parser.
  * @param options.overrides - Additional rule overrides.
- * @returns A ConfigArray containing the TypeScript ESLint configuration.
+ * @returns A TypedConfigArray containing the TypeScript ESLint configuration.
  */
-export async function typescript(options: NamingConventionOptions & OverridesOptions & ProjectTypeOptions & StylisticOptions & TypeScriptOptions = {}): Promise<ConfigArray> {
+export async function typescript(options: NamingConventionOptions & OverridesOptions & ProjectTypeOptions & StylisticOptions & TypeScriptOptions = {}): Promise<TypedConfigArray> {
   const { stylistic = true, parserOptions = {}, overrides = {}, enableErasableSyntaxOnly = false, useRelaxedNamingConventionForCamelAndPascalCases = false, type = 'app' } = options;
 
   let erasableSyntaxOnlyPlugin: TSESLint.FlatConfig.Plugin | undefined;
@@ -101,7 +101,7 @@ export async function typescript(options: NamingConventionOptions & OverridesOpt
             }
           : { '@typescript-eslint/explicit-module-boundary-types': 'error' }),
         '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
-        '@typescript-eslint/member-ordering': ['error', memberOrdering],
+        '@typescript-eslint/member-ordering': ['error', MEMBER_ORDERING_OPTIONS],
         '@typescript-eslint/method-signature-style': 'error',
         '@typescript-eslint/naming-convention': ['error', ...namingConvention(!useRelaxedNamingConventionForCamelAndPascalCases)],
         '@typescript-eslint/no-base-to-string': 'error',

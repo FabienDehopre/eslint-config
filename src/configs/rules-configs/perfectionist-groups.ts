@@ -1,42 +1,11 @@
-export type GroupsOptions<T> = (T | T[] | { newlinesBetween: 'always' | 'ignore' | 'never' })[];
+import type { ArrayItemType, ExtractRuleOptionsType, Rules } from '../../types';
 
-export type ImportGroup<T extends string> =
-  T |
-  'builtin' |
-  'builtin-type' |
-  'external' |
-  'external-type' |
-  'index' |
-  'index-type' |
-  'internal' |
-  'internal-type' |
-  'object' |
-  'parent' |
-  'parent-type' |
-  'sibling' |
-  'sibling-type' |
-  'side-effect' |
-  'side-effect-style' |
-  'style' |
-  'type' |
-  'unknown';
-
+export type SortImportsGroups = ArrayItemType<ExtractRuleOptionsType<Rules['perfectionist/sort-imports']>>['groups'];
 export type UnionOrIntersectionGroup =
-  'conditional' |
-  'function' |
-  'import' |
-  'intersection' |
-  'keyword' |
-  'literal' |
-  'named' |
-  'nullish' |
-  'object' |
-  'operator' |
-  'tuple' |
-  'union' |
-  'unknown';
+  ArrayItemType<ExtractRuleOptionsType<Rules['perfectionist/sort-intersection-types']>>['groups'] |
+  ArrayItemType<ExtractRuleOptionsType<Rules['perfectionist/sort-union-types']>>['groups'];
 
-export const SORT_IMPORT_GROUPS = [
+export const SORT_IMPORT_GROUPS: SortImportsGroups = [
   'type',
   { newlinesBetween: 'never' },
   'builtin-type',
@@ -68,9 +37,9 @@ export const SORT_IMPORT_GROUPS = [
   'object',
   { newlinesBetween: 'always' },
   'unknown',
-] satisfies GroupsOptions<ImportGroup<string>>;
+];
 
-export const SORT_UNION_OR_INTERSECTION_GROUPS = [
+export const SORT_UNION_OR_INTERSECTION_GROUPS: UnionOrIntersectionGroup = [
   'named',
   'keyword',
   'operator',
@@ -84,4 +53,4 @@ export const SORT_UNION_OR_INTERSECTION_GROUPS = [
   'union',
   'nullish',
   'unknown',
-] satisfies GroupsOptions<UnionOrIntersectionGroup>;
+];

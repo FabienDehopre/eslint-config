@@ -1,5 +1,4 @@
-import type { ConfigArray } from 'typescript-eslint';
-import type { FilesOptions, OverridesOptions, TailwindCssOptions } from '../types';
+import type { FilesOptions, OverridesOptions, TailwindCssOptions, TypedConfigArray } from '../types';
 
 import tseslint from 'typescript-eslint';
 
@@ -19,12 +18,12 @@ import { ensurePackages, interopDefault } from '../utils';
  *   },
  * });
  */
-export async function tailwindcss(options: (FilesOptions & OverridesOptions & TailwindCssOptions) = {}): Promise<ConfigArray> {
+export async function tailwindcss(options: (FilesOptions & OverridesOptions & TailwindCssOptions) = {}): Promise<TypedConfigArray> {
   await ensurePackages(['eslint-plugin-better-tailwindcss']);
   const betterTailwindcssPlugin = await interopDefault(import('eslint-plugin-better-tailwindcss'));
   const { files: filesGlob, overrides, enableAllRules, parsers, ...settings } = options;
   let files: { files?: string[] };
-  let parserConfigs: ConfigArray;
+  let parserConfigs: TypedConfigArray;
   if (parsers) {
     files = { files: [...new Set(Object.keys(parsers))] };
     parserConfigs = Object.entries(parsers)

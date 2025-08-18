@@ -1,5 +1,4 @@
-import type { ConfigArray, ConfigWithExtends } from 'typescript-eslint';
-import type { FormattersOptions, StylisticConfig } from '../types';
+import type { FormattersOptions, StylisticConfig, TypedConfigArray } from '../types';
 import type { VendoredPrettierOptions, VendoredPrettierRuleOptions } from '../vendor/prettier-types';
 
 import { isPackageExists } from 'local-pkg';
@@ -48,13 +47,13 @@ function mergePrettierOptions(
  * @param options - The options for configuring the formatters. If set to `true`, default options will be used.
  * @param stylistic - The stylistic options for the formatters.
  * @param hasAngularTemplateParser - Optional argument which indicates whether angular rules already registered the template parser or not.
- * @returns A promise that resolves to a `ConfigArray` containing the configured formatters.
+ * @returns A promise that resolves to a `TypedConfigArray` containing the configured formatters.
  */
 export async function formatters(
   options: FormattersOptions | true = {},
   stylistic: StylisticConfig = {},
   hasAngularTemplateParser = false
-): Promise<ConfigArray> {
+): Promise<TypedConfigArray> {
   if (options === true) {
     const isPrettierPluginXmlInScope = isPackageInScope('@prettier/plugin-xml');
     options = {
@@ -102,7 +101,7 @@ export async function formatters(
   };
 
   const formatPlugin = await interopDefault(import('eslint-plugin-format'));
-  const configs: ConfigWithExtends[] = [
+  const configs: TypedConfigArray = [
     {
       name: 'fabdeh/formatter/setup',
       plugins: {

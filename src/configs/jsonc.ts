@@ -1,5 +1,4 @@
-import type { ConfigArray } from 'typescript-eslint';
-import type { FilesOptions, OverridesOptions, StylisticOptions } from '../types';
+import type { FilesOptions, OverridesOptions, StylisticOptions, TypedConfigArray } from '../types';
 
 import tseslint from 'typescript-eslint';
 
@@ -13,7 +12,7 @@ import { interopDefault } from '../utils';
  * @param options.files - An array of glob patterns to specify the JSONC files to lint. Defaults to `[GLOB_JSON, GLOB_JSON5, GLOB_JSONC]`.
  * @param options.overrides - Additional rules or configurations to override the default settings.
  * @param options.stylistic - A boolean or object to enable or configure stylistic rules. Defaults to `true`.
- * @returns A promise that resolves to a `ConfigArray` containing the ESLint configuration.
+ * @returns A promise that resolves to a `TypedConfigArray` containing the ESLint configuration.
  * @example
  * ```typescript
  * const config = await jsonc({
@@ -24,7 +23,7 @@ import { interopDefault } from '../utils';
  * });
  * ```
  */
-export async function jsonc(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<ConfigArray> {
+export async function jsonc(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<TypedConfigArray> {
   const {
     files = [GLOB_JSON, GLOB_JSON5, GLOB_JSONC],
     overrides = {},

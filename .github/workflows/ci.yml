@@ -40,9 +40,11 @@ jobs:
       - name: Validate PR commits with commitlint
         if: github.event_name == 'pull_request'
         run: pnpm commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+      - name: Generate Rules Types
+        run: pnpm gen
+      - name: Do a Type Check
+        run: pnpm typecheck
       - name: Check code quality and style using ESLint
         run: pnpm lint:check
       - name: Build the project
-        run: pnpm build
-      - name: Do a Type Check
-        run: pnpm typecheck
+        run: pnpm build:ci

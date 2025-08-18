@@ -2,15 +2,85 @@
 
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { TSESLint } from '@typescript-eslint/utils';
+import type { Linter } from 'eslint';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { Attributes, Callees, Tags, Variables } from 'eslint-plugin-better-tailwindcss/api/types';
-import type { ConfigArray } from 'typescript-eslint';
+import type { RuleOptions } from './typegen';
 import type { VendoredPrettierOptions } from './vendor/prettier-types';
+
+export type { ConfigNames } from './typegen';
 
 /**
  * A type that can be awaited. Promise<T> or T.
  */
 export type Awaitable<T> = Promise<T> | T;
+
+// eslint-disable-next-line perfectionist/sort-intersection-types
+export type Rules = TSESLint.FlatConfig.Config['rules'] & RuleOptions;
+
+export type InfiniteDepthConfigWithExtends = InfiniteDepthConfigWithExtends[] | TypedConfig;
+
+/**
+ * An updated version of ESLint's `TSESLint.FlatConfig.Config`, which provides autocompletion
+ * for `rules` and relaxes type limitations for `plugins` and `rules`, because
+ * many plugins still lack proper type definitions.
+ */
+export type TypedConfig = Omit<TSESLint.FlatConfig.Config, 'rules'> & {
+  /**
+   * An object containing the configured rules. When `files` or `ignores` are
+   * specified, these rule configurations are only available to the matching files.
+   */
+  rules?: Rules;
+};
+
+export type TypedConfigWithExtends = TypedConfig & {
+  /**
+   * Allows you to "extend" a set of configs similar to `extends` from the
+   * classic configs.
+   *
+   * This is just a convenience shorthand to help reduce duplication.
+   *
+   * ```js
+   * export default tseslint.config({
+   *   files: ['** /*.ts'],
+   *   extends: [
+   *     eslint.configs.recommended,
+   *     tseslint.configs.recommended,
+   *   ],
+   *   rules: {
+   *     '@typescript-eslint/array-type': 'error',
+   *     '@typescript-eslint/consistent-type-imports': 'error',
+   *   },
+   * })
+   *
+   * // expands to
+   *
+   * export default [
+   *   {
+   *     ...eslint.configs.recommended,
+   *     files: ['** /*.ts'],
+   *   },
+   *   ...tseslint.configs.recommended.map(conf => ({
+   *     ...conf,
+   *     files: ['** /*.ts'],
+   *   })),
+   *   {
+   *     files: ['** /*.ts'],
+   *     rules: {
+   *       '@typescript-eslint/array-type': 'error',
+   *       '@typescript-eslint/consistent-type-imports': 'error',
+   *     },
+   *   },
+   * ]
+   * ```
+   */
+  extends?: InfiniteDepthConfigWithExtends[];
+};
+
+export type TypedConfigArray = TypedConfig[];
+
+export type ExtractRuleOptionsType<RuleEntry> = RuleEntry extends Linter.RuleSeverityAndOptions<infer Options> ? Options : never;
+export type ArrayItemType<T> = T extends (infer U)[] ? U : never;
 
 /**
  * Interface representing options for overriding default ESLint rules.
@@ -19,7 +89,7 @@ export interface OverridesOptions {
   /**
    * Optional property that allows specifying custom rules to override the default ones.
    */
-  overrides?: TSESLint.FlatConfig.Config['rules'];
+  overrides?: TypedConfig['rules'];
 }
 
 /**
@@ -111,12 +181,12 @@ export interface AngularOptions {
   /**
    * TypeScript-specific linting rule overrides.
    */
-  tsOverrides?: TSESLint.FlatConfig.Config['rules'];
+  tsOverrides?: TypedConfig['rules'];
 
   /**
    * HTML-specific linting rule overrides.
    */
-  htmlOverrides?: TSESLint.FlatConfig.Config['rules'];
+  htmlOverrides?: TypedConfig['rules'];
 
   /**
    * A class name pattern that allows service using `@Injectable` decorator to not use `providedIn` option.
@@ -304,6 +374,12 @@ export interface ProjectTypeOptions {
  */
 export interface CreateConfigOptions extends ProjectTypeOptions {
   /**
+   * An array of glob patterns indicating the files that the configuration object should not apply to.
+   * If not specified, the configuration object applies to all files matched by files.
+   */
+  ignores?: string[];
+
+  /**
    * Enable gitignore support.
    *
    * Passing an object to configure the options.
@@ -439,4 +515,4 @@ export interface CreateConfigOptions extends ProjectTypeOptions {
 }
 
 export const OPTIONS_SYMBOL = Symbol('options');
-export type ConfigArrayWithOptions = ConfigArray & { [OPTIONS_SYMBOL]?: CreateConfigOptions };
+export type ConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]?: CreateConfigOptions };

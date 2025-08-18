@@ -40,7 +40,8 @@
     "node": "^20.11.1 || ^22.11.0"
   },
   "scripts": {
-    "build": "unbuild",
+    "build": "pnpm gen && unbuild",
+    "build:ci": "unbuild",
     "build:inspector": "pnpm build && pnpx @eslint/config-inspector build",
     "dev": "pnpx @eslint/config-inspector --config eslint.config.ts",
     "preinstall": "npx only-allow pnpm",
@@ -50,7 +51,8 @@
     "lint:check": "eslint . --quiet",
     "prepack": "pnpm build",
     "release": "bumpp && npm publish",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "gen": "tsx scripts/typegen.ts"
   },
   "peerDependencies": {
     "@prettier/plugin-xml": "catalog:peer",
@@ -136,6 +138,7 @@
     "eslint-plugin-better-tailwindcss": "catalog:peer",
     "eslint-plugin-erasable-syntax-only": "catalog:peer",
     "eslint-plugin-format": "catalog:peer",
+    "eslint-typegen": "catalog:dev",
     "execa": "catalog:dev",
     "fast-glob": "catalog:dev",
     "fs-extra": "catalog:dev",
@@ -145,6 +148,7 @@
     "prettier-plugin-slidev": "catalog:peer",
     "simple-git-hooks": "catalog:dev",
     "tailwindcss": "catalog:dev",
+    "tsx": "catalog:dev",
     "typescript": "catalog:dev",
     "unbuild": "catalog:dev",
     "vitest": "catalog:dev"

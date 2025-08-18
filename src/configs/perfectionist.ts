@@ -1,4 +1,4 @@
-import type { ConfigArray } from 'typescript-eslint';
+import type { TypedConfigArray } from '../types';
 
 import process from 'node:process';
 
@@ -20,7 +20,7 @@ import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-c
  * @returns The configuration array for the "perfectionist" plugin.
  * @see https://github.com/azat-io/eslint-plugin-perfectionist
  */
-export async function perfectionist(): Promise<ConfigArray> {
+export async function perfectionist(): Promise<TypedConfigArray> {
   const rootDir = (await findNearestPackageJsonName()) === '@fabdeh/eslint-config'
     ? undefined
     : getWorkspaceRoot(process.cwd(), process.cwd());

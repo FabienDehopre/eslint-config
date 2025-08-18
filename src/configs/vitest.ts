@@ -1,5 +1,4 @@
-import type { ConfigArray } from 'typescript-eslint';
-import type { OverridesOptions, UnitTestingOptions } from '../types';
+import type { OverridesOptions, TypedConfigArray, UnitTestingOptions } from '../types';
 
 import globals from 'globals';
 import { isPackageExists } from 'local-pkg';
@@ -26,7 +25,7 @@ import { getJsDocRules } from './jsdoc';
  *   useTestingLibrary: false,
  * });
  */
-export async function vitest(options: OverridesOptions & UnitTestingOptions = {}): Promise<ConfigArray> {
+export async function vitest(options: OverridesOptions & UnitTestingOptions = {}): Promise<TypedConfigArray> {
   const {
     overrides = {},
     useJestDom = isPackageExists('@testing-library/jest-dom'),
