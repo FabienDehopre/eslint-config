@@ -48,3 +48,5 @@ jobs:
         run: pnpm build:ci
       - name: Check code quality and style using ESLint
         run: pnpm lint:ci
+      - name: Check exports
+        run: pnpm check-exports
