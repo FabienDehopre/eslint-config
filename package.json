@@ -44,6 +44,7 @@
     "build:ci": "tsdown",
     "build:inspector": "pnpm build && pnpx @eslint/config-inspector build",
     "dev": "pnpx @eslint/config-inspector --config eslint.config.js",
+    "check-exports": "attw --pack . --profile esm-only",
     "preinstall": "npx only-allow pnpm",
     "prepare": "is-ci || simple-git-hooks",
     "commit": "git-cz",
@@ -118,6 +119,7 @@
   },
   "devDependencies": {
     "@angular/core": "catalog:dev",
+    "@arethetypeswrong/cli": "catalog:dev",
     "@commitlint/cli": "catalog:dev",
     "@commitlint/config-conventional": "catalog:dev",
     "@commitlint/cz-commitlint": "catalog:dev",
