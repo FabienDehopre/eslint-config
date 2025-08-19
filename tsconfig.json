@@ -1,13 +1,17 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "moduleDetection": "force",
     "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "strict": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
     "declaration": true,
     "esModuleInterop": true,
     "isolatedDeclarations": true,
+    "verbatimModuleSyntax": true,
     "skipLibCheck": true,
     "erasableSyntaxOnly": true,
     "libReplacement": false
