@@ -263,3 +263,48 @@ export function defineConfig(
     vitest,
   }, ...userConfigs);
 }
+
+/**
+ * Creates an ESLint configuration array based on the provided options and user configurations.
+ * This function is similar to `defineConfig`, but it is designed for use in the root of a workspace environment.
+ * Contrary to `defineConfig`, it will not automatically detect the presence of certain packages and will not enable corresponding rules.
+ *
+ * @param options - Configuration options.
+ * @param userConfigs - Additional user configurations that can be awaited.
+ * @returns A promise that resolves to a `ConfigArrayWithOptions`.
+ * @example
+ * ```typescript
+ * const config = await defineWorkspaceConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
+ * ```
+ */
+export function defineWorkspaceConfig(
+  options: CreateConfigOptions = {},
+  ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
+): Promise<ConfigArrayWithOptions> {
+  return defineConfigInternal(true, options, ...userConfigs);
+}
+
+/**
+ * Creates an ESLint configuration array based on the provided base configuration, options and user configurations.
+ * This function is similar to `defineConfig`, but it is designed for use in a project of a workspace environment.
+ * It requires a base configuration that is already defined in the root of the workspace via the `defineWorkspaceConfig` function.
+ *
+ * @todo implement the function
+ * @param baseConfig - The base configuration to extend from.
+ * @param options - Configuration options.
+ * @param userConfigs - Additional user configurations that can be awaited.
+ * @returns A promise that resolves to a `ConfigArrayWithOptions`.
+ * @example
+ * ```typescript
+ * import baseConfig from '../../eslint.base.js';
+ *
+ * const config = await defineProjectConfig(baseConfig, { vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
+ * ```
+ */
+export async function defineProjectConfig(
+  baseConfig: Awaitable<ConfigArrayWithOptions>,
+  options: CreateConfigOptions = {},
+  ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
+): Promise<TypedConfigArray> {
+  throw new Error('Not implemented.');
+}
