@@ -34,32 +34,52 @@ import { interopDefault, resolveSubOptions } from './utils';
 const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/operators'];
 
 /**
- * Creates an ESLint configuration array based on the provided options and user configurations.
  *
- * @param options - Configuration options that extend `ConfigWithExtends` and `CreateConfigOptions`.
- * @param userConfigs - Additional user configurations that can be awaited.
- * @returns A promise that resolves to a `ConfigArray`.
- * @example
- * ```typescript
- * const config = await createConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
- * ```
+ * @param includeOptions
+ * @param options
+ * @param userConfigs
  */
-export async function defineConfig(
+async function defineConfigInternal(
+  includeOptions: true,
+  options: CreateConfigOptions,
+  ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
+): Promise<ConfigArrayWithOptions>;
+
+/**
+ *
+ * @param includeOptions
+ * @param options
+ * @param userConfigs
+ */
+async function defineConfigInternal(
+  includeOptions: false,
+  options: CreateConfigOptions,
+  ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
+): Promise<TypedConfigArray>;
+
+/**
+ *
+ * @param includeOptions
+ * @param options
+ * @param userConfigs
+ */
+async function defineConfigInternal(
+  includeOptions: boolean,
   options: CreateConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<ConfigArrayWithOptions> {
+): Promise<ConfigArrayWithOptions | TypedConfigArray> {
   const {
-    angular: enableAngular = isPackageExists('@angular/core'),
-    gitignore: enableGitignore = true,
-    jsdoc: enableJsdoc = true,
-    ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
+    angular: enableAngular,
+    gitignore: enableGitignore,
+    jsdoc: enableJsdoc,
+    ngrx: enableNgrx,
     // eslint-disable-next-line @angular-eslint/no-experimental
-    pnpm: enableCatalogs = false, // TODO: smart detect
-    regexp: enableRegexp = true,
-    tailwindcss: enableTailwind = false,
-    typescript: enableTypescript = isPackageExists('typescript'),
-    unicorn: enableUnicorn = true,
-    vitest: enableVitest = isPackageExists('vitest'),
+    pnpm: enableCatalogs,
+    regexp: enableRegexp,
+    tailwindcss: enableTailwind,
+    typescript: enableTypescript,
+    unicorn: enableUnicorn,
+    vitest: enableVitest,
   } = options;
 
   if (enableNgrx && !enableAngular) {
@@ -192,6 +212,54 @@ export async function defineConfig(
   }
 
   const config = tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as ConfigArrayWithOptions;
-  config[OPTIONS_SYMBOL] = options;
+  if (includeOptions) {
+    config[OPTIONS_SYMBOL] = options;
+  }
+
   return config;
+}
+
+/**
+ * Creates an ESLint configuration array based on the provided options and user configurations.
+ * Additionally, it will automatically detect the presence of certain packages and enable corresponding rules.
+ *
+ * @param options - Configuration options.
+ * @param userConfigs - Additional user configurations that can be awaited.
+ * @returns A promise that resolves to a `ConfigArrayWithOptions`.
+ * @example
+ * ```typescript
+ * const config = await createConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
+ * ```
+ */
+export function defineConfig(
+  options: CreateConfigOptions = {},
+  ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
+): Promise<TypedConfigArray> {
+  const {
+    angular = isPackageExists('@angular/core'),
+    gitignore = true,
+    jsdoc = true,
+    ngrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
+    // eslint-disable-next-line @angular-eslint/no-experimental
+    pnpm = false, // TODO: smart detect
+    regexp = true,
+    tailwindcss = false,
+    typescript = isPackageExists('typescript'),
+    unicorn = true,
+    vitest = isPackageExists('vitest'),
+  } = options;
+
+  return defineConfigInternal(false, {
+    ...options,
+    angular,
+    gitignore,
+    jsdoc,
+    ngrx,
+    pnpm,
+    regexp,
+    tailwindcss,
+    typescript,
+    unicorn,
+    vitest,
+  }, ...userConfigs);
 }
