@@ -93,6 +93,7 @@
     "@typescript-eslint/utils": "catalog:prod",
     "@vitest/eslint-plugin": "catalog:prod",
     "angular-eslint": "catalog:prod",
+    "deep-object-diff": "catalog:prod",
     "eslint-config-flat-gitignore": "catalog:prod",
     "eslint-flat-config-utils": "catalog:prod",
     "eslint-merge-processors": "catalog:prod",
