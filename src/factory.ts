@@ -1,4 +1,4 @@
-import type { Awaitable, TypedConfigArrayWithOptions, CreateConfigOptions, TypedConfigArray, TypedConfigWithExtends } from './types';
+import type { Awaitable, CreateConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from './types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -277,5 +277,9 @@ export async function defineProjectConfig(
   options: CreateConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
 ): Promise<TypedConfigArray> {
+  const resolvedBaseConfig = await baseConfig;
+  const workspaceOptions = resolvedBaseConfig[OPTIONS_SYMBOL];
+
+  // TODO: implement the function
   throw new Error('Not implemented.');
 }
