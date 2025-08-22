@@ -515,4 +515,4 @@ export interface CreateConfigOptions extends ProjectTypeOptions {
 }
 
 export const OPTIONS_SYMBOL: unique symbol = Symbol('options');
-export type ConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]?: CreateConfigOptions };
+export type TypedConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]?: CreateConfigOptions };

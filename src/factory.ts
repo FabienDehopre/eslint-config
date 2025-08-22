@@ -1,4 +1,4 @@
-import type { Awaitable, ConfigArrayWithOptions, CreateConfigOptions, TypedConfigArray, TypedConfigWithExtends } from './types';
+import type { Awaitable, TypedConfigArrayWithOptions, CreateConfigOptions, TypedConfigArray, TypedConfigWithExtends } from './types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -43,7 +43,7 @@ async function defineConfigInternal(
   includeOptions: true,
   options: CreateConfigOptions,
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<ConfigArrayWithOptions>;
+): Promise<TypedConfigArrayWithOptions>;
 
 /**
  *
@@ -67,7 +67,7 @@ async function defineConfigInternal(
   includeOptions: boolean,
   options: CreateConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<ConfigArrayWithOptions | TypedConfigArray> {
+): Promise<TypedConfigArrayWithOptions | TypedConfigArray> {
   const {
     angular: enableAngular,
     gitignore: enableGitignore,
@@ -211,7 +211,7 @@ async function defineConfigInternal(
     ));
   }
 
-  const config = tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as ConfigArrayWithOptions;
+  const config = tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArrayWithOptions;
   if (includeOptions) {
     config[OPTIONS_SYMBOL] = options;
   }
@@ -280,7 +280,7 @@ export function defineConfig(
 export function defineWorkspaceConfig(
   options: CreateConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<ConfigArrayWithOptions> {
+): Promise<TypedConfigArrayWithOptions> {
   return defineConfigInternal(true, options, ...userConfigs);
 }
 
@@ -302,7 +302,7 @@ export function defineWorkspaceConfig(
  * ```
  */
 export async function defineProjectConfig(
-  baseConfig: Awaitable<ConfigArrayWithOptions>,
+  baseConfig: Awaitable<TypedConfigArrayWithOptions>,
   options: CreateConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
 ): Promise<TypedConfigArray> {
