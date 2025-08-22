@@ -35,39 +35,13 @@ const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/o
 
 /**
  *
- * @param includeOptions
  * @param options
  * @param userConfigs
  */
 async function defineConfigInternal(
-  includeOptions: true,
-  options: CreateConfigOptions,
-  ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<TypedConfigArrayWithOptions>;
-
-/**
- *
- * @param includeOptions
- * @param options
- * @param userConfigs
- */
-async function defineConfigInternal(
-  includeOptions: false,
-  options: CreateConfigOptions,
-  ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<TypedConfigArray>;
-
-/**
- *
- * @param includeOptions
- * @param options
- * @param userConfigs
- */
-async function defineConfigInternal(
-  includeOptions: boolean,
   options: CreateConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<TypedConfigArrayWithOptions | TypedConfigArray> {
+): Promise<TypedConfigArray> {
   const {
     angular: enableAngular,
     gitignore: enableGitignore,
@@ -211,12 +185,7 @@ async function defineConfigInternal(
     ));
   }
 
-  const config = tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArrayWithOptions;
-  if (includeOptions) {
-    config[OPTIONS_SYMBOL] = options;
-  }
-
-  return config;
+  return tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArray;
 }
 
 /**
@@ -249,7 +218,7 @@ export function defineConfig(
     vitest = isPackageExists('vitest'),
   } = options;
 
-  return defineConfigInternal(false, {
+  return defineConfigInternal({
     ...options,
     angular,
     gitignore,
@@ -277,11 +246,13 @@ export function defineConfig(
  * const config = await defineWorkspaceConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
  * ```
  */
-export function defineWorkspaceConfig(
+export async function defineWorkspaceConfig(
   options: CreateConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
 ): Promise<TypedConfigArrayWithOptions> {
-  return defineConfigInternal(true, options, ...userConfigs);
+  const config = await defineConfigInternal(options, ...userConfigs) as TypedConfigArrayWithOptions;
+  config[OPTIONS_SYMBOL] = options;
+  return config;
 }
 
 /**
