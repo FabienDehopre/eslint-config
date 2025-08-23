@@ -1,4 +1,4 @@
-import type { Awaitable, CreateConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from './types';
+import type { Awaitable, CreateConfigOptions, CreateProjectConfigOptions, CreateWorkspaceConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from './types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -28,15 +28,18 @@ import {
   vitest,
   yaml
 } from './configs';
+import { GLOB_TS } from './globs';
 import { OPTIONS_SYMBOL } from './types';
 import { interopDefault, resolveSubOptions } from './utils';
 
 const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/operators'];
 
 /**
+ * Internal function to create ESLint configuration array.
  *
- * @param options
- * @param userConfigs
+ * @param options - Configuration options
+ * @param userConfigs - Additional user configurations
+ * @returns A promise that resolves to a TypedConfigArray
  */
 async function defineConfigInternal(
   options: CreateConfigOptions = {},
@@ -47,7 +50,7 @@ async function defineConfigInternal(
     gitignore: enableGitignore,
     jsdoc: enableJsdoc,
     ngrx: enableNgrx,
-    // eslint-disable-next-line @angular-eslint/no-experimental
+
     pnpm: enableCatalogs,
     regexp: enableRegexp,
     tailwindcss: enableTailwind,
@@ -209,7 +212,7 @@ export function defineConfig(
     gitignore = true,
     jsdoc = true,
     ngrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
-    // eslint-disable-next-line @angular-eslint/no-experimental
+
     pnpm = false, // TODO: smart detect
     regexp = true,
     tailwindcss = false,
@@ -247,7 +250,7 @@ export function defineConfig(
  * ```
  */
 export async function defineWorkspaceConfig(
-  options: CreateConfigOptions = {},
+  options: CreateWorkspaceConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
 ): Promise<TypedConfigArrayWithOptions> {
   const config = await defineConfigInternal(options, ...userConfigs) as TypedConfigArrayWithOptions;
@@ -260,11 +263,10 @@ export async function defineWorkspaceConfig(
  * This function is similar to `defineConfig`, but it is designed for use in a project of a workspace environment.
  * It requires a base configuration that is already defined in the root of the workspace via the `defineWorkspaceConfig` function.
  *
- * @todo implement the function
  * @param baseConfig - The base configuration to extend from.
  * @param options - Configuration options.
  * @param userConfigs - Additional user configurations that can be awaited.
- * @returns A promise that resolves to a `ConfigArrayWithOptions`.
+ * @returns A promise that resolves to a `TypedConfigArray`.
  * @example
  * ```typescript
  * import baseConfig from '../../eslint.base.js';
@@ -274,12 +276,101 @@ export async function defineWorkspaceConfig(
  */
 export async function defineProjectConfig(
   baseConfig: Awaitable<TypedConfigArrayWithOptions>,
-  options: CreateConfigOptions = {},
+  options: CreateProjectConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
 ): Promise<TypedConfigArray> {
   const resolvedBaseConfig = await baseConfig;
   const workspaceOptions = resolvedBaseConfig[OPTIONS_SYMBOL];
 
-  // TODO: implement the function
-  throw new Error('Not implemented.');
+  const {
+    jsdoc: enableJsdoc = true,
+    angular: enableAngular = isPackageExists('@angular/core'),
+    ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
+    tailwindcss: enableTailwind = false,
+    typescript: enableProjectTypescript = false,
+    vitest: enableVitest = isPackageExists('vitest'),
+  } = options;
+
+  if (enableNgrx && !enableAngular) {
+    throw new Error('NgRx rules can only be enabled if Angular rules are also enabled.');
+  }
+
+  const projectConfigs: Awaitable<TypedConfigArray>[] = [];
+
+  // Add JSDoc configuration (project-specific feature)
+  if (enableJsdoc) {
+    const stylisticOptions = workspaceOptions.stylistic === false ? false : typeof workspaceOptions.stylistic === 'object' ? workspaceOptions.stylistic : {};
+    projectConfigs.push(jsdoc({ stylistic: stylisticOptions }));
+  }
+
+  // Add Angular configuration (project-specific feature)
+  if (enableAngular) {
+    const angularOptions = typeof enableAngular === 'object' ? enableAngular : {};
+    projectConfigs.push(angular(angularOptions));
+  }
+
+  // Add NgRx configuration (project-specific feature)
+  if (enableNgrx) {
+    const ngrxOptions = typeof enableNgrx === 'object' ? enableNgrx : {};
+    // Get naming convention setting from workspace TypeScript options
+    const workspaceTypescriptOptions = workspaceOptions.typescript;
+    const useRelaxedNamingConvention = typeof workspaceTypescriptOptions === 'object'
+      ? workspaceTypescriptOptions.useRelaxedNamingConventionForCamelAndPascalCases
+      : false;
+
+    projectConfigs.push(ngrx({
+      ...ngrxOptions,
+      useRelaxedNamingConventionForCamelAndPascalCases: useRelaxedNamingConvention,
+    }));
+  }
+
+  // Add Vitest configuration (project-specific feature)
+  if (enableVitest) {
+    const vitestOptions = typeof enableVitest === 'object' ? enableVitest : {};
+    projectConfigs.push(vitest(vitestOptions));
+  }
+
+  // Add TailwindCSS configuration (project-specific feature)
+  if (enableTailwind) {
+    const tailwindcssOptions = typeof enableTailwind === 'object' ? enableTailwind : {};
+    projectConfigs.push(tailwindcss(tailwindcssOptions));
+  }
+
+  // Handle project-specific TypeScript configuration
+  if (enableProjectTypescript && workspaceOptions.typescript) {
+    const projectTypescriptOptions = typeof enableProjectTypescript === 'object' ? enableProjectTypescript : {};
+
+    // Create TypeScript override configs for project-specific options
+    if (projectTypescriptOptions.parserOptions || projectTypescriptOptions.overrides) {
+      const configs: TypedConfigArray = [];
+
+      // Add parser options override if specified
+      if (projectTypescriptOptions.parserOptions) {
+        configs.push({
+          name: 'fabdeh/project/typescript/parser-options',
+          files: [GLOB_TS],
+          languageOptions: {
+            parser: tseslint.parser,
+            parserOptions: projectTypescriptOptions.parserOptions,
+          },
+        });
+      }
+
+      // Add rule overrides if specified
+      if (projectTypescriptOptions.overrides) {
+        configs.push({
+          name: 'fabdeh/project/typescript/rules',
+          files: [GLOB_TS],
+          rules: projectTypescriptOptions.overrides,
+        });
+      }
+
+      projectConfigs.push(Promise.resolve(configs));
+    }
+  }
+
+  const resolvedProjectConfigs = await Promise.all(projectConfigs);
+  const resolvedUserConfigs = await Promise.all(userConfigs);
+
+  return tseslint.config(...resolvedBaseConfig, ...resolvedProjectConfigs.flat(), ...resolvedUserConfigs) as TypedConfigArray;
 }
