@@ -488,6 +488,7 @@ export interface CreateWorkspaceConfigOptions {
    *
    * @see https://github.com/antfu/pnpm-workspace-utils
    * @default false
+   * @experimental
    */
   pnpm?: boolean;
 }
@@ -547,14 +548,7 @@ export interface CreateProjectConfigOptions extends ProjectTypeOptions {
  *
  * @see defineConfig function
  */
-export interface CreateConfigOptions extends CreateWorkspaceConfigOptions, CreateProjectConfigOptions {
-  /**
-   * TypeScript rules overrides and parser configuration.
-   *
-   * @default auto-detected
-   */
-  typescript?: boolean | (NamingConventionOptions & OverridesOptions & TypeScriptOptions);
-}
+export type CreateConfigOptions = CreateWorkspaceConfigOptions & Omit<CreateProjectConfigOptions, 'typescript'>;
 
 export const OPTIONS_SYMBOL: unique symbol = Symbol('options');
 export type TypedConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]: CreateWorkspaceConfigOptions };
