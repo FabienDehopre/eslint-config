@@ -11,8 +11,7 @@ import {
   typescript,
   vitest
 } from './configs';
-import { NGRX_PACKAGES } from './constants';
-import { OPTIONS_SYMBOL } from './types';
+import { NGRX_PACKAGES, OPTIONS_SYMBOL } from './constants';
 import { resolveSubOptions } from './utils';
 
 /**

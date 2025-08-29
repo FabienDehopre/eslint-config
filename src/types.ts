@@ -5,6 +5,7 @@ import type { TSESLint } from '@typescript-eslint/utils';
 import type { Linter } from 'eslint';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { Attributes, Callees, Tags, Variables } from 'eslint-plugin-better-tailwindcss/api/types';
+import type { OPTIONS_SYMBOL } from './constants';
 import type { RuleOptions } from './typegen';
 import type { VendoredPrettierOptions } from './vendor/prettier-types';
 
@@ -545,5 +546,4 @@ export interface CreateProjectConfigOptions extends ProjectTypeOptions {
  */
 export type CreateConfigOptions = CreateWorkspaceConfigOptions & Omit<CreateProjectConfigOptions, 'typescript'>;
 
-export const OPTIONS_SYMBOL: unique symbol = Symbol('options');
 export type TypedConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]: CreateWorkspaceConfigOptions };

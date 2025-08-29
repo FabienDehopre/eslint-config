@@ -23,7 +23,7 @@ import {
   unicorn,
   yaml
 } from './configs';
-import { OPTIONS_SYMBOL } from './types';
+import { OPTIONS_SYMBOL } from './constants';
 import { interopDefault, resolveSubOptions } from './utils';
 
 /**
