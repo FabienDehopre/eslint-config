@@ -1,7 +1,7 @@
 import type { TSESLint } from '@typescript-eslint/utils';
 import type {
   NamingConventionOptions,
-  OverridesOptions, ProjectTypeOptions,
+  OverridesOptions, ProjectTypeOptions, ProjectTypeScriptOptions,
   StylisticOptions,
   TypedConfigArray,
   TypeScriptOptions, WorkspaceProjectType
@@ -16,6 +16,9 @@ import { GLOB_MARKDOWN, GLOB_TS } from '../shared/globs';
 import { ensurePackages, getTsConfigFileName, getWorkspaceRoot, interopDefault } from '../shared/utils';
 import { MEMBER_ORDERING_OPTIONS } from './rules-configs/member-ordering';
 import { namingConvention } from './rules-configs/naming-convention';
+
+export async function typescript(options?: NamingConventionOptions & OverridesOptions & ProjectTypeOptions<WorkspaceProjectType> & StylisticOptions & TypeScriptOptions): Promise<TypedConfigArray>;
+export async function typescript(options: OverridesOptions & ProjectTypeOptions & ProjectTypeScriptOptions, isWorkspaceProject: true): Promise<TypedConfigArray>;
 
 /**
  * Generates a TypeScript ESLint configuration.
@@ -87,6 +90,7 @@ export async function typescript(options: NamingConventionOptions & OverridesOpt
                 }
               : {}),
             '@typescript-eslint/explicit-module-boundary-types': 'error',
+            ...overrides,
           },
         }
       : {
