@@ -1,4 +1,4 @@
-import type { TypedConfig, TypedConfigArray } from '../src/types';
+import type { TypedConfig, TypedConfigArray } from '../src/shared/types';
 
 import fs from 'node:fs/promises';
 

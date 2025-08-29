@@ -1,10 +1,10 @@
 import type { TSESLint } from '@typescript-eslint/utils';
-import type { StylisticOptions, TypedConfig, TypedConfigArray } from '../types';
+import type { StylisticOptions, TypedConfig, TypedConfigArray } from '../shared/types';
 
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC, GLOB_TS } from '../globs';
+import { GLOB_SRC, GLOB_TS } from '../shared/globs';
 
 /**
  * Get the JSDoc rules based on specific parameters.

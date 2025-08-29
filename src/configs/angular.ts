@@ -1,9 +1,9 @@
-import type { AngularOptions, TypedConfigArray } from '../types';
+import type { AngularOptions, TypedConfigArray } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
-import { GLOB_HTML, GLOB_TS } from '../globs';
-import { interopDefault } from '../utils';
+import { GLOB_HTML, GLOB_TS } from '../shared/globs';
+import { interopDefault } from '../shared/utils';
 
 /**
  * Generates an ESLint configuration for Angular projects.

@@ -1,9 +1,9 @@
-import type { TypedConfigArray } from '../types';
+import type { TypedConfigArray } from '../shared/types';
 
 import eslintComments from '@eslint-community/eslint-plugin-eslint-comments';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC } from '../globs';
+import { GLOB_SRC } from '../shared/globs';
 
 /**
  * Generates a configuration array for ESLint comments rules.

@@ -1,10 +1,10 @@
-import type { NamingConventionOptions, NgrxOptions, TypedConfigArray } from '../types';
+import type { NamingConventionOptions, NgrxOptions, TypedConfigArray } from '../shared/types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_TS_EXT } from '../globs';
-import { interopDefault } from '../utils';
+import { GLOB_TS_EXT } from '../shared/globs';
+import { interopDefault } from '../shared/utils';
 import { namingConvention } from './rules-configs/naming-convention';
 
 const DEFAULT_STORE_GLOB = [

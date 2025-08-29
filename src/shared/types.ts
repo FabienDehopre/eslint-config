@@ -5,11 +5,11 @@ import type { TSESLint } from '@typescript-eslint/utils';
 import type { Linter } from 'eslint';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { Attributes, Callees, Tags, Variables } from 'eslint-plugin-better-tailwindcss/api/types';
+import type { RuleOptions } from '../typegen';
+import type { VendoredPrettierOptions } from '../vendor/prettier-types';
 import type { OPTIONS_SYMBOL } from './constants';
-import type { RuleOptions } from './typegen';
-import type { VendoredPrettierOptions } from './vendor/prettier-types';
 
-export type { ConfigNames } from './typegen';
+export type { ConfigNames } from '../typegen';
 
 /**
  * A type that can be awaited. Promise<T> or T.

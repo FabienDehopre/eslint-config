@@ -1,4 +1,4 @@
-import type { OverridesOptions, TypedConfigArray } from '../types';
+import type { OverridesOptions, TypedConfigArray } from '../shared/types';
 
 import eslint from '@eslint/js';
 import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
@@ -6,7 +6,7 @@ import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC } from '../globs';
+import { GLOB_SRC } from '../shared/globs';
 
 /**
  * Generates a configuration array for JavaScript projects with ESLint.

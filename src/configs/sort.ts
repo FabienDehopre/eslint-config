@@ -1,4 +1,4 @@
-import type { TypedConfigArray } from '../types';
+import type { TypedConfigArray } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 

@@ -1,4 +1,4 @@
-import type { FormattersOptions, StylisticConfig, TypedConfigArray } from '../types';
+import type { FormattersOptions, StylisticConfig, TypedConfigArray } from '../shared/types';
 import type { VendoredPrettierOptions, VendoredPrettierRuleOptions } from '../vendor/prettier-types';
 
 import { isPackageExists } from 'local-pkg';
@@ -14,8 +14,8 @@ import {
   GLOB_SCSS,
   GLOB_SVG,
   GLOB_XML
-} from '../globs';
-import { ensurePackages, interopDefault, isPackageInScope } from '../utils';
+} from '../shared/globs';
+import { ensurePackages, interopDefault, isPackageInScope } from '../shared/utils';
 import { STYLISTIC_CONFIG_DEFAULT } from './stylistic';
 
 /**

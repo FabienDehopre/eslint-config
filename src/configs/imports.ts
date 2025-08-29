@@ -1,9 +1,9 @@
-import type { StylisticOptions, TypedConfigArray } from '../types';
+import type { StylisticOptions, TypedConfigArray } from '../shared/types';
 
 import * as importX from 'eslint-plugin-import-x';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC, GLOB_TS } from '../globs';
+import { GLOB_SRC, GLOB_TS } from '../shared/globs';
 
 /**
  * Generates an ESLint configuration array for import rules.

@@ -1,9 +1,9 @@
-import type { StylisticConfig, StylisticOptions, TypedConfigArray } from '../types';
+import type { StylisticConfig, StylisticOptions, TypedConfigArray } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC } from '../globs';
-import { interopDefault } from '../utils';
+import { GLOB_SRC } from '../shared/globs';
+import { interopDefault } from '../shared/utils';
 
 export const STYLISTIC_CONFIG_DEFAULT: StylisticConfig = {
   semi: true,

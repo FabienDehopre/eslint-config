@@ -1,11 +1,11 @@
-import type { OverridesOptions, TypedConfigArray, UnitTestingOptions } from '../types';
+import type { OverridesOptions, TypedConfigArray, UnitTestingOptions } from '../shared/types';
 
 import globals from 'globals';
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_TESTS } from '../globs';
-import { interopDefault } from '../utils';
+import { GLOB_TESTS } from '../shared/globs';
+import { interopDefault } from '../shared/utils';
 import { getJsDocRules } from './jsdoc';
 
 /**

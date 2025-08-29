@@ -1,9 +1,9 @@
-import type { FilesOptions, OverridesOptions, StylisticOptions, TypedConfigArray } from '../types';
+import type { FilesOptions, OverridesOptions, StylisticOptions, TypedConfigArray } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
-import { GLOB_YAML } from '../globs';
-import { interopDefault } from '../utils';
+import { GLOB_YAML } from '../shared/globs';
+import { interopDefault } from '../shared/utils';
 
 /**
  * Generates an ESLint configuration for YAML files.

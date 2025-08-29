@@ -1,12 +1,12 @@
-import type { TypedConfigArray } from '../types';
+import type { TypedConfigArray } from '../shared/types';
 
 import process from 'node:process';
 
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC } from '../globs';
-import { findNearestPackageJsonName, getTsConfigFileName, getWorkspaceRoot } from '../utils';
+import { GLOB_SRC } from '../shared/globs';
+import { findNearestPackageJsonName, getTsConfigFileName, getWorkspaceRoot } from '../shared/utils';
 import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-configs/perfectionist-groups';
 
 /**

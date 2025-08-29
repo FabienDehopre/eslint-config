@@ -1,4 +1,4 @@
-import type { ArrayItemType, ExtractRuleOptionsType, Rules } from '../../types';
+import type { ArrayItemType, ExtractRuleOptionsType, Rules } from '../../shared/types';
 
 export type MemberOrderingOptions = ArrayItemType<ExtractRuleOptionsType<Rules['member-ordering']>>;
 

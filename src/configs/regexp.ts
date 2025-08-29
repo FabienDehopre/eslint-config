@@ -1,10 +1,10 @@
 import type { TSESLint } from '@typescript-eslint/utils';
-import type { OverridesOptions, RegExpOptions, TypedConfigArray } from '../types';
+import type { OverridesOptions, RegExpOptions, TypedConfigArray } from '../shared/types';
 
 import { configs } from 'eslint-plugin-regexp';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC } from '../globs';
+import { GLOB_SRC } from '../shared/globs';
 
 /**
  * Configure the recommended regexp rules.

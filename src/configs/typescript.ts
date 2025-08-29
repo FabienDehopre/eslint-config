@@ -5,15 +5,15 @@ import type {
   StylisticOptions,
   TypedConfigArray,
   TypeScriptOptions, WorkspaceProjectType
-} from '../types';
+} from '../shared/types';
 
 import process from 'node:process';
 
 import unusedImports from 'eslint-plugin-unused-imports';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_MARKDOWN, GLOB_TS } from '../globs';
-import { ensurePackages, getTsConfigFileName, getWorkspaceRoot, interopDefault } from '../utils';
+import { GLOB_MARKDOWN, GLOB_TS } from '../shared/globs';
+import { ensurePackages, getTsConfigFileName, getWorkspaceRoot, interopDefault } from '../shared/utils';
 import { MEMBER_ORDERING_OPTIONS } from './rules-configs/member-ordering';
 import { namingConvention } from './rules-configs/naming-convention';
 

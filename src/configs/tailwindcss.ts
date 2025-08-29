@@ -1,9 +1,9 @@
-import type { FilesOptions, OverridesOptions, TailwindCssOptions, TypedConfigArray } from '../types';
+import type { FilesOptions, OverridesOptions, TailwindCssOptions, TypedConfigArray } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
-import { GLOB_HTML, GLOB_SRC } from '../globs';
-import { ensurePackages, interopDefault } from '../utils';
+import { GLOB_HTML, GLOB_SRC } from '../shared/globs';
+import { ensurePackages, interopDefault } from '../shared/utils';
 
 /**
  * Generates an ESLint configuration array for Tailwind CSS using better-tailwindcss plugin.
