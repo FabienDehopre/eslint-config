@@ -95,43 +95,9 @@ export async function defineProjectConfig(
 
     configs.push(typescript({
       ...typescriptOptions,
-      stylistic: false,
       type: options.type,
     }, true));
   }
-  /*
-  if (enableProjectTypescript && workspaceOptions.typescript) {
-    const projectTypescriptOptions = typeof enableProjectTypescript === 'object' ? enableProjectTypescript : {};
-
-    // Create TypeScript override configs for project-specific options
-    if (projectTypescriptOptions.parserOptions || projectTypescriptOptions.overrides) {
-      const configs: TypedConfigArray = [];
-
-      // Add parser options override if specified
-      if (projectTypescriptOptions.parserOptions) {
-        configs.push({
-          name: 'fabdeh/project/typescript/parser-options',
-          files: [GLOB_TS],
-          languageOptions: {
-            parser: tseslint.parser,
-            parserOptions: projectTypescriptOptions.parserOptions,
-          },
-        });
-      }
-
-      // Add rule overrides if specified
-      if (projectTypescriptOptions.overrides) {
-        configs.push({
-          name: 'fabdeh/project/typescript/rules',
-          files: [GLOB_TS],
-          rules: projectTypescriptOptions.overrides,
-        });
-      }
-
-      configs.push(Promise.resolve(configs));
-    }
-  }
-  */
 
   return tseslint.config(...resolvedBaseConfig, ...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArray;
 }
