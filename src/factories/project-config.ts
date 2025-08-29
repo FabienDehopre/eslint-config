@@ -1,4 +1,4 @@
-import type { Awaitable, CreateProjectConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from './types';
+import type { Awaitable, CreateProjectConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -10,9 +10,9 @@ import {
   tailwindcss,
   typescript,
   vitest
-} from './configs';
-import { NGRX_PACKAGES, OPTIONS_SYMBOL } from './constants';
-import { resolveSubOptions } from './utils';
+} from '../configs';
+import { NGRX_PACKAGES, OPTIONS_SYMBOL } from '../constants';
+import { resolveSubOptions } from '../utils';
 
 /**
  * Creates an ESLint configuration array based on the provided base configuration, options and user configurations.

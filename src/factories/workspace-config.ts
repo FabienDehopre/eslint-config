@@ -1,4 +1,4 @@
-import type { Awaitable, CreateWorkspaceConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from './types';
+import type { Awaitable, CreateWorkspaceConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -22,9 +22,9 @@ import {
   typescript,
   unicorn,
   yaml
-} from './configs';
-import { OPTIONS_SYMBOL } from './constants';
-import { interopDefault, resolveSubOptions } from './utils';
+} from '../configs';
+import { OPTIONS_SYMBOL } from '../constants';
+import { interopDefault, resolveSubOptions } from '../utils';
 
 /**
  * Creates an ESLint configuration array based on the provided options and user configurations.

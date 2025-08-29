@@ -1,4 +1,4 @@
-import type { Awaitable, CreateConfigOptions, TypedConfigArray, TypedConfigWithExtends } from './types';
+import type { Awaitable, CreateConfigOptions, TypedConfigArray, TypedConfigWithExtends } from '../types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -27,9 +27,9 @@ import {
   unicorn,
   vitest,
   yaml
-} from './configs';
-import { NGRX_PACKAGES } from './constants';
-import { interopDefault, resolveSubOptions } from './utils';
+} from '../configs';
+import { NGRX_PACKAGES } from '../constants';
+import { interopDefault, resolveSubOptions } from '../utils';
 
 /**
  * Creates an ESLint configuration array based on the provided options and user configurations.
