@@ -546,4 +546,7 @@ export interface CreateProjectConfigOptions extends ProjectTypeOptions {
  */
 export type CreateConfigOptions = CreateWorkspaceConfigOptions & Omit<CreateProjectConfigOptions, 'typescript'>;
 
+/**
+ * Return-type of the `defineWorkspaceConfig` function.
+ */
 export type TypedConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]: CreateWorkspaceConfigOptions };
