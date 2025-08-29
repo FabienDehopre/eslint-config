@@ -260,7 +260,7 @@ export async function defineWorkspaceConfig(
     configs.push(typescript({
       ...typescriptOptions,
       stylistic: stylisticOptions,
-      // type: options.type, // TODO: fix typescritpt for workspace
+      type: 'workspace',
     }));
   }
 
@@ -351,7 +351,7 @@ export async function defineProjectConfig(
     jsdoc: enableJsdoc = true,
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
     tailwindcss: enableTailwind = false,
-    typescript: enableTypescript = false,
+    typescript: typescriptOptions,
     vitest: enableVitest = isPackageExists('vitest'),
   } = options;
 
@@ -397,6 +397,17 @@ export async function defineProjectConfig(
   }
 
   // Handle project-specific TypeScript
+  if (typescriptOptions) {
+    if (!workspaceOptions.typescript) {
+      throw new Error('Project-specific TypeScript configuration requires a base configuration with TypeScript support.');
+    }
+
+    configs.push(typescript({
+      ...typescriptOptions,
+      stylistic: false,
+      type: options.type,
+    }, true));
+  }
   /*
   if (enableProjectTypescript && workspaceOptions.typescript) {
     const projectTypescriptOptions = typeof enableProjectTypescript === 'object' ? enableProjectTypescript : {};

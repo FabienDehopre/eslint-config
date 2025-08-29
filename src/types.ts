@@ -358,13 +358,15 @@ export interface TailwindCssOptions {
   tags?: Tags;
 }
 
-export interface ProjectTypeOptions {
+export type ProjectType = 'app' | 'lib';
+export type WorkspaceProjectType = ProjectType | 'workspace';
+export interface ProjectTypeOptions<T = ProjectType> {
   /**
    * Type of the project. `lib` will enable more strict rules for libraries.
    *
    * @default 'app'
    */
-  type?: 'app' | 'lib';
+  type?: T;
 }
 
 /**
@@ -374,12 +376,7 @@ export interface ProjectTypeScriptOptions {
   /**
    * Additional parser options for TypeScript.
    */
-  parserOptions?: TSESLint.FlatConfig.ParserOptions;
-
-  /**
-   * Optional property that allows specifying custom rules to override the default ones.
-   */
-  overrides?: TypedConfig['rules'];
+  parserOptions: TSESLint.FlatConfig.ParserOptions;
 }
 
 /**
@@ -536,10 +533,8 @@ export interface CreateProjectConfigOptions extends ProjectTypeOptions {
   /**
    * Project-specific TypeScript configuration.
    * Allows overriding parser options and adding project-specific rule overrides.
-   *
-   * @default false
    */
-  typescript?: ProjectTypeScriptOptions | boolean;
+  typescript?: OverridesOptions & ProjectTypeScriptOptions;
 }
 
 /**
