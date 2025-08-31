@@ -58,10 +58,28 @@ export async function defineProjectConfig(
     configs.push(jsdoc({ stylistic: stylisticOptions }));
   }
 
+  // Handle project-specific TypeScript
+  if (typescriptOptions) {
+    if (!workspaceOptions.typescript) {
+      throw new Error('Project-specific TypeScript configuration requires a base configuration with TypeScript support.');
+    }
+
+    configs.push(typescript({
+      ...typescriptOptions,
+      type: options.type,
+    }, true));
+  }
+
   // Add Angular configuration (project-specific feature)
   if (enableAngular) {
     const angularOptions = resolveSubOptions(options, 'angular');
     configs.push(angular(angularOptions));
+    if (workspaceOptions.formatters) {
+      const htmlFormatters = resolvedBaseConfig.find((c) => c.name === 'fabdeh/formatter/html');
+      if (htmlFormatters) {
+        delete htmlFormatters.languageOptions;
+      }
+    }
   }
 
   // Add NgRx configuration (project-specific feature)
@@ -85,18 +103,6 @@ export async function defineProjectConfig(
   if (enableTailwind) {
     const tailwindcssOptions = resolveSubOptions(options, 'tailwindcss');
     configs.push(tailwindcss(tailwindcssOptions));
-  }
-
-  // Handle project-specific TypeScript
-  if (typescriptOptions) {
-    if (!workspaceOptions.typescript) {
-      throw new Error('Project-specific TypeScript configuration requires a base configuration with TypeScript support.');
-    }
-
-    configs.push(typescript({
-      ...typescriptOptions,
-      type: options.type,
-    }, true));
   }
 
   return tseslint.config(...resolvedBaseConfig, ...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArray;

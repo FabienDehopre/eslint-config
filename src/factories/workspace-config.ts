@@ -144,8 +144,8 @@ export async function defineWorkspaceConfig(
   if (options.formatters) {
     configs.push(formatters(
       options.formatters,
-      typeof stylisticOptions === 'boolean' ? {} : stylisticOptions
-      // Boolean(enableAngular) // TODO: fix formatters in project config when using angular
+      typeof stylisticOptions === 'boolean' ? {} : stylisticOptions,
+      false
     ));
   }
 
