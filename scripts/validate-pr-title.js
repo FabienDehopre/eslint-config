@@ -7,7 +7,7 @@ import load from '@commitlint/load';
 
 // Get PR title and body from environment variables or arguments
 const prTitle = process.env.PR_TITLE || process.argv[2] || '';
-// const prBody = process.env.PR_BODY || process.argv[3] || '';
+const prBody = process.env.PR_BODY || process.argv[3] || '';
 
 if (!prTitle) {
   console.error('Error: PR title is required');
@@ -21,7 +21,10 @@ console.log(`PR title: ${prTitle}`);
 
 // Validate the PR title using the shared validation function
 const config = await load({}, { file: 'commitlint.config.js', cwd: process.cwd() });
-const result = lint(prTitle, config.rules, config.parserPreset ? { parserOpts: config.parserPreset.parserOpts } : {});
+const result = lint(`${prTitle}
+
+${prBody}
+`, config.rules, config.parserPreset ? { parserOpts: config.parserPreset.parserOpts } : {});
 
 if (result.isValid) {
   console.log('✅ PR title ACCEPTED 👍');
