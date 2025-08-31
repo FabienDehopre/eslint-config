@@ -38,4 +38,4 @@ jobs:
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
-        run: pnpm pr-lint
+        run: pnpm validate-pr-title
