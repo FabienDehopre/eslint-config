@@ -123,6 +123,8 @@
     "@commitlint/cli": "catalog:dev",
     "@commitlint/config-conventional": "catalog:dev",
     "@commitlint/cz-commitlint": "catalog:dev",
+    "@commitlint/lint": "catalog:dev",
+    "@commitlint/load": "catalog:dev",
     "@fabdeh/eslint-config": "workspace:*",
     "@ngrx/effects": "catalog:dev",
     "@ngrx/operators": "catalog:dev",
