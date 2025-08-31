@@ -16,14 +16,26 @@ jobs:
         with:
           # Ensure's validate-pr-title.js is the copy from main
           ref: main
-          
-      - name: Setup Node.js
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+      - name: Use Node.js LTS
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-          
+          cache: pnpm
+      - name: Use latest corepack
+        run: |
+          echo "Before: corepack version => $(corepack --version || echo 'not installed')"
+          npm install -g corepack@latest
+          echo "After: corepack version => $(corepack --version)"
+          corepack enable
+          pnpm --version
+      - name: Install dependencies
+        run: pnpm install
       - name: Validate PR title
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
-        run: node ./scripts/validate-pr-title.js
+        run: pnpm pr-lint

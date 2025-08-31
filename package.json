@@ -53,7 +53,8 @@
     "prepack": "pnpm build",
     "release": "bumpp && npm publish",
     "typecheck": "tsc --noEmit",
-    "gen": "tsx scripts/typegen.ts"
+    "gen": "tsx scripts/typegen.ts",
+    "pr-lint": "tsx scripts/validate-pr-title.ts"
   },
   "peerDependencies": {
     "@prettier/plugin-xml": "catalog:peer",
