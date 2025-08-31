@@ -53,7 +53,8 @@
     "prepack": "pnpm build",
     "release": "bumpp && npm publish",
     "typecheck": "tsc --noEmit",
-    "gen": "tsx scripts/typegen.ts"
+    "gen": "tsx scripts/typegen.ts",
+    "validate-pr-title": "tsx scripts/validate-pr-title.ts"
   },
   "peerDependencies": {
     "@prettier/plugin-xml": "catalog:peer",
@@ -123,6 +124,8 @@
     "@commitlint/cli": "catalog:dev",
     "@commitlint/config-conventional": "catalog:dev",
     "@commitlint/cz-commitlint": "catalog:dev",
+    "@commitlint/lint": "catalog:dev",
+    "@commitlint/load": "catalog:dev",
     "@fabdeh/eslint-config": "workspace:*",
     "@ngrx/effects": "catalog:dev",
     "@ngrx/operators": "catalog:dev",
