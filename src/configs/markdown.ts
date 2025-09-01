@@ -1,11 +1,11 @@
 import type { TSESLint } from '@typescript-eslint/utils';
-import type { FilesOptions, OverridesOptions, TypedConfigArray } from '../types';
+import type { FilesOptions, OverridesOptions, TypedConfigArray } from '../shared/types';
 
 import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN } from '../globs';
-import { interopDefault } from '../utils';
+import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN } from '../shared/globs';
+import { interopDefault } from '../shared/utils';
 
 /**
  * Configures ESLint for Markdown files.

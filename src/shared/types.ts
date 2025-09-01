@@ -5,10 +5,11 @@ import type { TSESLint } from '@typescript-eslint/utils';
 import type { Linter } from 'eslint';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { Attributes, Callees, Tags, Variables } from 'eslint-plugin-better-tailwindcss/api/types';
-import type { RuleOptions } from './typegen';
-import type { VendoredPrettierOptions } from './vendor/prettier-types';
+import type { RuleOptions } from '../typegen';
+import type { VendoredPrettierOptions } from '../vendor/prettier-types';
+import type { OPTIONS_SYMBOL } from './constants';
 
-export type { ConfigNames } from './typegen';
+export type { ConfigNames } from '../typegen';
 
 /**
  * A type that can be awaited. Promise<T> or T.
@@ -358,21 +359,32 @@ export interface TailwindCssOptions {
   tags?: Tags;
 }
 
-export interface ProjectTypeOptions {
+export type ProjectType = 'app' | 'lib';
+export type WorkspaceProjectType = ProjectType | 'workspace';
+export interface ProjectTypeOptions<T = ProjectType> {
   /**
    * Type of the project. `lib` will enable more strict rules for libraries.
    *
    * @default 'app'
    */
-  type?: 'app' | 'lib';
+  type?: T;
 }
 
 /**
- * Options for creating an ESLint configuration.
- *
- * @see createConfig function
+ * Options for project-specific TypeScript configuration.
  */
-export interface CreateConfigOptions extends ProjectTypeOptions {
+export interface ProjectTypeScriptOptions {
+  /**
+   * Additional parser options for TypeScript.
+   */
+  parserOptions: TSESLint.FlatConfig.ParserOptions;
+}
+
+/**
+ * Options for creating workspace-level ESLint configuration.
+ * These options define foundational, consistency-focused configurations.
+ */
+export interface CreateWorkspaceConfigOptions {
   /**
    * An array of glob patterns indicating the files that the configuration object should not apply to.
    * If not specified, the configuration object applies to all files matched by files.
@@ -395,9 +407,9 @@ export interface CreateConfigOptions extends ProjectTypeOptions {
   javascript?: OverridesOptions;
 
   /**
-   * TypeScript rules overrides and parser configuration.
+   * TypeScript rules overrides and basic configuration.
    *
-   * @default auto-detected
+   * @default false
    */
   typescript?: boolean | (NamingConventionOptions & OverridesOptions & TypeScriptOptions);
 
@@ -408,13 +420,6 @@ export interface CreateConfigOptions extends ProjectTypeOptions {
    * @default true
    */
   stylistic?: boolean | (OverridesOptions & StylisticConfig);
-
-  /**
-   * Enable or disable JSDoc rules.
-   *
-   * @default true
-   */
-  jsdoc?: boolean;
 
   /**
    * Enable regexp rules.
@@ -430,34 +435,6 @@ export interface CreateConfigOptions extends ProjectTypeOptions {
    * @default true
    */
   unicorn?: UnicornOptions | boolean;
-
-  /**
-   * Options for the angular linting rules
-   *
-   * @default auto-detect based on the dependencies.
-   */
-  angular?: AngularOptions | boolean;
-
-  /**
-   * Options for the ngrx linting rules.
-   *
-   * @default auto-detect based on dependencies.
-   */
-  ngrx?: NgrxOptions | boolean;
-
-  /**
-   * Options for the vitest linting rules
-   *
-   * @default auto-detect based on dependencies.
-   */
-  vitest?: boolean | (OverridesOptions & UnitTestingOptions);
-
-  /**
-   * Options for the TailwindCSS linting rules.
-   *
-   * @default false
-   */
-  tailwindcss?: boolean | (FilesOptions & OverridesOptions & TailwindCssOptions);
 
   /**
    * Enable JSONC support.
@@ -508,11 +485,68 @@ export interface CreateConfigOptions extends ProjectTypeOptions {
    * In the future it will be smartly enabled based on the project usage.
    *
    * @see https://github.com/antfu/pnpm-workspace-utils
-   * @experimental
    * @default false
+   * @experimental
    */
   pnpm?: boolean;
 }
 
-export const OPTIONS_SYMBOL: unique symbol = Symbol('options');
-export type ConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]?: CreateConfigOptions };
+/**
+ * Options for creating project-level ESLint configuration.
+ * These options define feature-specific, implementation-focused configurations.
+ */
+export interface CreateProjectConfigOptions extends ProjectTypeOptions {
+  /**
+   * Enable or disable JSDoc rules.
+   *
+   * @default true
+   */
+  jsdoc?: boolean;
+
+  /**
+   * Options for the angular linting rules
+   *
+   * @default auto-detect based on the dependencies.
+   */
+  angular?: AngularOptions | boolean;
+
+  /**
+   * Options for the ngrx linting rules.
+   *
+   * @default auto-detect based on dependencies.
+   */
+  ngrx?: NgrxOptions | boolean;
+
+  /**
+   * Options for the vitest linting rules
+   *
+   * @default auto-detect based on dependencies.
+   */
+  vitest?: boolean | (OverridesOptions & UnitTestingOptions);
+
+  /**
+   * Options for the TailwindCSS linting rules.
+   *
+   * @default false
+   */
+  tailwindcss?: boolean | (FilesOptions & OverridesOptions & TailwindCssOptions);
+
+  /**
+   * Project-specific TypeScript configuration.
+   * Allows overriding parser options and adding project-specific rule overrides.
+   */
+  typescript?: OverridesOptions & ProjectTypeScriptOptions;
+}
+
+/**
+ * Options for creating an ESLint configuration.
+ * Combines workspace and project options for standalone usage.
+ *
+ * @see defineConfig function
+ */
+export type CreateConfigOptions = CreateWorkspaceConfigOptions & Omit<CreateProjectConfigOptions, 'typescript'>;
+
+/**
+ * Return-type of the `defineWorkspaceConfig` function.
+ */
+export type TypedConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]: CreateWorkspaceConfigOptions };

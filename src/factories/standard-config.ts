@@ -1,4 +1,4 @@
-import type { Awaitable, ConfigArrayWithOptions, CreateConfigOptions, TypedConfigArray, TypedConfigWithExtends } from './types';
+import type { Awaitable, CreateConfigOptions, TypedConfigArray, TypedConfigWithExtends } from '../shared/types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -27,27 +27,26 @@ import {
   unicorn,
   vitest,
   yaml
-} from './configs';
-import { OPTIONS_SYMBOL } from './types';
-import { interopDefault, resolveSubOptions } from './utils';
-
-const NGRX_PACKAGES = ['@ngrx/store', '@ngrx/effects', '@ngrx/signals', '@ngrx/operators'];
+} from '../configs';
+import { NGRX_PACKAGES } from '../shared/constants';
+import { interopDefault, resolveSubOptions } from '../shared/utils';
 
 /**
  * Creates an ESLint configuration array based on the provided options and user configurations.
+ * Additionally, it will automatically detect the presence of certain packages and enable corresponding rules.
  *
- * @param options - Configuration options that extend `ConfigWithExtends` and `CreateConfigOptions`.
+ * @param options - Configuration options.
  * @param userConfigs - Additional user configurations that can be awaited.
- * @returns A promise that resolves to a `ConfigArray`.
+ * @returns A promise that resolves to a `ConfigArrayWithOptions`.
  * @example
  * ```typescript
- * const config = await createConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
+ * const config = await defineConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
  * ```
  */
 export async function defineConfig(
   options: CreateConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<ConfigArrayWithOptions> {
+): Promise<TypedConfigArray> {
   const {
     angular: enableAngular = isPackageExists('@angular/core'),
     gitignore: enableGitignore = true,
@@ -191,7 +190,5 @@ export async function defineConfig(
     ));
   }
 
-  const config = tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as ConfigArrayWithOptions;
-  config[OPTIONS_SYMBOL] = options;
-  return config;
+  return tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArray;
 }

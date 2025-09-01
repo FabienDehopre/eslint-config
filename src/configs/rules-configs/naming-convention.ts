@@ -1,4 +1,4 @@
-import type { ExtractRuleOptionsType, Rules } from '../../types';
+import type { ExtractRuleOptionsType, Rules } from '../../shared/types';
 
 export type NamingConventionOptions = ExtractRuleOptionsType<Rules['@typescript-eslint/naming-convention']>;
 

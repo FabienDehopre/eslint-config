@@ -1,9 +1,9 @@
-import type { TypedConfigArray, UnicornOptions } from '../types';
+import type { TypedConfigArray, UnicornOptions } from '../shared/types';
 
 import unicornPlugin from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC } from '../globs';
+import { GLOB_SRC } from '../shared/globs';
 
 /**
  * Generates a configuration array for the Unicorn plugin with the specified options.

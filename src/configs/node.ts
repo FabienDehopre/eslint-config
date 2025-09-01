@@ -1,9 +1,9 @@
-import type { TypedConfigArray } from '../types';
+import type { TypedConfigArray } from '../shared/types';
 
 import nodePlugin from 'eslint-plugin-n';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_SRC } from '../globs';
+import { GLOB_SRC } from '../shared/globs';
 
 /**
  * Generates an array containing configuration settings for Node.js-specific rules and plugins.

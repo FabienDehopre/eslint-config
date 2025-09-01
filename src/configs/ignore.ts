@@ -1,8 +1,8 @@
-import type { TypedConfigArray } from '../types';
+import type { TypedConfigArray } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
-import { GLOB_EXCLUDE } from '../globs';
+import { GLOB_EXCLUDE } from '../shared/globs';
 
 /**
  * Generates a configuration array for ESLint with default and user-defined ignore patterns.

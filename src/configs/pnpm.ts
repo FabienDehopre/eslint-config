@@ -1,8 +1,8 @@
-import type { TypedConfigArray } from '../types';
+import type { TypedConfigArray } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
-import { interopDefault } from '../utils';
+import { interopDefault } from '../shared/utils';
 
 /**
  * Generates an array containing configuration settings for PNPM workspace-specific rules and plugins.
