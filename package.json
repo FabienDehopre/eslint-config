@@ -54,7 +54,9 @@
     "release": "bumpp && npm publish",
     "typecheck": "tsc --noEmit",
     "gen": "tsx scripts/typegen.ts",
-    "validate-pr-title": "tsx scripts/validate-pr-title.ts"
+    "validate-pr-title": "tsx scripts/validate-pr-title.ts",
+    "test": "vitest",
+    "test:watch": "vitest --watch"
   },
   "peerDependencies": {
     "@prettier/plugin-xml": "catalog:peer",
