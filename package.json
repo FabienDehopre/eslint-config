@@ -136,6 +136,7 @@
     "@testing-library/jest-dom": "catalog:dev",
     "@types/fs-extra": "catalog:dev",
     "@types/node": "catalog:dev",
+    "@vitest/coverage-v8": "catalog:dev",
     "bumpp": "catalog:dev",
     "changelogithub": "catalog:dev",
     "commitizen": "catalog:dev",
