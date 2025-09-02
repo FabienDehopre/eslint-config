@@ -64,9 +64,34 @@ The package uses a factory pattern with the `defineConfig()` function that:
 
 ## Testing
 
-- Uses Vitest for testing
+- Uses Vitest for testing with comprehensive unit test coverage
 - **tests/fixtures.spec.ts** - Fixture-based tests that validate ESLint configurations
+- **tests/utils.spec.ts** - Unit tests for utility functions with 98%+ coverage
 - Test fixtures in `fixtures/` directory with input/output comparisons
+
+### Testing Guidelines
+
+When writing unit tests, follow these critical principles:
+
+1. **Type Safety First**
+   - ❌ Never use `any` type
+   - ✅ Always import proper types (e.g., `Stats` from `'node:fs'`)
+   - ✅ Use `@types/*` packages for libraries without built-in types
+   - ✅ Leverage project's existing type system from `src/shared/types.ts`
+
+2. **Proper Type Casting**
+   - ❌ `as any`
+   - ✅ `as unknown as SpecificType`
+
+3. **Project Consistency**
+   - ✅ Use `test` instead of `it` for test functions
+   - ✅ Import specific option types from `src/shared/types.ts`
+   - ✅ Structure mock returns to match expected interfaces
+
+4. **Comprehensive Mocking**
+   - Mock Node.js modules (`fs`, `fs/promises`, `path`) properly
+   - Mock external dependencies with correct return types
+   - Test edge cases, error handling, and environment variations
 
 ## Build System
 
