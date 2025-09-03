@@ -24,6 +24,27 @@ This is a personal ESLint configuration package (`@fabdeh/eslint-config`) that p
 - `pnpm build:inspector` - Build and run ESLint config inspector
 - `pnpm commit` - Use commitizen for conventional commits
 
+### Search and Analysis Tools
+
+- Use `ast-grep` for structural code queries (finding functions, classes, imports, exports)
+- Use `jq` for parsing JSON configurations (package.json, tsconfig.json, ESLint configs)
+- Use `yq` for parsing YAML files (pnpm-workspace.yaml, CI configurations)
+
+**Installation (if missing):**
+
+```bash
+# macOS (Homebrew)
+brew install ast-grep ripgrep fd fzf jq yq
+
+# Ubuntu/Debian
+sudo apt install ripgrep fd-find fzf jq
+cargo install ast-grep --locked
+snap yq
+
+# Windows (Scoop)
+scoop install main/ast-grep ripgrep fd fzf jq main/yq
+```
+
 ### Release
 
 - `pnpm release` - Bump version and publish to npm
