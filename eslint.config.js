@@ -6,6 +6,10 @@ export default defineConfig(
     typescript: {
       enableErasableSyntaxOnly: true,
       useRelaxedNamingConventionForCamelAndPascalCases: true,
+      overrides: {
+        // to be removed when migrated from tseslint.config to eslint defineConfig
+        '@typescript-eslint/no-deprecated': 'off',
+      },
     },
     type: 'lib',
   },
