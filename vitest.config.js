@@ -38,6 +38,7 @@ export default defineConfig({
         '_fixtures/**',
         'fixtures/**',
         'scripts/**',
+        'src/shared/!(utils).ts',
       ],
       thresholds: {
         lines: 80,
