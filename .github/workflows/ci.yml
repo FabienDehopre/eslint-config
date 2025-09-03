@@ -55,3 +55,5 @@ jobs:
         run: pnpm lint:ci
       - name: Check exports
         run: pnpm check-exports
+      - name: Run tests
+        run: pnpm test:ci

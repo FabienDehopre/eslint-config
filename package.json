@@ -56,7 +56,8 @@
     "gen": "tsx scripts/typegen.ts",
     "validate-pr-title": "tsx scripts/validate-pr-title.ts",
     "test": "vitest",
-    "test:watch": "vitest --watch"
+    "test:watch": "vitest --watch",
+    "test:ci": "vitest --coverage"
   },
   "peerDependencies": {
     "@prettier/plugin-xml": "catalog:peer",
