@@ -14,7 +14,9 @@ This is a personal ESLint configuration package (`@fabdeh/eslint-config`) that p
 - `pnpm typecheck` - Run TypeScript type checking
 - `pnpm lint` - Run ESLint with auto-fix
 - `pnpm lint:check` - Run ESLint without auto-fix (for CI)
-- `pnpm test` - Run Vitest tests (fixtures tests)
+- `pnpm test` - Run all Vitest tests (unit tests and fixtures)
+- `pnpm test:watch` - Run tests in watch mode
+- `pnpm test:ci` - Run tests with coverage reporting
 
 ### Development Tools
 
@@ -32,10 +34,13 @@ This is a personal ESLint configuration package (`@fabdeh/eslint-config`) that p
 ### Core Structure
 
 - **src/index.ts** - Main entry point that exports all public APIs
-- **src/factory.ts** - Contains the `defineConfig()` function that creates ESLint configurations
-- **src/types.ts** - TypeScript type definitions for all configuration options
+- **src/factories/** - Factory functions that create ESLint configurations
+  - **project-config.ts** - Project-specific configuration factory
+  - **standard-config.ts** - Standard configuration factory with `defineConfig()` function
+  - **workspace-config.ts** - Workspace configuration factory
+- **src/shared/types.ts** - TypeScript type definitions for all configuration options
+- **src/shared/utils.ts** - Utility functions for configuration management
 - **src/configs/** - Individual configuration modules for each linting area
-- **src/utils.ts** - Utility functions for configuration management
 
 ### Configuration System
 
@@ -108,6 +113,10 @@ When writing unit tests, follow these critical principles:
 ## Development Notes
 
 - The package is designed to work standalone without Prettier
-- Auto-detection of frameworks happens in `factory.ts` using `local-pkg`
+- Auto-detection of frameworks happens in `src/factories/standard-config.ts` using `local-pkg`
 - All configurations are composable and can be used individually
 - TypeScript erasable syntax rules are supported for Node.js 23.6+ compatibility
+- **Factory Functions**: The package provides different configuration factories for various use cases:
+  - `standard-config.ts` - General-purpose configurations for standalone projects
+  - `workspace-config.ts` - Specialized configurations for monorepo/workspace environments
+  - `project-config.ts` - Project-specific configurations with enhanced customization options
