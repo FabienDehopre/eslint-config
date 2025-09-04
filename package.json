@@ -51,7 +51,7 @@
     "lint": "pnpm build && eslint . --fix",
     "lint:ci": "eslint . --quiet",
     "prepack": "pnpm build",
-    "release": "bumpp && npm publish",
+    "release": "bumpp",
     "typecheck": "tsc --noEmit",
     "gen": "tsx scripts/typegen.ts",
     "validate-pr-title": "tsx scripts/validate-pr-title.ts"
