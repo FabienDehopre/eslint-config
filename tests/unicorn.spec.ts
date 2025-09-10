@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { UnicornOptions } from '../src/shared/types';
 
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
@@ -257,15 +256,15 @@ describe('unicorn', () => {
 
       expect(result).toHaveLength(1);
 
-      const config = result[0]!;
-      expect(config.name).toBe('fabdeh/unicorn/rules');
-      expect(config.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
-      expect(config.plugins).toEqual({ unicorn: MOCK_UNICORN_PLUGIN });
+      const config = result.at(0);
+      expect(config?.name).toBe('fabdeh/unicorn/rules');
+      expect(config?.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
+      expect(config?.plugins).toEqual({ unicorn: MOCK_UNICORN_PLUGIN });
     });
 
     test('should include custom curated rules by default (not all recommended)', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Should have custom curated rules, not all recommended
       const expectedCustomRules = [
@@ -289,21 +288,21 @@ describe('unicorn', () => {
       ];
 
       for (const ruleName of expectedCustomRules) {
-        expect(config.rules).toHaveProperty(ruleName);
+        expect(config?.rules).toHaveProperty(ruleName);
       }
 
       // Should NOT have all recommended rules by default
-      expect(config.rules).not.toHaveProperty('unicorn/better-regex');
-      expect(config.rules).not.toHaveProperty('unicorn/consistent-destructuring');
-      expect(config.rules).not.toHaveProperty('unicorn/expiring-todo-comments');
-      expect(config.rules).not.toHaveProperty('unicorn/import-style');
+      expect(config?.rules).not.toHaveProperty('unicorn/better-regex');
+      expect(config?.rules).not.toHaveProperty('unicorn/consistent-destructuring');
+      expect(config?.rules).not.toHaveProperty('unicorn/expiring-todo-comments');
+      expect(config?.rules).not.toHaveProperty('unicorn/import-style');
     });
 
     test('should configure filename-case rule with custom options', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['unicorn/filename-case']).toEqual([
+      expect(config?.rules?.['unicorn/filename-case']).toEqual([
         'error',
         { case: 'kebabCase', ignore: [/^[A-Z0-9_-]+\.md$/] },
       ]);
@@ -311,9 +310,9 @@ describe('unicorn', () => {
 
     test('should configure consistent-function-scoping with custom options', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['unicorn/consistent-function-scoping']).toEqual([
+      expect(config?.rules?.['unicorn/consistent-function-scoping']).toEqual([
         'error',
         { checkArrowFunctions: false },
       ]);
@@ -321,9 +320,9 @@ describe('unicorn', () => {
 
     test('should have no-unused-properties as warning', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['unicorn/no-unused-properties']).toBe('warn');
+      expect(config?.rules?.['unicorn/no-unused-properties']).toBe('warn');
     });
   });
 
@@ -331,43 +330,43 @@ describe('unicorn', () => {
     test('should use all recommended rules when allRecommended is true', () => {
       const options: UnicornOptions = { allRecommended: true };
       const result = unicorn(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Should have all recommended rules
-      expect(config.rules).toEqual(MOCK_UNICORN_RECOMMENDED_RULES);
+      expect(config?.rules).toEqual(MOCK_UNICORN_RECOMMENDED_RULES);
 
       // Should include rules that are normally not in custom config
-      expect(config.rules).toHaveProperty('unicorn/better-regex', 'error');
-      expect(config.rules).toHaveProperty('unicorn/consistent-destructuring', 'error');
-      expect(config.rules).toHaveProperty('unicorn/expiring-todo-comments', 'error');
-      expect(config.rules).toHaveProperty('unicorn/import-style', 'error');
+      expect(config?.rules).toHaveProperty('unicorn/better-regex', 'error');
+      expect(config?.rules).toHaveProperty('unicorn/consistent-destructuring', 'error');
+      expect(config?.rules).toHaveProperty('unicorn/expiring-todo-comments', 'error');
+      expect(config?.rules).toHaveProperty('unicorn/import-style', 'error');
     });
 
     test('should use custom curated rules when allRecommended is false', () => {
       const options: UnicornOptions = { allRecommended: false };
       const result = unicorn(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Should NOT have all recommended rules
-      expect(config.rules).not.toEqual(MOCK_UNICORN_RECOMMENDED_RULES);
+      expect(config?.rules).not.toEqual(MOCK_UNICORN_RECOMMENDED_RULES);
 
       // Should have custom rules
-      expect(config.rules).toHaveProperty('unicorn/catch-error-name', 'error');
-      expect(config.rules).toHaveProperty('unicorn/no-array-for-each', 'error');
+      expect(config?.rules).toHaveProperty('unicorn/catch-error-name', 'error');
+      expect(config?.rules).toHaveProperty('unicorn/no-array-for-each', 'error');
 
       // Should NOT have some recommended rules
-      expect(config.rules).not.toHaveProperty('unicorn/better-regex');
-      expect(config.rules).not.toHaveProperty('unicorn/import-style');
+      expect(config?.rules).not.toHaveProperty('unicorn/better-regex');
+      expect(config?.rules).not.toHaveProperty('unicorn/import-style');
     });
 
     test('should use custom curated rules when allRecommended is undefined', () => {
       const options: UnicornOptions = {};
       const result = unicorn(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Should use custom rules by default
-      expect(config.rules).toHaveProperty('unicorn/catch-error-name', 'error');
-      expect(config.rules).not.toHaveProperty('unicorn/better-regex');
+      expect(config?.rules).toHaveProperty('unicorn/catch-error-name', 'error');
+      expect(config?.rules).not.toHaveProperty('unicorn/better-regex');
     });
   });
 
@@ -391,7 +390,7 @@ describe('unicorn', () => {
       });
 
       // Should NOT contain all recommended rules
-      const callArgs = configSpy.mock.calls[0]![0] as { rules: Record<string, unknown> };
+      const callArgs = configSpy.mock.calls.at(0)?.[0] as { rules: Record<string, unknown> };
       expect(callArgs.rules).not.toHaveProperty('unicorn/better-regex');
     });
 
@@ -445,7 +444,7 @@ describe('unicorn', () => {
 
     test('should have proper config structure', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
       expect(config).toMatchObject({
         name: 'fabdeh/unicorn/rules',
@@ -454,31 +453,31 @@ describe('unicorn', () => {
         rules: expect.any(Object),
       });
 
-      expect(Object.keys(config)).toEqual(['name', 'files', 'plugins', 'rules']);
+      expect(Object.keys(config ?? {})).toEqual(['name', 'files', 'plugins', 'rules']);
     });
 
     test('should use GLOB_SRC pattern', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
+      expect(config?.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
     });
 
     test('should have proper config name format', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.name).toBe('fabdeh/unicorn/rules');
-      expect(config.name).toMatch(/^fabdeh\/[a-z-]+\/rules$/);
+      expect(config?.name).toBe('fabdeh/unicorn/rules');
+      expect(config?.name).toMatch(/^fabdeh\/[a-z-]+\/rules$/);
     });
   });
 
   describe('rule configuration validation', () => {
     test('should have all rules prefixed with unicorn/', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const ruleKeys = Object.keys(config.rules!);
+      const ruleKeys = Object.keys(config?.rules ?? {});
       for (const ruleKey of ruleKeys) {
         expect(ruleKey).toMatch(/^unicorn\//);
       }
@@ -486,14 +485,14 @@ describe('unicorn', () => {
 
     test('should have proper rule severity levels', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const rules = config.rules!;
+      const rules = config?.rules ?? {};
       const ruleEntries = Object.entries(rules);
 
       for (const [, ruleConfig] of ruleEntries) {
         if (Array.isArray(ruleConfig)) {
-          expect(['error', 'warn', 'off']).toContain(ruleConfig[0]);
+          expect(['error', 'warn', 'off']).toContain(ruleConfig.at(0));
         } else {
           expect(['error', 'warn', 'off']).toContain(ruleConfig);
         }
@@ -502,9 +501,9 @@ describe('unicorn', () => {
 
     test('should have comprehensive custom rule coverage', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const unicornRules = Object.keys(config.rules!).filter((key) =>
+      const unicornRules = Object.keys(config?.rules ?? {}).filter((key) =>
         key.startsWith('unicorn/')
       );
 
@@ -514,20 +513,20 @@ describe('unicorn', () => {
 
     test('should have rules with configuration objects', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const rulesWithConfig = Object.entries(config.rules!).filter(
+      const rulesWithConfig = Object.entries(config?.rules ?? {}).filter(
         ([, ruleConfig]) => Array.isArray(ruleConfig)
       );
 
       expect(rulesWithConfig.length).toBeGreaterThan(0);
 
       // Specific rules with configuration
-      expect(config.rules!['unicorn/filename-case']).toEqual([
+      expect(config?.rules?.['unicorn/filename-case']).toEqual([
         'error',
         { case: 'kebabCase', ignore: [/^[A-Z0-9_-]+\.md$/] },
       ]);
-      expect(config.rules!['unicorn/consistent-function-scoping']).toEqual([
+      expect(config?.rules?.['unicorn/consistent-function-scoping']).toEqual([
         'error',
         { checkArrowFunctions: false },
       ]);
@@ -535,38 +534,38 @@ describe('unicorn', () => {
 
     test('should have specific rule configurations', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Check specific important rules
-      expect(config.rules!['unicorn/no-null']).toBe('error');
-      expect(config.rules!['unicorn/prefer-node-protocol']).toBe('error');
-      expect(config.rules!['unicorn/no-array-for-each']).toBe('error');
-      expect(config.rules!['unicorn/prefer-ternary']).toBe('error');
-      expect(config.rules!['unicorn/throw-new-error']).toBe('error');
+      expect(config?.rules?.['unicorn/no-null']).toBe('error');
+      expect(config?.rules?.['unicorn/prefer-node-protocol']).toBe('error');
+      expect(config?.rules?.['unicorn/no-array-for-each']).toBe('error');
+      expect(config?.rules?.['unicorn/prefer-ternary']).toBe('error');
+      expect(config?.rules?.['unicorn/throw-new-error']).toBe('error');
     });
   });
 
   describe('plugin integration', () => {
     test('should use eslint-plugin-unicorn plugin', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('unicorn');
-      expect(config.plugins!.unicorn).toStrictEqual(MOCK_UNICORN_PLUGIN);
+      expect(config?.plugins).toHaveProperty('unicorn');
+      expect(config?.plugins?.unicorn).toStrictEqual(MOCK_UNICORN_PLUGIN);
     });
 
     test('should target source files only', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
+      expect(config?.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
     });
   });
 
   describe('specific curated rules validation', () => {
     test('should include error prevention rules', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
       const errorPreventionRules = [
         'unicorn/catch-error-name',
@@ -578,13 +577,13 @@ describe('unicorn', () => {
       ];
 
       for (const ruleName of errorPreventionRules) {
-        expect(config.rules).toHaveProperty(ruleName, 'error');
+        expect(config?.rules).toHaveProperty(ruleName, 'error');
       }
     });
 
     test('should include modern JavaScript rules', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
       const modernJsRules = [
         'unicorn/prefer-node-protocol',
@@ -598,13 +597,13 @@ describe('unicorn', () => {
       ];
 
       for (const ruleName of modernJsRules) {
-        expect(config.rules).toHaveProperty(ruleName, 'error');
+        expect(config?.rules).toHaveProperty(ruleName, 'error');
       }
     });
 
     test('should include code quality rules', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
       const codeQualityRules = [
         'unicorn/no-array-for-each',
@@ -618,13 +617,13 @@ describe('unicorn', () => {
       ];
 
       for (const ruleName of codeQualityRules) {
-        expect(config.rules).toHaveProperty(ruleName, 'error');
+        expect(config?.rules).toHaveProperty(ruleName, 'error');
       }
     });
 
     test('should include security and best practice rules', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
       const securityRules = [
         'unicorn/no-document-cookie',
@@ -635,15 +634,15 @@ describe('unicorn', () => {
       ];
 
       for (const ruleName of securityRules) {
-        expect(config.rules).toHaveProperty(ruleName, 'error');
+        expect(config?.rules).toHaveProperty(ruleName, 'error');
       }
     });
 
     test('should configure filename-case for kebab-case with MD exception', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['unicorn/filename-case']).toEqual([
+      expect(config?.rules?.['unicorn/filename-case']).toEqual([
         'error',
         { case: 'kebabCase', ignore: [/^[A-Z0-9_-]+\.md$/] },
       ]);
@@ -651,9 +650,9 @@ describe('unicorn', () => {
 
     test('should set no-unused-properties to warn level', () => {
       const result = unicorn();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['unicorn/no-unused-properties']).toBe('warn');
+      expect(config?.rules?.['unicorn/no-unused-properties']).toBe('warn');
     });
   });
 
@@ -662,15 +661,15 @@ describe('unicorn', () => {
       const customResult = unicorn({ allRecommended: false });
       const recommendedResult = unicorn({ allRecommended: true });
 
-      const customRuleCount = Object.keys(customResult[0]!.rules!).length;
-      const recommendedRuleCount = Object.keys(recommendedResult[0]!.rules!).length;
+      const customRuleCount = Object.keys(customResult.at(0)?.rules ?? {}).length;
+      const recommendedRuleCount = Object.keys(recommendedResult.at(0)?.rules ?? {}).length;
 
       expect(customRuleCount).toBeLessThan(recommendedRuleCount);
     });
 
     test('should be a subset of recommended rules (mostly)', () => {
       const customResult = unicorn({ allRecommended: false });
-      const customRules = Object.keys(customResult[0]!.rules!);
+      const customRules = Object.keys(customResult.at(0)?.rules ?? {});
 
       // Most custom rules should exist in recommended (some may be custom additions)
       const commonRulesInRecommended = customRules.filter((ruleName) =>

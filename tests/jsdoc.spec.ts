@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { TSESLint } from '@typescript-eslint/utils';
 import type { StylisticOptions } from '../src/shared/types';
 
@@ -36,31 +35,31 @@ describe('jsdoc', () => {
 
         expect(result).toHaveLength(2);
 
-        const jsConfig = result[0]!;
-        expect(jsConfig.name).toBe('fabdeh/jsdoc/rules');
-        expect(jsConfig.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
-        expect(jsConfig.plugins).toEqual({ jsdoc: MOCK_JSDOC_PLUGIN });
+        const jsConfig = result.at(0);
+        expect(jsConfig?.name).toBe('fabdeh/jsdoc/rules');
+        expect(jsConfig?.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
+        expect(jsConfig?.plugins).toEqual({ jsdoc: MOCK_JSDOC_PLUGIN });
 
-        const tsConfig = result[1]!;
-        expect(tsConfig.name).toBe('fabdeh/jsdoc/ts-only/rules');
-        expect(tsConfig.files).toEqual(['**/*.?([cm])ts?(x)']);
+        const tsConfig = result.at(1);
+        expect(tsConfig?.name).toBe('fabdeh/jsdoc/ts-only/rules');
+        expect(tsConfig?.files).toEqual(['**/*.?([cm])ts?(x)']);
       });
 
       test('should include stylistic rules by default', () => {
         const result = jsdoc();
-        const jsConfig = result[0]!;
+        const jsConfig = result.at(0);
 
-        expect(jsConfig.rules).toHaveProperty('jsdoc/check-alignment', 'warn');
-        expect(jsConfig.rules).toHaveProperty('jsdoc/multiline-blocks', 'warn');
-        expect(jsConfig.rules).toHaveProperty('jsdoc/no-multi-asterisks', 'warn');
-        expect(jsConfig.rules).toHaveProperty('jsdoc/require-asterisk-prefix', 'warn');
-        expect(jsConfig.rules).toHaveProperty('jsdoc/require-hyphen-before-param-description', 'warn');
-        expect(jsConfig.rules).toHaveProperty('jsdoc/tag-lines', ['warn', 'never', { startLines: 1 }]);
+        expect(jsConfig?.rules).toHaveProperty('jsdoc/check-alignment', 'warn');
+        expect(jsConfig?.rules).toHaveProperty('jsdoc/multiline-blocks', 'warn');
+        expect(jsConfig?.rules).toHaveProperty('jsdoc/no-multi-asterisks', 'warn');
+        expect(jsConfig?.rules).toHaveProperty('jsdoc/require-asterisk-prefix', 'warn');
+        expect(jsConfig?.rules).toHaveProperty('jsdoc/require-hyphen-before-param-description', 'warn');
+        expect(jsConfig?.rules).toHaveProperty('jsdoc/tag-lines', ['warn', 'never', { startLines: 1 }]);
       });
 
       test('should include JS-only rules in first config', () => {
         const result = jsdoc();
-        const jsConfig = result[0]!;
+        const jsConfig = result.at(0);
 
         const expectedJSRules = [
           'jsdoc/check-access',
@@ -92,20 +91,20 @@ describe('jsdoc', () => {
         ];
 
         for (const ruleName of expectedJSRules) {
-          expect(jsConfig.rules).toHaveProperty(ruleName, 'warn');
+          expect(jsConfig?.rules).toHaveProperty(ruleName, 'warn');
         }
       });
 
       test('should include TS-only rules in second config', () => {
         const result = jsdoc();
-        const tsConfig = result[1]!;
+        const tsConfig = result.at(1);
 
-        expect(tsConfig.rules).toHaveProperty('jsdoc/check-tag-names', ['warn', { typed: true }]);
-        expect(tsConfig.rules).toHaveProperty('jsdoc/no-types', 'warn');
-        expect(tsConfig.rules).toHaveProperty('jsdoc/no-undefined-types', 'off');
-        expect(tsConfig.rules).toHaveProperty('jsdoc/require-param-type', 'off');
-        expect(tsConfig.rules).toHaveProperty('jsdoc/require-property-type', 'off');
-        expect(tsConfig.rules).toHaveProperty('jsdoc/require-returns-type', 'off');
+        expect(tsConfig?.rules).toHaveProperty('jsdoc/check-tag-names', ['warn', { typed: true }]);
+        expect(tsConfig?.rules).toHaveProperty('jsdoc/no-types', 'warn');
+        expect(tsConfig?.rules).toHaveProperty('jsdoc/no-undefined-types', 'off');
+        expect(tsConfig?.rules).toHaveProperty('jsdoc/require-param-type', 'off');
+        expect(tsConfig?.rules).toHaveProperty('jsdoc/require-property-type', 'off');
+        expect(tsConfig?.rules).toHaveProperty('jsdoc/require-returns-type', 'off');
       });
     });
 
@@ -113,33 +112,33 @@ describe('jsdoc', () => {
       test('should exclude stylistic rules when stylistic is false', () => {
         const options: StylisticOptions = { stylistic: false };
         const result = jsdoc(options);
-        const jsConfig = result[0]!;
+        const jsConfig = result.at(0);
 
-        expect(jsConfig.rules).not.toHaveProperty('jsdoc/check-alignment');
-        expect(jsConfig.rules).not.toHaveProperty('jsdoc/multiline-blocks');
-        expect(jsConfig.rules).not.toHaveProperty('jsdoc/no-multi-asterisks');
-        expect(jsConfig.rules).not.toHaveProperty('jsdoc/require-asterisk-prefix');
-        expect(jsConfig.rules).not.toHaveProperty('jsdoc/require-hyphen-before-param-description');
-        expect(jsConfig.rules).not.toHaveProperty('jsdoc/tag-lines');
+        expect(jsConfig?.rules).not.toHaveProperty('jsdoc/check-alignment');
+        expect(jsConfig?.rules).not.toHaveProperty('jsdoc/multiline-blocks');
+        expect(jsConfig?.rules).not.toHaveProperty('jsdoc/no-multi-asterisks');
+        expect(jsConfig?.rules).not.toHaveProperty('jsdoc/require-asterisk-prefix');
+        expect(jsConfig?.rules).not.toHaveProperty('jsdoc/require-hyphen-before-param-description');
+        expect(jsConfig?.rules).not.toHaveProperty('jsdoc/tag-lines');
       });
 
       test('should include stylistic rules when stylistic is true', () => {
         const options: StylisticOptions = { stylistic: true };
         const result = jsdoc(options);
-        const jsConfig = result[0]!;
+        const jsConfig = result.at(0);
 
-        expect(jsConfig.rules).toHaveProperty('jsdoc/check-alignment', 'warn');
-        expect(jsConfig.rules).toHaveProperty('jsdoc/multiline-blocks', 'warn');
-        expect(jsConfig.rules).toHaveProperty('jsdoc/tag-lines', ['warn', 'never', { startLines: 1 }]);
+        expect(jsConfig?.rules).toHaveProperty('jsdoc/check-alignment', 'warn');
+        expect(jsConfig?.rules).toHaveProperty('jsdoc/multiline-blocks', 'warn');
+        expect(jsConfig?.rules).toHaveProperty('jsdoc/tag-lines', ['warn', 'never', { startLines: 1 }]);
       });
 
       test('should include stylistic rules when stylistic is undefined (default)', () => {
         const options: StylisticOptions = {};
         const result = jsdoc(options);
-        const jsConfig = result[0]!;
+        const jsConfig = result.at(0);
 
-        expect(jsConfig.rules).toHaveProperty('jsdoc/check-alignment', 'warn');
-        expect(jsConfig.rules).toHaveProperty('jsdoc/multiline-blocks', 'warn');
+        expect(jsConfig?.rules).toHaveProperty('jsdoc/check-alignment', 'warn');
+        expect(jsConfig?.rules).toHaveProperty('jsdoc/multiline-blocks', 'warn');
       });
     });
 
@@ -240,7 +239,7 @@ describe('jsdoc', () => {
       test('should set all rules to the specified level', () => {
         const rules = getJsDocRules('warn', false, 'jsOnly');
 
-        const ruleEntries = Object.entries(rules);
+        const ruleEntries = Object.entries(rules ?? {});
         for (const [, ruleConfig] of ruleEntries) {
           if (Array.isArray(ruleConfig)) {
             expect(ruleConfig[0]).toBe('warn');
@@ -254,8 +253,8 @@ describe('jsdoc', () => {
         const errorRules = getJsDocRules('error' as TSESLint.SharedConfig.RuleLevel, false, 'jsOnly');
         const warnRules = getJsDocRules('warn' as TSESLint.SharedConfig.RuleLevel, false, 'jsOnly');
 
-        expect(errorRules['jsdoc/check-access']).toBe('error');
-        expect(warnRules['jsdoc/check-access']).toBe('warn');
+        expect(errorRules?.['jsdoc/check-access']).toBe('error');
+        expect(warnRules?.['jsdoc/check-access']).toBe('warn');
       });
     });
 
@@ -314,7 +313,7 @@ describe('jsdoc', () => {
       expect(result).toHaveLength(2);
 
       // JS configuration
-      const jsConfig = result[0]!;
+      const jsConfig = result.at(0);
       expect(jsConfig).toMatchObject({
         name: 'fabdeh/jsdoc/rules',
         files: ['**/*.?([cm])[jt]s?(x)'],
@@ -323,7 +322,7 @@ describe('jsdoc', () => {
       });
 
       // TS configuration
-      const tsConfig = result[1]!;
+      const tsConfig = result.at(1);
       expect(tsConfig).toMatchObject({
         name: 'fabdeh/jsdoc/ts-only/rules',
         files: ['**/*.?([cm])ts?(x)'],
@@ -334,31 +333,31 @@ describe('jsdoc', () => {
     test('should use correct glob patterns', () => {
       const result = jsdoc();
 
-      const jsConfig = result[0]!;
-      expect(jsConfig.files).toEqual(['**/*.?([cm])[jt]s?(x)']); // GLOB_SRC
+      const jsConfig = result.at(0);
+      expect(jsConfig?.files).toEqual(['**/*.?([cm])[jt]s?(x)']); // GLOB_SRC
 
-      const tsConfig = result[1]!;
-      expect(tsConfig.files).toEqual(['**/*.?([cm])ts?(x)']); // GLOB_TS
+      const tsConfig = result.at(1);
+      expect(tsConfig?.files).toEqual(['**/*.?([cm])ts?(x)']); // GLOB_TS
     });
 
     test('should have proper plugin configuration', () => {
       const result = jsdoc();
-      const jsConfig = result[0]!;
+      const jsConfig = result.at(0);
 
-      expect(jsConfig.plugins).toHaveProperty('jsdoc');
-      expect(jsConfig.plugins!.jsdoc).toStrictEqual(MOCK_JSDOC_PLUGIN);
+      expect(jsConfig?.plugins).toHaveProperty('jsdoc');
+      expect(jsConfig?.plugins?.jsdoc).toStrictEqual(MOCK_JSDOC_PLUGIN);
     });
   });
 
   describe('rule configuration validation', () => {
     test('should have all rules prefixed with jsdoc', () => {
       const result = jsdoc();
-      const jsConfig = result[0]!;
-      const tsConfig = result[1]!;
+      const jsConfig = result.at(0);
+      const tsConfig = result.at(1);
 
       const allRuleKeys = [
-        ...Object.keys(jsConfig.rules!),
-        ...Object.keys(tsConfig.rules!),
+        ...Object.keys(jsConfig?.rules ?? {}),
+        ...Object.keys(tsConfig?.rules ?? {}),
       ];
 
       for (const ruleKey of allRuleKeys) {
@@ -368,10 +367,10 @@ describe('jsdoc', () => {
 
     test('should use warn level by default', () => {
       const result = jsdoc();
-      const jsConfig = result[0]!;
-      const tsConfig = result[1]!;
+      const jsConfig = result.at(0);
+      const tsConfig = result.at(1);
 
-      const allRules = { ...jsConfig.rules!, ...tsConfig.rules! };
+      const allRules = { ...jsConfig?.rules, ...tsConfig?.rules };
       const ruleEntries = Object.entries(allRules);
 
       for (const [, ruleConfig] of ruleEntries) {
@@ -387,11 +386,11 @@ describe('jsdoc', () => {
 
     test('should have comprehensive rule coverage', () => {
       const result = jsdoc();
-      const jsConfig = result[0]!;
-      const tsConfig = result[1]!;
+      const jsConfig = result.at(0);
+      const tsConfig = result.at(1);
 
-      const jsRules = Object.keys(jsConfig.rules!);
-      const tsRules = Object.keys(tsConfig.rules!);
+      const jsRules = Object.keys(jsConfig?.rules ?? {});
+      const tsRules = Object.keys(tsConfig?.rules ?? {});
 
       // Should have a good number of jsdoc rules
       expect(jsRules.length).toBeGreaterThan(20);

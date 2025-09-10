@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { OverridesOptions, RegExpOptions } from '../src/shared/types';
 
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
@@ -100,30 +99,30 @@ describe('regexp', () => {
 
       expect(result).toHaveLength(1);
 
-      const config = result[0]!;
-      expect(config.name).toBe('fabdeh/regexp/rules');
-      expect(config.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
-      expect(config.plugins).toEqual({ regexp: MOCK_REGEXP_PLUGIN });
+      const config = result.at(0);
+      expect(config?.name).toBe('fabdeh/regexp/rules');
+      expect(config?.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
+      expect(config?.plugins).toEqual({ regexp: MOCK_REGEXP_PLUGIN });
     });
 
     test('should include recommended rules with default severity', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Should include all recommended rules
-      expect(config.rules).toHaveProperty('regexp/confusing-quantifier', 'error');
-      expect(config.rules).toHaveProperty('regexp/control-character-escape', 'error');
-      expect(config.rules).toHaveProperty('regexp/no-invalid-regexp', 'error');
-      expect(config.rules).toHaveProperty('regexp/prefer-regexp-test', 'error');
+      expect(config?.rules).toHaveProperty('regexp/confusing-quantifier', 'error');
+      expect(config?.rules).toHaveProperty('regexp/control-character-escape', 'error');
+      expect(config?.rules).toHaveProperty('regexp/no-invalid-regexp', 'error');
+      expect(config?.rules).toHaveProperty('regexp/prefer-regexp-test', 'error');
     });
 
     test('should preserve rule configurations from recommended config', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Rules with configuration objects should be preserved
-      expect(config.rules!['regexp/hexadecimal-escape']).toEqual(['error', 'always']);
-      expect(config.rules!['regexp/letter-case']).toEqual([
+      expect(config?.rules?.['regexp/hexadecimal-escape']).toEqual(['error', 'always']);
+      expect(config?.rules?.['regexp/letter-case']).toEqual([
         'error',
         { caseInsensitive: 'lowercase', unicodeFlag: 'ignore' },
       ]);
@@ -131,9 +130,9 @@ describe('regexp', () => {
 
     test('should include comprehensive rule coverage', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const regexpRules = Object.keys(config.rules!).filter((key) =>
+      const regexpRules = Object.keys(config?.rules ?? {}).filter((key) =>
         key.startsWith('regexp/')
       );
 
@@ -146,30 +145,30 @@ describe('regexp', () => {
     test('should override rule levels to warn when level is warn', () => {
       const options: RegExpOptions = { level: 'warn' };
       const result = regexp(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Simple error rules should be changed to warn
-      expect(config.rules!['regexp/confusing-quantifier']).toBe('warn');
-      expect(config.rules!['regexp/control-character-escape']).toBe('warn');
-      expect(config.rules!['regexp/no-invalid-regexp']).toBe('warn');
+      expect(config?.rules?.['regexp/confusing-quantifier']).toBe('warn');
+      expect(config?.rules?.['regexp/control-character-escape']).toBe('warn');
+      expect(config?.rules?.['regexp/no-invalid-regexp']).toBe('warn');
     });
 
     test('should keep original levels when level is not warn', () => {
       const options: RegExpOptions = { level: 'error' };
       const result = regexp(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['regexp/confusing-quantifier']).toBe('error');
-      expect(config.rules!['regexp/hexadecimal-escape']).toEqual(['error', 'always']);
+      expect(config?.rules?.['regexp/confusing-quantifier']).toBe('error');
+      expect(config?.rules?.['regexp/hexadecimal-escape']).toEqual(['error', 'always']);
     });
 
     test('should handle undefined level (default behavior)', () => {
       const options: RegExpOptions = {};
       const result = regexp(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['regexp/confusing-quantifier']).toBe('error');
-      expect(config.rules!['regexp/hexadecimal-escape']).toEqual(['error', 'always']);
+      expect(config?.rules?.['regexp/confusing-quantifier']).toBe('error');
+      expect(config?.rules?.['regexp/hexadecimal-escape']).toEqual(['error', 'always']);
     });
   });
 
@@ -183,19 +182,19 @@ describe('regexp', () => {
         },
       };
       const result = regexp(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['regexp/confusing-quantifier']).toBe('off');
-      expect(config.rules!['regexp/custom-rule']).toBe('warn');
-      expect(config.rules!['regexp/letter-case']).toBe('off');
+      expect(config?.rules?.['regexp/confusing-quantifier']).toBe('off');
+      expect(config?.rules?.['regexp/custom-rule']).toBe('warn');
+      expect(config?.rules?.['regexp/letter-case']).toBe('off');
     });
 
     test('should handle empty overrides', () => {
       const options: OverridesOptions = { overrides: {} };
       const result = regexp(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['regexp/confusing-quantifier']).toBe('error');
+      expect(config?.rules?.['regexp/confusing-quantifier']).toBe('error');
     });
   });
 
@@ -208,12 +207,12 @@ describe('regexp', () => {
         },
       };
       const result = regexp(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Level should affect other rules
-      expect(config.rules!['regexp/control-character-escape']).toBe('warn');
+      expect(config?.rules?.['regexp/control-character-escape']).toBe('warn');
       // Override should take precedence
-      expect(config.rules!['regexp/confusing-quantifier']).toBe('off');
+      expect(config?.rules?.['regexp/confusing-quantifier']).toBe('off');
     });
   });
 
@@ -269,12 +268,12 @@ describe('regexp', () => {
       const result = regexp();
 
       expect(result).toHaveLength(1);
-      expect(result[0]).toBeDefined();
+      expect(result.at(0)).toBeDefined();
     });
 
     test('should have proper config structure', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
       expect(config).toMatchObject({
         name: 'fabdeh/regexp/rules',
@@ -283,31 +282,31 @@ describe('regexp', () => {
         rules: expect.any(Object),
       });
 
-      expect(Object.keys(config)).toEqual(['name', 'files', 'plugins', 'rules']);
+      expect(Object.keys(config ?? {})).toEqual(['name', 'files', 'plugins', 'rules']);
     });
 
     test('should use GLOB_SRC pattern', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
+      expect(config?.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
     });
 
     test('should have proper config name format', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.name).toBe('fabdeh/regexp/rules');
-      expect(config.name).toMatch(/^fabdeh\/[a-z-]+\/rules$/);
+      expect(config?.name).toBe('fabdeh/regexp/rules');
+      expect(config?.name).toMatch(/^fabdeh\/[a-z-]+\/rules$/);
     });
   });
 
   describe('rule configuration validation', () => {
     test('should have all rules prefixed with regexp/', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const ruleKeys = Object.keys(config.rules!);
+      const ruleKeys = Object.keys(config?.rules ?? {});
       for (const ruleKey of ruleKeys) {
         expect(ruleKey).toMatch(/^regexp\//);
       }
@@ -315,14 +314,14 @@ describe('regexp', () => {
 
     test('should have proper rule severity levels by default', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const rules = config.rules!;
+      const rules = config?.rules ?? {};
       const ruleEntries = Object.entries(rules);
 
       for (const [, ruleConfig] of ruleEntries) {
         if (Array.isArray(ruleConfig)) {
-          expect(ruleConfig[0]).toBe('error');
+          expect(ruleConfig.at(0)).toBe('error');
         } else {
           expect(ruleConfig).toBe('error');
         }
@@ -331,26 +330,26 @@ describe('regexp', () => {
 
     test('should preserve plugin configuration from recommended config', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toEqual({ regexp: MOCK_REGEXP_PLUGIN });
+      expect(config?.plugins).toEqual({ regexp: MOCK_REGEXP_PLUGIN });
     });
   });
 
   describe('plugin integration', () => {
     test('should use eslint-plugin-regexp plugin from recommended config', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('regexp');
-      expect(config.plugins!.regexp).toStrictEqual(MOCK_REGEXP_PLUGIN);
+      expect(config?.plugins).toHaveProperty('regexp');
+      expect(config?.plugins?.regexp).toStrictEqual(MOCK_REGEXP_PLUGIN);
     });
 
     test('should target source files only', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
+      expect(config?.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
     });
   });
 
@@ -358,10 +357,10 @@ describe('regexp', () => {
     test('should use rules from eslint-plugin-regexp flat/recommended config', async () => {
       const { configs } = await import('eslint-plugin-regexp');
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Should have the same number of rules as the recommended config
-      expect(Object.keys(config.rules!)).toHaveLength(Object.keys(configs['flat/recommended'].rules).length);
+      expect(Object.keys(config?.rules ?? {})).toHaveLength(Object.keys(configs['flat/recommended'].rules).length);
 
       // Should include specific recommended rules
       const expectedRules = [
@@ -374,16 +373,16 @@ describe('regexp', () => {
       ];
 
       for (const ruleName of expectedRules) {
-        expect(config.rules).toHaveProperty(ruleName);
+        expect(config?.rules).toHaveProperty(ruleName);
       }
     });
 
     test('should preserve complex rule configurations', () => {
       const result = regexp();
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Complex configurations should be preserved exactly
-      expect(config.rules!['regexp/letter-case']).toEqual([
+      expect(config?.rules?.['regexp/letter-case']).toEqual([
         'error',
         { caseInsensitive: 'lowercase', unicodeFlag: 'ignore' },
       ]);
@@ -394,11 +393,11 @@ describe('regexp', () => {
     test('should correctly transform simple rule configurations', () => {
       const options: RegExpOptions = { level: 'warn' };
       const result = regexp(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Simple error rules should be changed to warn
-      expect(config.rules!['regexp/confusing-quantifier']).toBe('warn');
-      expect(config.rules!['regexp/control-character-escape']).toBe('warn');
+      expect(config?.rules?.['regexp/confusing-quantifier']).toBe('warn');
+      expect(config?.rules?.['regexp/control-character-escape']).toBe('warn');
     });
   });
 });

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion, @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/naming-convention */
 import type { StylisticConfig } from '../src/shared/types';
 
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
@@ -65,9 +65,9 @@ describe('formatters', () => {
 
       expect(result).toHaveLength(1);
 
-      const setupConfig = result[0]!;
-      expect(setupConfig.name).toBe('fabdeh/formatter/setup');
-      expect(setupConfig.plugins).toEqual({ format: MOCK_FORMAT_PLUGIN });
+      const setupConfig = result.at(0);
+      expect(setupConfig?.name).toBe('fabdeh/formatter/setup');
+      expect(setupConfig?.plugins).toEqual({ format: MOCK_FORMAT_PLUGIN });
     });
   });
 
@@ -77,8 +77,8 @@ describe('formatters', () => {
 
       expect(result.length).toBeGreaterThan(1);
 
-      const setupConfig = result[0]!;
-      expect(setupConfig.name).toBe('fabdeh/formatter/setup');
+      const setupConfig = result.at(0);
+      expect(setupConfig?.name).toBe('fabdeh/formatter/setup');
 
       // Should have CSS, GraphQL, HTML, and Markdown configs enabled by default
       const configNames = result.map((config) => config.name);
@@ -123,10 +123,10 @@ describe('formatters', () => {
       expect(configNames).toContain('fabdeh/formatter/less');
 
       // Check CSS config structure
-      const cssConfig = result.find((config) => config.name === 'fabdeh/formatter/css')!;
-      expect(cssConfig.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
-      expect(cssConfig.files).toEqual(['**/*.css', '**/*.{p,post}css']);
-      expect(cssConfig.rules).toHaveProperty('format/prettier');
+      const cssConfig = result.find((config) => config.name === 'fabdeh/formatter/css');
+      expect(cssConfig?.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
+      expect(cssConfig?.files).toEqual(['**/*.css', '**/*.{p,post}css']);
+      expect(cssConfig?.rules).toHaveProperty('format/prettier');
     });
 
     test('should add HTML formatter when html: true', async () => {
@@ -135,10 +135,10 @@ describe('formatters', () => {
       const configNames = result.map((config) => config.name);
       expect(configNames).toContain('fabdeh/formatter/html');
 
-      const htmlConfig = result.find((config) => config.name === 'fabdeh/formatter/html')!;
-      expect(htmlConfig.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
-      expect(htmlConfig.files).toEqual(['**/*.htm?(l)']);
-      expect(htmlConfig.rules).toHaveProperty('format/prettier');
+      const htmlConfig = result.find((config) => config.name === 'fabdeh/formatter/html');
+      expect(htmlConfig?.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
+      expect(htmlConfig?.files).toEqual(['**/*.htm?(l)']);
+      expect(htmlConfig?.rules).toHaveProperty('format/prettier');
     });
 
     test('should add XML formatter when xml: true', async () => {
@@ -147,13 +147,13 @@ describe('formatters', () => {
       const configNames = result.map((config) => config.name);
       expect(configNames).toContain('fabdeh/formatter/xml');
 
-      const xmlConfig = result.find((config) => config.name === 'fabdeh/formatter/xml')!;
-      expect(xmlConfig.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
-      expect(xmlConfig.files).toEqual(['**/*.xml']);
-      expect(xmlConfig.rules).toHaveProperty('format/prettier');
+      const xmlConfig = result.find((config) => config.name === 'fabdeh/formatter/xml');
+      expect(xmlConfig?.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
+      expect(xmlConfig?.files).toEqual(['**/*.xml']);
+      expect(xmlConfig?.rules).toHaveProperty('format/prettier');
 
       // Check that it includes XML plugin
-      const ruleOptions = xmlConfig.rules!['format/prettier'] as [string, object];
+      const ruleOptions = xmlConfig?.rules?.['format/prettier'] as [string, object];
       expect(ruleOptions[1]).toMatchObject({ parser: 'xml', plugins: ['@prettier/plugin-xml'] });
     });
 
@@ -163,10 +163,10 @@ describe('formatters', () => {
       const configNames = result.map((config) => config.name);
       expect(configNames).toContain('fabdeh/formatter/svg');
 
-      const svgConfig = result.find((config) => config.name === 'fabdeh/formatter/svg')!;
-      expect(svgConfig.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
-      expect(svgConfig.files).toEqual(['**/*.svg']);
-      expect(svgConfig.rules).toHaveProperty('format/prettier');
+      const svgConfig = result.find((config) => config.name === 'fabdeh/formatter/svg');
+      expect(svgConfig?.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
+      expect(svgConfig?.files).toEqual(['**/*.svg']);
+      expect(svgConfig?.rules).toHaveProperty('format/prettier');
     });
 
     test('should add Markdown formatter when markdown: true', async () => {
@@ -175,11 +175,11 @@ describe('formatters', () => {
       const configNames = result.map((config) => config.name);
       expect(configNames).toContain('fabdeh/formatter/markdown');
 
-      const markdownConfig = result.find((config) => config.name === 'fabdeh/formatter/markdown')!;
-      expect(markdownConfig.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
-      expect(markdownConfig.files).toEqual(['**/*.md']);
-      expect(markdownConfig.ignores).toEqual([]);
-      expect(markdownConfig.rules).toHaveProperty('format/prettier');
+      const markdownConfig = result.find((config) => config.name === 'fabdeh/formatter/markdown');
+      expect(markdownConfig?.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
+      expect(markdownConfig?.files).toEqual(['**/*.md']);
+      expect(markdownConfig?.ignores).toEqual([]);
+      expect(markdownConfig?.rules).toHaveProperty('format/prettier');
     });
 
     test('should add GraphQL formatter when graphql: true', async () => {
@@ -188,10 +188,10 @@ describe('formatters', () => {
       const configNames = result.map((config) => config.name);
       expect(configNames).toContain('fabdeh/formatter/graphql');
 
-      const graphqlConfig = result.find((config) => config.name === 'fabdeh/formatter/graphql')!;
-      expect(graphqlConfig.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
-      expect(graphqlConfig.files).toEqual(['**/*.{g,graph}ql']);
-      expect(graphqlConfig.rules).toHaveProperty('format/prettier');
+      const graphqlConfig = result.find((config) => config.name === 'fabdeh/formatter/graphql');
+      expect(graphqlConfig?.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
+      expect(graphqlConfig?.files).toEqual(['**/*.{g,graph}ql']);
+      expect(graphqlConfig?.rules).toHaveProperty('format/prettier');
     });
   });
 
@@ -203,12 +203,12 @@ describe('formatters', () => {
       expect(configNames).toContain('fabdeh/formatter/markdown');
       expect(configNames).toContain('fabdeh/formatter/slidev');
 
-      const markdownConfig = result.find((config) => config.name === 'fabdeh/formatter/markdown')!;
-      expect(markdownConfig.ignores).toEqual(['**/.slides.md']);
+      const markdownConfig = result.find((config) => config.name === 'fabdeh/formatter/markdown');
+      expect(markdownConfig?.ignores).toEqual(['**/.slides.md']);
 
-      const slidevConfig = result.find((config) => config.name === 'fabdeh/formatter/slidev')!;
-      expect(slidevConfig.files).toEqual(['**/.slides.md']);
-      expect(slidevConfig.rules).toHaveProperty('format/prettier');
+      const slidevConfig = result.find((config) => config.name === 'fabdeh/formatter/slidev');
+      expect(slidevConfig?.files).toEqual(['**/.slides.md']);
+      expect(slidevConfig?.rules).toHaveProperty('format/prettier');
     });
 
     test('should handle slidev with custom files', async () => {
@@ -222,11 +222,11 @@ describe('formatters', () => {
       expect(configNames).toContain('fabdeh/formatter/markdown');
       expect(configNames).toContain('fabdeh/formatter/slidev');
 
-      const markdownConfig = result.find((config) => config.name === 'fabdeh/formatter/markdown')!;
-      expect(markdownConfig.ignores).toEqual(customFiles);
+      const markdownConfig = result.find((config) => config.name === 'fabdeh/formatter/markdown');
+      expect(markdownConfig?.ignores).toEqual(customFiles);
 
-      const slidevConfig = result.find((config) => config.name === 'fabdeh/formatter/slidev')!;
-      expect(slidevConfig.files).toEqual(customFiles);
+      const slidevConfig = result.find((config) => config.name === 'fabdeh/formatter/slidev');
+      expect(slidevConfig?.files).toEqual(customFiles);
     });
 
     test('should not add slidev config when slidev is false', async () => {
@@ -236,8 +236,8 @@ describe('formatters', () => {
       expect(configNames).toContain('fabdeh/formatter/markdown');
       expect(configNames).not.toContain('fabdeh/formatter/slidev');
 
-      const markdownConfig = result.find((config) => config.name === 'fabdeh/formatter/markdown')!;
-      expect(markdownConfig.ignores).toEqual([]);
+      const markdownConfig = result.find((config) => config.name === 'fabdeh/formatter/markdown');
+      expect(markdownConfig?.ignores).toEqual([]);
     });
   });
 
@@ -251,8 +251,8 @@ describe('formatters', () => {
 
       const result = await formatters({ css: true, options: customOptions });
 
-      const cssConfig = result.find((config) => config.name === 'fabdeh/formatter/css')!;
-      const ruleOptions = cssConfig.rules!['format/prettier'] as [string, object];
+      const cssConfig = result.find((config) => config.name === 'fabdeh/formatter/css');
+      const ruleOptions = cssConfig?.rules?.['format/prettier'] as [string, object];
 
       expect(ruleOptions[1]).toMatchObject({
         parser: 'css',
@@ -267,8 +267,8 @@ describe('formatters', () => {
     test('should use default stylistic config', async () => {
       const result = await formatters({ css: true });
 
-      const cssConfig = result.find((config) => config.name === 'fabdeh/formatter/css')!;
-      const ruleOptions = cssConfig.rules!['format/prettier'] as [string, object];
+      const cssConfig = result.find((config) => config.name === 'fabdeh/formatter/css');
+      const ruleOptions = cssConfig?.rules?.['format/prettier'] as [string, object];
 
       // Should use defaults: semi: true, singleQuote: true (from quotes: 'single'), tabWidth: 2
       expect(ruleOptions[1]).toMatchObject({
@@ -288,8 +288,8 @@ describe('formatters', () => {
 
       const result = await formatters({ css: true }, stylisticConfig);
 
-      const cssConfig = result.find((config) => config.name === 'fabdeh/formatter/css')!;
-      const ruleOptions = cssConfig.rules!['format/prettier'] as [string, object];
+      const cssConfig = result.find((config) => config.name === 'fabdeh/formatter/css');
+      const ruleOptions = cssConfig?.rules?.['format/prettier'] as [string, object];
 
       expect(ruleOptions[1]).toMatchObject({
         parser: 'css',
@@ -306,8 +306,8 @@ describe('formatters', () => {
 
       const result = await formatters({ css: true }, stylisticConfig);
 
-      const cssConfig = result.find((config) => config.name === 'fabdeh/formatter/css')!;
-      const ruleOptions = cssConfig.rules!['format/prettier'] as [string, object];
+      const cssConfig = result.find((config) => config.name === 'fabdeh/formatter/css');
+      const ruleOptions = cssConfig?.rules?.['format/prettier'] as [string, object];
 
       expect(ruleOptions[1]).toMatchObject({
         parser: 'css',
@@ -321,15 +321,15 @@ describe('formatters', () => {
     test('should include parser for HTML when hasAngularTemplateParser is false', async () => {
       const result = await formatters({ html: true }, {}, false);
 
-      const htmlConfig = result.find((config) => config.name === 'fabdeh/formatter/html')!;
-      expect(htmlConfig.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
+      const htmlConfig = result.find((config) => config.name === 'fabdeh/formatter/html');
+      expect(htmlConfig?.languageOptions?.parser).toBe(MOCK_FORMAT_PLUGIN.parserPlain);
     });
 
     test('should not include parser for HTML when hasAngularTemplateParser is true', async () => {
       const result = await formatters({ html: true }, {}, true);
 
-      const htmlConfig = result.find((config) => config.name === 'fabdeh/formatter/html')!;
-      expect(htmlConfig.languageOptions).toBeUndefined();
+      const htmlConfig = result.find((config) => config.name === 'fabdeh/formatter/html');
+      expect(htmlConfig?.languageOptions).toBeUndefined();
     });
   });
 
@@ -365,7 +365,7 @@ describe('formatters', () => {
 
       expect(result).toHaveLength(4); // setup + css + scss + less
 
-      const setupConfig = result[0]!;
+      const setupConfig = result.at(0);
       expect(setupConfig).toMatchObject({
         name: 'fabdeh/formatter/setup',
         plugins: { format: MOCK_FORMAT_PLUGIN },
@@ -439,7 +439,7 @@ describe('formatters', () => {
       const configNames = result.map((config) => config.name);
 
       // Setup should always be first
-      expect(configNames[0]).toBe('fabdeh/formatter/setup');
+      expect(configNames.at(0)).toBe('fabdeh/formatter/setup');
 
       // CSS configs should come before other formatters
       const cssIndex = configNames.indexOf('fabdeh/formatter/css');

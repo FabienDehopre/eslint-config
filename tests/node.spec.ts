@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { node } from '../src/configs/node';
@@ -32,15 +31,15 @@ describe('node', () => {
 
       expect(result).toHaveLength(1);
 
-      const config = result[0]!;
-      expect(config.name).toBe('fabdeh/node/rules');
-      expect(config.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
-      expect(config.plugins).toEqual({ n: MOCK_NODE_PLUGIN });
+      const config = result.at(0);
+      expect(config?.name).toBe('fabdeh/node/rules');
+      expect(config?.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
+      expect(config?.plugins).toEqual({ n: MOCK_NODE_PLUGIN });
     });
 
     test('should include all required Node.js rules', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
       const expectedRules = {
         'n/handle-callback-err': ['error', '^(err|error)$'],
@@ -56,31 +55,31 @@ describe('node', () => {
         'n/process-exit-as-throw': 'error',
       };
 
-      expect(config.rules).toEqual(expectedRules);
+      expect(config?.rules).toEqual(expectedRules);
     });
 
     test('should configure handle-callback-err rule with pattern', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const rule = config.rules!['n/handle-callback-err'];
+      const rule = config?.rules?.['n/handle-callback-err'];
       expect(rule).toEqual(['error', '^(err|error)$']);
     });
 
     test('should configure prefer-global rules with never option', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['n/prefer-global/buffer']).toEqual(['error', 'never']);
-      expect(config.rules!['n/prefer-global/process']).toEqual(['error', 'never']);
+      expect(config?.rules?.['n/prefer-global/buffer']).toEqual(['error', 'never']);
+      expect(config?.rules?.['n/prefer-global/process']).toEqual(['error', 'never']);
     });
 
     test('should configure prefer-promises rules as simple errors', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['n/prefer-promises/dns']).toBe('error');
-      expect(config.rules!['n/prefer-promises/fs']).toBe('error');
+      expect(config?.rules?.['n/prefer-promises/dns']).toBe('error');
+      expect(config?.rules?.['n/prefer-promises/fs']).toBe('error');
     });
   });
 
@@ -142,12 +141,12 @@ describe('node', () => {
       const result = node();
 
       expect(result).toHaveLength(1);
-      expect(result[0]).toBeDefined();
+      expect(result.at(0)).toBeDefined();
     });
 
     test('should have proper config structure', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
       expect(config).toMatchObject({
         name: 'fabdeh/node/rules',
@@ -156,31 +155,31 @@ describe('node', () => {
         rules: expect.any(Object),
       });
 
-      expect(Object.keys(config)).toEqual(['name', 'files', 'plugins', 'rules']);
+      expect(Object.keys(config ?? {})).toEqual(['name', 'files', 'plugins', 'rules']);
     });
 
     test('should use GLOB_SRC pattern', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
+      expect(config?.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
     });
 
     test('should have proper config name format', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.name).toBe('fabdeh/node/rules');
-      expect(config.name).toMatch(/^fabdeh\/[a-z-]+\/rules$/);
+      expect(config?.name).toBe('fabdeh/node/rules');
+      expect(config?.name).toMatch(/^fabdeh\/[a-z-]+\/rules$/);
     });
   });
 
   describe('rule configuration validation', () => {
     test('should have all rules prefixed with n/', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const ruleKeys = Object.keys(config.rules!);
+      const ruleKeys = Object.keys(config?.rules ?? {});
       for (const ruleKey of ruleKeys) {
         expect(ruleKey).toMatch(/^n\//);
       }
@@ -188,14 +187,14 @@ describe('node', () => {
 
     test('should have proper rule severity levels', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const rules = config.rules!;
+      const rules = config?.rules ?? {};
       const ruleEntries = Object.entries(rules);
 
       for (const [, ruleConfig] of ruleEntries) {
         if (Array.isArray(ruleConfig)) {
-          expect(ruleConfig[0]).toBe('error');
+          expect(ruleConfig.at(0)).toBe('error');
         } else {
           expect(ruleConfig).toBe('error');
         }
@@ -204,9 +203,9 @@ describe('node', () => {
 
     test('should have exactly 11 node rules', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const nodeRules = Object.keys(config.rules!).filter((key) =>
+      const nodeRules = Object.keys(config?.rules ?? {}).filter((key) =>
         key.startsWith('n/')
       );
 
@@ -215,9 +214,9 @@ describe('node', () => {
 
     test('should have rules with configuration objects', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const rulesWithConfig = Object.entries(config.rules!).filter(
+      const rulesWithConfig = Object.entries(config?.rules ?? {}).filter(
         ([, ruleConfig]) => Array.isArray(ruleConfig)
       );
 
@@ -232,9 +231,9 @@ describe('node', () => {
 
     test('should have simple error rules', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const simpleErrorRules = Object.entries(config.rules!).filter(
+      const simpleErrorRules = Object.entries(config?.rules ?? {}).filter(
         ([, ruleConfig]) => ruleConfig === 'error'
       );
 
@@ -259,60 +258,60 @@ describe('node', () => {
   describe('plugin integration', () => {
     test('should use eslint-plugin-n plugin', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('n');
-      expect(config.plugins!.n).toStrictEqual(MOCK_NODE_PLUGIN);
+      expect(config?.plugins).toHaveProperty('n');
+      expect(config?.plugins?.n).toStrictEqual(MOCK_NODE_PLUGIN);
     });
 
     test('should target source files only', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
+      expect(config?.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
     });
   });
 
   describe('specific rule validation', () => {
     test('should configure callback error handling rules', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['n/handle-callback-err']).toEqual(['error', '^(err|error)$']);
-      expect(config.rules!['n/no-callback-literal']).toBe('error');
+      expect(config?.rules?.['n/handle-callback-err']).toEqual(['error', '^(err|error)$']);
+      expect(config?.rules?.['n/no-callback-literal']).toBe('error');
     });
 
     test('should configure Node.js API rules', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['n/no-deprecated-api']).toBe('error');
-      expect(config.rules!['n/no-exports-assign']).toBe('error');
-      expect(config.rules!['n/no-new-require']).toBe('error');
-      expect(config.rules!['n/no-path-concat']).toBe('error');
+      expect(config?.rules?.['n/no-deprecated-api']).toBe('error');
+      expect(config?.rules?.['n/no-exports-assign']).toBe('error');
+      expect(config?.rules?.['n/no-new-require']).toBe('error');
+      expect(config?.rules?.['n/no-path-concat']).toBe('error');
     });
 
     test('should configure global preference rules', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['n/prefer-global/buffer']).toEqual(['error', 'never']);
-      expect(config.rules!['n/prefer-global/process']).toEqual(['error', 'never']);
+      expect(config?.rules?.['n/prefer-global/buffer']).toEqual(['error', 'never']);
+      expect(config?.rules?.['n/prefer-global/process']).toEqual(['error', 'never']);
     });
 
     test('should configure promise preference rules', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['n/prefer-promises/dns']).toBe('error');
-      expect(config.rules!['n/prefer-promises/fs']).toBe('error');
+      expect(config?.rules?.['n/prefer-promises/dns']).toBe('error');
+      expect(config?.rules?.['n/prefer-promises/fs']).toBe('error');
     });
 
     test('should configure process exit rule', () => {
       const result = node();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['n/process-exit-as-throw']).toBe('error');
+      expect(config?.rules?.['n/process-exit-as-throw']).toBe('error');
     });
   });
 });

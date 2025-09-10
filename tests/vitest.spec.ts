@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { OverridesOptions, UnitTestingOptions } from '../src/shared/types';
 
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
@@ -103,17 +102,17 @@ describe('vitest', () => {
 
       expect(result).toHaveLength(1);
 
-      const config = result[0]!;
-      expect(config.name).toBe('fabdeh/vitest/rules');
-      expect(config.files).toEqual(['**/*.spec.?([cm])[jt]s', '**/*.test.?([cm])[jt]s', '**/test-setup.?([cm])[jt]s']);
-      expect(config.plugins).toEqual({ vitest: MOCK_VITEST_PLUGIN });
+      const config = result.at(0);
+      expect(config?.name).toBe('fabdeh/vitest/rules');
+      expect(config?.files).toEqual(['**/*.spec.?([cm])[jt]s', '**/*.test.?([cm])[jt]s', '**/test-setup.?([cm])[jt]s']);
+      expect(config?.plugins).toEqual({ vitest: MOCK_VITEST_PLUGIN });
     });
 
     test('should include vitest globals and language options', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.languageOptions?.globals).toEqual({
+      expect(config?.languageOptions?.globals).toEqual({
         process: 'readonly',
         // eslint-disable-next-line @typescript-eslint/naming-convention -- Buffer is a class name
         Buffer: 'readonly', // node globals
@@ -128,9 +127,9 @@ describe('vitest', () => {
 
     test('should include vitest settings', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.settings).toEqual({
+      expect(config?.settings).toEqual({
         vitest: {
           typecheck: true,
         },
@@ -139,7 +138,7 @@ describe('vitest', () => {
 
     test('should include core vitest rules', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
       const expectedVitestRules = {
         'vitest/expect-expect': 'error',
@@ -166,13 +165,13 @@ describe('vitest', () => {
       };
 
       for (const [ruleName, ruleConfig] of Object.entries(expectedVitestRules)) {
-        expect(config.rules).toHaveProperty(ruleName, ruleConfig);
+        expect(config?.rules).toHaveProperty(ruleName, ruleConfig);
       }
     });
 
     test('should disable conflicting rules', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
       const disabledRules = {
         'max-classes-per-file': 'off',
@@ -187,19 +186,19 @@ describe('vitest', () => {
       };
 
       for (const [ruleName, ruleConfig] of Object.entries(disabledRules)) {
-        expect(config.rules).toHaveProperty(ruleName, ruleConfig);
+        expect(config?.rules).toHaveProperty(ruleName, ruleConfig);
       }
     });
 
     test('should include jsdoc rules disabled', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
       // JSDoc rules should be turned off in test files
-      expect(config.rules).toHaveProperty('jsdoc/check-access', 'off');
-      expect(config.rules).toHaveProperty('jsdoc/require-jsdoc', 'off');
-      expect(config.rules).toHaveProperty('jsdoc/require-param', 'off');
-      expect(config.rules).toHaveProperty('jsdoc/require-returns', 'off');
+      expect(config?.rules).toHaveProperty('jsdoc/check-access', 'off');
+      expect(config?.rules).toHaveProperty('jsdoc/require-jsdoc', 'off');
+      expect(config?.rules).toHaveProperty('jsdoc/require-param', 'off');
+      expect(config?.rules).toHaveProperty('jsdoc/require-returns', 'off');
     });
   });
 
@@ -207,20 +206,20 @@ describe('vitest', () => {
     test('should include jest-dom plugin when useJestDom is true', async () => {
       const options: UnitTestingOptions = { useJestDom: true };
       const result = await vitest(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('jest-dom', MOCK_JEST_DOM_PLUGIN);
-      expect(config.rules).toHaveProperty('jest-dom/prefer-checked', 'error');
-      expect(config.rules).toHaveProperty('jest-dom/prefer-enabled-disabled', 'error');
+      expect(config?.plugins).toHaveProperty('jest-dom', MOCK_JEST_DOM_PLUGIN);
+      expect(config?.rules).toHaveProperty('jest-dom/prefer-checked', 'error');
+      expect(config?.rules).toHaveProperty('jest-dom/prefer-enabled-disabled', 'error');
     });
 
     test('should exclude jest-dom plugin when useJestDom is false', async () => {
       const options: UnitTestingOptions = { useJestDom: false };
       const result = await vitest(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).not.toHaveProperty('jest-dom');
-      expect(config.rules).not.toHaveProperty('jest-dom/prefer-checked');
+      expect(config?.plugins).not.toHaveProperty('jest-dom');
+      expect(config?.rules).not.toHaveProperty('jest-dom/prefer-checked');
     });
 
     test('should auto-detect jest-dom when useJestDom is not specified', async () => {
@@ -228,10 +227,10 @@ describe('vitest', () => {
       vi.mocked(isPackageExists).mockImplementation((pkg) => pkg === '@testing-library/jest-dom');
 
       const result = await vitest({});
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('jest-dom', MOCK_JEST_DOM_PLUGIN);
-      expect(config.rules).toHaveProperty('jest-dom/prefer-checked', 'error');
+      expect(config?.plugins).toHaveProperty('jest-dom', MOCK_JEST_DOM_PLUGIN);
+      expect(config?.rules).toHaveProperty('jest-dom/prefer-checked', 'error');
     });
   });
 
@@ -246,20 +245,20 @@ describe('vitest', () => {
 
       const options: UnitTestingOptions = { useTestingLibrary: true, useJestDom: false };
       const result = await vitest(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('testing-library', MOCK_TESTING_LIBRARY_PLUGIN);
-      expect(config.rules).toHaveProperty('testing-library/await-async-queries', 'error');
-      expect(config.rules).toHaveProperty('testing-library/no-debugging-utils', 'warn');
+      expect(config?.plugins).toHaveProperty('testing-library', MOCK_TESTING_LIBRARY_PLUGIN);
+      expect(config?.rules).toHaveProperty('testing-library/await-async-queries', 'error');
+      expect(config?.rules).toHaveProperty('testing-library/no-debugging-utils', 'warn');
     });
 
     test('should exclude testing-library plugin when useTestingLibrary is false', async () => {
       const options: UnitTestingOptions = { useTestingLibrary: false };
       const result = await vitest(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).not.toHaveProperty('testing-library');
-      expect(config.rules).not.toHaveProperty('testing-library/await-async-queries');
+      expect(config?.plugins).not.toHaveProperty('testing-library');
+      expect(config?.rules).not.toHaveProperty('testing-library/await-async-queries');
     });
 
     test('should auto-detect testing-library when useTestingLibrary is not specified', async () => {
@@ -274,10 +273,10 @@ describe('vitest', () => {
       vi.mocked(isPackageExists).mockImplementation((pkg) => pkg === '@testing-library/angular');
 
       const result = await vitest({});
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('testing-library', MOCK_TESTING_LIBRARY_PLUGIN);
-      expect(config.rules).toHaveProperty('testing-library/await-async-queries', 'error');
+      expect(config?.plugins).toHaveProperty('testing-library', MOCK_TESTING_LIBRARY_PLUGIN);
+      expect(config?.rules).toHaveProperty('testing-library/await-async-queries', 'error');
     });
   });
 
@@ -285,16 +284,16 @@ describe('vitest', () => {
     test('should include both jest-dom and testing-library when both are enabled', async () => {
       const options: UnitTestingOptions = { useJestDom: true, useTestingLibrary: true };
       const result = await vitest(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('vitest', MOCK_VITEST_PLUGIN);
-      expect(config.plugins).toHaveProperty('jest-dom', MOCK_JEST_DOM_PLUGIN);
-      expect(config.plugins).toHaveProperty('testing-library', MOCK_TESTING_LIBRARY_PLUGIN);
+      expect(config?.plugins).toHaveProperty('vitest', MOCK_VITEST_PLUGIN);
+      expect(config?.plugins).toHaveProperty('jest-dom', MOCK_JEST_DOM_PLUGIN);
+      expect(config?.plugins).toHaveProperty('testing-library', MOCK_TESTING_LIBRARY_PLUGIN);
 
       // Should have rules from all plugins
-      expect(config.rules).toHaveProperty('vitest/valid-expect', 'error');
-      expect(config.rules).toHaveProperty('jest-dom/prefer-checked', 'error');
-      expect(config.rules).toHaveProperty('testing-library/await-async-queries', 'error');
+      expect(config?.rules).toHaveProperty('vitest/valid-expect', 'error');
+      expect(config?.rules).toHaveProperty('jest-dom/prefer-checked', 'error');
+      expect(config?.rules).toHaveProperty('testing-library/await-async-queries', 'error');
     });
 
     test('should handle both libraries being auto-detected', async () => {
@@ -304,10 +303,10 @@ describe('vitest', () => {
       );
 
       const result = await vitest({});
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('jest-dom');
-      expect(config.plugins).toHaveProperty('testing-library');
+      expect(config?.plugins).toHaveProperty('jest-dom');
+      expect(config?.plugins).toHaveProperty('testing-library');
     });
   });
 
@@ -321,19 +320,19 @@ describe('vitest', () => {
         },
       };
       const result = await vitest(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules).toHaveProperty('vitest/valid-expect', 'warn');
-      expect(config.rules).toHaveProperty('vitest/custom-rule', 'error');
-      expect(config.rules).toHaveProperty('max-lines', 'error'); // Override disabled rule
+      expect(config?.rules).toHaveProperty('vitest/valid-expect', 'warn');
+      expect(config?.rules).toHaveProperty('vitest/custom-rule', 'error');
+      expect(config?.rules).toHaveProperty('max-lines', 'error'); // Override disabled rule
     });
 
     test('should handle empty overrides', async () => {
       const options: OverridesOptions = { overrides: {} };
       const result = await vitest(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules).toHaveProperty('vitest/valid-expect', 'error');
+      expect(config?.rules).toHaveProperty('vitest/valid-expect', 'error');
     });
   });
 
@@ -412,12 +411,12 @@ describe('vitest', () => {
       const result = await vitest();
 
       expect(result).toHaveLength(1);
-      expect(result[0]).toBeDefined();
+      expect(result.at(0)).toBeDefined();
     });
 
     test('should have proper config structure', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
       expect(config).toMatchObject({
         name: 'fabdeh/vitest/rules',
@@ -431,27 +430,27 @@ describe('vitest', () => {
 
     test('should use GLOB_TESTS pattern', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.files).toEqual(['**/*.spec.?([cm])[jt]s', '**/*.test.?([cm])[jt]s', '**/test-setup.?([cm])[jt]s']);
+      expect(config?.files).toEqual(['**/*.spec.?([cm])[jt]s', '**/*.test.?([cm])[jt]s', '**/test-setup.?([cm])[jt]s']);
     });
 
     test('should have proper config name format', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.name).toBe('fabdeh/vitest/rules');
-      expect(config.name).toMatch(/^fabdeh\/[a-z-]+\/rules$/);
+      expect(config?.name).toBe('fabdeh/vitest/rules');
+      expect(config?.name).toMatch(/^fabdeh\/[a-z-]+\/rules$/);
     });
   });
 
   describe('rule configuration validation', () => {
     test('should have rules with multiple prefixes', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const ruleKeys = Object.keys(config.rules!);
-      const prefixes = new Set(ruleKeys.map((key) => key.split('/')[0]!));
+      const ruleKeys = Object.keys(config?.rules ?? {});
+      const prefixes = new Set(ruleKeys.map((key) => key.split('/').at(0)).filter(Boolean));
 
       expect(prefixes).toContain('vitest');
       expect(prefixes).toContain('max-classes-per-file'); // non-prefixed rules
@@ -462,14 +461,14 @@ describe('vitest', () => {
 
     test('should have proper rule severity levels', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const rules = config.rules!;
+      const rules = config?.rules ?? {};
       const ruleEntries = Object.entries(rules);
 
       for (const [, ruleConfig] of ruleEntries) {
         if (Array.isArray(ruleConfig)) {
-          expect(['error', 'warn', 'off']).toContain(ruleConfig[0]);
+          expect(['error', 'warn', 'off']).toContain(ruleConfig.at(0));
         } else {
           expect(['error', 'warn', 'off']).toContain(ruleConfig);
         }
@@ -478,9 +477,9 @@ describe('vitest', () => {
 
     test('should have comprehensive rule coverage', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const vitestRules = Object.keys(config.rules!).filter((key) =>
+      const vitestRules = Object.keys(config?.rules ?? {}).filter((key) =>
         key.startsWith('vitest/')
       );
 
@@ -490,40 +489,40 @@ describe('vitest', () => {
 
     test('should have rules with configuration objects', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.rules!['vitest/consistent-test-it']).toEqual(['error', { fn: 'test' }]);
+      expect(config?.rules?.['vitest/consistent-test-it']).toEqual(['error', { fn: 'test' }]);
     });
   });
 
   describe('plugin integration', () => {
     test('should use @vitest/eslint-plugin plugin', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('vitest');
-      expect(config.plugins!.vitest).toBe(MOCK_VITEST_PLUGIN);
+      expect(config?.plugins).toHaveProperty('vitest');
+      expect(config?.plugins?.vitest).toBe(MOCK_VITEST_PLUGIN);
     });
 
     test('should target test files only', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.files).toEqual(['**/*.spec.?([cm])[jt]s', '**/*.test.?([cm])[jt]s', '**/test-setup.?([cm])[jt]s']);
+      expect(config?.files).toEqual(['**/*.spec.?([cm])[jt]s', '**/*.test.?([cm])[jt]s', '**/test-setup.?([cm])[jt]s']);
     });
 
     test('should configure proper test environment', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.languageOptions?.globals).toMatchObject({
+      expect(config?.languageOptions?.globals).toMatchObject({
         describe: 'readonly',
         test: 'readonly',
         expect: 'readonly',
         vi: 'readonly',
       });
 
-      expect(config.settings).toEqual({
+      expect(config?.settings).toEqual({
         vitest: { typecheck: true },
       });
     });
@@ -532,9 +531,9 @@ describe('vitest', () => {
   describe('globals integration', () => {
     test('should merge node, vitest, and plugin globals', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
-      const globals = config.languageOptions?.globals;
+      const globals = config?.languageOptions?.globals;
       expect(globals).toMatchObject({
         // Node globals
         process: 'readonly',
@@ -555,10 +554,10 @@ describe('vitest', () => {
   describe('jsdoc integration', () => {
     test('should import and disable jsdoc rules', async () => {
       const result = await vitest();
-      const config = result[0]!;
+      const config = result.at(0);
 
       // Should have jsdoc rules disabled
-      const jsDocRules = Object.entries(config.rules!).filter(([key, value]) =>
+      const jsDocRules = Object.entries(config?.rules ?? {}).filter(([key, value]) =>
         key.startsWith('jsdoc/') && value === 'off'
       );
 
@@ -574,12 +573,12 @@ describe('vitest', () => {
         overrides: { 'vitest/valid-expect': 'warn' },
       };
       const result = await vitest(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('vitest');
-      expect(config.plugins).toHaveProperty('jest-dom');
-      expect(config.plugins).toHaveProperty('testing-library');
-      expect(config.rules).toHaveProperty('vitest/valid-expect', 'warn');
+      expect(config?.plugins).toHaveProperty('vitest');
+      expect(config?.plugins).toHaveProperty('jest-dom');
+      expect(config?.plugins).toHaveProperty('testing-library');
+      expect(config?.rules).toHaveProperty('vitest/valid-expect', 'warn');
     });
 
     test('should handle package auto-detection with overrides', async () => {
@@ -590,11 +589,11 @@ describe('vitest', () => {
         overrides: { 'testing-library/no-debugging-utils': 'error' },
       };
       const result = await vitest(options);
-      const config = result[0]!;
+      const config = result.at(0);
 
-      expect(config.plugins).toHaveProperty('jest-dom');
-      expect(config.plugins).toHaveProperty('testing-library');
-      expect(config.rules).toHaveProperty('testing-library/no-debugging-utils', 'error');
+      expect(config?.plugins).toHaveProperty('jest-dom');
+      expect(config?.plugins).toHaveProperty('testing-library');
+      expect(config?.rules).toHaveProperty('testing-library/no-debugging-utils', 'error');
     });
   });
 });

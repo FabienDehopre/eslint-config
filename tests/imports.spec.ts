@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { StylisticOptions } from '../src/shared/types';
 
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
@@ -31,24 +30,24 @@ describe('imports', () => {
 
       expect(result).toHaveLength(2);
 
-      const mainConfig = result[0]!;
-      expect(mainConfig.name).toBe('fabdeh/imports/rules');
-      expect(mainConfig.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
-      expect(mainConfig.plugins).toEqual({
+      const mainConfig = result.at(0);
+      expect(mainConfig?.name).toBe('fabdeh/imports/rules');
+      expect(mainConfig?.files).toEqual(['**/*.?([cm])[jt]s?(x)']);
+      expect(mainConfig?.plugins).toEqual({
         'import-x': expect.objectContaining({ name: 'import-x-plugin' }),
       });
 
-      const tsConfig = result[1]!;
-      expect(tsConfig.name).toBe('fabdeh/imports/ts-disables');
-      expect(tsConfig.files).toEqual(['**/*.?([cm])ts?(x)']);
+      const tsConfig = result.at(1);
+      expect(tsConfig?.name).toBe('fabdeh/imports/ts-disables');
+      expect(tsConfig?.files).toEqual(['**/*.?([cm])ts?(x)']);
     });
 
     test('should include stylistic rules by default', () => {
       const result = imports();
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
 
-      expect(mainConfig.rules).toHaveProperty('import-x/newline-after-import');
-      expect(mainConfig.rules!['import-x/newline-after-import']).toEqual([
+      expect(mainConfig?.rules).toHaveProperty('import-x/newline-after-import');
+      expect(mainConfig?.rules?.['import-x/newline-after-import']).toEqual([
         'error',
         { considerComments: true, count: 1 },
       ]);
@@ -56,7 +55,7 @@ describe('imports', () => {
 
     test('should include core import-x rules', () => {
       const result = imports();
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
 
       const expectedRules = {
         'import-x/consistent-type-specifier-style': ['error', 'prefer-top-level'],
@@ -79,15 +78,15 @@ describe('imports', () => {
       };
 
       for (const [ruleName, ruleConfig] of Object.entries(expectedRules)) {
-        expect(mainConfig.rules).toHaveProperty(ruleName, ruleConfig);
+        expect(mainConfig?.rules).toHaveProperty(ruleName, ruleConfig);
       }
     });
 
     test('should include TypeScript-specific disables', () => {
       const result = imports();
-      const tsConfig = result[1]!;
+      const tsConfig = result.at(1);
 
-      expect(tsConfig.rules).toEqual({
+      expect(tsConfig?.rules).toEqual({
         'import-x/named': 'off',
         'import-x/no-deprecated': 'off',
       });
@@ -98,18 +97,18 @@ describe('imports', () => {
     test('should exclude stylistic rules when stylistic is false', () => {
       const options: StylisticOptions = { stylistic: false };
       const result = imports(options);
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
 
-      expect(mainConfig.rules).not.toHaveProperty('import-x/newline-after-import');
+      expect(mainConfig?.rules).not.toHaveProperty('import-x/newline-after-import');
     });
 
     test('should include stylistic rules when stylistic is true', () => {
       const options: StylisticOptions = { stylistic: true };
       const result = imports(options);
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
 
-      expect(mainConfig.rules).toHaveProperty('import-x/newline-after-import');
-      expect(mainConfig.rules!['import-x/newline-after-import']).toEqual([
+      expect(mainConfig?.rules).toHaveProperty('import-x/newline-after-import');
+      expect(mainConfig?.rules?.['import-x/newline-after-import']).toEqual([
         'error',
         { considerComments: true, count: 1 },
       ]);
@@ -118,9 +117,9 @@ describe('imports', () => {
     test('should include stylistic rules when stylistic is undefined (default)', () => {
       const options: StylisticOptions = {};
       const result = imports(options);
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
 
-      expect(mainConfig.rules).toHaveProperty('import-x/newline-after-import');
+      expect(mainConfig?.rules).toHaveProperty('import-x/newline-after-import');
     });
   });
 
@@ -189,7 +188,7 @@ describe('imports', () => {
       expect(result).toHaveLength(2);
 
       // Main configuration
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
       expect(mainConfig).toMatchObject({
         name: 'fabdeh/imports/rules',
         files: ['**/*.?([cm])[jt]s?(x)'],
@@ -198,7 +197,7 @@ describe('imports', () => {
       });
 
       // TypeScript-specific configuration
-      const tsConfig = result[1]!;
+      const tsConfig = result.at(1);
       expect(tsConfig).toMatchObject({
         name: 'fabdeh/imports/ts-disables',
         files: ['**/*.?([cm])ts?(x)'],
@@ -209,28 +208,28 @@ describe('imports', () => {
     test('should use correct glob patterns', () => {
       const result = imports();
 
-      const mainConfig = result[0]!;
-      expect(mainConfig.files).toEqual(['**/*.?([cm])[jt]s?(x)']); // GLOB_SRC
+      const mainConfig = result.at(0);
+      expect(mainConfig?.files).toEqual(['**/*.?([cm])[jt]s?(x)']); // GLOB_SRC
 
-      const tsConfig = result[1]!;
-      expect(tsConfig.files).toEqual(['**/*.?([cm])ts?(x)']); // GLOB_TS
+      const tsConfig = result.at(1);
+      expect(tsConfig?.files).toEqual(['**/*.?([cm])ts?(x)']); // GLOB_TS
     });
 
     test('should have proper plugin configuration', () => {
       const result = imports();
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
 
-      expect(mainConfig.plugins).toHaveProperty('import-x');
-      expect(mainConfig.plugins!['import-x']).toMatchObject({ name: 'import-x-plugin' });
+      expect(mainConfig?.plugins).toHaveProperty('import-x');
+      expect(mainConfig?.plugins?.['import-x']).toMatchObject({ name: 'import-x-plugin' });
     });
   });
 
   describe('rule configuration validation', () => {
     test('should have proper rule severity levels', () => {
       const result = imports();
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
 
-      const rules = mainConfig.rules!;
+      const rules = mainConfig?.rules ?? {};
       const ruleEntries = Object.entries(rules);
 
       for (const [ruleName, ruleConfig] of ruleEntries) {
@@ -245,23 +244,23 @@ describe('imports', () => {
 
     test('should have warning level rules for specific cases', () => {
       const result = imports();
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
 
-      expect(mainConfig.rules!['import-x/no-named-as-default']).toBe('warn');
-      expect(mainConfig.rules!['import-x/no-named-as-default-member']).toBe('warn');
+      expect(mainConfig?.rules?.['import-x/no-named-as-default']).toBe('warn');
+      expect(mainConfig?.rules?.['import-x/no-named-as-default-member']).toBe('warn');
     });
 
     test('should have rules with configuration objects', () => {
       const result = imports();
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
 
-      expect(mainConfig.rules!['import-x/consistent-type-specifier-style']).toEqual([
+      expect(mainConfig?.rules?.['import-x/consistent-type-specifier-style']).toEqual([
         'error',
         'prefer-top-level',
       ]);
 
       // When stylistic is enabled
-      expect(mainConfig.rules!['import-x/newline-after-import']).toEqual([
+      expect(mainConfig?.rules?.['import-x/newline-after-import']).toEqual([
         'error',
         { considerComments: true, count: 1 },
       ]);
@@ -269,30 +268,30 @@ describe('imports', () => {
 
     test('should disable specific rules for TypeScript files', () => {
       const result = imports();
-      const tsConfig = result[1]!;
+      const tsConfig = result.at(1);
 
-      expect(tsConfig.rules!['import-x/named']).toBe('off');
-      expect(tsConfig.rules!['import-x/no-deprecated']).toBe('off');
+      expect(tsConfig?.rules?.['import-x/named']).toBe('off');
+      expect(tsConfig?.rules?.['import-x/no-deprecated']).toBe('off');
     });
   });
 
   describe('plugin integration', () => {
     test('should use eslint-plugin-import-x plugin', () => {
       const result = imports();
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
 
-      expect(mainConfig.plugins).toHaveProperty('import-x');
-      expect(mainConfig.plugins!['import-x']).toMatchObject({ name: 'import-x-plugin' });
+      expect(mainConfig?.plugins).toHaveProperty('import-x');
+      expect(mainConfig?.plugins?.['import-x']).toMatchObject({ name: 'import-x-plugin' });
     });
 
     test('should have all rules prefixed with import-x', () => {
       const result = imports();
-      const mainConfig = result[0]!;
-      const tsConfig = result[1]!;
+      const mainConfig = result.at(0);
+      const tsConfig = result.at(1);
 
       const allRuleKeys = [
-        ...Object.keys(mainConfig.rules!),
-        ...Object.keys(tsConfig.rules!),
+        ...Object.keys(mainConfig?.rules ?? {}),
+        ...Object.keys(tsConfig?.rules ?? {}),
       ];
 
       for (const ruleKey of allRuleKeys) {
@@ -302,9 +301,9 @@ describe('imports', () => {
 
     test('should have comprehensive rule coverage', () => {
       const result = imports();
-      const mainConfig = result[0]!;
+      const mainConfig = result.at(0);
 
-      const importXRules = Object.keys(mainConfig.rules!).filter((key) =>
+      const importXRules = Object.keys(mainConfig?.rules ?? {}).filter((key) =>
         key.startsWith('import-x/')
       );
 

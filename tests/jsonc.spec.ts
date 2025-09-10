@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { FilesOptions, OverridesOptions, StylisticOptions } from '../src/shared/types';
 
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
@@ -41,35 +40,35 @@ describe('jsonc', () => {
 
       expect(result).toHaveLength(2);
 
-      const setupConfig = result[0]!;
-      expect(setupConfig.name).toBe('fabdeh/jsonc/setup');
-      expect(setupConfig.plugins).toEqual({ jsonc: MOCK_JSONC_PLUGIN });
+      const setupConfig = result.at(0);
+      expect(setupConfig?.name).toBe('fabdeh/jsonc/setup');
+      expect(setupConfig?.plugins).toEqual({ jsonc: MOCK_JSONC_PLUGIN });
 
-      const rulesConfig = result[1]!;
-      expect(rulesConfig.name).toBe('fabdeh/jsonc/rules');
-      expect(rulesConfig.languageOptions?.parser).toBe(MOCK_JSONC_PARSER);
-      expect(rulesConfig.files).toEqual(['**/*.json', '**/*.json5', '**/*.jsonc']);
+      const rulesConfig = result.at(1);
+      expect(rulesConfig?.name).toBe('fabdeh/jsonc/rules');
+      expect(rulesConfig?.languageOptions?.parser).toBe(MOCK_JSONC_PARSER);
+      expect(rulesConfig?.files).toEqual(['**/*.json', '**/*.json5', '**/*.jsonc']);
     });
 
     test('should include stylistic rules by default', async () => {
       const result = await jsonc();
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.rules).toHaveProperty('jsonc/array-bracket-spacing', ['error', 'never']);
-      expect(rulesConfig.rules).toHaveProperty('jsonc/comma-dangle', ['error', 'never']);
-      expect(rulesConfig.rules).toHaveProperty('jsonc/comma-style', ['error', 'last']);
-      expect(rulesConfig.rules).toHaveProperty('jsonc/indent', ['error', 2]);
-      expect(rulesConfig.rules).toHaveProperty('jsonc/key-spacing', ['error', { afterColon: true, beforeColon: false }]);
-      expect(rulesConfig.rules).toHaveProperty('jsonc/object-curly-newline', ['error', { consistent: true, multiline: true }]);
-      expect(rulesConfig.rules).toHaveProperty('jsonc/object-curly-spacing', ['error', 'always']);
-      expect(rulesConfig.rules).toHaveProperty('jsonc/object-property-newline', ['error', { allowMultiplePropertiesPerLine: true }]);
-      expect(rulesConfig.rules).toHaveProperty('jsonc/quote-props', 'error');
-      expect(rulesConfig.rules).toHaveProperty('jsonc/quotes', 'error');
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/array-bracket-spacing', ['error', 'never']);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/comma-dangle', ['error', 'never']);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/comma-style', ['error', 'last']);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/indent', ['error', 2]);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/key-spacing', ['error', { afterColon: true, beforeColon: false }]);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/object-curly-newline', ['error', { consistent: true, multiline: true }]);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/object-curly-spacing', ['error', 'always']);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/object-property-newline', ['error', { allowMultiplePropertiesPerLine: true }]);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/quote-props', 'error');
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/quotes', 'error');
     });
 
     test('should include core JSONC rules', async () => {
       const result = await jsonc();
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
       const expectedRules = {
         'jsonc/no-bigint-literals': 'error',
@@ -101,7 +100,7 @@ describe('jsonc', () => {
       };
 
       for (const [ruleName, ruleConfig] of Object.entries(expectedRules)) {
-        expect(rulesConfig.rules).toHaveProperty(ruleName, ruleConfig);
+        expect(rulesConfig?.rules).toHaveProperty(ruleName, ruleConfig);
       }
     });
   });
@@ -110,16 +109,16 @@ describe('jsonc', () => {
     test('should use custom files when provided', async () => {
       const options: FilesOptions = { files: ['custom/**/*.json', '*.config.json'] };
       const result = await jsonc(options);
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.files).toEqual(['custom/**/*.json', '*.config.json']);
+      expect(rulesConfig?.files).toEqual(['custom/**/*.json', '*.config.json']);
     });
 
     test('should use default files when not provided', async () => {
       const result = await jsonc({});
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.files).toEqual(['**/*.json', '**/*.json5', '**/*.jsonc']);
+      expect(rulesConfig?.files).toEqual(['**/*.json', '**/*.json5', '**/*.jsonc']);
     });
   });
 
@@ -127,38 +126,38 @@ describe('jsonc', () => {
     test('should exclude stylistic rules when stylistic is false', async () => {
       const options: StylisticOptions = { stylistic: false };
       const result = await jsonc(options);
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.rules).not.toHaveProperty('jsonc/array-bracket-spacing');
-      expect(rulesConfig.rules).not.toHaveProperty('jsonc/comma-dangle');
-      expect(rulesConfig.rules).not.toHaveProperty('jsonc/indent');
-      expect(rulesConfig.rules).not.toHaveProperty('jsonc/object-curly-spacing');
+      expect(rulesConfig?.rules).not.toHaveProperty('jsonc/array-bracket-spacing');
+      expect(rulesConfig?.rules).not.toHaveProperty('jsonc/comma-dangle');
+      expect(rulesConfig?.rules).not.toHaveProperty('jsonc/indent');
+      expect(rulesConfig?.rules).not.toHaveProperty('jsonc/object-curly-spacing');
     });
 
     test('should include stylistic rules when stylistic is true', async () => {
       const options: StylisticOptions = { stylistic: true };
       const result = await jsonc(options);
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.rules).toHaveProperty('jsonc/array-bracket-spacing');
-      expect(rulesConfig.rules).toHaveProperty('jsonc/comma-dangle');
-      expect(rulesConfig.rules).toHaveProperty('jsonc/indent');
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/array-bracket-spacing');
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/comma-dangle');
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/indent');
     });
 
     test('should handle stylistic object with custom indent', async () => {
       const options: StylisticOptions = { stylistic: { indent: 4 } };
       const result = await jsonc(options);
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.rules).toHaveProperty('jsonc/indent', ['error', 4]);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/indent', ['error', 4]);
     });
 
     test('should handle stylistic object with default indent', async () => {
       const options: StylisticOptions = { stylistic: {} };
       const result = await jsonc(options);
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.rules).toHaveProperty('jsonc/indent', ['error', 2]);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/indent', ['error', 2]);
     });
   });
 
@@ -171,18 +170,18 @@ describe('jsonc', () => {
         },
       };
       const result = await jsonc(options);
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.rules).toHaveProperty('jsonc/no-dupe-keys', 'warn');
-      expect(rulesConfig.rules).toHaveProperty('jsonc/custom-rule', 'error');
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/no-dupe-keys', 'warn');
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/custom-rule', 'error');
     });
 
     test('should handle empty overrides', async () => {
       const options: OverridesOptions = { overrides: {} };
       const result = await jsonc(options);
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.rules).toHaveProperty('jsonc/no-dupe-keys', 'error');
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/no-dupe-keys', 'error');
     });
   });
 
@@ -256,14 +255,14 @@ describe('jsonc', () => {
       expect(result).toHaveLength(2);
 
       // Setup configuration
-      const setupConfig = result[0]!;
+      const setupConfig = result.at(0);
       expect(setupConfig).toMatchObject({
         name: 'fabdeh/jsonc/setup',
         plugins: { jsonc: MOCK_JSONC_PLUGIN },
       });
 
       // Rules configuration
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
       expect(rulesConfig).toMatchObject({
         name: 'fabdeh/jsonc/rules',
         languageOptions: { parser: MOCK_JSONC_PARSER },
@@ -274,33 +273,33 @@ describe('jsonc', () => {
 
     test('should use correct glob patterns by default', async () => {
       const result = await jsonc();
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.files).toEqual(['**/*.json', '**/*.json5', '**/*.jsonc']);
+      expect(rulesConfig?.files).toEqual(['**/*.json', '**/*.json5', '**/*.jsonc']);
     });
 
     test('should have proper plugin configuration', async () => {
       const result = await jsonc();
-      const setupConfig = result[0]!;
+      const setupConfig = result.at(0);
 
-      expect(setupConfig.plugins).toHaveProperty('jsonc');
-      expect(setupConfig.plugins!.jsonc).toStrictEqual(MOCK_JSONC_PLUGIN);
+      expect(setupConfig?.plugins).toHaveProperty('jsonc');
+      expect(setupConfig?.plugins?.jsonc).toStrictEqual(MOCK_JSONC_PLUGIN);
     });
 
     test('should have proper parser configuration', async () => {
       const result = await jsonc();
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.languageOptions?.parser).toBe(MOCK_JSONC_PARSER);
+      expect(rulesConfig?.languageOptions?.parser).toBe(MOCK_JSONC_PARSER);
     });
   });
 
   describe('rule configuration validation', () => {
     test('should have all rules prefixed with jsonc', async () => {
       const result = await jsonc();
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      const ruleKeys = Object.keys(rulesConfig.rules!);
+      const ruleKeys = Object.keys(rulesConfig?.rules ?? {});
       for (const ruleKey of ruleKeys) {
         expect(ruleKey).toMatch(/^jsonc\//);
       }
@@ -308,9 +307,9 @@ describe('jsonc', () => {
 
     test('should have proper rule severity levels', async () => {
       const result = await jsonc();
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      const rules = rulesConfig.rules!;
+      const rules = rulesConfig?.rules ?? {};
       const ruleEntries = Object.entries(rules);
 
       for (const [, ruleConfig] of ruleEntries) {
@@ -324,9 +323,9 @@ describe('jsonc', () => {
 
     test('should have comprehensive rule coverage', async () => {
       const result = await jsonc();
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      const jsoncRules = Object.keys(rulesConfig.rules!).filter((key) =>
+      const jsoncRules = Object.keys(rulesConfig?.rules ?? {}).filter((key) =>
         key.startsWith('jsonc/')
       );
 
@@ -336,34 +335,34 @@ describe('jsonc', () => {
 
     test('should have rules with configuration objects', async () => {
       const result = await jsonc();
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
       // Rules with configuration objects
-      expect(rulesConfig.rules!['jsonc/array-bracket-spacing']).toEqual(['error', 'never']);
-      expect(rulesConfig.rules!['jsonc/comma-dangle']).toEqual(['error', 'never']);
-      expect(rulesConfig.rules!['jsonc/indent']).toEqual(['error', 2]);
-      expect(rulesConfig.rules!['jsonc/key-spacing']).toEqual(['error', { afterColon: true, beforeColon: false }]);
+      expect(rulesConfig?.rules?.['jsonc/array-bracket-spacing']).toEqual(['error', 'never']);
+      expect(rulesConfig?.rules?.['jsonc/comma-dangle']).toEqual(['error', 'never']);
+      expect(rulesConfig?.rules?.['jsonc/indent']).toEqual(['error', 2]);
+      expect(rulesConfig?.rules?.['jsonc/key-spacing']).toEqual(['error', { afterColon: true, beforeColon: false }]);
 
       // Simple error rules
-      expect(rulesConfig.rules!['jsonc/no-dupe-keys']).toBe('error');
-      expect(rulesConfig.rules!['jsonc/valid-json-number']).toBe('error');
+      expect(rulesConfig?.rules?.['jsonc/no-dupe-keys']).toBe('error');
+      expect(rulesConfig?.rules?.['jsonc/valid-json-number']).toBe('error');
     });
   });
 
   describe('plugin integration', () => {
     test('should use eslint-plugin-jsonc plugin', async () => {
       const result = await jsonc();
-      const setupConfig = result[0]!;
+      const setupConfig = result.at(0);
 
-      expect(setupConfig.plugins).toHaveProperty('jsonc');
-      expect(setupConfig.plugins!.jsonc).toBe(MOCK_JSONC_PLUGIN);
+      expect(setupConfig?.plugins).toHaveProperty('jsonc');
+      expect(setupConfig?.plugins?.jsonc).toBe(MOCK_JSONC_PLUGIN);
     });
 
     test('should use jsonc-eslint-parser parser', async () => {
       const result = await jsonc();
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.languageOptions?.parser).toBe(MOCK_JSONC_PARSER);
+      expect(rulesConfig?.languageOptions?.parser).toBe(MOCK_JSONC_PARSER);
     });
   });
 
@@ -375,19 +374,19 @@ describe('jsonc', () => {
         overrides: { 'jsonc/no-dupe-keys': 'warn' },
       };
       const result = await jsonc(options);
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.files).toEqual(['custom.json']);
-      expect(rulesConfig.rules).toHaveProperty('jsonc/indent', ['error', 'tab']);
-      expect(rulesConfig.rules).toHaveProperty('jsonc/no-dupe-keys', 'warn');
+      expect(rulesConfig?.files).toEqual(['custom.json']);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/indent', ['error', 'tab']);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/no-dupe-keys', 'warn');
     });
 
     test('should handle numeric indent in stylistic object', async () => {
       const options: StylisticOptions = { stylistic: { indent: 8 } };
       const result = await jsonc(options);
-      const rulesConfig = result[1]!;
+      const rulesConfig = result.at(1);
 
-      expect(rulesConfig.rules).toHaveProperty('jsonc/indent', ['error', 8]);
+      expect(rulesConfig?.rules).toHaveProperty('jsonc/indent', ['error', 8]);
     });
   });
 });
