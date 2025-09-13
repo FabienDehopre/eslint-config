@@ -87,3 +87,6 @@ onlyBuiltDependencies:
   - esbuild
   - simple-git-hooks
   - unrs-resolver
+
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
