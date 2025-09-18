@@ -26,25 +26,25 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: pnpm
-          registry-url: 'https://registry.npmjs.org'
-      - name: Use latest corepack
-        run: |
-          echo "Before: corepack version => $(corepack --version || echo 'not installed')"
-          npm install -g corepack@latest
-          echo "After: corepack version => $(corepack --version)"
-          corepack enable
-          pnpm --version
-      - name: Install dependencies
-        run: pnpm install
-      - run: npm publish --provenance --tag $DIST_TAG
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          DIST_TAG: ${{ inputs.dist-tag }}
+#      - name: Setup PNPM
+#        uses: pnpm/action-setup@v4
+#        with:
+#          run_install: false
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: lts/*
+#          cache: pnpm
+#          registry-url: 'https://registry.npmjs.org'
+#      - name: Use latest corepack
+#        run: |
+#          echo "Before: corepack version => $(corepack --version || echo 'not installed')"
+#          npm install -g corepack@latest
+#          echo "After: corepack version => $(corepack --version)"
+#          corepack enable
+#          pnpm --version
+#      - name: Install dependencies
+#        run: pnpm install
+#      - run: npm publish --provenance --tag $DIST_TAG
+#        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+#          DIST_TAG: ${{ inputs.dist-tag }}
