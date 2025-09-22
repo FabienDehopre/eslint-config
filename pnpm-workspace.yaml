@@ -84,7 +84,8 @@ catalogs:
 
 minimumReleaseAge: 1440
 
-minimumReleaseAgeExclude: null
+minimumReleaseAgeExclude:
+  - '@fabdeh/*'
 
 onlyBuiltDependencies:
   - esbuild
