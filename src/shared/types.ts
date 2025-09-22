@@ -381,16 +381,23 @@ export interface ProjectTypeScriptOptions {
 }
 
 /**
- * Options for creating workspace-level ESLint configuration.
- * These options define foundational, consistency-focused configurations.
+ * Common options for ignoring files.
  */
-export interface CreateWorkspaceConfigOptions {
+export interface IgnoresOptions {
   /**
    * An array of glob patterns indicating the files that the configuration object should not apply to.
    * If not specified, the configuration object applies to all files matched by files.
    */
   ignores?: string[];
+}
 
+/**
+ * Options for creating workspace-level ESLint configuration.
+ * These options define foundational, consistency-focused configurations.
+ *
+ * @see defineWorkspaceConfig function
+ */
+export interface CreateWorkspaceConfigOptions extends IgnoresOptions {
   /**
    * Enable gitignore support.
    *
@@ -494,8 +501,10 @@ export interface CreateWorkspaceConfigOptions {
 /**
  * Options for creating project-level ESLint configuration.
  * These options define feature-specific, implementation-focused configurations.
+ *
+ * @see defineProjectConfig function
  */
-export interface CreateProjectConfigOptions extends ProjectTypeOptions {
+export interface CreateProjectConfigOptions extends IgnoresOptions, ProjectTypeOptions {
   /**
    * Enable or disable JSDoc rules.
    *
@@ -544,7 +553,7 @@ export interface CreateProjectConfigOptions extends ProjectTypeOptions {
  *
  * @see defineConfig function
  */
-export type CreateConfigOptions = CreateWorkspaceConfigOptions & Omit<CreateProjectConfigOptions, 'typescript'>;
+export type CreateConfigOptions = CreateWorkspaceConfigOptions & Omit<CreateProjectConfigOptions, 'ignores' | 'typescript'>;
 
 /**
  * Return-type of the `defineWorkspaceConfig` function.
