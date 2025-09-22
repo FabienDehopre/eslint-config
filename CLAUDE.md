@@ -4,85 +4,75 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal ESLint configuration package (`@fabdeh/eslint-config`) that provides opinionated, composable ESLint rules. It uses the new ESLint Flat Config format and supports TypeScript, Angular, NgRx, and various file formats out of the box.
+This is `@fabdeh/eslint-config`, a personal ESLint configuration preset that provides opinionated, auto-fixing rules for TypeScript, JavaScript, Angular, and other file types. It's built using ESLint Flat Config and designed to work standalone without Prettier.
 
 ## Development Commands
 
-### Core Commands
+### Core Development
 
-- `pnpm build` - Build the package using unbuild
-- `pnpm typecheck` - Run TypeScript type checking
-- `pnpm lint` - Run ESLint with auto-fix
-- `pnpm lint:check` - Run ESLint without auto-fix (for CI)
-- `pnpm test` - Run Vitest tests (fixtures tests)
-
-### Development Tools
-
+- `pnpm build` - Generate TypeScript definitions and build the package (runs `pnpm gen && tsdown`)
 - `pnpm dev` - Start ESLint config inspector for development
-- `pnpm build:inspector` - Build and run ESLint config inspector
-- `pnpm commit` - Use commitizen for conventional commits
+- `pnpm lint` - Build and lint the codebase with auto-fix
+- `pnpm lint:ci` - Lint without fixes for CI
+- `pnpm typecheck` - Run TypeScript type checking
 
-### Release
+### Code Generation
 
-- `pnpm release` - Bump version and publish to npm
-- `pnpm prepack` - Automatically runs build before packaging
+- `pnpm gen` - Generate TypeScript type definitions from configs (runs `tsx scripts/typegen.ts`)
+- `pnpm build:inspector` - Build the ESLint config inspector
 
-## Architecture
+### Release & Testing
+
+- `pnpm check-exports` - Validate package exports with @arethetypeswrong/cli
+- `pnpm release` - Release new version using bumpp
+- `pnpm validate-pr-title` - Validate PR titles (runs `tsx scripts/validate-pr-title.ts`)
+
+## Architecture Overview
 
 ### Core Structure
 
-- **src/index.ts** - Main entry point that exports all public APIs
-- **src/factory.ts** - Contains the `defineConfig()` function that creates ESLint configurations
-- **src/types.ts** - TypeScript type definitions for all configuration options
-- **src/configs/** - Individual configuration modules for each linting area
-- **src/utils.ts** - Utility functions for configuration management
+- **`src/index.ts`** - Main exports for the package
+- **`src/factories/`** - Configuration factory functions:
+  - `standard-config.ts` - Main `defineConfig()` with auto-detection
+  - `workspace-config.ts` - `defineWorkspaceConfig()` for mono-repo roots
+  - `project-config.ts` - `defineProjectConfig()` for project-specific configurations
+- **`src/configs/`** - Individual ESLint rule configurations for each technology/file type
+- **`src/shared/`** - Shared utilities, types, constants, and glob patterns
 
-### Configuration System
+### Configuration Factories
 
-The package uses a factory pattern with the `defineConfig()` function that:
+- **`defineConfig()`** - Auto-detects Angular, NgRx, TypeScript, Vitest based on installed packages
+- **`defineWorkspaceConfig()`** - For workspace roots, minimal auto-detection
+- **`defineProjectConfig()`** - Individual config imports available for fine-grained control
 
-1. Auto-detects dependencies (Angular, TypeScript, Vitest, etc.)
-2. Conditionally enables relevant rule sets
-3. Allows fine-grained customization through options
-4. Composes multiple ESLint flat configs into a single configuration array
+### Package Management
 
-### Key Config Modules
+Uses pnpm with workspace catalogs (`pnpm-workspace.yaml`) for dependency version management. Catalogs are organized into `dev`, `peer`, and `prod` sections.
 
-- **javascript.ts** - Base JavaScript rules
-- **typescript.ts** - TypeScript-specific rules with erasable syntax support
-- **angular.ts** - Angular framework rules
-- **ngrx.ts** - NgRx state management rules
-- **vitest.ts** - Vitest testing framework rules
-- **stylistic.ts** - Code formatting rules (replaces Prettier)
-- **formatters.ts** - External formatters for CSS, HTML, etc.
+### Build Process
 
-## Package Management
+1. `pnpm gen` generates TypeScript definitions from ESLint configs
+2. `tsdown` compiles and bundles the TypeScript source
+3. Output goes to `dist/` directory
 
-- Uses `pnpm` as the package manager (enforced via `preinstall` script)
-- Workspace setup with `pnpm-workspace.yaml`
-- Git hooks configured via `simple-git-hooks` for pre-commit linting and commit message validation
+## Key Technologies Supported
 
-## Testing
+- **TypeScript** - Auto-detected, includes erasable syntax validation
+- **Angular** - Auto-detected when `@angular/core` present
+- **NgRx** - Auto-detected when NgRx packages present
+- **Vitest** - Auto-detected when `vitest` package present
+- **Formatters** - Optional CSS, HTML, Markdown formatting via `eslint-plugin-format`
 
-- Uses Vitest for testing
-- **tests/fixtures.spec.ts** - Fixture-based tests that validate ESLint configurations
-- Test fixtures in `fixtures/` directory with input/output comparisons
+## Important Notes
 
-## Build System
+### Type Generation
 
-- **tsdown** for building the package
-- **tsdown.config.js** - Build configuration with TypeScript declaration generation
-- Outputs to `dist/` directory with ESM format
+Always run `pnpm gen` after modifying configs in `src/configs/` to regenerate TypeScript definitions.
 
-## Commit Conventions
+### Testing Strategy
 
-- Uses conventional commits with commitizen
-- **commitlint.config.js** - Custom commit message rules
-- Scopes are disabled (scope-empty rule enforced)
+The project uses fixture files in `fixtures/` for testing configurations. No traditional test runner - relies on ESLint inspector and manual validation.
 
-## Development Notes
+### Git Hooks
 
-- The package is designed to work standalone without Prettier
-- Auto-detection of frameworks happens in `factory.ts` using `local-pkg`
-- All configurations are composable and can be used individually
-- TypeScript erasable syntax rules are supported for Node.js 23.6+ compatibility
+Pre-commit hooks run `pnpm nano-staged` which applies `eslint --fix` to all files.
