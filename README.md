@@ -19,7 +19,7 @@
 - Requires ESLint v9.21.0+
 
 > [!WARNING]
-> Please keep in mind that this is **_a personal config_** with a lot opinions. Changes might not always be pleased by everyone and every use cases.
+> Please keep in mind that this is **_a personal config_** with a lot of opinions. Changes might not always be pleased by everyone and every use case.
 >
 > If you are using this config directly, I'd suggest you **review the changes everytime you update**. Or if you want more control over the rules, always feel free to fork it. Thanks!
 
@@ -42,7 +42,7 @@ import { defineConfig } from '@fabdeh/eslint-config';
 export default defineConfig();
 ```
 
-### Add script for package.json
+### Add the scripts for package.json
 
 For example:
 
@@ -106,7 +106,7 @@ Add the following settings to your `.vscode/settings.json`:
 
 ## Customization
 
-Since the beginning, we used [ESLint Flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new). It provides much better organization and composition.
+Since the beginning, we've used [ESLint Flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new). It provides much better organization and composition.
 
 Normally you only need to import the `defineConfig` function:
 
@@ -287,7 +287,7 @@ The following integrations are automatically enabled if the corresponding packag
 
 #### TypeScript
 
-Most of TypeScript rules are enable automatically if `typescript` package is installed in you project. Some `@typescript-eslint` rules are also enabled by default for JavaScript files.
+Most of the TypeScript rules are enabled automatically if `typescript` package is installed in you project. Some `@typescript-eslint` rules are also enabled by default for JavaScript files.
 You can explicitly enable/disable TypeScript integration manually:
 
 ```js
@@ -301,15 +301,15 @@ export default defineConfig({
 
 ##### Erasable Syntax Only
 
-The TypeScript integration also allow you to turn on/off rules that will report on using syntax that will not be allowed by TypeScript's [--erasableSyntaxOnly option](https://devblogs.microsoft.com/typescript/announcing-typescript-5-8-beta/#the---erasablesyntaxonly-option):
+The TypeScript integration also allows you to turn on/off rules that will report on using syntax that will not be allowed by TypeScript's [--erasableSyntaxOnly option](https://devblogs.microsoft.com/typescript/announcing-typescript-5-8-beta/#the---erasablesyntaxonly-option):
 
 > Recently, Node.js 23.6 unflagged [experimental support for running TypeScript files directly](https://nodejs.org/api/typescript.html#type-stripping); however, only certain constructs are supported under this mode.
 >
 > ...
 >
-> TypeScript 5.8 introduces the `--erasableSyntaxOnly` flag. When this flag is enabled, TypeScript will only allow you to use constructs that can be erased from a file, and will issue an error if it encounters any constructs that cannot be erased.
+> TypeScript 5.8 introduces the `--erasableSyntaxOnly` flag. When this flag is enabled, TypeScript will only allow you to use constructs that can be erased from a file and will issue an error if it encounters any constructs that cannot be erased.
 
-You can enable these rules as follow:
+You can enable these rules as follows:
 
 ```js
 // eslint.config.js
@@ -322,7 +322,7 @@ export default defineConfig({
 });
 ```
 
-These rules are disabled by default and therefore the associated ESLint plugin is also not installed by default.
+These rules are disabled by default, and therefore the associated ESLint plugin is also not installed by default.
 Running `pnpx eslint` should prompt you to install the required plugin; otherwise, you can install it manually:
 
 ```bash
@@ -344,7 +344,7 @@ export default defineConfig({
 
 #### NgRx
 
-NgRx support is also detected automatically if any of the following package is installed in your project.
+NgRx support is also detected automatically if any of the following packages is installed in your project.
 
 - `@ngrx/store`
 - `@ngrx/effects`
@@ -362,11 +362,11 @@ export default defineConfig({
 });
 ```
 
-> Of course, NgRx depends on Angular so the Angular integration will be enabled as well.
+> Of course, NgRx depends on Angular, so the Angular integration will be enabled as well.
 
 #### Vitest
 
-The vitest integration is detected automatically by checking if `vitest` is installed in your project. It can be enable/disable manually in the configuration:
+The vitest integration is detected automatically by checking if `vitest` is installed in your project. It can be enabled/disabled manually in the configuration:
 
 ```js
 // eslint.config.js
@@ -383,7 +383,7 @@ We provide some optional integrations for specific use cases, that we don't incl
 
 #### Formatters
 
-Use external formatters to format files that ESLint cannot handle yet (`.css`, `.html`, etc). Powered by [`eslint-plugin-format`](https://github.com/antfu/eslint-plugin-format).
+Use external formatters to format files that ESLint cannot handle yet (`.css`, `.html`, etc.). Powered by [`eslint-plugin-format`](https://github.com/antfu/eslint-plugin-format).
 
 ```js
 // eslint.config.js
