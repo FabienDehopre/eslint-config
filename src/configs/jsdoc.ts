@@ -10,7 +10,7 @@ import { GLOB_SRC, GLOB_TS } from '../shared/globs';
  * Get the JSDoc rules based on specific parameters.
  *
  * @param level - The level of (mostly) all rules.
- * @param stylistic - Does the stylistic rules be included.
+ * @param stylistic - Should the stylistic rules be included.
  * @param mode - To get on JS or TS rules or both.
  * @returns The JSDoc eslint rules configured with the requested level.
  */
@@ -25,7 +25,7 @@ export function getJsDocRules(
           'jsdoc/check-access': level,
           'jsdoc/check-param-names': level,
           'jsdoc/check-property-names': level,
-          'jsdoc/check-tag-names': level,
+          'jsdoc/check-tag-names': [level, { definedTags: ['experimental'] }],
           'jsdoc/check-types': level,
           'jsdoc/check-values': level,
           'jsdoc/empty-tags': level,
@@ -62,7 +62,7 @@ export function getJsDocRules(
       : {}),
     ...(mode === 'both' || mode === 'tsOnly'
       ? {
-          'jsdoc/check-tag-names': [level, { typed: true }],
+          'jsdoc/check-tag-names': [level, { typed: true, definedTags: ['experimental'] }],
           'jsdoc/no-types': level,
           'jsdoc/no-undefined-types': 'off',
           'jsdoc/require-param-type': 'off',
