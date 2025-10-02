@@ -24,3 +24,17 @@ updates:
         patterns:
           - '@eslint/*'
           - eslint
+      commitlint:
+        patterns:
+          - '@commitlint/*'
+      angular:
+        patterns:
+          - '@angular/*'
+          - '@angular-devkit/*'
+      ngrx:
+        patterns:
+          - '@ngrx/*'
+      vitest:
+        patterns:
+          - '@vitest/*'
+          - vitest
