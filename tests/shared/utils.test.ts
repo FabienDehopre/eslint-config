@@ -145,7 +145,7 @@ describe('utils', () => {
     });
 
     test('should handle angular option correctly', () => {
-      const angularOptions = { templateParser: true };
+      const angularOptions = { prefix: 'test' };
       const options = { angular: angularOptions };
       const result = resolveSubOptions(options, 'angular');
 

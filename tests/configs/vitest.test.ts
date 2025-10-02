@@ -49,7 +49,7 @@ describe('vitest', () => {
       const config = await vitestConfig();
       const vitestConfigItem = config.find((c) => c.name === 'fabdeh/vitest/rules');
 
-      expect(vitestConfigItem?.settings?.vitest?.typecheck).toBeTruthy();
+      expect((vitestConfigItem?.settings?.vitest as { typecheck: boolean }).typecheck).toBeTruthy();
     });
   });
 

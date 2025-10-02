@@ -1,7 +1,16 @@
+import type { TSESLint } from '@typescript-eslint/utils';
+
 import { describe, expect, test } from 'vitest';
 
 import { tailwindcss } from '../../src/configs/tailwindcss';
 import { hasConfigWithName, validateEslintConfig } from '../utils/test-helpers';
+
+function createMockParser(name?: string): TSESLint.FlatConfig.Parser {
+  return {
+    ...(name && { meta: { name } }),
+    parse: () => ({ type: 'Program', body: [], loc: { start: { line: 1, column: 0 }, end: { line: 1, column: 0 } }, range: [0, 0], tokens: [], comments: [] }),
+  };
+}
 
 describe('tailwindcss', () => {
   describe('basic configuration', () => {
@@ -44,7 +53,7 @@ describe('tailwindcss', () => {
 
   describe('parsers configuration', () => {
     test('should create parser configs when parsers option is provided', async () => {
-      const mockParser = {};
+      const mockParser = createMockParser();
       const config = await tailwindcss({
         parsers: {
           '**/*.custom': mockParser,
@@ -57,8 +66,8 @@ describe('tailwindcss', () => {
     });
 
     test('should configure parser for each glob pattern', async () => {
-      const mockParser1 = { name: 'parser1' };
-      const mockParser2 = { name: 'parser2' };
+      const mockParser1 = createMockParser('parser1');
+      const mockParser2 = createMockParser('parser2');
       const config = await tailwindcss({
         parsers: {
           '**/*.custom': mockParser1,
@@ -74,7 +83,7 @@ describe('tailwindcss', () => {
     });
 
     test('should use parser globs as files in rules config when parsers provided', async () => {
-      const mockParser = {};
+      const mockParser = createMockParser();
       const config = await tailwindcss({
         parsers: {
           '**/*.custom': mockParser,
@@ -87,7 +96,7 @@ describe('tailwindcss', () => {
     });
 
     test('should use unique parser globs as files', async () => {
-      const mockParser = {};
+      const mockParser = createMockParser();
       const config = await tailwindcss({
         parsers: {
           '**/*.custom': mockParser,
@@ -135,7 +144,7 @@ describe('tailwindcss', () => {
         files: ['**/*.tsx'],
         overrides: {},
         enableAllRules: true,
-        customSetting: 'value',
+        ...({ customSetting: 'value' } as Record<string, unknown>),
       });
       const rulesConfig = config.find((c) => c.name === '@fabdeh/tailwindcss/rules');
 
@@ -147,7 +156,7 @@ describe('tailwindcss', () => {
 
   describe('combined options', () => {
     test('should work with all options combined', async () => {
-      const mockParser = {};
+      const mockParser = createMockParser();
       const config = await tailwindcss({
         parsers: {
           '**/*.custom': mockParser,

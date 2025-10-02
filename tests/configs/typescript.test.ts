@@ -81,7 +81,7 @@ describe('typescript', () => {
 
   describe('workspace project mode', () => {
     test('should use simplified rules for workspace projects', async () => {
-      const config = await typescript({ type: 'lib' }, true);
+      const config = await typescript({ type: 'lib', parserOptions: {} }, true);
       const rulesConfig = config.find((c) => c.name?.includes('typescript/rules'));
 
       expect(rulesConfig?.plugins?.['unused-imports']).toBeUndefined();
@@ -89,7 +89,7 @@ describe('typescript', () => {
     });
 
     test('should include explicit-function-return-type for lib workspace projects', async () => {
-      const config = await typescript({ type: 'lib' }, true);
+      const config = await typescript({ type: 'lib', parserOptions: {} }, true);
       const rulesConfig = config.find((c) => c.name?.includes('typescript/rules'));
 
       expect(rulesConfig?.rules?.['@typescript-eslint/explicit-function-return-type']).toEqual([

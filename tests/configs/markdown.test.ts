@@ -1,7 +1,17 @@
+import type { TSESLint } from '@typescript-eslint/utils';
+
 import { describe, expect, test } from 'vitest';
 
 import { markdown } from '../../src/configs/markdown';
 import { hasConfigWithName, validateEslintConfig } from '../utils/test-helpers';
+
+function assertHasParseForESLint(parser: TSESLint.FlatConfig.Parser | undefined): asserts parser is { parseForESLint: (text: string, options?: unknown) => {
+  [k in keyof TSESLint.Parser.ParseResult]: unknown;
+}; } {
+  if (!parser || !('parseForESLint' in parser)) {
+    throw new Error('Parser does not have parseForESLint function');
+  }
+}
 
 describe('markdown', () => {
   describe('basic configuration', () => {
@@ -64,7 +74,8 @@ describe('markdown', () => {
       const config = await markdown();
       const parserConfig = config.find((c) => c.name === 'fabdeh/markdown/parser');
 
-      expect(parserConfig?.languageOptions?.parser?.parseForESLint).toBeTypeOf('function');
+      assertHasParseForESLint(parserConfig?.languageOptions?.parser);
+      expect(parserConfig.languageOptions.parser.parseForESLint).toBeTypeOf('function');
     });
 
     test('should parse empty code correctly', async () => {
@@ -72,14 +83,21 @@ describe('markdown', () => {
       const parserConfig = config.find((c) => c.name === 'fabdeh/markdown/parser');
       const parser = parserConfig?.languageOptions?.parser;
 
-      const result = parser?.parseForESLint?.('');
+      assertHasParseForESLint(parser);
+      const result = parser.parseForESLint('');
 
       expect(result).toBeDefined();
-      expect(result?.ast?.type).toBe('Program');
-      expect(result?.ast?.body).toEqual([]);
-      expect(result?.ast?.loc).toEqual({ start: 0, end: 0 });
-      expect(result?.ast?.range).toEqual([0, 0]);
-      expect(result?.services?.isPlain).toBeTruthy();
+      expect(result.ast).toStrictEqual({
+        body: [],
+        comments: [],
+        loc: { end: 0, start: 0 },
+        range: [0, 0],
+        tokens: [],
+        type: 'Program',
+      });
+      expect(result.services).toStrictEqual({
+        isPlain: true,
+      });
     });
 
     test('should parse markdown code correctly', async () => {
@@ -87,14 +105,19 @@ describe('markdown', () => {
       const parserConfig = config.find((c) => c.name === 'fabdeh/markdown/parser');
       const parser = parserConfig?.languageOptions?.parser;
 
+      assertHasParseForESLint(parser);
       const code = '# Hello World\n\nThis is markdown.';
-      const result = parser?.parseForESLint?.(code);
+      const result = parser.parseForESLint(code);
 
       expect(result).toBeDefined();
-      expect(result?.ast?.type).toBe('Program');
-      expect(result?.ast?.body).toEqual([]);
-      expect(result?.ast?.loc?.end).toBe(code.length);
-      expect(result?.ast?.range).toEqual([0, code.length]);
+      expect(result.ast).toStrictEqual({
+        body: [],
+        comments: [],
+        loc: { end: code.length, start: 0 },
+        range: [0, code.length],
+        tokens: [],
+        type: 'Program',
+      });
     });
   });
 

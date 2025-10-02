@@ -55,11 +55,11 @@ describe('angular', () => {
     });
 
     test('should apply custom component styles mode', async () => {
-      const config = await angular({ componentStylesMode: 'metadata' });
+      const config = await angular({ componentStylesMode: 'array' });
       const tsConfig = config.find((c) => c.name === 'fabdeh/angular/rules');
 
       const stylesRule = tsConfig?.rules?.['@angular-eslint/consistent-component-styles'] as [string, string];
-      expect(stylesRule[1]).toBe('metadata');
+      expect(stylesRule[1]).toBe('array');
     });
 
     test('should apply tsOverrides', async () => {
@@ -208,7 +208,7 @@ describe('angular', () => {
         banDeveloperPreviewApi: false,
         banExperimentalApi: false,
         preferOnPushOnly: false,
-        componentStylesMode: 'metadata',
+        componentStylesMode: 'array',
         ignoreClassNamePatternForInjectableProvidedIn: '^Base',
         tsOverrides: {
           'max-classes-per-file': 'warn',
