@@ -39,7 +39,7 @@ export async function defineProjectConfig(
   const workspaceOptions = resolvedBaseConfig[OPTIONS_SYMBOL];
   const {
     angular: enableAngular = isPackageExists('@angular/core'),
-    jsdoc: enableJsdoc = true,
+    jsdoc: enableJsdoc = options.type === 'lib',
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
     tailwindcss: enableTailwind = false,
     typescript: typescriptOptions,

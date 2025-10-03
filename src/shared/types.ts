@@ -508,7 +508,8 @@ export interface CreateProjectConfigOptions extends IgnoresOptions, ProjectTypeO
   /**
    * Enable or disable JSDoc rules.
    *
-   * @default true
+   * @default true if `type` property is set to `lib`, otherwise false.
+   * @see type
    */
   jsdoc?: boolean;
 

@@ -50,7 +50,7 @@ export async function defineConfig(
   const {
     angular: enableAngular = isPackageExists('@angular/core'),
     gitignore: enableGitignore = true,
-    jsdoc: enableJsdoc = true,
+    jsdoc: enableJsdoc = options.type === 'lib',
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
     // eslint-disable-next-line @angular-eslint/no-experimental
     pnpm: enableCatalogs = false, // TODO: smart detect
