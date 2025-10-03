@@ -50,9 +50,10 @@ export async function defineProjectConfig(
     throw new Error('NgRx rules can only be enabled if Angular rules are also enabled.');
   }
 
-  const configs: Awaitable<TypedConfigArray>[] = [
-    ignores(options.ignores, 'project'),
-  ];
+  const configs: Awaitable<TypedConfigArray>[] = [];
+  if (options.ignores && options.ignores.length > 0) {
+    configs.push(ignores(options.ignores));
+  }
 
   // Add JSDoc configuration (project-specific feature)
   if (enableJsdoc) {
