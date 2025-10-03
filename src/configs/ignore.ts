@@ -14,6 +14,6 @@ import { GLOB_EXCLUDE } from '../shared/globs';
 export function ignores(userIgnores: string[] = [], fromFactory?: 'project' | 'workspace'): TypedConfigArray {
   return tseslint.config({
     name: `fabdeh/ignores${fromFactory ? `/${fromFactory}` : ''}`,
-    ignores: [...GLOB_EXCLUDE, ...userIgnores],
+    ignores: [...(!fromFactory || fromFactory === 'workspace' ? GLOB_EXCLUDE : []), ...userIgnores],
   });
 }
