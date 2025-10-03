@@ -11,7 +11,7 @@ catalogs:
     '@commitlint/config-conventional': ^19.8.1
     '@commitlint/cz-commitlint': ^19.8.1
     '@commitlint/format': ^19.8.1
-    '@commitlint/lint': ^19.8.1
+    '@commitlint/lint': ^20.0.0
     '@commitlint/load': ^19.8.1
     '@ngrx/effects': ^20.0.1
     '@ngrx/operators': ^20.0.1
