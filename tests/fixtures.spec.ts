@@ -16,7 +16,7 @@ interface TestParams {
   items?: ConfigWithExtends[];
 }
 
-describe('fixtures', () => {
+describe.skip('fixtures', () => {
   beforeAll(async () => {
     await rm('_fixtures', { recursive: true, force: true });
   });

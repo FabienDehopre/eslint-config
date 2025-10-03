@@ -14,6 +14,22 @@ export default defineConfig(
     type: 'lib',
   },
   {
+    name: 'project/ignores',
     ignores: ['fixtures', '_fixtures'],
+  },
+  {
+    name: 'project/overrides',
+    rules: {
+      '@typescript-eslint/await-thenable': 'off', // TODO: remove once TSEslint fixes the rule correctly.
+    },
+  },
+  {
+    name: 'project/tests/overrides',
+    files: ['tests/**/*.ts'],
+    rules: {
+      'jsdoc/require-jsdoc': 'off',
+      'jsdoc/require-returns': 'off',
+      'jsdoc/require-param-description': 'off',
+    },
   }
 );
