@@ -41,11 +41,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - if: github.event_name == 'workflow_dispatch'
-        run: npm publish --provenance --tag $DIST_TAG
+        run: pnpm publish --tag $DIST_TAG
         env:
+          NPM_CONFIG_PROVENANCE: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           DIST_TAG: ${{ inputs.dist-tag }}
       - if: github.event_name != 'workflow_dispatch'
-        run: npm publish --provenance --tag latest
+        run: pnpm publish --tag latest
         env:
+          NPM_CONFIG_PROVENANCE: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
