@@ -4,7 +4,7 @@ import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
 import {
-  angular,
+  angular, ignores,
   jsdoc,
   ngrx,
   tailwindcss,
@@ -50,7 +50,9 @@ export async function defineProjectConfig(
     throw new Error('NgRx rules can only be enabled if Angular rules are also enabled.');
   }
 
-  const configs: Awaitable<TypedConfigArray>[] = [];
+  const configs: Awaitable<TypedConfigArray>[] = [
+    ignores(options.ignores, 'project'),
+  ];
 
   // Add JSDoc configuration (project-specific feature)
   if (enableJsdoc) {

@@ -73,7 +73,7 @@ export async function defineWorkspaceConfig(
   }
 
   configs.push(
-    ignores(options.ignores),
+    ignores(options.ignores, 'workspace'),
     javascript({ overrides: options.javascript?.overrides }),
     comments(),
     node(),
