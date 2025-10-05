@@ -69,7 +69,7 @@ describe('defineConfig', () => {
       expect(hasConfigWithName(config, 'fabdeh/stylistic')).toBeTruthy();
 
       // Verify isPackageExists was called with 'typescript'
-      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('typescript');
+      expect(mockIsPackageExists).toHaveBeenCalledExactlyOnceWith('typescript');
     });
 
     test('should auto-detect and include Angular config', async () => {
@@ -82,7 +82,7 @@ describe('defineConfig', () => {
       expect(hasConfigWithName(config, 'angular')).toBeTruthy();
 
       // Verify isPackageExists was called with '@angular/core'
-      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('@angular/core');
+      expect(mockIsPackageExists).toHaveBeenCalledExactlyOnceWith('@angular/core');
     });
 
     test('should auto-detect and include NgRx config when Angular is present', async () => {
@@ -95,7 +95,7 @@ describe('defineConfig', () => {
       expect(hasConfigWithName(config, 'ngrx')).toBeTruthy();
 
       // Verify isPackageExists was called with NgRx packages
-      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('@ngrx/store');
+      expect(mockIsPackageExists).toHaveBeenCalledExactlyOnceWith('@ngrx/store');
     });
 
     test('should auto-detect and include Vitest config', async () => {
@@ -107,7 +107,7 @@ describe('defineConfig', () => {
       expect(hasConfigWithName(config, 'vitest')).toBeTruthy();
 
       // Verify isPackageExists was called with 'vitest'
-      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('vitest');
+      expect(mockIsPackageExists).toHaveBeenCalledExactlyOnceWith('vitest');
     });
 
     test('should include all auto-detected configs in full stack scenario', async () => {
@@ -228,7 +228,7 @@ describe('defineConfig', () => {
 
       await defineConfig({ gitignore: gitignoreOptions });
 
-      expect(MOCK_GIT_IGNORE_CONFIG).toHaveBeenCalledWithExactlyOnceWith({
+      expect(MOCK_GIT_IGNORE_CONFIG).toHaveBeenCalledExactlyOnceWith({
         name: 'fabdeh/gitignore',
         ...gitignoreOptions,
       });

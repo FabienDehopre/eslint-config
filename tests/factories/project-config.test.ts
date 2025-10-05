@@ -62,7 +62,7 @@ describe('defineProjectConfig', () => {
       expect(hasConfigWithName(config, 'angular')).toBeTruthy();
 
       // Verify isPackageExists was called with '@angular/core'
-      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('@angular/core');
+      expect(mockIsPackageExists).toHaveBeenCalledExactlyOnceWith('@angular/core');
     });
 
     test('should auto-detect NgRx when packages are present', async () => {
@@ -75,7 +75,7 @@ describe('defineProjectConfig', () => {
       expect(hasConfigWithName(config, 'ngrx')).toBeTruthy();
 
       // Verify NgRx packages were checked
-      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('@ngrx/store');
+      expect(mockIsPackageExists).toHaveBeenCalledExactlyOnceWith('@ngrx/store');
     });
 
     test('should auto-detect Vitest when package is present', async () => {
