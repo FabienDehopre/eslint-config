@@ -52,7 +52,7 @@ export async function defineProjectConfig(
 
   const configs: Awaitable<TypedConfigArray>[] = [];
   if (options.ignores && options.ignores.length > 0) {
-    configs.push(ignores(options.ignores));
+    configs.push(ignores(options.ignores, 'project'));
   }
 
   // Add JSDoc configuration (project-specific feature)
