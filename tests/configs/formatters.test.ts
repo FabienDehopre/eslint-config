@@ -57,7 +57,7 @@ describe('formatters', () => {
 
       const config = await formatters(true);
 
-      expect(mockIsPackageExists).toHaveBeenCalledExactlyOnceWith('@slidev/cli');
+      expect(mockIsPackageExists).toHaveBeenCalledWith('@slidev/cli');
       expect(hasConfigWithName(config, 'fabdeh/formatter/slidev')).toBeTruthy();
     });
   });

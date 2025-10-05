@@ -72,6 +72,7 @@ export async function vitest(options: OverridesOptions & UnitTestingOptions = {}
       'vitest/consistent-test-it': ['error', { fn: 'test' }],
       'vitest/no-standalone-expect': 'error',
       'vitest/no-test-return-statement': 'error',
+      'vitest/prefer-called-exactly-once-with': 'off',
       'vitest/prefer-hooks-in-order': 'error',
       'vitest/prefer-hooks-on-top': 'error',
       'vitest/prefer-lowercase-title': 'error',
