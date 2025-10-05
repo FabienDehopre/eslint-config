@@ -40,7 +40,6 @@ describe('defineConfig', () => {
 
       // Should include default enabled features
       expect(hasConfigWithName(config, 'fabdeh/unicorn')).toBeTruthy();
-      expect(hasConfigWithName(config, 'fabdeh/jsdoc')).toBeTruthy();
       expect(hasConfigWithName(config, 'fabdeh/regexp')).toBeTruthy();
       expect(hasConfigWithName(config, 'fabdeh/jsonc')).toBeTruthy();
       expect(hasConfigWithName(config, 'fabdeh/yaml')).toBeTruthy();
@@ -55,6 +54,9 @@ describe('defineConfig', () => {
       expect(hasConfigWithName(config, 'angular')).toBeFalsy();
       expect(hasConfigWithName(config, 'ngrx')).toBeFalsy();
       expect(hasConfigWithName(config, 'vitest')).toBeFalsy();
+
+      // Should NOT include JSDoc by default (only enabled for type: 'lib')
+      expect(hasConfigWithName(config, 'fabdeh/jsdoc')).toBeFalsy();
     });
 
     test('should auto-detect and include TypeScript config', async () => {
@@ -67,7 +69,7 @@ describe('defineConfig', () => {
       expect(hasConfigWithName(config, 'fabdeh/stylistic')).toBeTruthy();
 
       // Verify isPackageExists was called with 'typescript'
-      expect(mockIsPackageExists).toHaveBeenCalledWith('typescript');
+      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('typescript');
     });
 
     test('should auto-detect and include Angular config', async () => {
@@ -80,7 +82,7 @@ describe('defineConfig', () => {
       expect(hasConfigWithName(config, 'angular')).toBeTruthy();
 
       // Verify isPackageExists was called with '@angular/core'
-      expect(mockIsPackageExists).toHaveBeenCalledWith('@angular/core');
+      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('@angular/core');
     });
 
     test('should auto-detect and include NgRx config when Angular is present', async () => {
@@ -93,7 +95,7 @@ describe('defineConfig', () => {
       expect(hasConfigWithName(config, 'ngrx')).toBeTruthy();
 
       // Verify isPackageExists was called with NgRx packages
-      expect(mockIsPackageExists).toHaveBeenCalledWith('@ngrx/store');
+      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('@ngrx/store');
     });
 
     test('should auto-detect and include Vitest config', async () => {
@@ -105,7 +107,7 @@ describe('defineConfig', () => {
       expect(hasConfigWithName(config, 'vitest')).toBeTruthy();
 
       // Verify isPackageExists was called with 'vitest'
-      expect(mockIsPackageExists).toHaveBeenCalledWith('vitest');
+      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('vitest');
     });
 
     test('should include all auto-detected configs in full stack scenario', async () => {
@@ -168,6 +170,15 @@ describe('defineConfig', () => {
       expect(hasConfigWithName(config, 'angular')).toBeTruthy();
     });
 
+    test('should enable JSDoc when type is lib', async () => {
+      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
+
+      const config = await defineConfig({ type: 'lib' });
+
+      expect(validateEslintConfig(config)).toBeTruthy();
+      expect(hasConfigWithName(config, 'fabdeh/jsdoc')).toBeTruthy();
+    });
+
     test('should disable default features when explicitly set to false', async () => {
       setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
 
@@ -217,7 +228,7 @@ describe('defineConfig', () => {
 
       await defineConfig({ gitignore: gitignoreOptions });
 
-      expect(MOCK_GIT_IGNORE_CONFIG).toHaveBeenCalledWith({
+      expect(MOCK_GIT_IGNORE_CONFIG).toHaveBeenCalledWithExactlyOnceWith({
         name: 'fabdeh/gitignore',
         ...gitignoreOptions,
       });

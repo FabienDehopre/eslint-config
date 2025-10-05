@@ -74,7 +74,7 @@ describe('vitest', () => {
       const config = await vitestConfig();
       const vitestConfigItem = config.find((c) => c.name === 'fabdeh/vitest/rules');
 
-      expect(mockIsPackageExists).toHaveBeenCalledWith('@testing-library/jest-dom');
+      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('@testing-library/jest-dom');
       expect(vitestConfigItem?.plugins?.['jest-dom']).toBeDefined();
     });
   });
@@ -100,7 +100,7 @@ describe('vitest', () => {
       const config = await vitestConfig();
       const vitestConfigItem = config.find((c) => c.name === 'fabdeh/vitest/rules');
 
-      expect(mockIsPackageExists).toHaveBeenCalledWith('@testing-library/angular');
+      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('@testing-library/angular');
       expect(vitestConfigItem?.plugins?.['testing-library']).toBeDefined();
     });
   });

@@ -74,7 +74,7 @@ describe('defineWorkspaceConfig', () => {
       expect(hasConfigWithName(config, 'jsdoc')).toBeFalsy();
 
       // Verify TypeScript was checked
-      expect(mockIsPackageExists).toHaveBeenCalledWith('typescript');
+      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('typescript');
     });
 
     test('should NOT auto-detect Angular/NgRx/Vitest in workspace mode', async () => {
@@ -92,7 +92,7 @@ describe('defineWorkspaceConfig', () => {
       expect(hasConfigWithName(config, 'jsdoc')).toBeFalsy();
 
       // Verify minimal detection calls
-      expect(mockIsPackageExists).toHaveBeenCalledWith('typescript');
+      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('typescript');
       // Should NOT check for Angular/NgRx/Vitest in workspace mode
       expect(mockIsPackageExists).not.toHaveBeenCalledWith('@angular/core');
       expect(mockIsPackageExists).not.toHaveBeenCalledWith('vitest');
@@ -169,7 +169,7 @@ describe('defineWorkspaceConfig', () => {
 
       await defineWorkspaceConfig({ gitignore: gitignoreOptions });
 
-      expect(MOCK_GIT_IGNORE_CONFIG).toHaveBeenCalledWith({
+      expect(MOCK_GIT_IGNORE_CONFIG).toHaveBeenCalledWithExactlyOnceWith({
         name: 'fabdeh/gitignore',
         ...gitignoreOptions,
       });

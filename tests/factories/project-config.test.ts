@@ -62,7 +62,7 @@ describe('defineProjectConfig', () => {
       expect(hasConfigWithName(config, 'angular')).toBeTruthy();
 
       // Verify isPackageExists was called with '@angular/core'
-      expect(mockIsPackageExists).toHaveBeenCalledWith('@angular/core');
+      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('@angular/core');
     });
 
     test('should auto-detect NgRx when packages are present', async () => {
@@ -75,7 +75,7 @@ describe('defineProjectConfig', () => {
       expect(hasConfigWithName(config, 'ngrx')).toBeTruthy();
 
       // Verify NgRx packages were checked
-      expect(mockIsPackageExists).toHaveBeenCalledWith('@ngrx/store');
+      expect(mockIsPackageExists).toHaveBeenCalledWithExactlyOnceWith('@ngrx/store');
     });
 
     test('should auto-detect Vitest when package is present', async () => {
@@ -89,10 +89,19 @@ describe('defineProjectConfig', () => {
       expect(hasConfigWithName(config, 'vitest')).toBeTruthy();
     });
 
-    test('should include JSDoc by default in project mode', async () => {
+    test('should NOT include JSDoc by default unless type is lib', async () => {
       setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
 
       const config = await defineProjectConfig(baseConfig);
+
+      expect(validateEslintConfig(config)).toBeTruthy();
+      expect(hasConfigWithName(config, 'fabdeh/jsdoc')).toBeFalsy();
+    });
+
+    test('should include JSDoc when type is lib', async () => {
+      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
+
+      const config = await defineProjectConfig(baseConfig, { type: 'lib' });
 
       expect(validateEslintConfig(config)).toBeTruthy();
       expect(hasConfigWithName(config, 'fabdeh/jsdoc')).toBeTruthy();
