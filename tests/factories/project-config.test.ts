@@ -117,6 +117,55 @@ describe('defineProjectConfig', () => {
     });
   });
 
+  describe('ignore patterns', () => {
+    test('should include custom ignore patterns when provided', async () => {
+      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
+
+      const config = await defineProjectConfig(baseConfig, {
+        ignores: ['**/custom-ignore/**', '**/*.temp.ts'],
+      });
+
+      expect(validateEslintConfig(config)).toBeTruthy();
+      expect(hasConfigWithName(config, 'fabdeh/ignores/project')).toBeTruthy();
+
+      // Find the ignore config and verify it contains custom patterns
+      const ignoreConfig = config.find((c) => c.name === 'fabdeh/ignores/project');
+      expect(ignoreConfig).toBeDefined();
+      expect(ignoreConfig?.ignores).toContain('**/custom-ignore/**');
+      expect(ignoreConfig?.ignores).toContain('**/*.temp.ts');
+    });
+
+    test('should not include global GLOB_EXCLUDE patterns for project config', async () => {
+      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
+
+      const config = await defineProjectConfig(baseConfig, {
+        ignores: ['**/custom/**'],
+      });
+
+      expect(validateEslintConfig(config)).toBeTruthy();
+
+      // Find the ignore config
+      const ignoreConfig = config.find((c) => c.name === 'fabdeh/ignores/project');
+      expect(ignoreConfig).toBeDefined();
+
+      // Project-level ignores should NOT include GLOB_EXCLUDE (like dist/**, node_modules/**)
+      // Only custom patterns should be present
+      expect(ignoreConfig?.ignores).toContain('**/custom/**');
+      // Verify it's not merging with workspace GLOB_EXCLUDE patterns
+      expect(ignoreConfig?.ignores?.length).toBe(1);
+    });
+
+    test('should work without custom ignores', async () => {
+      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
+
+      const config = await defineProjectConfig(baseConfig);
+
+      expect(validateEslintConfig(config)).toBeTruthy();
+      // Should not have project-specific ignores if none provided
+      expect(hasConfigWithName(config, 'fabdeh/ignores/project')).toBeFalsy();
+    });
+  });
+
   describe('error handling', () => {
     test('should throw error when NgRx is enabled without Angular', async () => {
       setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
