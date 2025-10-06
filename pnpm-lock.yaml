@@ -84,6 +84,9 @@ catalogs:
     nano-staged:
       specifier: ^0.8.0
       version: 0.8.0
+    semver:
+      specifier: ^7.7.2
+      version: 7.7.2
     simple-git-hooks:
       specifier: ^2.13.1
       version: 2.13.1
@@ -437,6 +440,9 @@ importers:
       prettier-plugin-slidev:
         specifier: catalog:peer
         version: 1.0.5(prettier@3.6.2)
+      semver:
+        specifier: catalog:dev
+        version: 7.7.2
       simple-git-hooks:
         specifier: catalog:dev
         version: 2.13.1

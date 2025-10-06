@@ -32,6 +32,7 @@ catalogs:
     is-ci: ^4.1.0
     jiti: ^2.6.1
     nano-staged: ^0.8.0
+    semver: ^7.7.2
     simple-git-hooks: ^2.13.1
     tailwindcss: ^4.1.14
     tsdown: ^0.15.6

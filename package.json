@@ -155,6 +155,7 @@
     "jiti": "catalog:dev",
     "nano-staged": "catalog:dev",
     "prettier-plugin-slidev": "catalog:peer",
+    "semver": "catalog:dev",
     "simple-git-hooks": "catalog:dev",
     "tailwindcss": "catalog:dev",
     "tsdown": "catalog:dev",
