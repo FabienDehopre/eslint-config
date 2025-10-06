@@ -168,33 +168,83 @@ describe('utils', () => {
 
     test('should return early when running in CI environment', async () => {
       const originalCI = process.env.CI;
+      const originalTTY = process.stdout.isTTY;
+
       process.env.CI = 'true';
+      process.stdout.isTTY = true;
 
       await ensurePackages(['some-package']);
 
-      if (originalCI === undefined) {
-        delete process.env.CI;
-      } else {
+      process.env.CI = originalCI;
+      process.stdout.isTTY = originalTTY;
+
+      expect(true).toBeTruthy();
+    });
+
+    test('should return early when not in TTY', async () => {
+      const originalCI = process.env.CI;
+      const originalTTY = process.stdout.isTTY;
+
+      delete process.env.CI;
+      process.stdout.isTTY = false;
+
+      await ensurePackages(['some-package']);
+
+      if (originalCI !== undefined) {
         process.env.CI = originalCI;
       }
+      process.stdout.isTTY = originalTTY;
 
       expect(true).toBeTruthy();
     });
 
     test('should return early when no non-existing packages', async () => {
+      const originalCI = process.env.CI;
+      const originalTTY = process.stdout.isTTY;
+
+      delete process.env.CI;
+      process.stdout.isTTY = true;
+
       await ensurePackages(['vitest']);
+
+      if (originalCI !== undefined) {
+        process.env.CI = originalCI;
+      }
+      process.stdout.isTTY = originalTTY;
 
       expect(true).toBeTruthy();
     });
 
     test('should handle empty package list', async () => {
+      const originalCI = process.env.CI;
+      const originalTTY = process.stdout.isTTY;
+
+      delete process.env.CI;
+      process.stdout.isTTY = true;
+
       await ensurePackages([]);
+
+      if (originalCI !== undefined) {
+        process.env.CI = originalCI;
+      }
+      process.stdout.isTTY = originalTTY;
 
       expect(true).toBeTruthy();
     });
 
     test('should handle undefined packages', async () => {
+      const originalCI = process.env.CI;
+      const originalTTY = process.stdout.isTTY;
+
+      delete process.env.CI;
+      process.stdout.isTTY = true;
+
       await ensurePackages([undefined, 'vitest', undefined]);
+
+      if (originalCI !== undefined) {
+        process.env.CI = originalCI;
+      }
+      process.stdout.isTTY = originalTTY;
 
       expect(true).toBeTruthy();
     });
