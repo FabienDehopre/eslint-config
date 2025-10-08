@@ -65,13 +65,15 @@ Uses pnpm with workspace catalogs (`pnpm-workspace.yaml`) for dependency version
 
 ## Important Notes
 
+- When reporting information to me, be extremely concise and sacrifice grammar for the sake of concision.
+
 ### Type Generation
 
 Always run `pnpm gen` after modifying configs in `src/configs/` to regenerate TypeScript definitions.
 
-### Testing Strategy
-
-The project uses fixture files in `fixtures/` for testing configurations. No traditional test runner - relies on ESLint inspector and manual validation.
+[//]: # "### Testing Strategy"
+[//]: #
+[//]: # "The project uses fixture files in `fixtures/` for testing configurations. No traditional test runner - relies on ESLint inspector and manual validation."
 
 ### Git Hooks
 
