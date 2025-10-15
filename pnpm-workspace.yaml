@@ -5,7 +5,7 @@ catalogMode: strict
 
 catalogs:
   dev:
-    '@angular/core': ^20.3.3
+    '@angular/core': ^20.3.4
     '@arethetypeswrong/cli': ^0.18.2
     '@commitlint/cli': ^20.1.0
     '@commitlint/config-conventional': ^20.0.0
@@ -20,9 +20,9 @@ catalogs:
     '@testing-library/angular': ^18.1.0
     '@testing-library/jest-dom': ^6.9.1
     '@types/fs-extra': ^11.0.4
-    '@types/node': ^22.18.8
+    '@types/node': ^22.18.10
     '@vitest/coverage-v8': ^3.2.4
-    bumpp: ^10.2.3
+    bumpp: ^10.3.1
     changelogithub: ^13.16.0
     commitizen: ^4.3.1
     eslint-typegen: ^2.3.0
@@ -32,10 +32,10 @@ catalogs:
     is-ci: ^4.1.0
     jiti: ^2.6.1
     nano-staged: ^0.8.0
-    semver: ^7.7.2
+    semver: ^7.7.3
     simple-git-hooks: ^2.13.1
     tailwindcss: ^4.1.14
-    tsdown: ^0.15.6
+    tsdown: ^0.15.7
     tsx: ^4.20.6
     typescript: ^5.9.3
     unbuild: ^3.6.0
@@ -43,7 +43,7 @@ catalogs:
   peer:
     '@prettier/plugin-xml': ^3.4.2
     eslint: ^9.37.0
-    eslint-plugin-better-tailwindcss: ^3.7.9
+    eslint-plugin-better-tailwindcss: ^3.7.10
     eslint-plugin-erasable-syntax-only: ^0.3.1
     eslint-plugin-format: ^1.0.2
     prettier-plugin-slidev: ^1.0.5
@@ -52,27 +52,27 @@ catalogs:
     '@clack/prompts': ^0.11.0
     '@eslint-community/eslint-plugin-eslint-comments': ^4.5.0
     '@eslint/js': ^9.37.0
-    '@eslint/markdown': ^7.3.0
+    '@eslint/markdown': ^7.4.0
     '@ngrx/eslint-plugin': ^20.0.1
     '@stylistic/eslint-plugin': ^5.4.0
-    '@typescript-eslint/eslint-plugin': ^8.45.0
-    '@typescript-eslint/parser': ^8.45.0
-    '@typescript-eslint/utils': ^8.45.0
-    '@vitest/eslint-plugin': ^1.3.15
-    angular-eslint: ^20.3.0
+    '@typescript-eslint/eslint-plugin': ^8.46.1
+    '@typescript-eslint/parser': ^8.46.1
+    '@typescript-eslint/utils': ^8.46.1
+    '@vitest/eslint-plugin': ^1.3.18
+    angular-eslint: ^20.4.0
     eslint-config-flat-gitignore: ^2.1.0
     eslint-flat-config-utils: ^2.1.4
     eslint-merge-processors: ^2.0.0
     eslint-plugin-import-x: ^4.16.1
     eslint-plugin-jest-dom: ^5.5.0
-    eslint-plugin-jsdoc: ^60.8.0
+    eslint-plugin-jsdoc: ^61.1.2
     eslint-plugin-jsonc: ^2.21.0
     eslint-plugin-n: ^17.23.1
     eslint-plugin-perfectionist: ^4.15.1
     eslint-plugin-pnpm: ^1.2.0
     eslint-plugin-prefer-arrow-functions: ^3.9.1
     eslint-plugin-regexp: ^2.10.0
-    eslint-plugin-testing-library: ^7.11.0
+    eslint-plugin-testing-library: ^7.13.3
     eslint-plugin-toml: ^0.12.0
     eslint-plugin-unicorn: ^61.0.2
     eslint-plugin-unused-imports: ^4.2.0
@@ -81,7 +81,7 @@ catalogs:
     jsonc-eslint-parser: ^2.4.1
     local-pkg: ^1.1.2
     toml-eslint-parser: ^0.10.0
-    typescript-eslint: ^8.45.0
+    typescript-eslint: ^8.46.1
     yaml-eslint-parser: ^1.3.0
 
 minimumReleaseAge: 1440
