@@ -39,19 +39,19 @@ describe('angular', () => {
       const config = await angular({ prefix: 'custom' });
       const tsConfig = config.find((c) => c.name === 'fabdeh/angular/rules');
 
-      const componentSelectorRule = tsConfig?.rules?.['@angular-eslint/component-selector'] as [string, { prefix: string }];
-      const directiveSelectorRule = tsConfig?.rules?.['@angular-eslint/directive-selector'] as [string, { prefix: string }];
+      const componentSelectorRule = tsConfig?.rules?.['@angular-eslint/component-selector'];
+      const directiveSelectorRule = tsConfig?.rules?.['@angular-eslint/directive-selector'];
 
-      expect(componentSelectorRule[1].prefix).toBe('custom');
-      expect(directiveSelectorRule[1].prefix).toBe('custom');
+      expect(componentSelectorRule).toEqual(expect.arrayContaining(['error', expect.objectContaining({ prefix: 'custom' })]));
+      expect(directiveSelectorRule).toEqual(expect.arrayContaining(['error', expect.objectContaining({ prefix: 'custom' })]));
     });
 
     test('should use default prefix "app" when not specified', async () => {
       const config = await angular();
       const tsConfig = config.find((c) => c.name === 'fabdeh/angular/rules');
 
-      const componentSelectorRule = tsConfig?.rules?.['@angular-eslint/component-selector'] as [string, { prefix: string }];
-      expect(componentSelectorRule[1].prefix).toBe('app');
+      const componentSelectorRule = tsConfig?.rules?.['@angular-eslint/component-selector'];
+      expect(componentSelectorRule).toEqual(expect.arrayContaining(['error', expect.objectContaining({ prefix: 'app' })]));
     });
 
     test('should apply custom component styles mode', async () => {
@@ -224,8 +224,8 @@ describe('angular', () => {
       const templateConfig = config.find((c) => c.name === 'fabdeh/angular-template/rules');
 
       // Check TypeScript config
-      const componentSelectorRule = tsConfig?.rules?.['@angular-eslint/component-selector'] as [string, { prefix: string }];
-      expect(componentSelectorRule[1].prefix).toBe('my');
+      const componentSelectorRule = tsConfig?.rules?.['@angular-eslint/component-selector'];
+      expect(componentSelectorRule).toEqual(expect.arrayContaining(['error', expect.objectContaining({ prefix: 'my' })]));
       expect(tsConfig?.rules?.['@angular-eslint/no-developer-preview']).toBeUndefined();
       expect(tsConfig?.rules?.['@angular-eslint/no-experimental']).toBeUndefined();
       expect(tsConfig?.rules?.['@angular-eslint/prefer-on-push-component-change-detection']).toBeUndefined();
