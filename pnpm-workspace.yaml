@@ -44,7 +44,7 @@ catalogs:
     '@prettier/plugin-xml': ^3.4.2
     eslint: ^9.39.1
     eslint-plugin-better-tailwindcss: ^3.7.11
-    eslint-plugin-erasable-syntax-only: ^0.3.1
+    eslint-plugin-erasable-syntax-only: ^0.4.0
     eslint-plugin-format: ^1.0.2
     prettier-plugin-slidev: ^1.0.5
   prod:
