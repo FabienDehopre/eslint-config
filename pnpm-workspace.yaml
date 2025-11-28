@@ -5,7 +5,7 @@ catalogMode: strict
 
 catalogs:
   dev:
-    '@angular/core': ^20.3.14
+    '@angular/core': ^21.0.1
     '@arethetypeswrong/cli': ^0.18.2
     '@commitlint/cli': ^20.1.0
     '@commitlint/config-conventional': ^20.0.0
@@ -59,7 +59,7 @@ catalogs:
     '@typescript-eslint/parser': ^8.48.0
     '@typescript-eslint/utils': ^8.48.0
     '@vitest/eslint-plugin': ^1.5.0
-    angular-eslint: ^20.7.0
+    angular-eslint: ^21.0.1
     eslint-config-flat-gitignore: ^2.1.0
     eslint-flat-config-utils: ^2.1.4
     eslint-merge-processors: ^2.0.0
