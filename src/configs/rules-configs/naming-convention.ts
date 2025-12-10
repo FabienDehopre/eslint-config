@@ -23,7 +23,7 @@ export function namingConvention(strict: boolean, allowJsx = false): NamingConve
     { selector: 'parameter', modifiers: ['unused'], format: [strict ? 'strictCamelCase' : 'camelCase'], leadingUnderscore: 'allow' },
     // eslint-disable-next-line unicorn/no-null
     { selector: 'variable', modifiers: ['destructured'], format: null },
-    { selector: 'import', modifiers: ['default', 'namespace'], format: [strict ? 'strictCamelCase' : 'camelCase', strict ? 'StrictPascalCase' : 'PascalCase'] },
+    { selector: 'import', format: [strict ? 'strictCamelCase' : 'camelCase', strict ? 'StrictPascalCase' : 'PascalCase'] },
     { selector: 'interface', format: [strict ? 'StrictPascalCase' : 'PascalCase'], custom: { regex: '^I[A-Z]', match: false } },
   ];
 }
