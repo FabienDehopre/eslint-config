@@ -27,6 +27,7 @@ export async function angular(options: AngularOptions = {}): Promise<TypedConfig
     preferOnPushOnly = true,
     banExperimentalApi = true,
     banDeveloperPreviewApi = true,
+    inlineTemplateAndStyles = false,
   } = options;
   return tseslint.config(
     {
@@ -66,7 +67,7 @@ export async function angular(options: AngularOptions = {}): Promise<TypedConfig
           },
         ],
         ...angularEslint.configs.tsRecommended.find((c) => c.name === 'angular-eslint/ts-recommended')?.rules,
-        '@angular-eslint/component-max-inline-declarations': 'error',
+        ...(inlineTemplateAndStyles ? {} : { '@angular-eslint/component-max-inline-declarations': 'error' }),
         '@angular-eslint/component-selector': [
           'error',
           {

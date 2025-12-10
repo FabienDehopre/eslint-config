@@ -221,6 +221,13 @@ export interface AngularOptions {
    * @default true
    */
   banDeveloperPreviewApi?: boolean;
+
+  /**
+   * Whether the Angular application uses inline templates and styles instead of external files.
+   *
+   * @default false
+   */
+  inlineTemplateAndStyles?: boolean;
 }
 
 /**
