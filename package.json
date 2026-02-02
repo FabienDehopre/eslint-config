@@ -115,7 +115,6 @@
     "globals": "catalog:prod",
     "jsonc-eslint-parser": "catalog:prod",
     "local-pkg": "catalog:prod",
-    "toml-eslint-parser": "catalog:prod",
     "typescript-eslint": "catalog:prod",
     "yaml-eslint-parser": "catalog:prod"
   },

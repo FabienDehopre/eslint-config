@@ -22,10 +22,7 @@ export async function toml(options: FilesOptions & OverridesOptions & StylisticO
     stylistic = true,
   } = options;
   const { indent = 2 } = typeof stylistic === 'object' ? stylistic : {};
-  const [tomlPlugin, tomlParser] = await Promise.all([
-    interopDefault(import('eslint-plugin-toml')),
-    interopDefault(import('toml-eslint-parser')),
-  ]);
+  const tomlPlugin = await interopDefault(import('eslint-plugin-toml'));
 
   return tseslint.config(
     {
@@ -36,10 +33,8 @@ export async function toml(options: FilesOptions & OverridesOptions & StylisticO
     },
     {
       name: 'fabdeh/toml/rules',
-      languageOptions: {
-        parser: tomlParser,
-      },
       files,
+      language: 'toml/toml',
       rules: {
         '@stylistic/spaced-comment': 'off',
         'toml/comma-style': 'error',
