@@ -26,10 +26,7 @@ export async function yaml(options: FilesOptions & OverridesOptions & StylisticO
     indent = 2,
     quotes = 'single',
   } = typeof stylistic === 'object' ? stylistic : {};
-  const [yamlPlugin, yamlParser] = await Promise.all([
-    interopDefault(import('eslint-plugin-yml')),
-    interopDefault(import('yaml-eslint-parser')),
-  ]);
+  const yamlPlugin = await interopDefault(import('eslint-plugin-yml'));
 
   return tseslint.config(
     {
@@ -40,9 +37,7 @@ export async function yaml(options: FilesOptions & OverridesOptions & StylisticO
     },
     {
       name: 'fabdeh/yaml/rules',
-      languageOptions: {
-        parser: yamlParser,
-      },
+      language: 'yaml/yaml',
       files,
       rules: {
         '@stylistic/spaced-comment': 'off',
