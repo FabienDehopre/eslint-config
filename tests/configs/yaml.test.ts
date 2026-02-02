@@ -53,7 +53,7 @@ describe('yaml', () => {
     const rulesConfig = config.find((c) => c.name === 'fabdeh/yaml/rules');
 
     const indentRule = rulesConfig?.rules?.['yaml/indent'] as [string, number];
-    expect(indentRule[1]).toBe(2);
+    expect(indentRule[1]).toBe('tab');
   });
 
   test('should configure quotes with single', async () => {
