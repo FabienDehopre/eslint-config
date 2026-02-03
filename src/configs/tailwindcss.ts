@@ -51,7 +51,7 @@ export async function tailwindcss(options: (FilesOptions & OverridesOptions & Ta
         'better-tailwindcss': settings,
       },
       rules: {
-        ...betterTailwindcssPlugin.configs.recommended?.rules,
+        ...betterTailwindcssPlugin.configs.recommended.rules,
         ...(enableAllRules
           ? {
               'better-tailwindcss/enforce-consistent-variable-syntax': 'warn',
