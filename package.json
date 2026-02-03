@@ -160,6 +160,11 @@
     "typescript": "catalog:dev",
     "vitest": "catalog:dev"
   },
+  "pnpm": {
+    "overrides": {
+      "lodash": "^4.17.23"
+    }
+  },
   "resolutions": {
     "eslint": "catalog:peer"
   },
