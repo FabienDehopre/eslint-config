@@ -2,7 +2,7 @@ import process from 'node:process';
 
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { ensurePackages, findNearestPackageJsonName, getTsConfigFileName, getWorkspaceRoot, interopDefault, isPackageInScope, resolveSubOptions } from '../../src/shared/utils';
+import { ensurePackages, getTsConfigFileName, getWorkspaceRoot, interopDefault, isPackageInScope, resolveSubOptions } from '../../src/shared/utils';
 
 describe('utils', () => {
   describe('interopDefault', () => {
@@ -247,29 +247,6 @@ describe('utils', () => {
       process.stdout.isTTY = originalTTY;
 
       expect(true).toBeTruthy();
-    });
-  });
-
-  describe('findNearestPackageJsonName', () => {
-    test('should find package.json in current directory', async () => {
-      const projectRoot = process.cwd();
-      const result = await findNearestPackageJsonName(projectRoot);
-
-      expect(typeof result).toBe('string');
-      expect(result).toBeTruthy();
-    });
-
-    test('should throw error when no package.json found', async () => {
-      await expect(findNearestPackageJsonName('/')).rejects.toThrow('No package.json file found.');
-    });
-
-    test('should search parent directories recursively', async () => {
-      const projectRoot = process.cwd();
-      const subdirectory = `${projectRoot}/tests`;
-      const result = await findNearestPackageJsonName(subdirectory);
-
-      expect(typeof result).toBe('string');
-      expect(result).toBeTruthy();
     });
   });
 });

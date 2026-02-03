@@ -2,7 +2,6 @@ import type { PathLike } from 'node:fs';
 import type { Awaitable, CreateConfigOptions } from './types';
 
 import { statSync } from 'node:fs';
-import { readFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import process from 'node:process';
 
@@ -126,27 +125,6 @@ export async function ensurePackages(packages: (string | undefined)[]): Promise<
   });
   if (result) {
     await import('@antfu/install-pkg').then((i) => i.installPackage(nonExistingPackages, { dev: true }));
-  }
-}
-
-/**
- * Search for the nearest package.json file and return the `name` property value.
- *
- * @param directoryPath - The folder to start from (default to current working directory).
- * @returns The name of the nearest package.json
- */
-export async function findNearestPackageJsonName(directoryPath: string = resolve()): Promise<string> {
-  try {
-    const packageJsonPath = join(directoryPath, 'package.json');
-    const packageJsonData = JSON.parse(await readFile(packageJsonPath, 'utf8')) as { name: string };
-    return packageJsonData.name;
-  } catch {
-    const parentDir = dirname(directoryPath);
-    if (directoryPath === parentDir) {
-      throw new Error('No package.json file found.');
-    }
-
-    return findNearestPackageJsonName(parentDir);
   }
 }
 
