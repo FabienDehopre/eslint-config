@@ -4,7 +4,7 @@ import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { TSESLint } from '@typescript-eslint/utils';
 import type { Linter } from 'eslint';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
-import type { Attributes, Callees, Tags, Variables } from 'eslint-plugin-better-tailwindcss/api/types';
+import type { ObjectKeyMatcher, ObjectValueMatcher, Regex, StringMatcher } from 'eslint-plugin-better-tailwindcss/types';
 import type { RuleOptions } from '../typegen';
 import type { VendoredPrettierOptions } from '../vendor/prettier-types';
 import type { OPTIONS_SYMBOL } from './constants';
@@ -341,21 +341,21 @@ export interface TailwindCssOptions {
    *
    * @default Name for `"class"` and strings Matcher for `"class", "className"`.
    */
-  attributes?: Attributes;
+  attributes?: (Regex | [string, (ObjectKeyMatcher | ObjectValueMatcher | StringMatcher)[]])[];
 
   /**
    * List of function names which arguments should also get linted.
    *
    * @default  Matchers for `"cc", "clb", "clsx", "cn", "cnb", "ctl", "cva", "cx", "dcnb", "objstr", "tv", "twJoin", "twMerge"`.
    */
-  callees?: Callees;
+  callees?: (Regex | [string, (ObjectKeyMatcher | ObjectValueMatcher | StringMatcher)[]])[];
 
   /**
    * List of variable names whose initializer should also get linted.
    *
    * @default strings Matcher for `"className", "classNames", "classes", "style", "styles"`.
    */
-  variables?: Variables;
+  variables?: (Regex | [string, (ObjectKeyMatcher | ObjectValueMatcher | StringMatcher)[]])[];
 
   /**
    * List of template literal tag names whose content should get linted.
@@ -363,7 +363,7 @@ export interface TailwindCssOptions {
    *
    * @default None
    */
-  tags?: Tags;
+  tags?: (Regex | [string, (ObjectKeyMatcher | ObjectValueMatcher | StringMatcher)[]])[];
 }
 
 export type ProjectType = 'app' | 'lib';
