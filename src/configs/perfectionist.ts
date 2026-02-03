@@ -6,7 +6,7 @@ import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import tseslint from 'typescript-eslint';
 
 import { GLOB_SRC } from '../shared/globs';
-import { findNearestPackageJsonName, getTsConfigFileName, getWorkspaceRoot } from '../shared/utils';
+import { getTsConfigFileName, getWorkspaceRoot } from '../shared/utils';
 import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-configs/perfectionist-groups';
 
 /**
@@ -20,10 +20,8 @@ import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-c
  * @returns The configuration array for the "perfectionist" plugin.
  * @see https://github.com/azat-io/eslint-plugin-perfectionist
  */
-export async function perfectionist(): Promise<TypedConfigArray> {
-  const rootDir = (await findNearestPackageJsonName()) === '@fabdeh/eslint-config'
-    ? undefined
-    : getWorkspaceRoot(process.cwd(), process.cwd());
+export function perfectionist(): TypedConfigArray {
+  const rootDir = getWorkspaceRoot(process.cwd(), process.cwd());
   return tseslint.config({
     name: 'fabdeh/perfectionist/rules',
     files: [GLOB_SRC],
@@ -36,15 +34,13 @@ export async function perfectionist(): Promise<TypedConfigArray> {
         'error',
         {
           groups: SORT_IMPORT_GROUPS,
-          tsconfig: rootDir
-            ? {
-                rootDir,
-                filename: getTsConfigFileName(rootDir),
-              }
-            : undefined,
+          tsconfig: {
+            rootDir,
+            filename: getTsConfigFileName(rootDir),
+          },
           order: 'asc',
           type: 'natural',
-          newlinesBetween: 'never',
+          newlinesBetween: 0,
         },
       ],
       'perfectionist/sort-intersection-types': [

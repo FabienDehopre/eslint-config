@@ -179,6 +179,8 @@ Going more advanced, you can also import fine-grained configs and compose them a
 We wouldn't recommend using this style in general unless you know exactly what they are doing, as there are shared options between configs and might need extra care to make them consistent.
 
 ```js
+import tseslint from 'typescript-eslint';
+
 // eslint.config.js
 import {
   angular,
@@ -194,7 +196,6 @@ import {
   unicorn,
   vitest,
 } from '@fabdeh/eslint-config';
-import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   ignores(),
