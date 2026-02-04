@@ -87,7 +87,7 @@ minimumReleaseAge: 1440
 
 minimumReleaseAgeExclude:
   - '@fabdeh/*'
-  - eslint-plugin-better-tailwindcss
+  - '@isaacs/brace-expansion'
 
 onlyBuiltDependencies:
   - esbuild
