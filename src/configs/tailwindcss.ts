@@ -51,6 +51,7 @@ export async function tailwindcss(options: (FilesOptions & OverridesOptions & Ta
         'better-tailwindcss': settings,
       },
       rules: {
+        // TODO: split recommended rules into correctness and styling (only if styling options is enabled globally)
         ...betterTailwindcssPlugin.configs.recommended.rules,
         ...(enableAllRules
           ? {
