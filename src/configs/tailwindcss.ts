@@ -1,4 +1,10 @@
-import type { FilesOptions, OverridesOptions, TailwindCssOptions, TypedConfigArray } from '../shared/types';
+import type {
+  FilesOptions,
+  OverridesOptions,
+  StylisticOptions,
+  TailwindCssOptions,
+  TypedConfigArray
+} from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
@@ -18,10 +24,10 @@ import { ensurePackages, interopDefault } from '../shared/utils';
  *   },
  * });
  */
-export async function tailwindcss(options: (FilesOptions & OverridesOptions & TailwindCssOptions) = {}): Promise<TypedConfigArray> {
+export async function tailwindcss(options: (FilesOptions & OverridesOptions & StylisticOptions & TailwindCssOptions) = {}): Promise<TypedConfigArray> {
   await ensurePackages(['eslint-plugin-better-tailwindcss']);
   const betterTailwindcssPlugin = await interopDefault(import('eslint-plugin-better-tailwindcss'));
-  const { files: filesGlob, overrides, enableAllRules, parsers, ...settings } = options;
+  const { files: filesGlob, overrides, enableAllRules, parsers, stylistic = true, ...settings } = options;
   let files: { files?: string[] };
   let parserConfigs: TypedConfigArray;
   if (parsers) {
@@ -51,8 +57,8 @@ export async function tailwindcss(options: (FilesOptions & OverridesOptions & Ta
         'better-tailwindcss': settings,
       },
       rules: {
-        // TODO: split recommended rules into correctness and styling (only if styling options is enabled globally)
-        ...betterTailwindcssPlugin.configs.recommended.rules,
+        ...betterTailwindcssPlugin.configs.correctness.rules,
+        ...(stylistic || enableAllRules ? betterTailwindcssPlugin.configs.stylistic.rules : {}),
         ...(enableAllRules
           ? {
               'better-tailwindcss/enforce-consistent-variable-syntax': 'warn',

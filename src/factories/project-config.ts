@@ -51,13 +51,14 @@ export async function defineProjectConfig(
   }
 
   const configs: Awaitable<TypedConfigArray>[] = [];
+  const stylisticOptions = workspaceOptions.stylistic === false ? false : typeof workspaceOptions.stylistic === 'object' ? workspaceOptions.stylistic : {};
+
   if (options.ignores && options.ignores.length > 0) {
     configs.push(ignores(options.ignores, 'project'));
   }
 
   // Add JSDoc configuration (project-specific feature)
   if (enableJsdoc) {
-    const stylisticOptions = workspaceOptions.stylistic === false ? false : typeof workspaceOptions.stylistic === 'object' ? workspaceOptions.stylistic : {};
     configs.push(jsdoc({ stylistic: stylisticOptions }));
   }
 
@@ -105,7 +106,7 @@ export async function defineProjectConfig(
   // Add TailwindCSS configuration (project-specific feature)
   if (enableTailwind) {
     const tailwindcssOptions = resolveSubOptions(options, 'tailwindcss');
-    configs.push(tailwindcss(tailwindcssOptions));
+    configs.push(tailwindcss({ ...tailwindcssOptions, stylistic: stylisticOptions }));
   }
 
   return tseslint.config(...resolvedBaseConfig, ...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArray;

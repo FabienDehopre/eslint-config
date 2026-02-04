@@ -142,7 +142,10 @@ export async function defineConfig(
 
   if (enableTailwind) {
     const tailwindcssOptions = resolveSubOptions(options, 'tailwindcss');
-    configs.push(tailwindcss(tailwindcssOptions));
+    configs.push(tailwindcss({
+      ...tailwindcssOptions,
+      stylistic: stylisticOptions,
+    }));
   }
 
   if (options.jsonc ?? true) {
