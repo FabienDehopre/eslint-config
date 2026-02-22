@@ -5,11 +5,14 @@
     "security:minimumReleaseAgeNpm",
     "schedule:automergeDaily",
     "group:all",
-    ":automergeAll"
+    ":automergeAll",
+    ":semanticCommitScopeDisabled"
   ],
   "timezone": "Europe/Brussels",
   "prConcurrentLimit": 1,
   "automergeType": "pr",
+  "allowScripts": true,
+  "ignoreScripts": false,
   "packageRules": [
     {
       "matchUpdateTypes": [
