@@ -11,8 +11,6 @@
   "timezone": "Europe/Brussels",
   "prConcurrentLimit": 1,
   "automergeType": "pr",
-  "allowScripts": true,
-  "ignoreScripts": false,
   "packageRules": [
     {
       "matchUpdateTypes": [
