@@ -149,7 +149,7 @@ describe('formatters', () => {
       const markdownConfig = config.find((c) => c.name === 'fabdeh/formatter/markdown');
 
       expect(markdownConfig?.rules?.['format/prettier']).toBeDefined();
-      const ruleConfig = markdownConfig?.rules?.['format/prettier'] as [string, { embeddedLanguageFormatting: string }];
+      const ruleConfig = markdownConfig?.rules?.['format/prettier'] as unknown as [string, { embeddedLanguageFormatting: string }];
       expect(ruleConfig[1].embeddedLanguageFormatting).toBe('off');
     });
 
@@ -193,7 +193,7 @@ describe('formatters', () => {
       const graphqlConfig = config.find((c) => c.name === 'fabdeh/formatter/graphql');
 
       expect(graphqlConfig?.rules?.['format/prettier']).toBeDefined();
-      const ruleConfig = graphqlConfig?.rules?.['format/prettier'] as [string, { parser: string }];
+      const ruleConfig = graphqlConfig?.rules?.['format/prettier'] as unknown as [string, { parser: string }];
       expect(ruleConfig[1].parser).toBe('graphql');
     });
   });
@@ -203,7 +203,7 @@ describe('formatters', () => {
       const config = await formatters({ css: true }, { indent: 4 });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { tabWidth: number }];
+      const ruleConfig = cssConfig?.rules?.['format/prettier'] as unknown as [string, { tabWidth: number }];
       expect(ruleConfig[1].tabWidth).toBe(4);
     });
 
@@ -211,7 +211,7 @@ describe('formatters', () => {
       const config = await formatters({ css: true }, { indent: 'tab' });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { useTabs: boolean }];
+      const ruleConfig = cssConfig?.rules?.['format/prettier'] as unknown as [string, { useTabs: boolean }];
       expect(ruleConfig[1].useTabs).toBeTruthy();
     });
 
@@ -219,7 +219,7 @@ describe('formatters', () => {
       const config = await formatters({ css: true }, { quotes: 'single' });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { singleQuote: boolean }];
+      const ruleConfig = cssConfig?.rules?.['format/prettier'] as unknown as [string, { singleQuote: boolean }];
       expect(ruleConfig[1].singleQuote).toBeTruthy();
     });
 
@@ -227,7 +227,7 @@ describe('formatters', () => {
       const config = await formatters({ css: true }, { quotes: 'double' });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { singleQuote: boolean }];
+      const ruleConfig = cssConfig?.rules?.['format/prettier'] as unknown as [string, { singleQuote: boolean }];
       expect(ruleConfig[1].singleQuote).toBeFalsy();
     });
 
@@ -235,7 +235,7 @@ describe('formatters', () => {
       const config = await formatters({ css: true }, { semi: false });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { semi: boolean }];
+      const ruleConfig = cssConfig?.rules?.['format/prettier'] as unknown as [string, { semi: boolean }];
       expect(ruleConfig[1].semi).toBeFalsy();
     });
   });
@@ -245,7 +245,7 @@ describe('formatters', () => {
       const config = await formatters({ css: true, options: { printWidth: 80 } });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { printWidth: number }];
+      const ruleConfig = cssConfig?.rules?.['format/prettier'] as unknown as [string, { printWidth: number }];
       expect(ruleConfig[1].printWidth).toBe(80);
     });
 
@@ -253,7 +253,7 @@ describe('formatters', () => {
       const config = await formatters({ css: true, options: { printWidth: 80 } });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { trailingComma: string }];
+      const ruleConfig = cssConfig?.rules?.['format/prettier'] as unknown as [string, { trailingComma: string }];
       expect(ruleConfig[1].trailingComma).toBe('all');
     });
   });
