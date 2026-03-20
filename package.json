@@ -2,7 +2,7 @@
   "name": "@fabdeh/eslint-config",
   "type": "module",
   "version": "0.9.0",
-  "packageManager": "pnpm@10.21.0+sha512.da3337267e400fdd3d479a6c68079ac6db01d8ca4f67572083e722775a796788a7a9956613749e000fac20d424b594f7a791a5f4e2e13581c5ef947f26968a40",
+  "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be",
   "description": "My personal eslint config preset",
   "author": {
     "name": "Fabien Dehopré",
@@ -36,9 +36,6 @@
   "files": [
     "dist"
   ],
-  "engines": {
-    "node": "^20.19.0 || ^22.12.0 || ^24.0.0"
-  },
   "scripts": {
     "build": "pnpm gen && tsdown",
     "build:ci": "tsdown",
