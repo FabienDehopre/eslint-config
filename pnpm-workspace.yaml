@@ -83,11 +83,10 @@ catalogs:
     typescript-eslint: ^8.57.1
     yaml-eslint-parser: ^2.0.0
 
-minimumReleaseAge: 1440
+minimumReleaseAge: 4320
 
 minimumReleaseAgeExclude:
   - '@fabdeh/*'
-  - '@isaacs/brace-expansion'
 
 onlyBuiltDependencies:
   - esbuild
