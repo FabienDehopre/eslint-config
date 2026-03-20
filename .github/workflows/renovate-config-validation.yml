@@ -29,4 +29,4 @@ jobs:
           node-version: lts/*
 
       - name: Validate Renovate config
-        run: npx --yes --package renovate -- renovate-config-validator --no-global .github/renovate.json
+        run: npx --yes --package renovate@latest -- renovate-config-validator --no-global .github/renovate.json
