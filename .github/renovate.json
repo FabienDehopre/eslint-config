@@ -2,14 +2,15 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:best-practices",
-    ":preserveSemverRanges",
+    "schedule:automergeDaily",
     "group:allNonMajor",
     ":automergeMinor",
-    ":label(renovate)",
-    ":semanticPrefixChore",
+    ":semanticCommitType(build)",
     ":semanticCommitScopeDisabled"
   ],
+  "timezone": "Europe/Brussels",
   "prConcurrentLimit": 1,
+  "automergeType": "pr",
   "platformAutomerge": true,
   "packageRules": [
     {
