@@ -5,6 +5,17 @@ import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { formatters } from '../../src/configs/formatters';
 import { hasConfigWithName, validateEslintConfig } from '../utils/test-helpers';
 
+/**
+ * Extracts and returns the options object from a `format/prettier` rule entry tuple.
+ * Throws if the rule entry is not a tuple with at least 2 elements.
+ */
+function getPrettierRuleOptions(ruleEntry: unknown): Record<string, unknown> {
+  if (!Array.isArray(ruleEntry) || ruleEntry.length < 2) {
+    throw new Error('Expected \'format/prettier\' rule to be a tuple with options');
+  }
+  return ruleEntry[1] as Record<string, unknown>;
+}
+
 // Mock external dependencies
 vi.mock('local-pkg');
 
@@ -149,8 +160,8 @@ describe('formatters', () => {
       const markdownConfig = config.find((c) => c.name === 'fabdeh/formatter/markdown');
 
       expect(markdownConfig?.rules?.['format/prettier']).toBeDefined();
-      const ruleConfig = markdownConfig?.rules?.['format/prettier'] as [string, { embeddedLanguageFormatting: string }];
-      expect(ruleConfig[1].embeddedLanguageFormatting).toBe('off');
+      const options = getPrettierRuleOptions(markdownConfig?.rules?.['format/prettier']);
+      expect(options.embeddedLanguageFormatting).toBe('off');
     });
 
     test('should include slidev formatter when slidev option is true', async () => {
@@ -193,8 +204,8 @@ describe('formatters', () => {
       const graphqlConfig = config.find((c) => c.name === 'fabdeh/formatter/graphql');
 
       expect(graphqlConfig?.rules?.['format/prettier']).toBeDefined();
-      const ruleConfig = graphqlConfig?.rules?.['format/prettier'] as [string, { parser: string }];
-      expect(ruleConfig[1].parser).toBe('graphql');
+      const options = getPrettierRuleOptions(graphqlConfig?.rules?.['format/prettier']);
+      expect(options.parser).toBe('graphql');
     });
   });
 
@@ -203,40 +214,40 @@ describe('formatters', () => {
       const config = await formatters({ css: true }, { indent: 4 });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { tabWidth: number }];
-      expect(ruleConfig[1].tabWidth).toBe(4);
+      const options = getPrettierRuleOptions(cssConfig?.rules?.['format/prettier']);
+      expect(options.tabWidth).toBe(4);
     });
 
     test('should apply tab indent to prettier options', async () => {
       const config = await formatters({ css: true }, { indent: 'tab' });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { useTabs: boolean }];
-      expect(ruleConfig[1].useTabs).toBeTruthy();
+      const options = getPrettierRuleOptions(cssConfig?.rules?.['format/prettier']);
+      expect(options.useTabs).toBeTruthy();
     });
 
     test('should apply single quotes to prettier options', async () => {
       const config = await formatters({ css: true }, { quotes: 'single' });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { singleQuote: boolean }];
-      expect(ruleConfig[1].singleQuote).toBeTruthy();
+      const options = getPrettierRuleOptions(cssConfig?.rules?.['format/prettier']);
+      expect(options.singleQuote).toBeTruthy();
     });
 
     test('should apply double quotes to prettier options', async () => {
       const config = await formatters({ css: true }, { quotes: 'double' });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { singleQuote: boolean }];
-      expect(ruleConfig[1].singleQuote).toBeFalsy();
+      const options = getPrettierRuleOptions(cssConfig?.rules?.['format/prettier']);
+      expect(options.singleQuote).toBeFalsy();
     });
 
     test('should apply semi option to prettier options', async () => {
       const config = await formatters({ css: true }, { semi: false });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { semi: boolean }];
-      expect(ruleConfig[1].semi).toBeFalsy();
+      const options = getPrettierRuleOptions(cssConfig?.rules?.['format/prettier']);
+      expect(options.semi).toBeFalsy();
     });
   });
 
@@ -245,16 +256,16 @@ describe('formatters', () => {
       const config = await formatters({ css: true, options: { printWidth: 80 } });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { printWidth: number }];
-      expect(ruleConfig[1].printWidth).toBe(80);
+      const options = getPrettierRuleOptions(cssConfig?.rules?.['format/prettier']);
+      expect(options.printWidth).toBe(80);
     });
 
     test('should preserve default options when not overridden', async () => {
       const config = await formatters({ css: true, options: { printWidth: 80 } });
       const cssConfig = config.find((c) => c.name === 'fabdeh/formatter/css');
 
-      const ruleConfig = cssConfig?.rules?.['format/prettier'] as [string, { trailingComma: string }];
-      expect(ruleConfig[1].trailingComma).toBe('all');
+      const options = getPrettierRuleOptions(cssConfig?.rules?.['format/prettier']);
+      expect(options.trailingComma).toBe('all');
     });
   });
 });

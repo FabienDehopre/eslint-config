@@ -22,12 +22,12 @@ import { STYLISTIC_CONFIG_DEFAULT } from './stylistic';
  * Merges the provided Prettier options with any overrides.
  *
  * @param options - The base Prettier options to merge.
- * @param overrides - Optional overrides for the Prettier options.
+ * @param overrides - Required overrides for the Prettier options. Must include a `parser` property.
  * @returns The merged Prettier options.
  */
 function mergePrettierOptions(
   options: VendoredPrettierOptions,
-  overrides: VendoredPrettierRuleOptions = {}
+  overrides: VendoredPrettierRuleOptions
 ): VendoredPrettierRuleOptions {
   return {
     ...options,
