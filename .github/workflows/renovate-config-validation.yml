@@ -1,0 +1,32 @@
+name: Renovate Config Validation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/renovate.json
+      - .github/workflows/renovate-config-validation.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/renovate.json
+      - .github/workflows/renovate-config-validation.yml
+
+permissions:
+  contents: read
+
+jobs:
+  validate-renovate-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Validate Renovate config
+        run: npx --yes --package renovate -- renovate-config-validator --no-global .github/renovate.json
