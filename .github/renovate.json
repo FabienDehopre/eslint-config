@@ -7,12 +7,16 @@
     "schedule:automergeDaily",
     ":automergeStableNonMajor",
     ":semanticCommitType(build)",
-    ":semanticCommitScopeDisabled"
+    ":semanticCommitScopeDisabled",
+    ":dependencyDashboard"
   ],
   "timezone": "Europe/Brussels",
   "prConcurrentLimit": 1,
   "automergeType": "pr",
   "automergeStrategy": "squash",
+  "major": {
+    "dependencyDashboardApproval": true
+  },
   "packageRules": [
     {
       "description": "Skip release age delay for own packages",
