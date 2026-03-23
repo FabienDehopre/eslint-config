@@ -11,6 +11,8 @@
   ],
   "timezone": "Europe/Brussels",
   "prConcurrentLimit": 1,
+  "automergeType": "pr",
+  "automergeStrategy": "squash",
   "packageRules": [
     {
       "description": "Skip release age delay for own packages",
