@@ -116,8 +116,8 @@ catalogs:
       specifier: ^0.4.0
       version: 0.4.0
     eslint-plugin-format:
-      specifier: ^1.5.0
-      version: 1.5.0
+      specifier: ^2.0.0
+      version: 2.0.1
     prettier-plugin-slidev:
       specifier: ^1.0.5
       version: 1.0.5
@@ -413,7 +413,7 @@ importers:
         version: 0.4.0(@typescript-eslint/parser@8.57.1(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
       eslint-plugin-format:
         specifier: catalog:peer
-        version: 1.5.0(eslint@9.39.4(jiti@2.6.1))
+        version: 2.0.1(eslint@9.39.4(jiti@2.6.1))
       eslint-typegen:
         specifier: catalog:dev
         version: 2.3.1(eslint@9.39.4(jiti@2.6.1))
@@ -2808,8 +2808,8 @@ packages:
     peerDependencies:
       eslint: ^9.39.4
 
-  eslint-plugin-format@1.5.0:
-    resolution: {integrity: sha512-jaeOKrxs79Nn6rMkLycPkLHvBVKcgsFG+RqNXb6W9iS9y2Q0NYGhFTLcDUdp5mf01X99wEkjtX2O8cumM7lNMQ==}
+  eslint-plugin-format@2.0.1:
+    resolution: {integrity: sha512-0BA65p5DAiuKtx5MmMJfPk9WaTjoHHbyVW7ZXRhaZoA1fdiMHhay9QRiDL2wr0hJWZxdF7CRThOK/70VUKVg2g==}
     peerDependencies:
       eslint: ^9.39.4
 
@@ -7430,7 +7430,7 @@ snapshots:
       eslint: 9.39.4(jiti@2.6.1)
       eslint-compat-utils: 0.5.1(eslint@9.39.4(jiti@2.6.1))
 
-  eslint-plugin-format@1.5.0(eslint@9.39.4(jiti@2.6.1)):
+  eslint-plugin-format@2.0.1(eslint@9.39.4(jiti@2.6.1)):
     dependencies:
       '@dprint/formatter': 0.5.1
       '@dprint/markdown': 0.21.1
