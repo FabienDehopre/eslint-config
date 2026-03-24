@@ -17,6 +17,10 @@
   "major": {
     "dependencyDashboardApproval": true
   },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
   "packageRules": [
     {
       "description": "Skip release age delay for own packages",
