@@ -56,7 +56,7 @@
   },
   "peerDependencies": {
     "@prettier/plugin-xml": "catalog:peer",
-    "eslint": "catalog:peer",
+    "eslint": "^9.38.0 || ^10.0.0",
     "eslint-plugin-better-tailwindcss": "catalog:peer",
     "eslint-plugin-erasable-syntax-only": "catalog:peer",
     "eslint-plugin-format": "catalog:peer",
@@ -83,7 +83,6 @@
     "@antfu/install-pkg": "catalog:prod",
     "@clack/prompts": "catalog:prod",
     "@eslint-community/eslint-plugin-eslint-comments": "catalog:prod",
-    "@eslint/js": "catalog:prod",
     "@eslint/markdown": "catalog:prod",
     "@ngrx/eslint-plugin": "catalog:prod",
     "@stylistic/eslint-plugin": "catalog:prod",
@@ -137,7 +136,7 @@
     "bumpp": "catalog:dev",
     "changelogithub": "catalog:dev",
     "commitizen": "catalog:dev",
-    "eslint": "catalog:peer",
+    "eslint": "catalog:dev",
     "eslint-plugin-better-tailwindcss": "catalog:peer",
     "eslint-plugin-erasable-syntax-only": "catalog:peer",
     "eslint-plugin-format": "catalog:peer",
@@ -164,9 +163,6 @@
       "lodash": "^4.17.23",
       "qs": "^6.15.0"
     }
-  },
-  "resolutions": {
-    "eslint": "catalog:peer"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm nano-staged",
