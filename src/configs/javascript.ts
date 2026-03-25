@@ -160,7 +160,7 @@ export function javascript(
           },
           {
             selector: 'TSExportAssignment',
-            message: 'Use `export default` with `as const` objects instead of enums.',
+            message: 'Avoid `export =`. Use ESM-style exports instead (for example, `export default` or named exports).',
           },
           {
             selector: 'ForInStatement',
