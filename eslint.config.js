@@ -2,6 +2,7 @@ import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig(
   {
+    ignores: ['src/typings.d.ts'],
     formatters: true,
     typescript: {
       enableErasableSyntaxOnly: true,
