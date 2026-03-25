@@ -32,7 +32,7 @@ export function javascript(
     {
       name: 'fabdeh/javascript/setup',
       languageOptions: {
-        ecmaVersion: 2022,
+        ecmaVersion: 'latest',
         globals: {
           ...globals.browser,
           ...globals.es2021,
@@ -45,7 +45,7 @@ export function javascript(
           ecmaFeatures: {
             jsx: true,
           },
-          ecmaVersion: 2022,
+          ecmaVersion: 'latest',
           sourceType: 'module',
         },
         sourceType: 'module',
