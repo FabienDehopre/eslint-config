@@ -51,7 +51,6 @@ catalogs:
     '@antfu/install-pkg': ^1.1.0
     '@clack/prompts': ^1.1.0
     '@eslint-community/eslint-plugin-eslint-comments': ^4.7.1
-    '@eslint/js': ^10.0.0
     '@eslint/markdown': ^7.5.1
     '@ngrx/eslint-plugin': ^21.0.1
     '@stylistic/eslint-plugin': ^5.10.0

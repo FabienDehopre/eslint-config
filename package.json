@@ -83,7 +83,6 @@
     "@antfu/install-pkg": "catalog:prod",
     "@clack/prompts": "catalog:prod",
     "@eslint-community/eslint-plugin-eslint-comments": "catalog:prod",
-    "@eslint/js": "catalog:prod",
     "@eslint/markdown": "catalog:prod",
     "@ngrx/eslint-plugin": "catalog:prod",
     "@stylistic/eslint-plugin": "catalog:prod",
