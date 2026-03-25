@@ -139,27 +139,38 @@ export function javascript(
         'no-proto': 'error',
         'no-redeclare': 'error',
         'no-regex-spaces': 'error',
-        /*
+        'no-restricted-globals': [
+          'error',
+          { message: 'Use `globalThis` instead.', name: 'global' },
+          { message: 'Use `globalThis` instead.', name: 'self' },
+        ],
+        'no-restricted-properties': [
+          'error',
+          { message: 'Use `Object.getPrototypeOf` or `Object.setPrototypeOf` instead.', property: '__proto__' },
+          { message: 'Use `Object.defineProperty` instead.', property: '__defineGetter__' },
+          { message: 'Use `Object.defineProperty` instead.', property: '__defineSetter__' },
+          { message: 'Use `Object.getOwnPropertyDescriptor` instead.', property: '__lookupGetter__' },
+          { message: 'Use `Object.getOwnPropertyDescriptor` instead.', property: '__lookupSetter__' },
+        ],
         'no-restricted-syntax': [
           'error',
           {
             selector: 'TSEnumDeclaration',
-            message: '',
+            message: 'Use `as const` objects instead of enums.',
           },
           {
             selector: 'TSExportAssignment',
-            message: '',
+            message: 'Use `export default` with `as const` objects instead of enums.',
           },
           {
             selector: 'ForInStatement',
-            message: '',
+            message: 'Avoid using `for...in` statements. Use `Object.keys()`, `Object.values()`, or `Object.entries()` instead.',
           },
           {
             selector: ':matches(PropertyDefinition, MethodDefinition)[accessibility="private"]',
             message: 'Use `#private` members instead.',
           },
         ],
-        */
         'no-self-assign': 'error',
         'no-self-compare': 'error',
         'no-sequences': 'error',
