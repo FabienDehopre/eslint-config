@@ -56,7 +56,7 @@
   },
   "peerDependencies": {
     "@prettier/plugin-xml": "catalog:peer",
-    "eslint": "catalog:peer",
+    "eslint": ">=9.38.0",
     "eslint-plugin-better-tailwindcss": "catalog:peer",
     "eslint-plugin-erasable-syntax-only": "catalog:peer",
     "eslint-plugin-format": "catalog:peer",
@@ -137,7 +137,7 @@
     "bumpp": "catalog:dev",
     "changelogithub": "catalog:dev",
     "commitizen": "catalog:dev",
-    "eslint": "catalog:peer",
+    "eslint": "catalog:dev",
     "eslint-plugin-better-tailwindcss": "catalog:peer",
     "eslint-plugin-erasable-syntax-only": "catalog:peer",
     "eslint-plugin-format": "catalog:peer",
@@ -166,7 +166,7 @@
     }
   },
   "resolutions": {
-    "eslint": "catalog:peer"
+    "eslint": "catalog:dev"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm nano-staged",
