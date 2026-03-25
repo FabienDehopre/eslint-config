@@ -45,7 +45,7 @@ catalogs:
     eslint: ^9.39.4
     eslint-plugin-better-tailwindcss: ^4.3.2
     eslint-plugin-erasable-syntax-only: ^0.4.0
-    eslint-plugin-format: ^1.5.0
+    eslint-plugin-format: ^2.0.0
     prettier-plugin-slidev: ^1.0.5
   prod:
     '@antfu/install-pkg': ^1.1.0
