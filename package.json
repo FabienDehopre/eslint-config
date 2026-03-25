@@ -165,9 +165,6 @@
       "qs": "^6.15.0"
     }
   },
-  "resolutions": {
-    "eslint": "catalog:dev"
-  },
   "simple-git-hooks": {
     "pre-commit": "pnpm nano-staged",
     "commit-msg": "pnpm commitlint --edit ${1}"
