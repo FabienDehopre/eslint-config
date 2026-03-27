@@ -5,10 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 catalogs:
-  default:
-    eslint-config-flat-gitignore:
-      specifier: 2.3.0
-      version: 2.3.0
   dev:
     '@angular/core':
       specifier: ^21.2.5
@@ -162,6 +158,9 @@ catalogs:
     angular-eslint:
       specifier: ^21.3.1
       version: 21.3.1
+    eslint-config-flat-gitignore:
+      specifier: ^2.3.0
+      version: 2.3.0
     eslint-flat-config-utils:
       specifier: ^3.0.2
       version: 3.0.2
