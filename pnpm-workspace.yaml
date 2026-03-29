@@ -5,7 +5,7 @@ catalogMode: strict
 
 catalogs:
   dev:
-    '@angular/core': ^21.2.5
+    '@angular/core': ^21.2.6
     '@arethetypeswrong/cli': ^0.18.2
     '@commitlint/cli': ^20.5.0
     '@commitlint/config-conventional': ^20.5.0
@@ -13,10 +13,10 @@ catalogs:
     '@commitlint/format': ^20.1.0
     '@commitlint/lint': ^20.5.0
     '@commitlint/load': ^20.5.0
-    '@ngrx/effects': ^21.0.1
-    '@ngrx/operators': ^21.0.1
-    '@ngrx/signals': ^21.0.1
-    '@ngrx/store': ^21.0.1
+    '@ngrx/effects': ^21.1.0
+    '@ngrx/operators': ^21.1.0
+    '@ngrx/signals': ^21.1.0
+    '@ngrx/store': ^21.1.0
     '@testing-library/angular': ^19.2.1
     '@testing-library/jest-dom': ^6.9.1
     '@types/fs-extra': ^11.0.4
@@ -36,7 +36,7 @@ catalogs:
     semver: ^7.7.4
     simple-git-hooks: ^2.13.1
     tailwindcss: ^4.2.2
-    tsdown: ^0.21.4
+    tsdown: ^0.21.5
     tsx: ^4.21.0
     typescript: ^5.9.3
     unbuild: ^3.6.0
@@ -52,7 +52,7 @@ catalogs:
     '@clack/prompts': ^1.1.0
     '@eslint-community/eslint-plugin-eslint-comments': ^4.7.1
     '@eslint/markdown': ^7.5.1
-    '@ngrx/eslint-plugin': ^21.0.1
+    '@ngrx/eslint-plugin': ^21.1.0
     '@stylistic/eslint-plugin': ^5.10.0
     '@typescript-eslint/eslint-plugin': ^8.57.2
     '@typescript-eslint/parser': ^8.57.2
@@ -64,7 +64,7 @@ catalogs:
     eslint-merge-processors: ^2.0.0
     eslint-plugin-import-x: ^4.16.2
     eslint-plugin-jest-dom: ^5.5.0
-    eslint-plugin-jsdoc: ^62.8.0
+    eslint-plugin-jsdoc: ^62.8.1
     eslint-plugin-jsonc: ^3.0.0
     eslint-plugin-n: ^17.24.0
     eslint-plugin-perfectionist: ^5.7.0
