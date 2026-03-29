@@ -5,32 +5,10 @@ settings:
   excludeLinksFromLockfile: false
 
 catalogs:
-  default:
-    '@angular/core':
-      specifier: 21.2.6
-      version: 21.2.6
-    '@ngrx/effects':
-      specifier: 21.1.0
-      version: 21.1.0
-    '@ngrx/eslint-plugin':
-      specifier: 21.1.0
-      version: 21.1.0
-    '@ngrx/operators':
-      specifier: 21.1.0
-      version: 21.1.0
-    '@ngrx/signals':
-      specifier: 21.1.0
-      version: 21.1.0
-    '@ngrx/store':
-      specifier: 21.1.0
-      version: 21.1.0
-    eslint-plugin-jsdoc:
-      specifier: 62.8.1
-      version: 62.8.1
-    tsdown:
-      specifier: 0.21.5
-      version: 0.21.5
   dev:
+    '@angular/core':
+      specifier: ^21.2.6
+      version: 21.2.6
     '@arethetypeswrong/cli':
       specifier: ^0.18.2
       version: 0.18.2
@@ -49,6 +27,18 @@ catalogs:
     '@commitlint/load':
       specifier: ^20.5.0
       version: 20.5.0
+    '@ngrx/effects':
+      specifier: ^21.1.0
+      version: 21.1.0
+    '@ngrx/operators':
+      specifier: ^21.1.0
+      version: 21.1.0
+    '@ngrx/signals':
+      specifier: ^21.1.0
+      version: 21.1.0
+    '@ngrx/store':
+      specifier: ^21.1.0
+      version: 21.1.0
     '@testing-library/angular':
       specifier: ^19.2.1
       version: 19.2.1
@@ -106,6 +96,9 @@ catalogs:
     tailwindcss:
       specifier: ^4.2.2
       version: 4.2.2
+    tsdown:
+      specifier: ^0.21.5
+      version: 0.21.5
     tsx:
       specifier: ^4.21.0
       version: 4.21.0
@@ -144,6 +137,9 @@ catalogs:
     '@eslint/markdown':
       specifier: ^7.5.1
       version: 7.5.1
+    '@ngrx/eslint-plugin':
+      specifier: ^21.1.0
+      version: 21.1.0
     '@stylistic/eslint-plugin':
       specifier: ^5.10.0
       version: 5.10.0
@@ -177,6 +173,9 @@ catalogs:
     eslint-plugin-jest-dom:
       specifier: ^5.5.0
       version: 5.5.0
+    eslint-plugin-jsdoc:
+      specifier: ^62.8.1
+      version: 62.8.1
     eslint-plugin-jsonc:
       specifier: ^3.0.0
       version: 3.1.2
