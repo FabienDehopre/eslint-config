@@ -30,7 +30,7 @@ catalog:
   '@typescript-eslint/eslint-plugin': ^8.57.2
   '@typescript-eslint/parser': ^8.57.2
   '@typescript-eslint/utils': ^8.57.2
-  '@vitest/coverage-v8': ^4.1.1
+  '@vitest/coverage-v8': ^4.1.2
   '@vitest/eslint-plugin': ^1.6.13
   angular-eslint: ^21.3.1
   bumpp: ^11.0.1
@@ -71,12 +71,12 @@ catalog:
   semver: ^7.7.4
   simple-git-hooks: ^2.13.1
   tailwindcss: ^4.2.2
-  tsdown: ^0.21.5
+  tsdown: ^0.21.6
   tsx: ^4.21.0
   typescript: ^5.9.3
   typescript-eslint: ^8.57.2
   unbuild: ^3.6.0
-  vitest: ^4.1.1
+  vitest: ^4.1.2
   yaml-eslint-parser: ^2.0.0
 
 minimumReleaseAge: 4320
