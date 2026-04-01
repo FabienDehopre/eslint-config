@@ -4,7 +4,6 @@
 [![NPM Version](https://img.shields.io/npm/v/%40fabdeh%2Feslint-config)](https://www.npmjs.com/package/@fabdeh/eslint-config)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/cab11755-048a-4d81-8ed1-dd2f67135664/deploy-status)](https://app.netlify.com/sites/fabdeh-eslint-config/deploys)
 
-- Auto-fix formatting (designed to be used standalone **without** Prettier)
 - Reasonable defaults and best practices with only one line of config
 - Designed to work with TypeScript, JSX, etc., out of the box.
 - Opinionated, but [very customizable](#customization)
@@ -118,9 +117,9 @@ Add the following settings to your `.vscode/settings.json`:
 
 ```jsonc
 {
-  // Disable the default formatter, use eslint instead
-  "prettier.enable": false,
-  "editor.formatOnSave": false,
+  // Enable the default formatter, use eslint instead
+  "prettier.enable": true,
+  "editor.formatOnSave": true,
 
   // Auto fix
   "editor.codeActionsOnSave": {
