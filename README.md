@@ -4,23 +4,22 @@
 [![NPM Version](https://img.shields.io/npm/v/%40fabdeh%2Feslint-config)](https://www.npmjs.com/package/@fabdeh/eslint-config)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/cab11755-048a-4d81-8ed1-dd2f67135664/deploy-status)](https://app.netlify.com/sites/fabdeh-eslint-config/deploys)
 
-- Auto fix for formatting (aimed to be used standalone **without** Prettier)
-- Reasonable defaults, best practices, only one line of config
-- Designed to work with TypeScript, JSX, etc. Out-of-box.
+- Reasonable defaults and best practices with only one line of config
+- Designed to work with TypeScript, JSX, etc., out of the box.
 - Opinionated, but [very customizable](#customization)
-- [ESLint Flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new), compose easily!
-- Automatic [Angular](#angular), [NGRX](#ngrx), [TypeScript](#typescript), [Vitest](#vitest) support when the corresponding dependency is detected.
-- **Style principle**: Minimal for reading, stable for diff, consistent
+- [ESLint flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new), composed easily.
+- Automatic [Angular](#angular), [NgRx](#ngrx), [TypeScript](#typescript), and [Vitest](#vitest) support when the corresponding dependency is detected.
+- **Style principle**: minimal for reading, stable for diffs, consistent
   - Sorted imports, dangling commas
   - Single quotes, no semi
   - Using [ESLint Stylistic](https://github.com/eslint-stylistic/eslint-stylistic)
 - Respects `.gitignore` by default
-- Requires ESLint v9.21.0+
+- Requires ESLint v9.38.0+ (or v10+)
 
 > [!WARNING]
-> Please keep in mind that this is **_a personal config_** with a lot of opinions. Changes might not always be pleased by everyone and every use case.
+> Please keep in mind that this is **_a personal config_** with many opinions. Changes may not suit everyone or every use case.
 >
-> If you are using this config directly, I'd suggest you **review the changes everytime you update**. Or if you want more control over the rules, always feel free to fork it. Thanks!
+> If you are using this config directly, I suggest you **review changes every time you update**. If you want more control over the rules, feel free to fork it. Thanks!
 
 ## Usage
 
@@ -32,7 +31,7 @@ Run the command in your terminal:
 pnpm add -D eslint @fabdeh/eslint-config
 ```
 
-And create an `eslint.config.mjs` in you project root:
+Then create an `eslint.config.mjs` in your project root:
 
 ```js
 // eslint.config.mjs
@@ -40,6 +39,57 @@ import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig();
 ```
+
+### Monorepo / Workspace
+
+For monorepos, split your setup in two layers:
+
+- `defineWorkspaceConfig()` for the workspace root.
+- `defineProjectConfig()` for each app/lib to extend the root config.
+
+Root config example:
+
+```js
+// eslint.config.js (workspace root)
+import { defineWorkspaceConfig } from '@fabdeh/eslint-config';
+
+export default defineWorkspaceConfig({
+  typescript: true,
+});
+```
+
+Project config example:
+
+```js
+import { defineProjectConfig } from '@fabdeh/eslint-config';
+
+// apps/my-app/eslint.config.js
+import baseConfig from '../../eslint.config.js';
+
+export default defineProjectConfig(baseConfig, {
+  type: 'app',
+});
+```
+
+Behavior matrix:
+
+| Feature | `defineConfig` | `defineWorkspaceConfig` | `defineProjectConfig` |
+| --- | --- | --- | --- |
+| `typescript` | Auto-detected (`typescript`) | Auto-detected (`typescript`) | Inherited from workspace, optional project-specific parser options |
+| `angular` | Auto-detected (`@angular/core`) | Not auto-detected | Auto-detected (`@angular/core`) |
+| `ngrx` | Auto-detected (`@ngrx/*`) | Not auto-detected | Auto-detected (`@ngrx/*`) |
+| `vitest` | Auto-detected (`vitest`) | Not auto-detected | Auto-detected (`vitest`) |
+| `jsdoc` | Default `true` only when `type: 'lib'` | Not included | Default `true` only when `type: 'lib'` |
+| `tailwindcss` | Available, disabled by default | Not included | Available, disabled by default |
+
+Monorepo notes:
+
+- `defineWorkspaceConfig()` is for foundation-level rules and defaults (imports, unicorn, regexp, jsonc/yaml/toml/markdown, stylistic, ignores).
+- `defineProjectConfig()` appends project-specific integrations on top of your workspace base config.
+- `ngrx` requires `angular`; enabling NgRx without Angular throws.
+- Project-specific `typescript` options require TypeScript support in workspace base config.
+- Project-level `ignores` are additive for the project config only and do not re-apply workspace global ignore patterns.
+- Final order in project configs is: workspace base configs -> project configs -> user-provided extra configs.
 
 ### Add the scripts for package.json
 
@@ -67,9 +117,9 @@ Add the following settings to your `.vscode/settings.json`:
 
 ```jsonc
 {
-  // Disable the default formatter, use eslint instead
-  "prettier.enable": false,
-  "editor.formatOnSave": false,
+  // Enable the default formatter, use eslint instead
+  "prettier.enable": true,
+  "editor.formatOnSave": true,
 
   // Auto fix
   "editor.codeActionsOnSave": {
@@ -77,7 +127,7 @@ Add the following settings to your `.vscode/settings.json`:
     "source.organizeImports": "never"
   },
 
-  // Silence the style rules in you IDE, but still fix them automatically
+  // Silence style rules in your IDE, while still fixing them automatically
   "eslint.rules.customizations": [{ "rule": "@stylistic/*", "severity": "off", "fixable": true }],
 
   // Enable eslint for all supported languages
@@ -105,7 +155,7 @@ Add the following settings to your `.vscode/settings.json`:
 
 ## Customization
 
-Since the beginning, we've used [ESLint Flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new). It provides much better organization and composition.
+This project uses [ESLint flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new). It provides better organization and composition.
 
 Normally you only need to import the `defineConfig` function:
 
@@ -147,7 +197,7 @@ export default defineConfig({
 });
 ```
 
-The `defineConfig` factory function also accepts any number of arbitrary custom config overrides:
+The `defineConfig` factory function also accepts any number of custom config overrides:
 
 ```js
 // eslint.config.js
@@ -155,11 +205,11 @@ import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig(
   {
-    // Configure the fabdeh's config
+    // Configure @fabdeh/eslint-config
   },
 
-  // From the second arguments they are ESLint Flat Configs
-  // you can have multiple configs
+  // From the second argument onward, these are ESLint flat configs
+  // You can provide multiple config objects
   {
     files: ['**/*.ts'],
     rules: {},
@@ -170,15 +220,15 @@ export default defineConfig(
 );
 ```
 
-Going more advanced, you can also import fine-grained configs and compose them as you wish:
+For advanced usage, you can import fine-grained configs and compose them as needed:
 
 <details>
 <summary>Advanced Example</summary>
 
-We wouldn't recommend using this style in general unless you know exactly what they are doing, as there are shared options between configs and might need extra care to make them consistent.
+We don't recommend this style unless you know exactly what you're doing, since there are shared options between configs that may require extra care to keep consistent.
 
 ```js
-import tseslint from 'typescript-eslint';
+import { defineConfig } from 'eslint/config';
 
 // eslint.config.js
 import {
@@ -196,7 +246,7 @@ import {
   vitest,
 } from '@fabdeh/eslint-config';
 
-export default tseslint.config(
+export default defineConfig(
   ignores(),
   javascript(/* Options */),
   comments(),
@@ -214,14 +264,14 @@ export default tseslint.config(
 
 </details>
 
-Check out the [configs](https://github.com/FabienDehopre/eslint-config/blob/main/src/configs) and [factory](https://github.com/FabienDehopre/eslint-config/blob/main/src/factory.ts) for more details.
+Check out the [configs](https://github.com/FabienDehopre/eslint-config/blob/main/src/configs) and [factory functions](https://github.com/FabienDehopre/eslint-config/blob/main/src/factories) for more details.
 
 > Thanks to [antfu/eslint-config](https://github.com/antfu/eslint-config) for the inspiration and reference.
 
 ### Rules Overrides
 
-All the rules are always bound to one or more file extensions (via minimatch pattern. i.e.: \*_/_.?([cm])[jt]s?(x) for all JS and TS file types including JSX syntax).
-If you want to override the rules, you need to specify the file extension:
+All rules are bound to one or more file extensions (via minimatch patterns, e.g. `**/*.?([cm])[jt]s?(x)` for JS and TS file types, including JSX syntax).
+If you want to override rules, you need to specify the file extension:
 
 ```js
 // eslint.config.js
@@ -257,7 +307,7 @@ import { defineConfig } from '@fabdeh/eslint-config';
 export default defineConfig({
   typescript: {
     overrides: {
-      '@typescript-eslint/consisten-type-definitions': ['error', 'interface'],
+      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
     },
   },
   angular: {
@@ -276,6 +326,34 @@ export default defineConfig({
 });
 ```
 
+### Other integrations and defaults
+
+In addition to Angular/NgRx/TypeScript/Vitest, `defineConfig()` and `defineWorkspaceConfig()` support:
+
+- `gitignore` (default: `true`)
+- `stylistic` (default: `true`)
+- `unicorn` (default: `true`)
+- `regexp` (default: `true`)
+- `jsonc`, `yaml`, `toml`, `markdown` (default: `true`)
+- `pnpm` workspace/catalog rules (default: `false`, currently experimental)
+
+Quick example:
+
+```js
+import { defineConfig } from '@fabdeh/eslint-config';
+
+export default defineConfig({
+  gitignore: true,
+  unicorn: true,
+  regexp: true,
+  jsonc: true,
+  yaml: true,
+  toml: true,
+  markdown: true,
+  pnpm: false,
+});
+```
+
 ### Auto-detected integrations
 
 The following integrations are automatically enabled if the corresponding package is installed in your project:
@@ -287,7 +365,7 @@ The following integrations are automatically enabled if the corresponding packag
 
 #### TypeScript
 
-Most of the TypeScript rules are enabled automatically if `typescript` package is installed in you project. Some `@typescript-eslint` rules are also enabled by default for JavaScript files.
+Most TypeScript rules are enabled automatically if the `typescript` package is installed in your project. Some `@typescript-eslint` rules are also enabled by default for JavaScript files.
 You can explicitly enable/disable TypeScript integration manually:
 
 ```js
@@ -301,7 +379,7 @@ export default defineConfig({
 
 ##### Erasable Syntax Only
 
-The TypeScript integration also allows you to turn on/off rules that will report on using syntax that will not be allowed by TypeScript's [--erasableSyntaxOnly option](https://devblogs.microsoft.com/typescript/announcing-typescript-5-8-beta/#the---erasablesyntaxonly-option):
+The TypeScript integration also lets you enable/disable rules that report syntax not allowed by TypeScript's [--erasableSyntaxOnly option](https://devblogs.microsoft.com/typescript/announcing-typescript-5-8-beta/#the---erasablesyntaxonly-option):
 
 > Recently, Node.js 23.6 unflagged [experimental support for running TypeScript files directly](https://nodejs.org/api/typescript.html#type-stripping); however, only certain constructs are supported under this mode.
 >
@@ -351,7 +429,7 @@ NgRx support is also detected automatically if any of the following packages is 
 - `@ngrx/signals`
 - `@ngrx/operators`
 
-As the Angular integration is can be explicitly enabled/disabled:
+As with the Angular integration, it can be explicitly enabled/disabled:
 
 ```js
 // eslint.config.js
@@ -366,7 +444,7 @@ export default defineConfig({
 
 #### Vitest
 
-The vitest integration is detected automatically by checking if `vitest` is installed in your project. It can be enabled/disabled manually in the configuration:
+The Vitest integration is detected automatically by checking whether `vitest` is installed in your project. It can be enabled/disabled manually in the configuration:
 
 ```js
 // eslint.config.js
@@ -374,6 +452,19 @@ import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig({
   vitest: true,
+});
+```
+
+You can also configure Vitest helpers explicitly:
+
+```js
+import { defineConfig } from '@fabdeh/eslint-config';
+
+export default defineConfig({
+  vitest: {
+    useJestDom: true,
+    useTestingLibrary: true,
+  },
 });
 ```
 
@@ -393,7 +484,7 @@ If you want to apply lint and auto-fix before every commit, you can add the foll
 }
 ```
 
-and then
+Then run:
 
 ```bash
 pnpm add -D nano-staged simple-git-hooks
