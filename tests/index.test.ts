@@ -15,7 +15,6 @@ describe('index exports', () => {
   test('should export all config functions', () => {
     expect(exports.angular).toBeDefined();
     expect(exports.comments).toBeDefined();
-    expect(exports.formatters).toBeDefined();
     expect(exports.ignores).toBeDefined();
     expect(exports.imports).toBeDefined();
     expect(exports.javascript).toBeDefined();

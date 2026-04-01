@@ -78,12 +78,6 @@ export async function defineProjectConfig(
   if (enableAngular) {
     const angularOptions = resolveSubOptions(options, 'angular');
     configs.push(angular(angularOptions));
-    if (workspaceOptions.formatters) {
-      const htmlFormatters = resolvedBaseConfig.find((c) => c.name === 'fabdeh/formatter/html');
-      if (htmlFormatters) {
-        delete htmlFormatters.languageOptions;
-      }
-    }
   }
 
   // Add NgRx configuration (project-specific feature)

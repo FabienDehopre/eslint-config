@@ -55,27 +55,15 @@
     "test": "vitest"
   },
   "peerDependencies": {
-    "@prettier/plugin-xml": "catalog:",
     "eslint": "^9.38.0 || ^10.0.0",
     "eslint-plugin-better-tailwindcss": "catalog:",
-    "eslint-plugin-erasable-syntax-only": "catalog:",
-    "eslint-plugin-format": "catalog:",
-    "prettier-plugin-slidev": "catalog:"
+    "eslint-plugin-erasable-syntax-only": "catalog:"
   },
   "peerDependenciesMeta": {
-    "@prettier/plugin-xml": {
-      "optional": true
-    },
     "eslint-plugin-better-tailwindcss": {
       "optional": true
     },
     "eslint-plugin-erasable-syntax-only": {
-      "optional": true
-    },
-    "eslint-plugin-format": {
-      "optional": true
-    },
-    "prettier-plugin-slidev": {
       "optional": true
     }
   },
@@ -127,7 +115,6 @@
     "@ngrx/operators": "catalog:",
     "@ngrx/signals": "catalog:",
     "@ngrx/store": "catalog:",
-    "@prettier/plugin-xml": "catalog:",
     "@testing-library/angular": "catalog:",
     "@testing-library/jest-dom": "catalog:",
     "@types/fs-extra": "catalog:",
@@ -139,7 +126,6 @@
     "eslint": "catalog:",
     "eslint-plugin-better-tailwindcss": "catalog:",
     "eslint-plugin-erasable-syntax-only": "catalog:",
-    "eslint-plugin-format": "catalog:",
     "eslint-typegen": "catalog:",
     "execa": "catalog:",
     "fast-glob": "catalog:",
@@ -147,7 +133,6 @@
     "is-ci": "catalog:",
     "jiti": "catalog:",
     "nano-staged": "catalog:",
-    "prettier-plugin-slidev": "catalog:",
     "semver": "catalog:",
     "simple-git-hooks": "catalog:",
     "tailwindcss": "catalog:",
