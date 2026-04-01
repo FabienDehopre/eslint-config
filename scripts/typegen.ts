@@ -5,7 +5,7 @@ import fs from 'node:fs/promises';
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core';
 import { builtinRules } from 'eslint/use-at-your-own-risk';
 
-import { angular, comments, formatters, imports, javascript, jsdoc, jsonc, markdown, ngrx, node, perfectionist, regexp, sortPackageJson, stylistic, tailwindcss, toml, typescript, unicorn, vitest, yaml } from '../src';
+import { angular, comments, imports, javascript, jsdoc, jsonc, markdown, ngrx, node, perfectionist, regexp, sortPackageJson, stylistic, tailwindcss, toml, typescript, unicorn, vitest, yaml } from '../src';
 
 type Awaitable<T> = Promise<T> | T;
 
@@ -27,7 +27,6 @@ const configs = await combine(
   },
   angular(),
   comments(),
-  formatters(),
   imports(),
   javascript(),
   jsdoc(),

@@ -233,35 +233,4 @@ describe('defineWorkspaceConfig', () => {
       expect(preservedOptions).toEqual(options);
     });
   });
-
-  describe('formatters handling', () => {
-    test('should include formatters when enabled', async () => {
-      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
-
-      const config = await defineWorkspaceConfig({
-        formatters: {
-          css: true,
-          html: true,
-          markdown: true,
-        },
-      });
-
-      expect(validateEslintConfig(config)).toBeTruthy();
-      expect(hasConfigWithName(config, 'formatter')).toBeTruthy();
-    });
-
-    test('should NOT include Angular-specific HTML formatter in workspace mode', async () => {
-      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
-
-      const config = await defineWorkspaceConfig({
-        formatters: {
-          html: true,
-        },
-      });
-
-      expect(validateEslintConfig(config)).toBeTruthy();
-      // In workspace mode, formatters should not include Angular-specific logic
-      // This is passed as false to the formatters function
-    });
-  });
 });

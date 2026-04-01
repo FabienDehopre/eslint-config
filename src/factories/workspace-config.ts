@@ -5,7 +5,6 @@ import tseslint from 'typescript-eslint';
 
 import {
   comments,
-  formatters,
   ignores,
   imports,
   javascript,
@@ -139,14 +138,6 @@ export async function defineWorkspaceConfig(
   if (options.markdown ?? true) {
     const markdownOptions = resolveSubOptions(options, 'markdown');
     configs.push(markdown(markdownOptions));
-  }
-
-  if (options.formatters) {
-    configs.push(formatters(
-      options.formatters,
-      typeof stylisticOptions === 'boolean' ? {} : stylisticOptions,
-      false
-    ));
   }
 
   const eslintConfigWithOptions = tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArrayWithOptions;

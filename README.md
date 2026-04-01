@@ -10,7 +10,6 @@
 - Opinionated, but [very customizable](#customization)
 - [ESLint Flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new), compose easily!
 - Automatic [Angular](#angular), [NGRX](#ngrx), [TypeScript](#typescript), [Vitest](#vitest) support when the corresponding dependency is detected.
-- Optional [formatters](#formatters) support for formatting CSS, HTML, XML, etc.
 - **Style principle**: Minimal for reading, stable for diff, consistent
   - Sorted imports, dangling commas
   - Single quotes, no semi
@@ -378,41 +377,6 @@ export default defineConfig({
 });
 ```
 
-### Optional integrations
-
-We provide some optional integrations for specific use cases, that we don't include their dependencies by default.
-
-#### Formatters
-
-Use external formatters to format files that ESLint cannot handle yet (`.css`, `.html`, etc.). Powered by [`eslint-plugin-format`](https://github.com/antfu/eslint-plugin-format).
-
-```js
-// eslint.config.js
-import { defineConfig } from '@fabdeh/eslint-config';
-
-export default defineConfig({
-  formatters: {
-    /**
-     * Format CSS, LESS, SCSS files
-     */
-    css: true,
-    /**
-     * Format HTML files
-     */
-    html: true,
-    /**
-     * Format Markdown files
-     */
-    markdown: true,
-  }
-});
-```
-
-Running `npx eslint` should prompt you to install the required dependencies; otherwise, you can install them manually:
-
-```bash
-pnpm add -D eslint-plugin-format
-```
 
 ### Lint Staged
 

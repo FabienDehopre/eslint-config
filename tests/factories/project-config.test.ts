@@ -217,37 +217,6 @@ describe('defineProjectConfig', () => {
     });
   });
 
-  describe('angular and formatter interaction', () => {
-    test('should modify HTML formatter when Angular is enabled and formatters exist in workspace', async () => {
-      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.angularBasic);
-
-      // Create base config with formatters
-      const baseConfigWithFormatters = await defineWorkspaceConfig({
-        typescript: true,
-        formatters: { html: true, css: true },
-      });
-
-      const config = await defineProjectConfig(baseConfigWithFormatters, {
-        angular: true,
-      });
-
-      expect(validateEslintConfig(config)).toBeTruthy();
-      expect(hasConfigWithName(config, 'angular')).toBeTruthy();
-      expect(hasConfigWithName(config, 'formatter')).toBeTruthy();
-    });
-
-    test('should work with Angular when no formatters in workspace', async () => {
-      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.angularBasic);
-
-      const config = await defineProjectConfig(baseConfig, {
-        angular: true,
-      });
-
-      expect(validateEslintConfig(config)).toBeTruthy();
-      expect(hasConfigWithName(config, 'angular')).toBeTruthy();
-    });
-  });
-
   describe('tailwindCSS support', () => {
     test('should include TailwindCSS config when enabled', async () => {
       setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);

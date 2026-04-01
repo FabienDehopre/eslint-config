@@ -6,7 +6,6 @@ import type { Linter } from 'eslint';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { ObjectKeyMatcher, ObjectValueMatcher, Regex, StringMatcher } from 'eslint-plugin-better-tailwindcss/types';
 import type { RuleOptions } from '../typegen';
-import type { VendoredPrettierOptions } from '../vendor/prettier-types';
 import type { OPTIONS_SYMBOL } from './constants';
 
 export type { ConfigNames } from '../typegen';
@@ -290,17 +289,6 @@ export interface UnitTestingOptions {
   useTestingLibrary?: boolean;
 }
 
-export interface FormattersOptions {
-  css?: boolean;
-  html?: boolean;
-  xml?: boolean;
-  svg?: boolean;
-  markdown?: boolean;
-  graphql?: boolean;
-  options?: VendoredPrettierOptions;
-  slidev?: boolean | { files?: string[] };
-}
-
 export interface RegExpOptions {
   /**
    * Override rules level.
@@ -474,23 +462,9 @@ export interface CreateWorkspaceConfigOptions extends IgnoresOptions {
   /**
    * Enable linting for **code snippets** in Markdown.
    *
-   * For formatting Markdown content, enable also `formatters.markdown`.
-   *
    * @default true
    */
   markdown?: OverridesOptions | boolean;
-
-  /**
-   * Use external formatters to format files.
-   *
-   * Requires installing:
-   * - `eslint-plugin-format`
-   *
-   * When set to `true`, it will enable all formatters.
-   *
-   * @default false
-   */
-  formatters?: FormattersOptions | boolean;
 
   /**
    * Enable pnpm (workspace/catalogs) support.

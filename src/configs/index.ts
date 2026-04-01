@@ -1,6 +1,5 @@
 export * from './angular';
 export * from './comments';
-export * from './formatters';
 export * from './ignore';
 export * from './imports';
 export * from './javascript';
