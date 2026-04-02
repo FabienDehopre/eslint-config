@@ -1,5 +1,5 @@
 import type { ConfigWithExtends } from 'typescript-eslint';
-import type { CreateConfigOptions } from '../src';
+import type { DefineConfigOptions } from '../src';
 
 import { existsSync } from 'node:fs';
 import { readFile, rm, writeFile } from 'node:fs/promises';
@@ -12,7 +12,7 @@ import { afterAll, beforeAll, describe, test } from 'vitest';
 
 interface TestParams {
   name: string;
-  config: CreateConfigOptions;
+  config: DefineConfigOptions;
   items?: ConfigWithExtends[];
 }
 

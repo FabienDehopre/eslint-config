@@ -399,7 +399,7 @@ export interface IgnoresOptions {
  *
  * @see defineWorkspaceConfig function
  */
-export interface CreateWorkspaceConfigOptions extends IgnoresOptions {
+export interface DefineWorkspaceConfigOptions extends IgnoresOptions {
   /**
    * Enable gitignore support.
    *
@@ -492,7 +492,7 @@ export interface CreateWorkspaceConfigOptions extends IgnoresOptions {
  *
  * @see defineProjectConfig function
  */
-export interface CreateProjectConfigOptions extends IgnoresOptions, ProjectTypeOptions {
+export interface DefineProjectConfigOptions extends IgnoresOptions, ProjectTypeOptions {
   /**
    * Enable or disable JSDoc rules.
    *
@@ -549,9 +549,9 @@ export interface CreateProjectConfigOptions extends IgnoresOptions, ProjectTypeO
  *
  * @see defineConfig function
  */
-export type CreateConfigOptions = CreateWorkspaceConfigOptions & Omit<CreateProjectConfigOptions, 'ignores' | 'typescript'>;
+export type DefineConfigOptions = DefineWorkspaceConfigOptions & Omit<DefineProjectConfigOptions, 'ignores' | 'typescript'>;
 
 /**
  * Return-type of the `defineWorkspaceConfig` function.
  */
-export type TypedConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]: CreateWorkspaceConfigOptions };
+export type TypedConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]: DefineWorkspaceConfigOptions };
