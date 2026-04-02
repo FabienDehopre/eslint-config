@@ -76,7 +76,9 @@ export const GLOB_HTML: string = '**/*.htm?(l)' as const satisfies string;
 /**
  * A glob pattern that matches test files.
  */
-export const GLOB_TESTS: string[] = [`**/*.spec.?([cm])[jt]s`, `**/*.test.?([cm])[jt]s`, `**/test-setup.?([cm])[jt]s`] as const satisfies string[];
+export const GLOB_TESTS: string[] = [`**/*.spec.?([cm])[jt]s`, `**/*.test.?([cm])[jt]s`] as const satisfies string[];
+
+export const GLOB_VITEST: string[] = [...GLOB_TESTS, `**/test-setup.?([cm])[jt]s`] as const satisfies string[];
 
 /**
  * A glob pattern that matches all source files.
@@ -100,7 +102,7 @@ export const GLOB_EXCLUDE: string[] = [
   '**/package-lock.json',
   '**/yarn.lock',
   '**/pnpm-lock.yaml',
-  '**/bun.lockb',
+  '**/bun.lock',
 
   '**/output',
   '**/coverage',
