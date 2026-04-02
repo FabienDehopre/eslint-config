@@ -9,7 +9,7 @@ export default defineConfig(
       useRelaxedNamingConventionForCamelAndPascalCases: true,
       overrides: {
         // to be removed when migrated from tseslint.config to eslint defineConfig
-        '@typescript-eslint/no-deprecated': 'off',
+        '@typescript-eslint/no-deprecated': 'warn',
       },
     },
     type: 'lib',
