@@ -4,7 +4,8 @@ import type {
   OverridesOptions, ProjectTypeOptions, ProjectTypeScriptOptions,
   StylisticOptions,
   TypedConfigArray,
-  TypeScriptOptions, WorkspaceProjectType
+  TypeScriptOptions,
+  WorkspaceProjectType
 } from '../shared/types';
 
 import process from 'node:process';

@@ -4,10 +4,10 @@ import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
 import {
-  angular, ignores,
+  angular,
+  ignores,
   jsdoc,
   ngrx,
-  playwright,
   tailwindcss,
   typescript,
   vitest
@@ -42,10 +42,9 @@ export async function defineProjectConfig(
     angular: enableAngular = isPackageExists('@angular/core'),
     jsdoc: enableJsdoc = options.type === 'lib',
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
-    playwright: enablePlaywright = isPackageExists('playwright') && options.type === 'e2e' && !options.vitest,
     tailwindcss: enableTailwind = false,
     typescript: typescriptOptions,
-    vitest: enableVitest = isPackageExists('vitest') && options.type !== 'e2e' && !options.playwright,
+    vitest: enableVitest = isPackageExists('vitest'),
   } = options;
 
   if (enableNgrx && !enableAngular) {
@@ -97,11 +96,6 @@ export async function defineProjectConfig(
   if (enableVitest) {
     const vitestOptions = resolveSubOptions(options, 'vitest');
     configs.push(vitest(vitestOptions));
-  }
-
-  if (enablePlaywright) {
-    const playwrightOptions = resolveSubOptions(options, 'playwright');
-    configs.push(playwright(playwrightOptions));
   }
 
   // Add TailwindCSS configuration (project-specific feature)

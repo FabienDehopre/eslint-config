@@ -361,7 +361,7 @@ export interface TailwindCssOptions {
   tags?: (Regex | [string, (ObjectKeyMatcher | ObjectValueMatcher | StringMatcher)[]])[];
 }
 
-export type ProjectType = 'app' | 'e2e' | 'lib';
+export type ProjectType = 'app' | 'lib';
 export type WorkspaceProjectType = ProjectType | 'workspace';
 export interface ProjectTypeOptions<T = ProjectType> {
   /**
@@ -523,13 +523,6 @@ export interface DefineProjectConfigOptions extends IgnoresOptions, ProjectTypeO
   vitest?: boolean | (FilesOptions & OverridesOptions & UnitTestingOptions);
 
   /**
-   * Options for the Playwright linting rules
-   *
-   * @default auto-detect based on dependencies.
-   */
-  playwright?: boolean | (FilesOptions & OverridesOptions);
-
-  /**
    * Options for the TailwindCSS linting rules.
    *
    * @default false
@@ -543,13 +536,22 @@ export interface DefineProjectConfigOptions extends IgnoresOptions, ProjectTypeO
   typescript?: OverridesOptions & ProjectTypeScriptOptions;
 }
 
+export type DefinePlaywrightConfigOptions = FilesOptions & IgnoresOptions & OverridesOptions;
+
 /**
  * Options for creating an ESLint configuration.
  * Combines workspace and project options for standalone usage.
  *
  * @see defineConfig function
  */
-export type DefineConfigOptions = DefineWorkspaceConfigOptions & Omit<DefineProjectConfigOptions, 'ignores' | 'typescript'>;
+export type DefineConfigOptions = DefineWorkspaceConfigOptions & Omit<DefineProjectConfigOptions, 'ignores' | 'typescript'> & {
+  /**
+   * Options for the Playwright linting rules
+   *
+   * @default auto-detect based on dependencies.
+   */
+  playwright?: boolean | (FilesOptions & OverridesOptions);
+};
 
 /**
  * Return-type of the `defineWorkspaceConfig` function.

@@ -52,14 +52,14 @@ export async function defineConfig(
     gitignore: enableGitignore = true,
     jsdoc: enableJsdoc = options.type === 'lib',
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
-    playwright: enablePlaywright = isPackageExists('playwright') && options.type === 'e2e' && !options.vitest,
+    playwright: enablePlaywright = isPackageExists('playwright'),
     // eslint-disable-next-line @angular-eslint/no-experimental
     pnpm: enableCatalogs = false, // TODO: smart detect
     regexp: enableRegexp = true,
     tailwindcss: enableTailwind = false,
     typescript: enableTypescript = isPackageExists('typescript'),
     unicorn: enableUnicorn = true,
-    vitest: enableVitest = isPackageExists('vitest') && options.type !== 'e2e' && !options.playwright,
+    vitest: enableVitest = isPackageExists('vitest'),
   } = options;
 
   if (enableNgrx && !enableAngular) {
