@@ -126,6 +126,7 @@
     "eslint": "catalog:",
     "eslint-plugin-better-tailwindcss": "catalog:",
     "eslint-plugin-erasable-syntax-only": "catalog:",
+    "eslint-plugin-playwright": "catalog:",
     "eslint-typegen": "catalog:",
     "execa": "catalog:",
     "fast-glob": "catalog:",
