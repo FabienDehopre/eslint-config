@@ -275,6 +275,13 @@ export interface NgrxOptions {
  */
 export interface UnitTestingOptions {
   /**
+   * Indicates whether to enable the `vitest` globals.
+   *
+   * @default true
+   */
+  enableVitestGlobals?: boolean;
+
+  /**
    * Indicates whether to include Jest DOM matchers.
    *
    * @default auto-detect based on the dependencies.
