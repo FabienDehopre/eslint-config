@@ -361,7 +361,7 @@ export interface TailwindCssOptions {
   tags?: (Regex | [string, (ObjectKeyMatcher | ObjectValueMatcher | StringMatcher)[]])[];
 }
 
-export type ProjectType = 'app' | 'lib';
+export type ProjectType = 'app' | 'e2e' | 'lib';
 export type WorkspaceProjectType = ProjectType | 'workspace';
 export interface ProjectTypeOptions<T = ProjectType> {
   /**
