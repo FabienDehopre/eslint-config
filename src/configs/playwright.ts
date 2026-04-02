@@ -1,4 +1,4 @@
-import type { FilesOptions, OverridesOptions, TypedConfigArray } from '../shared/types';
+import type { FilesOptions, OverridesOptions, PlaywrightOptions, TypedConfigArray } from '../shared/types';
 
 import { GLOB_TESTS } from '../shared/globs';
 import { interopDefault } from '../shared/utils';
@@ -8,20 +8,23 @@ import { getJsDocRules } from './jsdoc';
  * Configures and returns an ESLint flat config for Playwright test files.
  *
  * @param [options] - Options used to customize the Playwright config.
+ * @param [options.e2eFolderPath] - The path to the e2e folder to prepend to each `options.files` glob pattern (defaults to `e2e`).
  * @param [options.files] - File globs to target (defaults to `GLOB_TESTS`).
  * @param [options.overrides] - Custom ESLint rule overrides merged last.
  * @returns A promise that resolves to a single-entry ESLint config array.
  * @example
  * const config = await playwright({
- *   files: ['e2e\/**\/*.test.ts'],
+ *   e2eFolderPath: 'tests/e2e',
+ *   files: ['**\/*.test.ts'], // will become 'tests\/e2e\/**\/*.test.ts' because of the e2eFolderPath option
  *   overrides: {
  *     'playwright/no-page-pause': 'off',
  *   },
  * });
  */
-export async function playwright(options: FilesOptions & OverridesOptions = {}): Promise<TypedConfigArray> {
+export async function playwright(options: FilesOptions & OverridesOptions & PlaywrightOptions = {}): Promise<TypedConfigArray> {
   const {
-    files = GLOB_TESTS,
+    e2eFolderPath,
+    files = GLOB_TESTS.map((glob) => `${e2eFolderPath ?? 'e2e'}${glob.replace('**', '')}`), // TODO: make sure files is still a valid glob pattern
     overrides = {},
   } = options;
   const playwrightPlugin = await interopDefault(import('eslint-plugin-playwright'));
@@ -45,7 +48,7 @@ export async function playwright(options: FilesOptions & OverridesOptions = {}):
       'playwright/no-nth-methods': 'error',
       'playwright/prefer-comparison-matcher': 'error',
       'playwright/prefer-equality-matcher': 'error',
-      'playwright/prefer-lowercase-title': ['error', { allowPrefixes: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'] }],
+      'playwright/prefer-lowercase-title': ['error', { allowedPrefixes: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'] }],
       'playwright/prefer-native-locators': 'error',
       'playwright/prefer-to-be': 'error',
       'playwright/prefer-to-contain': 'error',

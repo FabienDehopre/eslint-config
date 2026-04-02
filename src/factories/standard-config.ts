@@ -136,14 +136,16 @@ export async function defineConfig(
     }));
   }
 
-  if (enableVitest) {
-    const vitestOptions = resolveSubOptions(options, 'vitest');
-    configs.push(vitest(vitestOptions));
-  }
-
+  let e2eFolderPath: string | undefined;
   if (enablePlaywright) {
     const playwrightOptions = resolveSubOptions(options, 'playwright');
-    configs.push(playwright(playwrightOptions));
+    e2eFolderPath = playwrightOptions.e2eFolderPath ?? 'TODO: find a way to get the path to the e2e folder from the playwright config';
+    configs.push(playwright({ ...playwrightOptions, e2eFolderPath }));
+  }
+
+  if (enableVitest) {
+    const vitestOptions = resolveSubOptions(options, 'vitest');
+    configs.push(vitest({ ...vitestOptions, e2eFolderPath }));
   }
 
   if (enableTailwind) {
