@@ -15,6 +15,7 @@ import {
   ngrx,
   node,
   perfectionist,
+  playwright,
   pnpm,
   regexp,
   sortPackageJson,
@@ -51,13 +52,14 @@ export async function defineConfig(
     gitignore: enableGitignore = true,
     jsdoc: enableJsdoc = options.type === 'lib',
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
+    playwright: enablePlaywright = isPackageExists('playwright') && options.type === 'e2e' && !options.vitest,
     // eslint-disable-next-line @angular-eslint/no-experimental
     pnpm: enableCatalogs = false, // TODO: smart detect
     regexp: enableRegexp = true,
     tailwindcss: enableTailwind = false,
     typescript: enableTypescript = isPackageExists('typescript'),
     unicorn: enableUnicorn = true,
-    vitest: enableVitest = isPackageExists('vitest'),
+    vitest: enableVitest = isPackageExists('vitest') && options.type !== 'e2e' && !options.playwright,
   } = options;
 
   if (enableNgrx && !enableAngular) {
@@ -137,6 +139,11 @@ export async function defineConfig(
   if (enableVitest) {
     const vitestOptions = resolveSubOptions(options, 'vitest');
     configs.push(vitest(vitestOptions));
+  }
+
+  if (enablePlaywright) {
+    const playwrightOptions = resolveSubOptions(options, 'playwright');
+    configs.push(playwright(playwrightOptions));
   }
 
   if (enableTailwind) {
