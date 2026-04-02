@@ -297,6 +297,11 @@ export interface UnitTestingOptions {
 }
 
 export interface PlaywrightOptions {
+  /**
+   * Location of the e2e test folder.
+   *
+   * @default 'e2e'
+   */
   e2eFolderPath?: string;
 }
 

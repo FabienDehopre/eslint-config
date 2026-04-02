@@ -1,7 +1,9 @@
 import type { FilesOptions, OverridesOptions, PlaywrightOptions, TypedConfigArray } from '../shared/types';
 
+import { join } from 'node:path';
+
 import { GLOB_TESTS } from '../shared/globs';
-import { interopDefault } from '../shared/utils';
+import { interopDefault, isDirectory } from '../shared/utils';
 import { getJsDocRules } from './jsdoc';
 
 /**
@@ -23,10 +25,16 @@ import { getJsDocRules } from './jsdoc';
  */
 export async function playwright(options: FilesOptions & OverridesOptions & PlaywrightOptions = {}): Promise<TypedConfigArray> {
   const {
-    e2eFolderPath,
-    files = GLOB_TESTS.map((glob) => `${e2eFolderPath ?? 'e2e'}${glob.replace('**', '')}`), // TODO: make sure files is still a valid glob pattern
+    e2eFolderPath = 'e2e',
+    files = GLOB_TESTS.map((glob) => join(e2eFolderPath, glob)),
     overrides = {},
   } = options;
+  if (!isDirectory(e2eFolderPath)) {
+    // end-to-end tests folder does not exist or is not a directory,
+    // so we skip loading the Playwright plugin and return an empty config to avoid errors
+    return [];
+  }
+
   const playwrightPlugin = await interopDefault(import('eslint-plugin-playwright'));
   return [{
     name: 'fabdeh/playwright/rules',
