@@ -30,6 +30,7 @@ export async function vitest(options: OverridesOptions & UnitTestingOptions = {}
     overrides = {},
     useJestDom = isPackageExists('@testing-library/jest-dom'),
     useTestingLibrary = isPackageExists('@testing-library/angular'),
+    enableVitestGlobals = true,
   } = options;
   const [vitestPlugin, jestDomPlugin, testingLibraryPlugin] = await Promise.all([
     interopDefault(import('@vitest/eslint-plugin')),
@@ -46,8 +47,7 @@ export async function vitest(options: OverridesOptions & UnitTestingOptions = {}
     languageOptions: {
       globals: {
         ...globals.node,
-        ...globals.vitest,
-        ...vitestPlugin.environments.env.globals,
+        ...(enableVitestGlobals ? vitestPlugin.environments.env.globals : {}),
       },
     },
     settings: {
