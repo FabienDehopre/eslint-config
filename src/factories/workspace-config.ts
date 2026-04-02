@@ -1,4 +1,4 @@
-import type { Awaitable, CreateWorkspaceConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../shared/types';
+import type { Awaitable, DefineWorkspaceConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../shared/types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -39,7 +39,7 @@ import { interopDefault, resolveSubOptions } from '../shared/utils';
  * ```
  */
 export async function defineWorkspaceConfig(
-  options: CreateWorkspaceConfigOptions = {},
+  options: DefineWorkspaceConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
 ): Promise<TypedConfigArrayWithOptions> {
   const {

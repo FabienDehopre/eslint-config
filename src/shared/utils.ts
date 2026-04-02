@@ -1,5 +1,5 @@
 import type { PathLike } from 'node:fs';
-import type { Awaitable, CreateConfigOptions } from './types';
+import type { Awaitable, DefineConfigOptions } from './types';
 
 import { statSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -133,18 +133,18 @@ export type ResolvedOptions<T> = T extends boolean ? never : NonNullable<T>;
 /**
  * Returns the object representation of the configuration or an empty object if it is a boolean.
  *
- * @param options - The {@link CreateConfigOptions} object to extract the sub-options from.
+ * @param options - The {@link DefineConfigOptions} object to extract the sub-options from.
  * @param key - The property name.
  * @returns An object representing the required options.
  */
-export function resolveSubOptions<K extends keyof CreateConfigOptions>(
-  options: CreateConfigOptions,
+export function resolveSubOptions<K extends keyof DefineConfigOptions>(
+  options: DefineConfigOptions,
   key: K
-): ResolvedOptions<CreateConfigOptions[K]> {
+): ResolvedOptions<DefineConfigOptions[K]> {
   const option = options[key];
   if (typeof option === 'boolean') {
-    return {} as unknown as ResolvedOptions<CreateConfigOptions[K]>;
+    return {} as unknown as ResolvedOptions<DefineConfigOptions[K]>;
   }
 
-  return (option ?? {}) as ResolvedOptions<CreateConfigOptions[K]>;
+  return (option ?? {}) as ResolvedOptions<DefineConfigOptions[K]>;
 }

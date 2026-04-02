@@ -1,4 +1,4 @@
-import type { Awaitable, CreateConfigOptions, TypedConfigArray, TypedConfigWithExtends } from '../shared/types';
+import type { Awaitable, DefineConfigOptions, TypedConfigArray, TypedConfigWithExtends } from '../shared/types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -44,7 +44,7 @@ import { interopDefault, resolveSubOptions } from '../shared/utils';
  * ```
  */
 export async function defineConfig(
-  options: CreateConfigOptions = {},
+  options: DefineConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
 ): Promise<TypedConfigArray> {
   const {

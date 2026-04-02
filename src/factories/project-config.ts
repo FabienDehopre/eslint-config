@@ -1,4 +1,4 @@
-import type { Awaitable, CreateProjectConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../shared/types';
+import type { Awaitable, DefineProjectConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../shared/types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -33,7 +33,7 @@ import { resolveSubOptions } from '../shared/utils';
  */
 export async function defineProjectConfig(
   baseConfig: Awaitable<TypedConfigArrayWithOptions>,
-  options: CreateProjectConfigOptions = {},
+  options: DefineProjectConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
 ): Promise<TypedConfigArray> {
   const resolvedBaseConfig = await baseConfig;
