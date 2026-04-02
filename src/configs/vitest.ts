@@ -11,7 +11,7 @@ import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
 import { GLOB_VITEST } from '../shared/globs';
-import { interopDefault } from '../shared/utils';
+import { interopDefault, pathToGlobPattern } from '../shared/utils';
 import { getJsDocRules } from './jsdoc';
 
 /**
@@ -67,7 +67,7 @@ export async function vitest(options: FilesOptions & OverridesOptions & Playwrig
       },
     },
     files,
-    ...(e2eFolderPath ? { ignores: [e2eFolderPath] } : {}), // todo: make sure it is a valid glob pattern
+    ...(e2eFolderPath ? { ignores: [pathToGlobPattern()(e2eFolderPath)] } : {}),
     rules: {
       ...vitestPlugin.configs.recommended.rules,
       ...(jestDomPlugin?.configs['flat/recommended'].rules),

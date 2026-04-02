@@ -2,9 +2,11 @@ import type { PathLike } from 'node:fs';
 import type { Awaitable, DefineConfigOptions } from './types';
 
 import { statSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { readFile } from 'node:fs/promises';
+import { dirname, join, normalize, resolve } from 'node:path';
 import process from 'node:process';
 
+import { glob } from 'fast-glob';
 import { isPackageExists } from 'local-pkg';
 
 const SCOPE_URL = import.meta.dirname;
@@ -36,6 +38,20 @@ export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { de
 function fileExists(path: PathLike): boolean {
   try {
     return statSync(path).isFile();
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Checks whether the given path points to an existing directory.
+ *
+ * @param path - Filesystem path to validate.
+ * @returns `true` when the path exists and is a directory; otherwise `false`.
+ */
+export function isDirectory(path: PathLike): boolean {
+  try {
+    return statSync(path).isDirectory();
   } catch {
     return false;
   }
@@ -147,4 +163,102 @@ export function resolveSubOptions<K extends keyof DefineConfigOptions>(
   }
 
   return (option ?? {}) as ResolvedOptions<DefineConfigOptions[K]>;
+}
+
+/**
+ * Replace Windows with posix style paths
+ *
+ * @param filePath   - Path to convert
+ * @returns          Converted filepath
+ */
+function convertPathToPosix(filePath: string): string {
+  const normalizedFilePath = normalize(filePath);
+  return normalizedFilePath.replaceAll('\\', '/');
+}
+
+export interface PathToGlobPatternOptions {
+  /**
+   * An array of accepted extensions
+   */
+  extensions?: string[];
+  /**
+   * cwd to use to resolve relative pathnames
+   */
+  cwd?: string;
+}
+
+/**
+ * Checks if a provided path is a directory and returns a glob string matching
+ * all files under that directory if so, the path itself otherwise.
+ *
+ * Reason for this is that `glob` needs `/**` to collect all the files under a
+ * directory where as our previous implementation without `glob` simply walked
+ * a directory that is passed. So this is to maintain backwards compatibility.
+ *
+ * Also makes sure all path separators are POSIX style for `glob` compatibility.
+ *
+ * @param   [options]                    - An options object
+ * @param [options.extensions] - An array of accepted extensions
+ * @param   [options.cwd]  - The cwd to use to resolve relative pathnames
+ * @returns A function that takes a pathname and returns a glob that
+ *                     matches all files with the provided extensions if
+ *                     pathname is a directory.
+ */
+export function pathToGlobPattern(options?: PathToGlobPatternOptions): (path: string) => string {
+  const cwd = options?.cwd ?? process.cwd();
+  const extensions = options?.extensions?.map((ext) => ext.replace(/^\./, '')) ?? [];
+  let suffix = '/**';
+  if (extensions.length === 0) {
+    suffix += '/*';
+  } else if (extensions.length === 1) {
+    suffix += `/*.${extensions[0]}`;
+  } else {
+    suffix += `/**/*.{${extensions.join(',')}}`;
+  }
+
+  return (path: string) => {
+    let newPath = path;
+    const resolvedPath = resolve(cwd, path);
+    if (isDirectory(resolvedPath)) {
+      newPath = path.replace(/[/\\]$/, '') + suffix;
+    }
+
+    return convertPathToPosix(newPath);
+  };
+}
+
+/**
+ * Finds the first valid Playwright test directory declared via `testDir` in any
+ * `playwright.config.ts` file under the current workspace.
+ *
+ * The function:
+ * - Locates Playwright config files, excluding `node_modules`.
+ * - Reads each config as text.
+ * - Extracts `testDir` with a regex.
+ * - Resolves `testDir` relative to the config file location.
+ * - Returns the first resolved path that exists as a directory.
+ *
+ * @returns Absolute path to the first existing Playwright test directory, or `undefined` if none is found.
+ */
+export async function getPlaywrightDirectory(): Promise<string | undefined> {
+  const playwrightConfig = await glob('**/playwright.config.ts', { ignore: ['**/node_modules/**'] });
+  const testDirectories = await Promise.all(
+    playwrightConfig.map(async (config) => {
+      const configContent = await readFile(config, 'utf-8');
+      const match = /testDir:\s*["'](.+)["'],?/.exec(configContent);
+      if (match) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- group 1 is always defined if regex matches
+        const testDir = match[1]!;
+        const configDir = dirname(config);
+        const resolvedTestDir = resolve(configDir, testDir);
+        if (isDirectory(resolvedTestDir)) {
+          return resolvedTestDir;
+        }
+      }
+
+      return undefined;
+    })
+  );
+
+  return testDirectories.find(Boolean);
 }

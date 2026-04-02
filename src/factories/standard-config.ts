@@ -28,8 +28,8 @@ import {
   vitest,
   yaml
 } from '../configs';
-import { NGRX_PACKAGES } from '../shared/constants';
-import { interopDefault, resolveSubOptions } from '../shared/utils';
+import { NGRX_PACKAGES, PLAYWRIGHT_PACKAGES } from '../shared/constants';
+import { getPlaywrightDirectory, interopDefault, resolveSubOptions } from '../shared/utils';
 
 /**
  * Creates an ESLint configuration array based on the provided options and user configurations.
@@ -52,7 +52,7 @@ export async function defineConfig(
     gitignore: enableGitignore = true,
     jsdoc: enableJsdoc = options.type === 'lib',
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
-    playwright: enablePlaywright = isPackageExists('playwright'),
+    playwright: enablePlaywright = PLAYWRIGHT_PACKAGES.some((p) => isPackageExists(p)),
     // eslint-disable-next-line @angular-eslint/no-experimental
     pnpm: enableCatalogs = false, // TODO: smart detect
     regexp: enableRegexp = true,
@@ -139,7 +139,7 @@ export async function defineConfig(
   let e2eFolderPath: string | undefined;
   if (enablePlaywright) {
     const playwrightOptions = resolveSubOptions(options, 'playwright');
-    e2eFolderPath = playwrightOptions.e2eFolderPath ?? 'TODO: find a way to get the path to the e2e folder from the playwright config';
+    e2eFolderPath = playwrightOptions.e2eFolderPath ?? await getPlaywrightDirectory();
     configs.push(playwright({ ...playwrightOptions, e2eFolderPath }));
   }
 
