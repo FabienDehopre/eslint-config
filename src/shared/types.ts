@@ -296,6 +296,10 @@ export interface UnitTestingOptions {
   useTestingLibrary?: boolean;
 }
 
+export interface PlaywrightOptions {
+  e2eFolderPath?: string;
+}
+
 export interface RegExpOptions {
   /**
    * Override rules level.
@@ -550,7 +554,7 @@ export type DefineConfigOptions = DefineWorkspaceConfigOptions & Omit<DefineProj
    *
    * @default auto-detect based on dependencies.
    */
-  playwright?: boolean | (FilesOptions & OverridesOptions);
+  playwright?: boolean | (FilesOptions & OverridesOptions & PlaywrightOptions);
 };
 
 /**

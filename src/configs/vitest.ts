@@ -1,4 +1,10 @@
-import type { FilesOptions, OverridesOptions, TypedConfigArray, UnitTestingOptions } from '../shared/types';
+import type {
+  FilesOptions,
+  OverridesOptions,
+  PlaywrightOptions,
+  TypedConfigArray,
+  UnitTestingOptions
+} from '../shared/types';
 
 import globals from 'globals';
 import { isPackageExists } from 'local-pkg';
@@ -16,6 +22,7 @@ import { getJsDocRules } from './jsdoc';
  * @param [options.overrides] - Custom rule overrides.
  * @param [options.useJestDom] - Whether to use the `@testing-library/jest-dom` plugin.
  * @param [options.useTestingLibrary] - Whether to use the `@testing-library/angular` plugin.
+ * @param [options.e2eFolderPath] - The path to the e2e folder to ignore (this is only used internally by the `defineConfig` function, not by the user).
  * @returns A promise that resolves to the ESLint configuration array.
  * @example
  * const config = await vitest({
@@ -27,13 +34,14 @@ import { getJsDocRules } from './jsdoc';
  *   useTestingLibrary: false,
  * });
  */
-export async function vitest(options: FilesOptions & OverridesOptions & UnitTestingOptions = {}): Promise<TypedConfigArray> {
+export async function vitest(options: FilesOptions & OverridesOptions & PlaywrightOptions & UnitTestingOptions = {}): Promise<TypedConfigArray> {
   const {
     files = GLOB_VITEST,
     overrides = {},
     useJestDom = isPackageExists('@testing-library/jest-dom'),
     useTestingLibrary = isPackageExists('@testing-library/angular'),
     enableVitestGlobals = true,
+    e2eFolderPath,
   } = options;
   const [vitestPlugin, jestDomPlugin, testingLibraryPlugin] = await Promise.all([
     interopDefault(import('@vitest/eslint-plugin')),
@@ -59,6 +67,7 @@ export async function vitest(options: FilesOptions & OverridesOptions & UnitTest
       },
     },
     files,
+    ...(e2eFolderPath ? { ignores: [e2eFolderPath] } : {}), // todo: make sure it is a valid glob pattern
     rules: {
       ...vitestPlugin.configs.recommended.rules,
       ...(jestDomPlugin?.configs['flat/recommended'].rules),
