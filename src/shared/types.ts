@@ -523,6 +523,13 @@ export interface CreateProjectConfigOptions extends IgnoresOptions, ProjectTypeO
   vitest?: boolean | (FilesOptions & OverridesOptions & UnitTestingOptions);
 
   /**
+   * Options for the Playwright linting rules
+   *
+   * @default auto-detect based on dependencies.
+   */
+  playwright?: boolean | (FilesOptions & OverridesOptions);
+
+  /**
    * Options for the TailwindCSS linting rules.
    *
    * @default false

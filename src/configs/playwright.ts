@@ -1,0 +1,56 @@
+import type { FilesOptions, OverridesOptions, TypedConfigArray } from '../shared/types';
+
+import { GLOB_TESTS } from '../shared/globs';
+import { interopDefault } from '../shared/utils';
+import { getJsDocRules } from './jsdoc';
+
+/**
+ * Configures and returns an ESLint flat config for Playwright test files.
+ *
+ * @param [options] - Options used to customize the Playwright config.
+ * @param [options.files] - File globs to target (defaults to `GLOB_TESTS`).
+ * @param [options.overrides] - Custom ESLint rule overrides merged last.
+ * @returns A promise that resolves to a single-entry ESLint config array.
+ * @example
+ * const config = await playwright({
+ *   files: ['e2e\/**\/*.test.ts'],
+ *   overrides: {
+ *     'playwright/no-page-pause': 'off',
+ *   },
+ * });
+ */
+export async function playwright(options: FilesOptions & OverridesOptions = {}): Promise<TypedConfigArray> {
+  const {
+    files = GLOB_TESTS,
+    overrides = {},
+  } = options;
+  const playwrightPlugin = await interopDefault(import('eslint-plugin-playwright'));
+  return [{
+    name: 'fabdeh/playwright/rules',
+    plugins: {
+      playwright: playwrightPlugin,
+    },
+    files,
+    rules: {
+      ...playwrightPlugin.configs.recommended.rules,
+      'max-lines': 'off',
+      '@typescript-eslint/consistent-type-assertions': 'off',
+      '@typescript-eslint/no-empty-function': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/unbound-method': 'off',
+      'unicorn/no-null': 'off',
+      'playwright/no-get-by-title': 'error',
+      'playwright/no-nth-methods': 'error',
+      'playwright/prefer-comparison-matcher': 'error',
+      'playwright/prefer-equality-matcher': 'error',
+      'playwright/prefer-lowercase-title': ['error', { allowPrefixes: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'] }],
+      'playwright/prefer-native-locators': 'error',
+      'playwright/prefer-to-be': 'error',
+      'playwright/prefer-to-contain': 'error',
+      ...getJsDocRules('off', true, 'both'),
+      ...overrides,
+    },
+  }];
+}
