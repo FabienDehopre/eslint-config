@@ -1,10 +1,10 @@
-import type { OverridesOptions, TypedConfigArray, UnitTestingOptions } from '../shared/types';
+import type { FilesOptions, OverridesOptions, TypedConfigArray, UnitTestingOptions } from '../shared/types';
 
 import globals from 'globals';
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
-import { GLOB_TESTS } from '../shared/globs';
+import { GLOB_VITEST } from '../shared/globs';
 import { interopDefault } from '../shared/utils';
 import { getJsDocRules } from './jsdoc';
 
@@ -12,21 +12,24 @@ import { getJsDocRules } from './jsdoc';
  * Configures and returns an ESLint configuration array for Vitest.
  *
  * @param [options] - The options to customize the configuration.
+ * @param [options.files] - File globs to target (defaults to `GLOB_VITEST`).
  * @param [options.overrides] - Custom rule overrides.
  * @param [options.useJestDom] - Whether to use the `@testing-library/jest-dom` plugin.
  * @param [options.useTestingLibrary] - Whether to use the `@testing-library/angular` plugin.
  * @returns A promise that resolves to the ESLint configuration array.
  * @example
  * const config = await vitest({
+ *   files: ['**\/*.spec.ts'],
  *   overrides: {
- *     'no-console': 'warn',
+ *     'vitest/prefer-lowercase-title': 'warn',
  *   },
  *   useJestDom: true,
  *   useTestingLibrary: false,
  * });
  */
-export async function vitest(options: OverridesOptions & UnitTestingOptions = {}): Promise<TypedConfigArray> {
+export async function vitest(options: FilesOptions & OverridesOptions & UnitTestingOptions = {}): Promise<TypedConfigArray> {
   const {
+    files = GLOB_VITEST,
     overrides = {},
     useJestDom = isPackageExists('@testing-library/jest-dom'),
     useTestingLibrary = isPackageExists('@testing-library/angular'),
@@ -55,7 +58,7 @@ export async function vitest(options: OverridesOptions & UnitTestingOptions = {}
         typecheck: true,
       },
     },
-    files: [...GLOB_TESTS],
+    files,
     rules: {
       ...vitestPlugin.configs.recommended.rules,
       ...(jestDomPlugin?.configs['flat/recommended'].rules),

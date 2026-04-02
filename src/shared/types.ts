@@ -520,7 +520,7 @@ export interface CreateProjectConfigOptions extends IgnoresOptions, ProjectTypeO
    *
    * @default auto-detect based on dependencies.
    */
-  vitest?: boolean | (OverridesOptions & UnitTestingOptions);
+  vitest?: boolean | (FilesOptions & OverridesOptions & UnitTestingOptions);
 
   /**
    * Options for the TailwindCSS linting rules.
