@@ -1,24 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "esnext",
     "moduleDetection": "force",
-    "baseUrl": ".",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "strict": true,
+    "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
-    "declaration": true,
-    "esModuleInterop": true,
-    "isolatedDeclarations": true,
-    "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "erasableSyntaxOnly": true,
-    "libReplacement": false
+    "erasableSyntaxOnly": true
   },
-  "include": ["**/*.ts"],
-  "exclude": [
-    "./fixtures/**/*.*",
-    "./_fixtures/**/*.*"
+  "references": [
+    { "path": "./tsconfig.src.json" },
+    { "path": "./tsconfig.test.json" }
+  ],
+  "include": [
+    "*.config.ts",
+    "scripts/**/*.ts"
   ]
 }

@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import type { TypedConfig, TypedConfigArray } from '../src/shared/types';
 
 import fs from 'node:fs/promises';
@@ -15,12 +18,10 @@ async function combine(...configs: Awaitable<TypedConfig | TypedConfigArray>[]):
   return resolved.flat();
 }
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const configs = await combine(
   {
     plugins: {
       '': {
-
         rules: Object.fromEntries(builtinRules.entries()),
       },
     },
@@ -47,7 +48,6 @@ const configs = await combine(
   yaml()
 );
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const configNames = configs.map((i) => i.name).filter(Boolean) as string[];
 
 // @ts-expect-error -- should be fine

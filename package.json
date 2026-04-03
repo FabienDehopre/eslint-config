@@ -40,7 +40,7 @@
     "build": "pnpm gen && tsdown",
     "build:ci": "tsdown",
     "build:inspector": "pnpm build && pnpx @eslint/config-inspector build",
-    "dev": "pnpx @eslint/config-inspector --config eslint.config.js",
+    "dev": "pnpx @eslint/config-inspector --config eslint.config.ts",
     "check-exports": "attw --pack . --profile esm-only",
     "preinstall": "npx only-allow pnpm",
     "prepare": "is-ci || simple-git-hooks",
@@ -49,7 +49,7 @@
     "lint:ci": "eslint . --quiet",
     "prepack": "pnpm build",
     "release": "bumpp",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit -p tsconfig.src.json",
     "gen": "tsx scripts/typegen.ts",
     "validate-pr-title": "tsx scripts/validate-pr-title.ts",
     "test": "vitest"

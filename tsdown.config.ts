@@ -4,4 +4,5 @@ export default defineConfig({
   entry: ['./src/index.ts'],
   shims: true,
   format: 'esm',
+  tsconfig: './tsconfig.src.json',
 });
