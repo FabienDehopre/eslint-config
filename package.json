@@ -49,7 +49,7 @@
     "lint:ci": "eslint . --quiet",
     "prepack": "pnpm build",
     "release": "bumpp",
-    "typecheck": "tsc --noEmit -p tsconfig.src.json",
+    "typecheck": "tsc --noEmit -p tsconfig.src.json && tsc --noEmit -p tsconfig.test.json",
     "gen": "tsx scripts/typegen.ts",
     "validate-pr-title": "tsx scripts/validate-pr-title.ts",
     "test": "vitest"
