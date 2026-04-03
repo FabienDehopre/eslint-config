@@ -1,9 +1,10 @@
+// @ts-check
 import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig(
   {
     ignores: ['src/typings.d.ts'],
-    formatters: true,
+    playwright: { e2eFolderPath: './fixtures/' },
     typescript: {
       enableErasableSyntaxOnly: true,
       useRelaxedNamingConventionForCamelAndPascalCases: true,
