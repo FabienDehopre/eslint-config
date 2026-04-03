@@ -3,7 +3,7 @@ import type { MockedFunction } from 'vitest';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { defineConfig } from '../../src/factories/standard-config';
-import { hasConfigWithName, MOCK_GIT_IGNORE_CONFIG, setupPackageScenario, validateEslintConfig } from '../utils/test-helpers';
+import { extractConfigNames, hasConfigWithName, MOCK_GIT_IGNORE_CONFIG, setupPackageScenario, validateEslintConfig } from '../utils/test-helpers';
 import { PACKAGE_SCENARIOS } from './__fixtures__/expected-configs';
 
 // Mock external dependencies
@@ -200,6 +200,28 @@ describe('defineConfig', () => {
       expect(hasConfigWithName(config, 'fabdeh/yaml')).toBeFalsy();
       expect(hasConfigWithName(config, 'fabdeh/toml')).toBeFalsy();
       expect(hasConfigWithName(config, 'fabdeh/markdown')).toBeFalsy();
+      expect(hasConfigWithName(config, 'fabdeh/sort/package-json')).toBeFalsy();
+      expect(hasConfigWithName(config, 'fabdeh/sort/tsconfig-json')).toBeFalsy();
+    });
+
+    test('should include pnpm configs when pnpm is explicitly enabled', async () => {
+      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
+
+      const config = await defineConfig({ pnpm: true });
+
+      expect(validateEslintConfig(config)).toBeTruthy();
+      expect(hasConfigWithName(config, 'fabdeh/pnpm/package-json')).toBeTruthy();
+      expect(hasConfigWithName(config, 'fabdeh/pnpm/pnpm-workspace-yaml')).toBeTruthy();
+    });
+
+    test('should include package and tsconfig sorting configs when jsonc is enabled', async () => {
+      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
+
+      const config = await defineConfig({ jsonc: true });
+
+      expect(validateEslintConfig(config)).toBeTruthy();
+      expect(hasConfigWithName(config, 'fabdeh/sort/package-json')).toBeTruthy();
+      expect(hasConfigWithName(config, 'fabdeh/sort/tsconfig-json')).toBeTruthy();
     });
   });
 
@@ -258,6 +280,54 @@ describe('defineConfig', () => {
       const config = await defineConfig({ stylistic: false });
 
       expect(hasConfigWithName(config, 'fabdeh/stylistic')).toBeFalsy();
+    });
+  });
+
+  describe('config composition and feature interactions', () => {
+    test('should append user configs after generated configs', async () => {
+      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.noPackages);
+
+      const config = await defineConfig(
+        {},
+        { name: 'user/first', rules: { 'no-console': 'error' } },
+        Promise.resolve([{ name: 'user/second', rules: { 'no-alert': 'error' } }])
+      );
+
+      expect(validateEslintConfig(config)).toBeTruthy();
+
+      const configNames = extractConfigNames(config);
+      expect(configNames.at(-2)).toBe('user/first');
+      expect(configNames.at(-1)).toBe('user/second');
+    });
+
+    test('should pass playwright e2e folder path to vitest ignores when both are enabled', async () => {
+      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.vitestOnly);
+
+      const config = await defineConfig({
+        playwright: { e2eFolderPath: 'tests/e2e' },
+        vitest: true,
+      });
+
+      expect(validateEslintConfig(config)).toBeTruthy();
+
+      const vitestConfig = config.find((c) => c.name === 'fabdeh/vitest/rules');
+      expect(vitestConfig).toBeDefined();
+      expect(vitestConfig?.ignores).toEqual(['tests/e2e']);
+    });
+
+    test('should not add vitest ignores when playwright is disabled', async () => {
+      setupPackageScenario(mockIsPackageExists, PACKAGE_SCENARIOS.vitestOnly);
+
+      const config = await defineConfig({
+        playwright: false,
+        vitest: true,
+      });
+
+      expect(validateEslintConfig(config)).toBeTruthy();
+
+      const vitestConfig = config.find((c) => c.name === 'fabdeh/vitest/rules');
+      expect(vitestConfig).toBeDefined();
+      expect(vitestConfig?.ignores).toBeUndefined();
     });
   });
 });
