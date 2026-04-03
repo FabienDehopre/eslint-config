@@ -3,6 +3,7 @@ import type { MockedFunction } from 'vitest';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { vitest as vitestConfig } from '../../src/configs/vitest';
+import { GLOB_VITEST } from '../../src/shared/globs';
 import { hasConfigWithName, validateEslintConfig } from '../utils/test-helpers';
 
 // Mock external dependencies
@@ -51,6 +52,55 @@ describe('vitest', () => {
 
       expect((vitestConfigItem?.settings?.vitest as { typecheck: boolean }).typecheck).toBeTruthy();
     });
+
+    test('should use vitest file globs by default', async () => {
+      const config = await vitestConfig();
+      const vitestConfigItem = config.find((c) => c.name === 'fabdeh/vitest/rules');
+
+      expect(vitestConfigItem?.files).toEqual(GLOB_VITEST);
+    });
+
+    test('should use custom file globs when provided', async () => {
+      const files = ['custom-tests/**/*.spec.ts'];
+      const config = await vitestConfig({ files });
+      const vitestConfigItem = config.find((c) => c.name === 'fabdeh/vitest/rules');
+
+      expect(vitestConfigItem?.files).toEqual(files);
+    });
+  });
+
+  describe('globals configuration', () => {
+    test('should include vitest globals when enableVitestGlobals is true', async () => {
+      const config = await vitestConfig({ enableVitestGlobals: true });
+      const vitestConfigItem = config.find((c) => c.name === 'fabdeh/vitest/rules');
+
+      expect(vitestConfigItem?.languageOptions?.globals?.vi).toBeTruthy();
+    });
+
+    test('should exclude vitest globals when enableVitestGlobals is false', async () => {
+      const config = await vitestConfig({ enableVitestGlobals: false });
+      const vitestConfigItem = config.find((c) => c.name === 'fabdeh/vitest/rules');
+
+      expect(vitestConfigItem?.languageOptions?.globals?.vi).toBeUndefined();
+    });
+  });
+
+  describe('ignore configuration', () => {
+    test('should not define ignores when e2eFolderPath is not provided', async () => {
+      const config = await vitestConfig();
+      const vitestConfigItem = config.find((c) => c.name === 'fabdeh/vitest/rules');
+
+      expect(vitestConfigItem?.ignores).toBeUndefined();
+    });
+
+    test('should define ignores when e2eFolderPath is provided', async () => {
+      const config = await vitestConfig({ e2eFolderPath: 'tests/e2e' });
+      const vitestConfigItem = config.find((c) => c.name === 'fabdeh/vitest/rules');
+
+      expect(vitestConfigItem?.ignores).toBeDefined();
+      expect(vitestConfigItem?.ignores).toHaveLength(1);
+      expect(vitestConfigItem?.ignores?.[0]).toContain('tests/e2e');
+    });
   });
 
   describe('jest-dom plugin', () => {
@@ -77,6 +127,16 @@ describe('vitest', () => {
       expect(mockIsPackageExists).toHaveBeenCalledWith('@testing-library/jest-dom');
       expect(vitestConfigItem?.plugins?.['jest-dom']).toBeDefined();
     });
+
+    test('should not auto-detect jest-dom when useJestDom is explicitly false', async () => {
+      mockIsPackageExists.mockReturnValue(true);
+
+      const config = await vitestConfig({ useJestDom: false });
+      const vitestConfigItem = config.find((c) => c.name === 'fabdeh/vitest/rules');
+
+      expect(mockIsPackageExists).not.toHaveBeenCalledWith('@testing-library/jest-dom');
+      expect(vitestConfigItem?.plugins?.['jest-dom']).toBeUndefined();
+    });
   });
 
   describe('testing-library plugin', () => {
@@ -102,6 +162,16 @@ describe('vitest', () => {
 
       expect(mockIsPackageExists).toHaveBeenCalledWith('@testing-library/angular');
       expect(vitestConfigItem?.plugins?.['testing-library']).toBeDefined();
+    });
+
+    test('should not auto-detect testing-library when useTestingLibrary is explicitly false', async () => {
+      mockIsPackageExists.mockReturnValue(true);
+
+      const config = await vitestConfig({ useTestingLibrary: false });
+      const vitestConfigItem = config.find((c) => c.name === 'fabdeh/vitest/rules');
+
+      expect(mockIsPackageExists).not.toHaveBeenCalledWith('@testing-library/angular');
+      expect(vitestConfigItem?.plugins?.['testing-library']).toBeUndefined();
     });
   });
 
