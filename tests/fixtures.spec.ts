@@ -39,7 +39,7 @@ describe.skip('fixtures', () => {
       },
     });
     await writeFile(join(target, 'eslint.config.ts'), `
-// @eslint-disable
+/* eslint-disable */
 import { createConfig } from '@fabdeh/eslint-config';
 
 export default createConfig(
