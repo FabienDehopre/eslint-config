@@ -6,7 +6,7 @@ import { readFile } from 'node:fs/promises';
 import { dirname, join, normalize, resolve } from 'node:path';
 import process from 'node:process';
 
-import { glob } from 'fast-glob';
+import { glob } from 'glob';
 import { isPackageExists } from 'local-pkg';
 
 const SCOPE_URL = import.meta.dirname;
