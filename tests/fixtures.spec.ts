@@ -6,8 +6,8 @@ import { readFile, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 
 import { execa } from 'execa';
-import fg from 'fast-glob';
 import { copy, remove } from 'fs-extra/esm';
+import { glob } from 'glob';
 import { afterAll, beforeAll, describe, test } from 'vitest';
 
 interface TestParams {
@@ -53,7 +53,7 @@ export default createConfig(
       stdio: 'pipe',
     });
 
-    const files = await fg('**/*', {
+    const files = await glob('**/*', {
       ignore: ['node_modules', 'eslint.config.js'],
       cwd: target,
     });

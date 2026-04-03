@@ -58,6 +58,7 @@ catalog:
   execa: ^9.6.1
   fast-glob: ^3.3.3
   fs-extra: ^11.3.4
+  glob: ^13.0.6
   globals: ^17.4.0
   is-ci: ^4.1.0
   jiti: ^2.6.1
