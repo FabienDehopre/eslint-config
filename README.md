@@ -50,7 +50,7 @@ For monorepos, split your setup in two layers:
 Root config example:
 
 ```js
-// eslint.config.js (workspace root)
+// eslint.config.ts (workspace root)
 import { defineWorkspaceConfig } from '@fabdeh/eslint-config';
 
 export default defineWorkspaceConfig({
@@ -63,8 +63,8 @@ Project config example:
 ```js
 import { defineProjectConfig } from '@fabdeh/eslint-config';
 
-// apps/my-app/eslint.config.js
-import baseConfig from '../../eslint.config.js';
+// apps/my-app/eslint.config.ts
+import baseConfig from '../../eslint.config.ts';
 
 export default defineProjectConfig(baseConfig, {
   type: 'app',
@@ -160,7 +160,7 @@ This project uses [ESLint flat config](https://eslint.org/docs/latest/use/config
 Normally you only need to import the `defineConfig` function:
 
 ```js
-// eslint.config.js
+// eslint.config.ts
 import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig();
@@ -169,7 +169,7 @@ export default defineConfig();
 And that's it! Or you can configure each integration individually, for example:
 
 ```js
-// eslint.config.js
+// eslint.config.ts
 import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig({
@@ -200,7 +200,7 @@ export default defineConfig({
 The `defineConfig` factory function also accepts any number of custom config overrides:
 
 ```js
-// eslint.config.js
+// eslint.config.ts
 import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig(
@@ -230,7 +230,7 @@ We don't recommend this style unless you know exactly what you're doing, since t
 ```js
 import { defineConfig } from 'eslint/config';
 
-// eslint.config.js
+// eslint.config.ts
 import {
   angular,
   comments,
@@ -274,7 +274,7 @@ All rules are bound to one or more file extensions (via minimatch patterns, e.g.
 If you want to override rules, you need to specify the file extension:
 
 ```js
-// eslint.config.js
+// eslint.config.ts
 import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig(
@@ -301,7 +301,7 @@ export default defineConfig(
 We also provide the `overrides` option in each integration to make it easier:
 
 ```js
-// eslint.config.js
+// eslint.config.ts
 import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig({
@@ -369,7 +369,7 @@ Most TypeScript rules are enabled automatically if the `typescript` package is i
 You can explicitly enable/disable TypeScript integration manually:
 
 ```js
-// eslint.config.js
+// eslint.config.ts
 import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig({
@@ -390,7 +390,7 @@ The TypeScript integration also lets you enable/disable rules that report syntax
 You can enable these rules as follows:
 
 ```js
-// eslint.config.js
+// eslint.config.ts
 import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig({
@@ -412,7 +412,7 @@ pnpm add -D eslint-plugin-erasable-syntax-only
 Angular support is detected automatically by checking if `@angular/core` is installed in your project. You can also explicitly enable/disable it:
 
 ```js
-// eslint.config.js
+// eslint.config.ts
 import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig({
@@ -432,7 +432,7 @@ NgRx support is also detected automatically if any of the following packages is 
 As with the Angular integration, it can be explicitly enabled/disabled:
 
 ```js
-// eslint.config.js
+// eslint.config.ts
 import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig({
@@ -447,7 +447,7 @@ export default defineConfig({
 The Vitest integration is detected automatically by checking whether `vitest` is installed in your project. It can be enabled/disabled manually in the configuration:
 
 ```js
-// eslint.config.js
+// eslint.config.ts
 import { defineConfig } from '@fabdeh/eslint-config';
 
 export default defineConfig({

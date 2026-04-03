@@ -21,7 +21,7 @@ console.log('🐟🐟🐟 Validating PR title 🐟🐟🐟');
 console.log(`PR title: ${prTitle}`);
 
 // Validate the PR title using the shared validation function
-const config = await load({}, { file: 'commitlint.config.js', cwd: process.cwd() });
+const config = await load({}, { file: 'commitlint.config.ts', cwd: process.cwd() });
 const result = await lint(prTitle, config.rules);
 
 if (result.valid) {

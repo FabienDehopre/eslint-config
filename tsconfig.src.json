@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noPropertyAccessFromIndexSignature": true,
+    "declaration": true,
+    "isolatedDeclarations": true,
+    "verbatimModuleSyntax": true
+  },
+  "include": ["src/**/*.ts"]
+}
+

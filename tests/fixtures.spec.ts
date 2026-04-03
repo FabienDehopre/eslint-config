@@ -38,8 +38,8 @@ describe.skip('fixtures', () => {
         return !src.includes('node_modules');
       },
     });
-    await writeFile(join(target, 'eslint.config.js'), `
-// @eslint-disable
+    await writeFile(join(target, 'eslint.config.ts'), `
+/* eslint-disable */
 import { createConfig } from '@fabdeh/eslint-config';
 
 export default createConfig(
@@ -54,7 +54,7 @@ export default createConfig(
     });
 
     const files = await glob('**/*', {
-      ignore: ['**/node_modules/**', '**/eslint.config.js'],
+      ignore: ['**/node_modules/**', '**/eslint.config.ts'],
       cwd: target,
     });
 

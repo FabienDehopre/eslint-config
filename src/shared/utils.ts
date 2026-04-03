@@ -70,8 +70,8 @@ export function isDirectory(path: PathLike): boolean {
  * @returns The root directory of the workspace.
  */
 export function getWorkspaceRoot(dir: string, candidateRoot: string): string {
-  if (process.env.NX_WORKSPACE_ROOT) {
-    return process.env.NX_WORKSPACE_ROOT;
+  if (process.env['NX_WORKSPACE_ROOT']) {
+    return process.env['NX_WORKSPACE_ROOT'];
   }
 
   if (dirname(dir) === dir) {
@@ -126,7 +126,7 @@ export function isPackageInScope(name: string): boolean {
  * @returns A promise that resolves when the operation is complete.
  */
 export async function ensurePackages(packages: (string | undefined)[]): Promise<void> {
-  if (process.env.CI || !process.stdout.isTTY || !IS_CWD_IN_SCOPE) {
+  if (process.env['CI'] || !process.stdout.isTTY || !IS_CWD_IN_SCOPE) {
     return;
   }
 
