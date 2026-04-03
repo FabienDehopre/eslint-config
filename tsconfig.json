@@ -2,9 +2,9 @@
   "compilerOptions": {
     "target": "ESNext",
     "moduleDetection": "force",
-    "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "types": ["node"],
     "strict": true,
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
