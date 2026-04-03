@@ -238,9 +238,10 @@ export function pathToGlobPattern(options?: PathToGlobPatternOptions): (path: st
  * @returns Absolute path to the first existing Playwright test directory, or `undefined` if none is found.
  */
 export async function getPlaywrightDirectory(): Promise<string | undefined> {
-  const playwrightConfig = await glob('**/playwright.config.ts', { ignore: ['**/node_modules/**'] });
-  const testDirectories = await Promise.all(
-    playwrightConfig.map(async (config) => {
+  const playwrightConfigs = await glob('**/playwright.config.ts', { ignore: ['**/node_modules/**'] });
+
+  for (const config of playwrightConfigs) {
+    try {
       const configContent = await readFile(config, 'utf-8');
       const match = /testDir:\s*["'](.+)["'],?/.exec(configContent);
       if (match) {
@@ -252,10 +253,10 @@ export async function getPlaywrightDirectory(): Promise<string | undefined> {
           return resolvedTestDir;
         }
       }
+    } catch {
+      // skip unreadable or unparseable config files
+    }
+  }
 
-      return undefined;
-    })
-  );
-
-  return testDirectories.find(Boolean);
+  return undefined;
 }
