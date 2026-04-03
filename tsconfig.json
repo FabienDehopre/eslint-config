@@ -7,9 +7,10 @@
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
+    "erasableSyntaxOnly": true,
+    "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
-    "skipLibCheck": true,
-    "erasableSyntaxOnly": true
+    "skipLibCheck": true
   },
   "references": [
     { "path": "./tsconfig.src.json" },
