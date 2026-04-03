@@ -207,14 +207,11 @@ export interface PathToGlobPatternOptions {
 export function pathToGlobPattern(options?: PathToGlobPatternOptions): (path: string) => string {
   const cwd = options?.cwd ?? process.cwd();
   const extensions = options?.extensions?.map((ext) => ext.replace(/^\./, '')) ?? [];
-  let suffix = '/**';
-  if (extensions.length === 0) {
-    suffix += '/*';
-  } else if (extensions.length === 1) {
-    suffix += `/*.${extensions[0]}`;
-  } else {
-    suffix += `/**/*.{${extensions.join(',')}}`;
-  }
+  const suffix = extensions.length === 0
+    ? '/**/*'
+    : extensions.length === 1
+      ? `/**/*.${extensions[0]}`
+      : `/**/*.{${extensions.join(',')}}`;
 
   return (path: string) => {
     let newPath = path;
