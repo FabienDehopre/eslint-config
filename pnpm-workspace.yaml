@@ -13,7 +13,7 @@ catalog:
   '@commitlint/lint': ^20.5.0
   '@commitlint/load': ^20.5.0
   '@eslint-community/eslint-plugin-eslint-comments': ^4.7.1
-  '@eslint/markdown': ^7.5.1
+  '@eslint/markdown': ^8.0.0
   '@ngrx/effects': ^21.1.0
   '@ngrx/eslint-plugin': ^21.1.0
   '@ngrx/operators': ^21.1.0
