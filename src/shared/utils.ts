@@ -171,7 +171,7 @@ export function resolveSubOptions<K extends keyof DefineConfigOptions>(
  * @param filePath   - Path to convert
  * @returns          Converted filepath
  */
-function convertPathToPosix(filePath: string): string {
+export function convertPathToPosix(filePath: string): string {
   const normalizedFilePath = normalize(filePath);
   return normalizedFilePath.replaceAll('\\', '/');
 }

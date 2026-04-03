@@ -35,7 +35,7 @@ const configs = await combine(
   ngrx(),
   node(),
   perfectionist(),
-  playwright(),
+  playwright({ e2eFolderPath: './fixtures/' }),
   regexp(),
   sortPackageJson(),
   stylistic(),

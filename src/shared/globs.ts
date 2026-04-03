@@ -102,7 +102,7 @@ export const GLOB_EXCLUDE: string[] = [
   '**/package-lock.json',
   '**/yarn.lock',
   '**/pnpm-lock.yaml',
-  '**/bun.lock',
+  '**/bun.lock?(b)',
 
   '**/output',
   '**/coverage',

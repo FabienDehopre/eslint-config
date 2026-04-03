@@ -3,7 +3,7 @@ import type { FilesOptions, OverridesOptions, PlaywrightOptions, TypedConfigArra
 import { join } from 'node:path';
 
 import { GLOB_TESTS } from '../shared/globs';
-import { interopDefault, isDirectory } from '../shared/utils';
+import { convertPathToPosix, interopDefault, isDirectory } from '../shared/utils';
 import { getJsDocRules } from './jsdoc';
 
 /**
@@ -26,7 +26,7 @@ import { getJsDocRules } from './jsdoc';
 export async function playwright(options: FilesOptions & OverridesOptions & PlaywrightOptions = {}): Promise<TypedConfigArray> {
   const {
     e2eFolderPath = 'e2e',
-    files = GLOB_TESTS.map((glob) => join(e2eFolderPath, glob)),
+    files = GLOB_TESTS.map((glob) => convertPathToPosix(join(e2eFolderPath, glob))),
     overrides = {},
   } = options;
   if (!isDirectory(e2eFolderPath)) {

@@ -54,7 +54,7 @@ export default createConfig(
     });
 
     const files = await glob('**/*', {
-      ignore: ['node_modules', 'eslint.config.js'],
+      ignore: ['**/node_modules/**', '**/eslint.config.js'],
       cwd: target,
     });
 
