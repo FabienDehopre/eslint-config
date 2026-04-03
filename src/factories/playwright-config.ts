@@ -10,7 +10,7 @@ import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
 import { ignores, playwright, typescript } from '../configs';
-import { OPTIONS_SYMBOL } from '../shared/constants';
+import { OPTIONS_SYMBOL, PLAYWRIGHT_PACKAGES } from '../shared/constants';
 
 /**
  * Creates an ESLint configuration array for Playwright projects based on the provided base configuration,
@@ -33,7 +33,7 @@ export async function definePlaywrightConfig(
   options: DefinePlaywrightConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
 ): Promise<TypedConfigArray> {
-  if (!isPackageExists('playwright')) {
+  if (PLAYWRIGHT_PACKAGES.every((p) => !isPackageExists(p))) {
     throw new Error('Playwright rules require the "playwright" package to be installed.');
   }
 

@@ -139,7 +139,7 @@ export async function defineConfig(
   let e2eFolderPath: string | undefined;
   if (enablePlaywright) {
     const playwrightOptions = resolveSubOptions(options, 'playwright');
-    e2eFolderPath = playwrightOptions.e2eFolderPath ?? await getPlaywrightDirectory();
+    e2eFolderPath = playwrightOptions.e2eFolderPath ?? await getPlaywrightDirectory() ?? 'e2e';
     configs.push(playwright({ ...playwrightOptions, e2eFolderPath }));
   }
 
