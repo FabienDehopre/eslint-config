@@ -46,15 +46,9 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
     useRelaxedNamingConventionForCamelAndPascalCases = false,
   } = options;
 
-  const configs: TypedConfigArray = [
-    {
-      name: 'fabdeh/ngrx/setup',
-      plugins: {
-        '@ngrx': ngrxPlugin.configs.store.find((c) => c.name === 'ngrx/base')?.plugins?.['@ngrx'] ?? {},
-      },
-    },
-  ];
+  const configs: TypedConfigArray = [];
   let addOperatorsRules = false;
+  const registerPluginFiles = [];
   const ngrxOperatorsFiles = [];
   if (store) {
     const {
@@ -64,6 +58,7 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
     } = typeof store === 'object' ? store : {};
     addOperatorsRules ||= enforceOperatorsRules;
     ngrxOperatorsFiles.push(files);
+    registerPluginFiles.push(files);
     configs.push({
       name: 'fabdeh/ngrx-store/rules',
       files,
@@ -102,6 +97,7 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
     } = typeof effects === 'object' ? effects : {};
     addOperatorsRules ||= enforceOperatorsRules;
     ngrxOperatorsFiles.push(files);
+    registerPluginFiles.push(files);
     configs.push({
       name: 'fabdeh/ngrx-effects/rules',
       files,
@@ -132,6 +128,7 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
     } = typeof signals === 'object' ? signals : {};
     addOperatorsRules ||= enforceOperatorsRules;
     ngrxOperatorsFiles.push(files);
+    registerPluginFiles.push(files);
     configs.push({
       name: 'fabdeh/ngrx-signals/rules',
       files,
@@ -165,6 +162,16 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
       files: [...ngrxOperatorsFiles],
       rules: {
         ...ngrxPlugin.configs.operators.find((c) => c.name === 'ngrx/operators')?.rules,
+      },
+    });
+  }
+
+  if (registerPluginFiles.length > 0) {
+    configs.unshift({
+      name: 'fabdeh/ngrx/setup',
+      files: [...registerPluginFiles],
+      plugins: {
+        '@ngrx': ngrxPlugin.configs.store.find((c) => c.name === 'ngrx/base')?.plugins?.['@ngrx'] ?? {},
       },
     });
   }
