@@ -48,7 +48,7 @@ export async function tailwindcss(options: (FilesOptions & OverridesOptions & St
   return tseslint.config(
     ...parserConfigs,
     {
-      name: '@fabdeh/tailwindcss/rules',
+      name: 'fabdeh/tailwindcss/rules',
       ...files,
       plugins: {
         'better-tailwindcss': betterTailwindcssPlugin,
