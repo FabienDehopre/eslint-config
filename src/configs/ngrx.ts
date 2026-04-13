@@ -46,7 +46,14 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
     useRelaxedNamingConventionForCamelAndPascalCases = false,
   } = options;
 
-  const configs: TypedConfigArray = [];
+  const configs: TypedConfigArray = [
+    {
+      name: 'fabdeh/ngrx/setup',
+      plugins: {
+        '@ngrx': ngrxPlugin.configs.store.find((c) => c.name === 'ngrx/base')?.plugins?.['@ngrx'] ?? {},
+      },
+    },
+  ];
   let addOperatorsRules = false;
   const ngrxOperatorsFiles = [];
   if (store) {
@@ -60,7 +67,6 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
     configs.push({
       name: 'fabdeh/ngrx-store/rules',
       files,
-      plugins: { '@ngrx': ngrxPlugin },
       rules: {
         ...ngrxPlugin.configs.store.find((c) => c.name === 'ngrx/store')?.rules,
         '@typescript-eslint/naming-convention': [
@@ -99,7 +105,6 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
     configs.push({
       name: 'fabdeh/ngrx-effects/rules',
       files,
-      plugins: { '@ngrx': ngrxPlugin },
       rules: {
         ...ngrxPlugin.configs.effects.find((c) => c.name === 'ngrx/effects')?.rules,
         '@typescript-eslint/naming-convention': [
@@ -130,7 +135,6 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
     configs.push({
       name: 'fabdeh/ngrx-signals/rules',
       files,
-      plugins: { '@ngrx': ngrxPlugin },
       rules: {
         ...ngrxPlugin.configs.signals.find((c) => c.name === 'ngrx/signals')?.rules,
         '@typescript-eslint/naming-convention': [
@@ -159,7 +163,6 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
     configs.push({
       name: 'fabdeh/ngrx-operators/rules',
       files: [...ngrxOperatorsFiles],
-      plugins: { '@ngrx': ngrxPlugin },
       rules: {
         ...ngrxPlugin.configs.operators.find((c) => c.name === 'ngrx/operators')?.rules,
       },
