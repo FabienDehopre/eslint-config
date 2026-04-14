@@ -7,7 +7,7 @@
     "alint": "eslint . --fix"
   },
   "dependencies": {
-    "@fabdeh/eslint-config": "catalog:",
+    "@fabdeh/eslint-config": "workspace:*",
     "@types/node": "catalog:",
     "zod": "catalog:"
   },

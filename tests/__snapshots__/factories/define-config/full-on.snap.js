@@ -415,7 +415,7 @@
       "parser": {
         "meta": {
           "name": "typescript-eslint/parser",
-          "version": "8.57.2",
+          "version": "8.58.1",
         },
         "parseForESLint": [Function],
       },
