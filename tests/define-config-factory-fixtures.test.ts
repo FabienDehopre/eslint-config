@@ -10,7 +10,7 @@ import { afterAll, beforeAll, describe, test } from 'vitest';
 
 import { CONFIG_PRESET_FULL_OFF, CONFIG_PRESET_FULL_ON } from '../src/config-presets';
 
-describe('fixtures', () => {
+describe('defineConfig factory fixtures', () => {
   const isWindows = process.platform === 'win32';
   const timeout = isWindows ? 300_000 : 60_000;
 

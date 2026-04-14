@@ -46,7 +46,7 @@ const IGNORE_CONFIGS = new Set([
   'fabdeh/javascript/setup',
 ]);
 
-describe('defineConfig', () => {
+describe('defineConfig factory snapshot', () => {
   for (const { name, configs } of SUITES) {
     test.concurrent(`factory ${name}`, async ({ expect }) => {
       const config = await defineConfig(configs);
