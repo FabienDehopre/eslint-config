@@ -18,7 +18,7 @@ export function serializeConfigs(configs: TypedConfigArray, ignoreConfigs: Set<s
 
     if (config.languageOptions) {
       if (config.languageOptions.parser && typeof config.languageOptions.parser !== 'string') {
-        clone.languageOptions.parse = config.languageOptions.parser.meta?.name ?? (config.languageOptions.parser as any).name ?? 'unknown';
+        clone.languageOptions.parser = config.languageOptions.parser.meta?.name ?? (config.languageOptions.parser as any).name ?? 'unknown';
       }
 
       delete clone.languageOptions.globals;
