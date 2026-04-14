@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable no-console, @typescript-eslint/naming-convention */
 
 import process from 'node:process';
 

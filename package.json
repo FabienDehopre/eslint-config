@@ -123,6 +123,7 @@
     "@types/node": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "bumpp": "catalog:",
+    "change-case": "catalog:",
     "changelogithub": "catalog:",
     "commitizen": "catalog:",
     "eslint": "catalog:",

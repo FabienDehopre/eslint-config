@@ -31,6 +31,7 @@ catalog:
   '@vitest/eslint-plugin': ^1.6.13
   angular-eslint: ^21.3.1
   bumpp: ^11.0.1
+  change-case: ^5.4.4
   changelogithub: ^14.0.0
   commitizen: ^4.3.1
   eslint: ^10.1.0

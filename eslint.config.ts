@@ -16,7 +16,7 @@ export default defineConfig(
   },
   {
     name: 'project/ignores',
-    ignores: ['fixtures', '_fixtures'],
+    ignores: ['**/fixtures/**', '**/_fixtures/**', '**/typegen/**'],
   },
   {
     name: 'project/overrides',
@@ -31,6 +31,15 @@ export default defineConfig(
       'jsdoc/require-jsdoc': 'off',
       'jsdoc/require-returns': 'off',
       'jsdoc/require-param-description': 'off',
+    },
+  },
+  {
+    name: 'project/scripts/overrides',
+    files: ['scripts/**/*.ts'],
+    rules: {
+      'no-console': 'off',
+      '@typescript-eslint/naming-convention': 'off',
+      'jsdoc/require-jsdoc': 'off',
     },
   }
 );
