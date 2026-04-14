@@ -775,15 +775,32 @@
   },
   {
     "files": [
+      [
+        "**/*.actions.?([cm])ts?(x)",
+        "**/*.feature.?([cm])ts?(x)",
+        "**/*.reducer.?([cm])ts?(x)",
+        "**/*.state.?([cm])ts?(x)",
+      ],
+      [
+        "**/*.effects.?([cm])ts?(x)",
+      ],
+      [
+        "**/*.store.?([cm])ts?(x)",
+      ],
+    ],
+    "name": "fabdeh/ngrx/setup",
+    "plugins": [
+      "@ngrx",
+    ],
+  },
+  {
+    "files": [
       "**/*.actions.?([cm])ts?(x)",
       "**/*.feature.?([cm])ts?(x)",
       "**/*.reducer.?([cm])ts?(x)",
       "**/*.state.?([cm])ts?(x)",
     ],
     "name": "fabdeh/ngrx-store/rules",
-    "plugins": [
-      "@ngrx",
-    ],
     "rules": [
       "@ngrx/avoid-combining-selectors",
       "@ngrx/avoid-dispatching-multiple-actions-sequentially",
@@ -811,9 +828,6 @@
       "**/*.effects.?([cm])ts?(x)",
     ],
     "name": "fabdeh/ngrx-effects/rules",
-    "plugins": [
-      "@ngrx",
-    ],
     "rules": [
       "@ngrx/no-dispatch-in-effects",
       "@ngrx/no-effects-in-providers",
@@ -828,9 +842,6 @@
       "**/*.store.?([cm])ts?(x)",
     ],
     "name": "fabdeh/ngrx-signals/rules",
-    "plugins": [
-      "@ngrx",
-    ],
     "rules": [
       "@ngrx/enforce-type-call",
       "@ngrx/prefer-protected-state",
@@ -854,9 +865,6 @@
       ],
     ],
     "name": "fabdeh/ngrx-operators/rules",
-    "plugins": [
-      "@ngrx",
-    ],
     "rules": [
       "@ngrx/prefer-concat-latest-from",
     ],
