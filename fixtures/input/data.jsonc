@@ -1,0 +1,10 @@
+{
+	"name":"fixture",
+	"enabled":true,
+	"items":[
+		"b",
+		"a"
+	],
+	"meta": {"version":1}
+}
+

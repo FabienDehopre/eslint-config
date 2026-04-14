@@ -1,0 +1,8 @@
+features:
+  formatter: enabled
+  lint: enabled
+
+paths:
+  output: dist
+  input: src
+

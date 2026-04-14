@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "name": "fixture-package",
+  "private": true,
+  "scripts": {
+    "zlint": "eslint .",
+    "alint": "eslint . --fix"
+  },
+  "dependencies": {
+    "zod": "catalog:",
+    "@types/node": "catalog:",
+    "@fabdeh/eslint-config": "catalog:"
+  },
+  "devDependencies": {
+    "vitest": "catalog:",
+    "typescript": "catalog:"
+  }
+}

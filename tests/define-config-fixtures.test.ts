@@ -8,7 +8,9 @@ import { execa } from 'execa';
 import { glob } from 'glob';
 import { afterAll, beforeAll, describe, test } from 'vitest';
 
-describe.todo('fixtures', () => {
+import { CONFIG_PRESET_FULL_OFF, CONFIG_PRESET_FULL_ON } from '../src/config-presets';
+
+describe('fixtures', () => {
   const isWindows = process.platform === 'win32';
   const timeout = isWindows ? 300_000 : 60_000;
 
@@ -62,5 +64,18 @@ export default defineConfig(
     }, timeout);
   }
 
-  runWithConfig('', {});
+  runWithConfig('default', {});
+  runWithConfig('full-off', CONFIG_PRESET_FULL_OFF);
+  runWithConfig('full-on', CONFIG_PRESET_FULL_ON);
+  runWithConfig('pnpm-without-jsonc', {
+    jsonc: false,
+    pnpm: true,
+  });
+  runWithConfig('pnpm-without-yaml', {
+    pnpm: true,
+    yaml: false,
+  });
+  runWithConfig('lib', {
+    type: 'lib',
+  });
 });
