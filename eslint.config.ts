@@ -13,6 +13,9 @@ export default defineConfig(
       },
     },
     type: 'lib',
+    vitest: {
+      enableVitestGlobals: false,
+    },
   },
   {
     name: 'project/ignores',
@@ -28,6 +31,12 @@ export default defineConfig(
     name: 'project/tests/overrides',
     files: ['tests/**/*.ts'],
     rules: {
+      '@angular-eslint/no-experimental': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unnecessary-condition': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
       'jsdoc/require-jsdoc': 'off',
       'jsdoc/require-returns': 'off',
       'jsdoc/require-param-description': 'off',

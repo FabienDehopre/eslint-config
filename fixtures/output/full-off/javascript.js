@@ -6,15 +6,15 @@ const parts = [
   'gamma',
 ]
 
-let prefix = 'item: '
+const prefix = 'item: '
 
-const mapped = parts.map(function (part) {
+const mapped = parts.map((part) => {
   return prefix + part
 })
 
 const tools = {
-  basename: basename,
-  mapped: mapped,
+  basename,
+  mapped,
 }
 
 export default tools
