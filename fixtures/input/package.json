@@ -9,7 +9,7 @@
   "dependencies": {
     "zod": "catalog:",
     "@types/node": "catalog:",
-    "@fabdeh/eslint-config": "catalog:"
+    "@fabdeh/eslint-config": "workspace:*"
   },
   "devDependencies": {
     "vitest": "catalog:",
