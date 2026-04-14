@@ -1,9 +1,10 @@
-import type { ArrayItemType, ExtractRuleOptionsType, Rules } from '../../shared/types';
+import type { ArrayItemType, ExtractRuleOptionsType } from '../../shared/types';
+import type { PerfectionistRuleOptions } from '../../typegen';
 
-export type SortImportsGroups = ArrayItemType<ExtractRuleOptionsType<Rules['perfectionist/sort-imports']>>['groups'];
+export type SortImportsGroups = ArrayItemType<ExtractRuleOptionsType<PerfectionistRuleOptions['perfectionist/sort-imports']>>['groups'];
 export type UnionOrIntersectionGroup =
-  ArrayItemType<ExtractRuleOptionsType<Rules['perfectionist/sort-intersection-types']>>['groups'] |
-  ArrayItemType<ExtractRuleOptionsType<Rules['perfectionist/sort-union-types']>>['groups'];
+  ArrayItemType<ExtractRuleOptionsType<PerfectionistRuleOptions['perfectionist/sort-intersection-types']>>['groups'] |
+  ArrayItemType<ExtractRuleOptionsType<PerfectionistRuleOptions['perfectionist/sort-union-types']>>['groups'];
 
 export const SORT_IMPORT_GROUPS: SortImportsGroups = [
   'type-builtin',
