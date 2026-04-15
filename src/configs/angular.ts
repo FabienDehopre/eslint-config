@@ -1,4 +1,4 @@
-import type { AngularOptions, TypedConfig } from '../shared/types';
+import type { AngularOptions, OverridesOptions, Rules, TypedConfig } from '../shared/types';
 
 import { GLOB_HTML, GLOB_TS } from '../shared/globs';
 import { interopDefault } from '../shared/utils';
@@ -8,17 +8,14 @@ import { interopDefault } from '../shared/utils';
  *
  * @param options - Configuration options for Angular ESLint.
  * @param options.enableAccessibilityRules - Whether to enable accessibility rules for HTML templates.
- * @param options.tsOverrides - Additional TypeScript rule overrides.
- * @param options.htmlOverrides - Additional HTML rule overrides.
  * @param options.prefix - The prefix to use for Angular component and directive selectors.
  * @returns A promise that resolves to an array of ESLint configurations.
  */
-export async function angular(options: AngularOptions = {}): Promise<TypedConfig[]> {
+export async function angular(options: AngularOptions & OverridesOptions = {}): Promise<TypedConfig[]> {
   const angularEslint = await interopDefault(import('angular-eslint'));
   const {
     enableAccessibilityRules = true,
-    tsOverrides = {},
-    htmlOverrides = {},
+    overrides = {},
     prefix = 'app',
     ignoreClassNamePatternForInjectableProvidedIn: ignoreClassNamePattern,
     componentStylesMode = 'string',
@@ -27,6 +24,19 @@ export async function angular(options: AngularOptions = {}): Promise<TypedConfig
     banDeveloperPreviewApi = true,
     inlineTemplateAndStyles = false,
   } = options;
+
+  const tsOverrides: Rules = {};
+  const htmlOverrides: Rules = {};
+  for (const [key, value] of Object.entries(overrides)) {
+    if (key.startsWith('angular/')) {
+      tsOverrides[key] = value;
+    }
+
+    if (key.startsWith('angular-eslint/')) {
+      htmlOverrides[key] = value;
+    }
+  }
+
   return [
     {
       name: 'fabdeh/angular/rules',
