@@ -28,12 +28,10 @@ export async function angular(options: AngularOptions & OverridesOptions = {}): 
   const tsOverrides: Rules = {};
   const htmlOverrides: Rules = {};
   for (const [key, value] of Object.entries(overrides)) {
-    if (key.startsWith('angular/')) {
-      tsOverrides[key] = value;
-    }
-
-    if (key.startsWith('angular-eslint/')) {
+    if (key.startsWith('@angular-eslint/template/')) {
       htmlOverrides[key] = value;
+    } else if (key.startsWith('@angular-eslint/')) {
+      tsOverrides[key] = value;
     }
   }
 
