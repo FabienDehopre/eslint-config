@@ -22,7 +22,7 @@ import { isInEditorEnv } from '../shared/utils';
  * @param baseConfig - The base configuration to extend from.
  * @param options - Playwright-specific configuration options.
  * @param userConfigs - Additional user configurations that can be awaited.
- * @returns A promise that resolves to a `TypedConfig[]`.
+ * @returns The merged ESLint configurations.
  * @example
  * ```typescript
  * import { definePlaywrightConfig } from '@fabdeh/eslint-config';
