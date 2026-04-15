@@ -43,7 +43,9 @@ import { interopDefault, isInEditorEnv, resolveSubOptions } from '../shared/util
  * @returns A promise that resolves to a `ConfigArrayWithOptions`.
  * @example
  * ```typescript
- * const config = await defineWorkspaceConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
+ * import { defineWorkspaceConfig } from '@fabdeh/eslint-config';
+ *
+ * export default defineWorkspaceConfig({ typescript: { parserOptions: { project: './tsconfig.json' } } });
  * ```
  */
 export function defineWorkspaceConfig(
