@@ -28,7 +28,12 @@ async function writePluginRulesDeclarationsFile(pluginName: string, plugin: ESLi
       declarationsLines.push(`  /*`, ...jsdoc.map((l) => `   * ${l.replaceAll('*/', String.raw`*\/`)}`), '   */');
     }
 
-    declarationsLines.push(`  '${pluginName}/${name}'?: Linter.RuleEntry<${typeName}>;`);
+    if (pluginName === 'default') {
+      declarationsLines.push(`  '${name}'?: Linter.RuleEntry<${typeName}>;`);
+    } else {
+      declarationsLines.push(`  '${pluginName}/${name}'?: Linter.RuleEntry<${typeName}>;`);
+    }
+
     typeDeclarationsLines.push(...typeDeclarations);
   }
 
