@@ -1,4 +1,4 @@
-import type { OverridesOptions, TypedConfigArray } from '../shared/types';
+import type { IsInEditorOptions, OverridesOptions, TypedConfigArray } from '../shared/types';
 
 import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
 import unusedImports from 'eslint-plugin-unused-imports';
@@ -23,9 +23,12 @@ import { GLOB_SRC } from '../shared/globs';
  * ```
  */
 export function javascript(
-  options: OverridesOptions = {}
+  options: IsInEditorOptions & OverridesOptions = {}
 ): TypedConfigArray {
-  const { overrides = {} } = options;
+  const {
+    isInEditor = false,
+    overrides = {},
+  } = options;
 
   return tseslint.config(
     {
@@ -227,7 +230,13 @@ export function javascript(
           'error',
           { singleReturnOnly: true, allowNamedFunctions: true },
         ],
-        'prefer-const': 'error',
+        'prefer-const': [
+          isInEditor ? 'warn' : 'error',
+          {
+            destructuring: 'all',
+            ignoreReadBeforeAssign: true,
+          },
+        ],
         'prefer-exponentiation-operator': 'error',
         'prefer-object-spread': 'error',
         'prefer-promise-reject-errors': 'error',
@@ -240,7 +249,7 @@ export function javascript(
         'symbol-description': 'error',
         'unicode-bom': ['error', 'never'],
         'use-isnan': ['error', { enforceForIndexOf: true }],
-        'unused-imports/no-unused-imports': 'error',
+        'unused-imports/no-unused-imports': isInEditor ? 'warn' : 'error',
         'unused-imports/no-unused-vars': [
           'error',
           {
