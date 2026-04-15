@@ -62,6 +62,7 @@ export function definePlaywrightConfig(
   let composer = new FlatConfigComposer<TypedConfig, ConfigNames>();
   composer = composer
     .append(
+      baseConfig,
       ...configs,
       ...userConfigs
     );
