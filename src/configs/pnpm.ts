@@ -7,7 +7,13 @@ import { findUp } from 'find-up-simple';
 import { interopDefault } from '../shared/utils';
 
 /**
+ * Detects whether the current PNPM workspace uses catalog definitions.
  *
+ * Searches for a `pnpm-workspace.yaml` file and checks whether it contains
+ * either the `catalog:` or `catalogs:` keys, which are used to define shared
+ * dependency version catalogs in PNPM workspaces.
+ *
+ * @returns `true` when catalog configuration is present; otherwise `false`.
  */
 async function detectCatalogUsage(): Promise<boolean> {
   const workspaceFile = await findUp('pnpm-workspace.yaml');
