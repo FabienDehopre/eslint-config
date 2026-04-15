@@ -1,5 +1,13 @@
-import type { Awaitable, DefineConfigOptions, TypedConfigArray, TypedConfigWithExtends } from '../shared/types';
+import type {
+  Awaitable,
+  ConfigNames,
+  DefineConfigOptions,
+  TypedConfig,
+  TypedConfigArray,
+  TypedConfigWithExtends
+} from '../shared/types';
 
+import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
@@ -29,7 +37,7 @@ import {
   yaml
 } from '../configs';
 import { NGRX_PACKAGES, PLAYWRIGHT_PACKAGES } from '../shared/constants';
-import { getPlaywrightDirectory, interopDefault, resolveSubOptions } from '../shared/utils';
+import { getPlaywrightDirectory, interopDefault, isInEditorEnv, resolveSubOptions } from '../shared/utils';
 
 /**
  * Creates an ESLint configuration array based on the provided options and user configurations.
@@ -43,10 +51,10 @@ import { getPlaywrightDirectory, interopDefault, resolveSubOptions } from '../sh
  * const config = await defineConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
  * ```
  */
-export async function defineConfig(
+export function defineConfig(
   options: DefineConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<TypedConfigArray> {
+): FlatConfigComposer<TypedConfig, ConfigNames> {
   const {
     angular: enableAngular = isPackageExists('@angular/core'),
     gitignore: enableGitignore = true,
@@ -148,7 +156,7 @@ export async function defineConfig(
   let e2eFolderPath: string | undefined;
   if (enablePlaywright) {
     const playwrightOptions = resolveSubOptions(options, 'playwright');
-    e2eFolderPath = playwrightOptions.e2eFolderPath ?? await getPlaywrightDirectory() ?? 'e2e';
+    e2eFolderPath = playwrightOptions.e2eFolderPath ?? getPlaywrightDirectory() ?? 'e2e';
     configs.push(playwright({ ...playwrightOptions, e2eFolderPath }));
   }
 
@@ -202,5 +210,23 @@ export async function defineConfig(
     configs.push(markdown(markdownOptions));
   }
 
-  return tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArray;
+  let composer = new FlatConfigComposer<TypedConfig, ConfigNames>();
+  composer = composer
+    .append(
+      ...configs,
+      ...userConfigs
+    );
+
+  if (isInEditor) {
+    composer = composer
+      .disableRulesFix([
+        'prefer-const',
+        'unused-imports/no-unused-imports',
+      ], {
+        builtinRules: () => import('eslint/use-at-your-own-risk').then((m) => m.builtinRules),
+      });
+  }
+
+  return composer;
+  // return tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArray;
 }

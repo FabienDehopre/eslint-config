@@ -1,12 +1,11 @@
 import type { PathLike } from 'node:fs';
 import type { Awaitable, DefineConfigOptions } from './types';
 
-import { statSync } from 'node:fs';
-import { readFile } from 'node:fs/promises';
+import { readFileSync, statSync } from 'node:fs';
 import { dirname, join, normalize, resolve } from 'node:path';
 import process from 'node:process';
 
-import { glob } from 'glob';
+import { globSync } from 'glob';
 import { isPackageExists } from 'local-pkg';
 
 const SCOPE_URL = import.meta.dirname;
@@ -287,12 +286,12 @@ export function pathToGlobPattern(options?: PathToGlobPatternOptions): (path: st
  *
  * @returns Absolute path to the first existing Playwright test directory, or `undefined` if none is found.
  */
-export async function getPlaywrightDirectory(): Promise<string | undefined> {
-  const playwrightConfigs = await glob('**/playwright.config.ts', { ignore: ['**/node_modules/**'] });
+export function getPlaywrightDirectory(): string | undefined {
+  const playwrightConfigs = globSync('**/playwright.config.ts', { ignore: ['**/node_modules/**'] });
 
   for (const config of playwrightConfigs) {
     try {
-      const configContent = await readFile(config, 'utf-8');
+      const configContent = readFileSync(config, 'utf-8');
       const match = /testDir:\s*["'](.+)["'],?/.exec(configContent);
       if (match) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- group 1 is always defined if regex matches
