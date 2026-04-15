@@ -402,7 +402,7 @@ export interface PnpmOptions {
   /**
    * Sort entries in pnpm-workspace.yaml
    *
-   * @default false
+   * @default true
    */
   sort?: boolean;
 }
