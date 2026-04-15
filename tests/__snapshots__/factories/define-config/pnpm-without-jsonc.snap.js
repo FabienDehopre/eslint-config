@@ -986,24 +986,6 @@
   },
   {
     "files": [
-      "package.json",
-      "**/package.json",
-    ],
-    "languageOptions": {
-      "parser": "jsonc-eslint-parser",
-    },
-    "name": "fabdeh/pnpm/package-json",
-    "plugins": [
-      "pnpm",
-    ],
-    "rules": [
-      "pnpm/json-enforce-catalog",
-      "pnpm/json-prefer-workspace-settings",
-      "pnpm/json-valid-catalog",
-    ],
-  },
-  {
-    "files": [
       "pnpm-workspace.yaml",
     ],
     "languageOptions": {
@@ -1014,8 +996,24 @@
       "pnpm",
     ],
     "rules": [
+      "pnpm/yaml-enforce-settings",
       "pnpm/yaml-no-duplicate-catalog-item",
       "pnpm/yaml-no-unused-catalog-item",
+    ],
+  },
+  {
+    "files": [
+      "pnpm-workspace.yaml",
+    ],
+    "languageOptions": {
+      "parser": "yaml-eslint-parser",
+    },
+    "name": "antfu/pnpm/pnpm-workspace-yaml-sort",
+    "plugins": [
+      "yaml",
+    ],
+    "rules": [
+      "yaml/sort-keys",
     ],
   },
   {

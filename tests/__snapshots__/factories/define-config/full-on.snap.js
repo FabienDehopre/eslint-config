@@ -1157,9 +1157,7 @@
       "package.json",
       "**/package.json",
     ],
-    "languageOptions": {
-      "parser": "jsonc-eslint-parser",
-    },
+    "language": "jsonc/x",
     "name": "fabdeh/pnpm/package-json",
     "plugins": [
       "pnpm",
@@ -1182,8 +1180,24 @@
       "pnpm",
     ],
     "rules": [
+      "pnpm/yaml-enforce-settings",
       "pnpm/yaml-no-duplicate-catalog-item",
       "pnpm/yaml-no-unused-catalog-item",
+    ],
+  },
+  {
+    "files": [
+      "pnpm-workspace.yaml",
+    ],
+    "languageOptions": {
+      "parser": "yaml-eslint-parser",
+    },
+    "name": "antfu/pnpm/pnpm-workspace-yaml-sort",
+    "plugins": [
+      "yaml",
+    ],
+    "rules": [
+      "yaml/sort-keys",
     ],
   },
   {
