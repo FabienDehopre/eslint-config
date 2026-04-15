@@ -103,6 +103,17 @@ export interface FilesOptions {
 }
 
 /**
+ * Common options for ignoring files.
+ */
+export interface IgnoresOptions {
+  /**
+   * An array of glob patterns indicating the files that the configuration object should not apply to.
+   * If not specified, the configuration object applies to all files matched by files.
+   */
+  ignores?: string[];
+}
+
+/**
  * Options for configuring the behavior of the Unicorn config.
  */
 export interface UnicornOptions {
@@ -389,17 +400,6 @@ export interface ProjectTypeScriptOptions {
    * Additional parser options for TypeScript.
    */
   parserOptions: TSESLint.FlatConfig.ParserOptions;
-}
-
-/**
- * Common options for ignoring files.
- */
-export interface IgnoresOptions {
-  /**
-   * An array of glob patterns indicating the files that the configuration object should not apply to.
-   * If not specified, the configuration object applies to all files matched by files.
-   */
-  ignores?: string[];
 }
 
 /**
