@@ -4,6 +4,7 @@ import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { TSESLint } from '@typescript-eslint/utils';
 import type { Linter } from 'eslint';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
+import type { FlatConfigComposer } from 'eslint-flat-config-utils';
 import type { ObjectKeyMatcher, ObjectValueMatcher, Regex, StringMatcher } from 'eslint-plugin-better-tailwindcss/types';
 import type { RuleOptions } from '../typegen';
 import type { OPTIONS_SYMBOL } from './constants';
@@ -580,7 +581,7 @@ export interface DefineProjectConfigOptions extends IgnoresOptions, ProjectTypeO
   typescript?: OverridesOptions & ProjectTypeScriptOptions;
 }
 
-export type DefinePlaywrightConfigOptions = FilesOptions & IgnoresOptions & OverridesOptions;
+export type DefinePlaywrightConfigOptions = FilesOptions & IgnoresOptions & IsInEditorOptions & OverridesOptions;
 
 /**
  * Options for creating an ESLint configuration.
@@ -600,4 +601,4 @@ export type DefineConfigOptions = DefineWorkspaceConfigOptions & Omit<DefineProj
 /**
  * Return-type of the `defineWorkspaceConfig` function.
  */
-export type TypedConfigArrayWithOptions = TypedConfig[] & { [OPTIONS_SYMBOL]: DefineWorkspaceConfigOptions };
+export type FlatConfigComposerWithOptions<T extends TypedConfig, ConfigNames extends string> = FlatConfigComposer<T, ConfigNames> & { [OPTIONS_SYMBOL]: DefineWorkspaceConfigOptions };

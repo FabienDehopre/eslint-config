@@ -1,5 +1,14 @@
-import type { Awaitable, DefineWorkspaceConfigOptions, TypedConfig, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../shared/types';
+import type {
+  Awaitable,
+  ConfigNames,
+  DefineWorkspaceConfigOptions,
+  FlatConfigComposerWithOptions,
+  TypedConfig,
+  TypedConfigWithExtends
+} from '../shared/types';
 
+import { FlatConfigComposer } from 'eslint-flat-config-utils';
+import { findUpSync } from 'find-up-simple';
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
@@ -23,7 +32,7 @@ import {
   yaml
 } from '../configs';
 import { OPTIONS_SYMBOL } from '../shared/constants';
-import { interopDefault, resolveSubOptions } from '../shared/utils';
+import { interopDefault, isInEditorEnv, resolveSubOptions } from '../shared/utils';
 
 /**
  * Creates an ESLint configuration array based on the provided options and user configurations.
@@ -38,18 +47,27 @@ import { interopDefault, resolveSubOptions } from '../shared/utils';
  * const config = await defineWorkspaceConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
  * ```
  */
-export async function defineWorkspaceConfig(
+export function defineWorkspaceConfig(
   options: DefineWorkspaceConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<TypedConfigArrayWithOptions> {
+): FlatConfigComposerWithOptions<TypedConfig, ConfigNames> {
   const {
     gitignore: enableGitignore = true,
     // eslint-disable-next-line @angular-eslint/no-experimental
-    pnpm: enableCatalogs = false, // TODO: smart detect
+    pnpm: enableCatalogs = !!findUpSync('pnpm-workspace.yaml'),
     regexp: enableRegexp = true,
     typescript: enableTypescript = isPackageExists('typescript'),
     unicorn: enableUnicorn = true,
   } = options;
+
+  let isInEditor = options.isInEditor;
+  if (isInEditor === undefined) {
+    isInEditor = isInEditorEnv();
+    if (isInEditor) {
+      // eslint-disable-next-line no-console
+      console.log('[@fabdeh/eslint-config] Detected running in editor, some rules are disabled.');
+    }
+  }
 
   const stylisticOptions =
     options.stylistic === false ? false : typeof options.stylistic === 'object' ? options.stylistic : {};
@@ -73,7 +91,7 @@ export async function defineWorkspaceConfig(
 
   configs.push(
     ignores(options.ignores, 'workspace'),
-    javascript({ overrides: options.javascript?.overrides }),
+    javascript({ isInEditor, overrides: options.javascript?.overrides }),
     comments(),
     node(),
     imports({ stylistic: stylisticOptions }),
@@ -116,7 +134,13 @@ export async function defineWorkspaceConfig(
   }
 
   if (enableCatalogs) {
-    configs.push(pnpm());
+    const pnpmOptions = resolveSubOptions(options, 'pnpm');
+    configs.push(pnpm({
+      isInEditor,
+      json: options.jsonc !== false,
+      yaml: options.yaml !== false,
+      ...pnpmOptions,
+    }));
   }
 
   if (options.yaml ?? true) {
@@ -140,7 +164,24 @@ export async function defineWorkspaceConfig(
     configs.push(markdown(markdownOptions));
   }
 
-  const eslintConfigWithOptions = tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArrayWithOptions;
-  eslintConfigWithOptions[OPTIONS_SYMBOL] = options;
-  return eslintConfigWithOptions;
+  let composer = new FlatConfigComposer<TypedConfig, ConfigNames>();
+  composer = composer
+    .append(
+      ...configs,
+      ...userConfigs
+    );
+
+  if (isInEditor) {
+    composer = composer
+      .disableRulesFix([
+        'prefer-const',
+        'unused-imports/no-unused-imports',
+      ], {
+        builtinRules: () => import('eslint/use-at-your-own-risk').then((m) => m.builtinRules),
+      });
+  }
+
+  const composerWithOptions = composer as FlatConfigComposerWithOptions<TypedConfig, ConfigNames>;
+  composerWithOptions[OPTIONS_SYMBOL] = options;
+  return composerWithOptions;
 }
