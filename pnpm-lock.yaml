@@ -168,6 +168,9 @@ catalogs:
     execa:
       specifier: ^9.6.1
       version: 9.6.1
+    find-up-simple:
+      specifier: ^1.0.1
+      version: 1.0.1
     fs-extra:
       specifier: ^11.3.4
       version: 11.3.4
@@ -323,6 +326,9 @@ importers:
       eslint-plugin-yml:
         specifier: 'catalog:'
         version: 3.3.1(eslint@10.2.0(jiti@2.6.1))
+      find-up-simple:
+        specifier: 'catalog:'
+        version: 1.0.1
       glob:
         specifier: 'catalog:'
         version: 13.0.6

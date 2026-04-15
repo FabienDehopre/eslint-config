@@ -386,6 +386,36 @@ export interface TailwindCssOptions {
   tags?: (Regex | [string, (ObjectKeyMatcher | ObjectValueMatcher | StringMatcher)[]])[];
 }
 
+export interface PnpmOptions {
+  /**
+   * Requires catalogs usage
+   *
+   * Detects automatically based if `catalogs` is used in the pnpm-workspace.yaml file
+   */
+  catalogs?: boolean;
+
+  /**
+   * Enable linting for package.json, will install the jsonc parser
+   *
+   * @default true
+   */
+  json?: boolean;
+
+  /**
+   * Enable linting for pnpm-workspace.yaml, will install the yaml parser
+   *
+   * @default true
+   */
+  yaml?: boolean;
+
+  /**
+   * Sort entries in pnpm-workspace.yaml
+   *
+   * @default false
+   */
+  sort?: boolean;
+}
+
 export type ProjectType = 'app' | 'lib';
 export type WorkspaceProjectType = ProjectType | 'workspace';
 export interface ProjectTypeOptions<T = ProjectType> {
@@ -494,10 +524,10 @@ export interface DefineWorkspaceConfigOptions extends IgnoresOptions, IsInEditor
    * In the future it will be smartly enabled based on the project usage.
    *
    * @see https://github.com/antfu/pnpm-workspace-utils
-   * @default false
    * @experimental
+   * @default false
    */
-  pnpm?: boolean;
+  pnpm?: PnpmOptions | boolean;
 }
 
 /**
