@@ -57,6 +57,7 @@ catalog:
   eslint-plugin-yml: ^3.3.1
   eslint-typegen: ^2.3.1
   execa: ^9.6.1
+  find-up-simple: ^1.0.1
   fs-extra: ^11.3.4
   glob: ^13.0.6
   globals: ^17.4.0

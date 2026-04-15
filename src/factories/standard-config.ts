@@ -7,6 +7,7 @@ import type {
 } from '../shared/types';
 
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
+import { findUpSync } from 'find-up-simple';
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
 
@@ -61,7 +62,7 @@ export function defineConfig(
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
     playwright: enablePlaywright = PLAYWRIGHT_PACKAGES.some((p) => isPackageExists(p)),
     // eslint-disable-next-line @angular-eslint/no-experimental
-    pnpm: enableCatalogs = false, // TODO: smart detect
+    pnpm: enableCatalogs = !!findUpSync('pnpm-workspace.yaml'),
     regexp: enableRegexp = true,
     tailwindcss: enableTailwind = false,
     typescript: enableTypescript = isPackageExists('typescript'),
@@ -185,7 +186,13 @@ export function defineConfig(
   }
 
   if (enableCatalogs) {
-    configs.push(pnpm());
+    const pnpmOptions = resolveSubOptions(options, 'pnpm');
+    configs.push(pnpm({
+      isInEditor,
+      json: options.jsonc !== false,
+      yaml: options.yaml !== false,
+      ...pnpmOptions,
+    }));
   }
 
   if (options.yaml ?? true) {
