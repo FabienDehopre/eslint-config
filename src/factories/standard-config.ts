@@ -234,5 +234,4 @@ export function defineConfig(
   }
 
   return composer;
-  // return tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfig[];
 }

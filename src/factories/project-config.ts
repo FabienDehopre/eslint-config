@@ -1,7 +1,10 @@
-import type { Awaitable, DefineProjectConfigOptions, TypedConfig, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../shared/types';
+import type {
+  Awaitable, ConfigNames, DefineProjectConfigOptions, FlatConfigComposerWithOptions, TypedConfig,
+  TypedConfigWithExtends
+} from '../shared/types';
 
+import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
-import tseslint from 'typescript-eslint';
 
 import {
   angular,
@@ -13,7 +16,7 @@ import {
   vitest
 } from '../configs';
 import { NGRX_PACKAGES, OPTIONS_SYMBOL } from '../shared/constants';
-import { resolveSubOptions } from '../shared/utils';
+import { isInEditorEnv, resolveSubOptions } from '../shared/utils';
 
 /**
  * Creates an ESLint configuration array based on the provided base configuration, options and user configurations.
@@ -31,13 +34,12 @@ import { resolveSubOptions } from '../shared/utils';
  * const config = await defineProjectConfig(baseConfig, { vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
  * ```
  */
-export async function defineProjectConfig(
-  baseConfig: Awaitable<TypedConfigArrayWithOptions>,
+export function defineProjectConfig(
+  baseConfig: FlatConfigComposerWithOptions<TypedConfig, ConfigNames>,
   options: DefineProjectConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<TypedConfig[]> {
-  const resolvedBaseConfig = await baseConfig;
-  const workspaceOptions = resolvedBaseConfig[OPTIONS_SYMBOL];
+): FlatConfigComposer<TypedConfig, ConfigNames> {
+  const workspaceOptions = baseConfig[OPTIONS_SYMBOL];
   const {
     angular: enableAngular = isPackageExists('@angular/core'),
     jsdoc: enableJsdoc = options.type === 'lib',
@@ -46,6 +48,15 @@ export async function defineProjectConfig(
     typescript: typescriptOptions,
     vitest: enableVitest = isPackageExists('vitest'),
   } = options;
+
+  let isInEditor = workspaceOptions.isInEditor;
+  if (isInEditor === undefined) {
+    isInEditor = isInEditorEnv();
+    if (isInEditor) {
+      // eslint-disable-next-line no-console
+      console.log('[@fabdeh/eslint-config] Detected running in editor, some rules are disabled.');
+    }
+  }
 
   if (enableNgrx && !enableAngular) {
     throw new Error('NgRx rules can only be enabled if Angular rules are also enabled.');
@@ -104,5 +115,22 @@ export async function defineProjectConfig(
     configs.push(tailwindcss({ ...tailwindcssOptions, stylistic: stylisticOptions }));
   }
 
-  return tseslint.config(...resolvedBaseConfig, ...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfig[];
+  let composer = new FlatConfigComposer<TypedConfig, ConfigNames>();
+  composer = composer
+    .append(
+      ...configs,
+      ...userConfigs
+    );
+
+  if (isInEditor) {
+    composer = composer
+      .disableRulesFix([
+        'prefer-const',
+        'unused-imports/no-unused-imports',
+      ], {
+        builtinRules: () => import('eslint/use-at-your-own-risk').then((m) => m.builtinRules),
+      });
+  }
+
+  return composer;
 }

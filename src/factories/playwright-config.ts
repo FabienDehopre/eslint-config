@@ -1,16 +1,17 @@
 import type {
   Awaitable,
+  ConfigNames,
   DefinePlaywrightConfigOptions,
-  TypedConfig,
-  TypedConfigArrayWithOptions,
-  TypedConfigWithExtends
+  FlatConfigComposerWithOptions,
+  TypedConfig, TypedConfigWithExtends
 } from '../shared/types';
 
+import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { isPackageExists } from 'local-pkg';
-import tseslint from 'typescript-eslint';
 
 import { ignores, playwright, typescript } from '../configs';
 import { OPTIONS_SYMBOL, PLAYWRIGHT_PACKAGES } from '../shared/constants';
+import { isInEditorEnv } from '../shared/utils';
 
 /**
  * Creates an ESLint configuration array for Playwright projects based on the provided base configuration,
@@ -28,17 +29,25 @@ import { OPTIONS_SYMBOL, PLAYWRIGHT_PACKAGES } from '../shared/constants';
  *
  * const config = await definePlaywrightConfig(baseConfig, { ignores: ['playwright-report/**'] });
  */
-export async function definePlaywrightConfig(
-  baseConfig: Awaitable<TypedConfigArrayWithOptions>,
+export function definePlaywrightConfig(
+  baseConfig: FlatConfigComposerWithOptions<TypedConfig, ConfigNames>,
   options: DefinePlaywrightConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<TypedConfig[]> {
+): FlatConfigComposer<TypedConfig, ConfigNames> {
   if (PLAYWRIGHT_PACKAGES.every((p) => !isPackageExists(p))) {
     throw new Error('Playwright rules require the "playwright" package to be installed.');
   }
 
-  const resolvedBaseConfig = await baseConfig;
-  const workspaceOptions = resolvedBaseConfig[OPTIONS_SYMBOL];
+  let isInEditor = options.isInEditor;
+  if (isInEditor === undefined) {
+    isInEditor = isInEditorEnv();
+    if (isInEditor) {
+      // eslint-disable-next-line no-console
+      console.log('[@fabdeh/eslint-config] Detected running in editor, some rules are disabled.');
+    }
+  }
+
+  const workspaceOptions = baseConfig[OPTIONS_SYMBOL];
   const configs: Awaitable<TypedConfig[]>[] = [];
   if (options.ignores && options.ignores.length > 0) {
     configs.push(ignores(options.ignores, 'project'));
@@ -50,5 +59,23 @@ export async function definePlaywrightConfig(
 
   configs.push(playwright(options));
 
-  return tseslint.config(...resolvedBaseConfig, ...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfig[];
+  // return tseslint.config(...resolvedBaseConfig, ...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfig[];
+  let composer = new FlatConfigComposer<TypedConfig, ConfigNames>();
+  composer = composer
+    .append(
+      ...configs,
+      ...userConfigs
+    );
+
+  if (isInEditor) {
+    composer = composer
+      .disableRulesFix([
+        'prefer-const',
+        'unused-imports/no-unused-imports',
+      ], {
+        builtinRules: () => import('eslint/use-at-your-own-risk').then((m) => m.builtinRules),
+      });
+  }
+
+  return composer;
 }

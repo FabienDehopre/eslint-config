@@ -145,14 +145,6 @@
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
-  "pnpm": {
-    "overrides": {
-      "@isaacs/brace-expansion": "^5.0.1",
-      "@modelcontextprotocol/sdk": "^1.26.0",
-      "lodash": "^4.17.23",
-      "qs": "^6.15.0"
-    }
-  },
   "simple-git-hooks": {
     "pre-commit": "pnpm nano-staged",
     "commit-msg": "pnpm commitlint --edit ${1}"
