@@ -61,7 +61,7 @@ export async function pnpm(options: IsInEditorOptions & PnpmOptions = {}): Promi
                   'error',
                   {
                     autofix: !isInEditor,
-                    ignore: ['@types/vscode'],
+                    ignores: ['@types/vscode'],
                   },
                 ],
               }
