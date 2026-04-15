@@ -1,7 +1,5 @@
 import type { AngularOptions, TypedConfig } from '../shared/types';
 
-import tseslint from 'typescript-eslint';
-
 import { GLOB_HTML, GLOB_TS } from '../shared/globs';
 import { interopDefault } from '../shared/utils';
 
@@ -29,7 +27,7 @@ export async function angular(options: AngularOptions = {}): Promise<TypedConfig
     banDeveloperPreviewApi = true,
     inlineTemplateAndStyles = false,
   } = options;
-  return tseslint.config(
+  return [
     {
       name: 'fabdeh/angular/rules',
       plugins: {
@@ -138,6 +136,6 @@ export async function angular(options: AngularOptions = {}): Promise<TypedConfig
           : {}),
         ...htmlOverrides,
       },
-    }
-  );
+    },
+  ];
 }

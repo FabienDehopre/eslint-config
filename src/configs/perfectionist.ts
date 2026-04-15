@@ -3,7 +3,6 @@ import type { TypedConfig } from '../shared/types';
 import process from 'node:process';
 
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
-import tseslint from 'typescript-eslint';
 
 import { GLOB_SRC } from '../shared/globs';
 import { getTsConfigFileName, getWorkspaceRoot } from '../shared/utils';
@@ -22,46 +21,48 @@ import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-c
  */
 export function perfectionist(): TypedConfig[] {
   const rootDir = getWorkspaceRoot(process.cwd(), process.cwd());
-  return tseslint.config({
-    name: 'fabdeh/perfectionist/rules',
-    files: [GLOB_SRC],
-    plugins: {
-      perfectionist: perfectionistPlugin,
-    },
-    rules: {
-      'perfectionist/sort-exports': ['error', { order: 'asc', type: 'natural' }],
-      'perfectionist/sort-imports': [
-        'error',
-        {
-          groups: SORT_IMPORT_GROUPS,
-          tsconfig: {
-            rootDir,
-            filename: getTsConfigFileName(rootDir),
+  return [
+    {
+      name: 'fabdeh/perfectionist/rules',
+      files: [GLOB_SRC],
+      plugins: {
+        perfectionist: perfectionistPlugin,
+      },
+      rules: {
+        'perfectionist/sort-exports': ['error', { order: 'asc', type: 'natural' }],
+        'perfectionist/sort-imports': [
+          'error',
+          {
+            groups: SORT_IMPORT_GROUPS,
+            tsconfig: {
+              rootDir,
+              filename: getTsConfigFileName(rootDir),
+            },
+            order: 'asc',
+            type: 'natural',
+            newlinesBetween: 0,
           },
-          order: 'asc',
-          type: 'natural',
-          newlinesBetween: 0,
-        },
-      ],
-      'perfectionist/sort-intersection-types': [
-        'error',
-        {
-          groups: SORT_UNION_OR_INTERSECTION_GROUPS,
-          order: 'asc',
-          type: 'natural',
-        },
-      ],
-      'perfectionist/sort-named-exports': ['error', { order: 'asc', type: 'natural' }],
-      'perfectionist/sort-named-imports': ['error', { order: 'asc', type: 'natural' }],
-      'perfectionist/sort-switch-case': ['error', { order: 'asc', type: 'natural' }],
-      'perfectionist/sort-union-types': [
-        'error',
-        {
-          groups: SORT_UNION_OR_INTERSECTION_GROUPS,
-          order: 'asc',
-          type: 'natural',
-        },
-      ],
+        ],
+        'perfectionist/sort-intersection-types': [
+          'error',
+          {
+            groups: SORT_UNION_OR_INTERSECTION_GROUPS,
+            order: 'asc',
+            type: 'natural',
+          },
+        ],
+        'perfectionist/sort-named-exports': ['error', { order: 'asc', type: 'natural' }],
+        'perfectionist/sort-named-imports': ['error', { order: 'asc', type: 'natural' }],
+        'perfectionist/sort-switch-case': ['error', { order: 'asc', type: 'natural' }],
+        'perfectionist/sort-union-types': [
+          'error',
+          {
+            groups: SORT_UNION_OR_INTERSECTION_GROUPS,
+            order: 'asc',
+            type: 'natural',
+          },
+        ],
+      },
     },
-  });
+  ];
 }

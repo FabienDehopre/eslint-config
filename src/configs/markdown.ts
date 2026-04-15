@@ -56,7 +56,7 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
     }),
   };
 
-  return tseslint.config(
+  return [
     {
       name: 'fabdeh/markdown/setup',
       plugins: {
@@ -125,6 +125,6 @@ export async function markdown(options: FilesOptions & OverridesOptions = {}): P
         ...markdownPlugin.configs.recommended.at(0)?.rules,
         'markdown/no-duplicate-headings': 'error',
       },
-    }
-  );
+    },
+  ];
 }

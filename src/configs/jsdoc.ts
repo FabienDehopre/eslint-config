@@ -2,7 +2,6 @@ import type { TSESLint } from '@typescript-eslint/utils';
 import type { StylisticOptions, TypedConfig } from '../shared/types';
 
 import jsdocPlugin from 'eslint-plugin-jsdoc';
-import tseslint from 'typescript-eslint';
 
 import { GLOB_SRC, GLOB_TS } from '../shared/globs';
 
@@ -82,7 +81,7 @@ export function getJsDocRules(
  */
 export function jsdoc(options: StylisticOptions = {}): TypedConfig[] {
   const { stylistic = true } = options;
-  return tseslint.config(
+  return [
     {
       name: 'fabdeh/jsdoc/rules',
       files: [GLOB_SRC],
@@ -93,6 +92,6 @@ export function jsdoc(options: StylisticOptions = {}): TypedConfig[] {
       name: 'fabdeh/jsdoc/ts-only/rules',
       files: [GLOB_TS],
       rules: getJsDocRules('warn', !!stylistic, 'tsOnly'),
-    }
-  );
+    },
+  ];
 }

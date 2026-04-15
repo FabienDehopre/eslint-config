@@ -1,7 +1,6 @@
 import type { NamingConventionOptions, NgrxOptions, TypedConfig } from '../shared/types';
 
 import { isPackageExists } from 'local-pkg';
-import tseslint from 'typescript-eslint';
 
 import { GLOB_TS_EXT } from '../shared/globs';
 import { interopDefault } from '../shared/utils';
@@ -176,5 +175,5 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
     });
   }
 
-  return tseslint.config(configs);
+  return configs;
 }

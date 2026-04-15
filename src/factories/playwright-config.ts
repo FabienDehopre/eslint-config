@@ -59,7 +59,6 @@ export function definePlaywrightConfig(
 
   configs.push(playwright(options));
 
-  // return tseslint.config(...resolvedBaseConfig, ...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfig[];
   let composer = new FlatConfigComposer<TypedConfig, ConfigNames>();
   composer = composer
     .append(
@@ -73,6 +72,7 @@ export function definePlaywrightConfig(
         'prefer-const',
         'unused-imports/no-unused-imports',
       ], {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         builtinRules: () => import('eslint/use-at-your-own-risk').then((m) => m.builtinRules),
       });
   }

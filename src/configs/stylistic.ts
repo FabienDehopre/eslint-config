@@ -1,7 +1,5 @@
 import type { StylisticConfig, StylisticOptions, TypedConfig } from '../shared/types';
 
-import tseslint from 'typescript-eslint';
-
 import { GLOB_SRC } from '../shared/globs';
 import { interopDefault } from '../shared/utils';
 
@@ -28,17 +26,19 @@ export async function stylistic(options: StylisticOptions = {}): Promise<TypedCo
   const stylisticPlugin = await interopDefault(import('@stylistic/eslint-plugin'));
   const config = stylisticPlugin.configs.customize(stylisticOptions);
 
-  return tseslint.config({
-    name: 'fabdeh/stylistic/rules',
-    files: [GLOB_SRC],
-    plugins: {
-      '@stylistic': stylisticPlugin,
+  return [
+    {
+      name: 'fabdeh/stylistic/rules',
+      files: [GLOB_SRC],
+      plugins: {
+        '@stylistic': stylisticPlugin,
+      },
+      rules: {
+        ...config.rules,
+        '@stylistic/comma-dangle': ['error', { arrays: 'always-multiline', objects: 'always-multiline' }],
+        '@stylistic/no-extra-semi': 'error',
+        '@stylistic/operator-linebreak': ['error', 'after', { overrides: { '?': 'before', ':': 'before' } }],
+      },
     },
-    rules: {
-      ...config.rules,
-      '@stylistic/comma-dangle': ['error', { arrays: 'always-multiline', objects: 'always-multiline' }],
-      '@stylistic/no-extra-semi': 'error',
-      '@stylistic/operator-linebreak': ['error', 'after', { overrides: { '?': 'before', ':': 'before' } }],
-    },
-  });
+  ];
 }

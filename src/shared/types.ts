@@ -42,7 +42,7 @@ export type TypedConfigWithExtends = TypedConfig & {
    * This is just a convenience shorthand to help reduce duplication.
    *
    * ```js
-   * export default tseslint.config({
+   * export default defineConfig({
    *   files: ['** /*.ts'],
    *   extends: [
    *     eslint.configs.recommended,

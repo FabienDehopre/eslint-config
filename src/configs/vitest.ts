@@ -8,7 +8,6 @@ import type {
 
 import globals from 'globals';
 import { isPackageExists } from 'local-pkg';
-import tseslint from 'typescript-eslint';
 
 import { GLOB_VITEST } from '../shared/globs';
 import { interopDefault, pathToGlobPattern } from '../shared/utils';
@@ -48,58 +47,60 @@ export async function vitest(options: FilesOptions & OverridesOptions & Playwrig
     useJestDom ? interopDefault(import('eslint-plugin-jest-dom')) : Promise.resolve(undefined),
     useTestingLibrary ? interopDefault(import('eslint-plugin-testing-library')) : Promise.resolve(undefined),
   ]);
-  return tseslint.config({
-    name: 'fabdeh/vitest/rules',
-    plugins: {
-      vitest: vitestPlugin,
-      ...(jestDomPlugin ? { 'jest-dom': jestDomPlugin } : {}),
-      ...(testingLibraryPlugin ? { 'testing-library': testingLibraryPlugin } : {}),
-    },
-    languageOptions: {
-      globals: {
-        ...globals.node,
-        ...(enableVitestGlobals ? vitestPlugin.environments.env.globals : {}),
+  return [
+    {
+      name: 'fabdeh/vitest/rules',
+      plugins: {
+        vitest: vitestPlugin,
+        ...(jestDomPlugin ? { 'jest-dom': jestDomPlugin } : {}),
+        ...(testingLibraryPlugin ? { 'testing-library': testingLibraryPlugin } : {}),
+      },
+      languageOptions: {
+        globals: {
+          ...globals.node,
+          ...(enableVitestGlobals ? vitestPlugin.environments.env.globals : {}),
+        },
+      },
+      settings: {
+        vitest: {
+          typecheck: true,
+        },
+      },
+      files,
+      ...(e2eFolderPath ? { ignores: [pathToGlobPattern()(e2eFolderPath)] } : {}),
+      rules: {
+        ...vitestPlugin.configs.recommended.rules,
+        ...(jestDomPlugin?.configs['flat/recommended'].rules),
+        ...(testingLibraryPlugin?.configs['flat/angular'].rules),
+        'max-classes-per-file': 'off',
+        'max-lines': 'off',
+        '@typescript-eslint/consistent-type-assertions': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-call': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/unbound-method': 'off',
+        'unicorn/no-null': 'off',
+        'vitest/consistent-test-it': ['error', { fn: 'test' }],
+        'vitest/no-standalone-expect': 'error',
+        'vitest/no-test-return-statement': 'error',
+        'vitest/prefer-called-exactly-once-with': 'off',
+        'vitest/prefer-hooks-in-order': 'error',
+        'vitest/prefer-hooks-on-top': 'error',
+        'vitest/prefer-lowercase-title': 'error',
+        'vitest/prefer-spy-on': 'error',
+        'vitest/prefer-to-be': 'error',
+        'vitest/prefer-to-be-falsy': 'error',
+        'vitest/prefer-to-be-object': 'error',
+        'vitest/prefer-to-be-truthy': 'error',
+        'vitest/prefer-to-contain': 'error',
+        'vitest/prefer-to-have-length': 'error',
+        'vitest/prefer-todo': 'error',
+        'vitest/prefer-vi-mocked': 'error',
+        'vitest/require-top-level-describe': 'error',
+        ...getJsDocRules('off', true, 'both'),
+        ...overrides,
       },
     },
-    settings: {
-      vitest: {
-        typecheck: true,
-      },
-    },
-    files,
-    ...(e2eFolderPath ? { ignores: [pathToGlobPattern()(e2eFolderPath)] } : {}),
-    rules: {
-      ...vitestPlugin.configs.recommended.rules,
-      ...(jestDomPlugin?.configs['flat/recommended'].rules),
-      ...(testingLibraryPlugin?.configs['flat/angular'].rules),
-      'max-classes-per-file': 'off',
-      'max-lines': 'off',
-      '@typescript-eslint/consistent-type-assertions': 'off',
-      '@typescript-eslint/no-empty-function': 'off',
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-unsafe-call': 'off',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
-      '@typescript-eslint/unbound-method': 'off',
-      'unicorn/no-null': 'off',
-      'vitest/consistent-test-it': ['error', { fn: 'test' }],
-      'vitest/no-standalone-expect': 'error',
-      'vitest/no-test-return-statement': 'error',
-      'vitest/prefer-called-exactly-once-with': 'off',
-      'vitest/prefer-hooks-in-order': 'error',
-      'vitest/prefer-hooks-on-top': 'error',
-      'vitest/prefer-lowercase-title': 'error',
-      'vitest/prefer-spy-on': 'error',
-      'vitest/prefer-to-be': 'error',
-      'vitest/prefer-to-be-falsy': 'error',
-      'vitest/prefer-to-be-object': 'error',
-      'vitest/prefer-to-be-truthy': 'error',
-      'vitest/prefer-to-contain': 'error',
-      'vitest/prefer-to-have-length': 'error',
-      'vitest/prefer-todo': 'error',
-      'vitest/prefer-vi-mocked': 'error',
-      'vitest/require-top-level-describe': 'error',
-      ...getJsDocRules('off', true, 'both'),
-      ...overrides,
-    },
-  });
+  ];
 }

@@ -9,7 +9,6 @@ import type {
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 import { findUpSync } from 'find-up-simple';
 import { isPackageExists } from 'local-pkg';
-import tseslint from 'typescript-eslint';
 
 import {
   angular,
@@ -90,15 +89,17 @@ export function defineConfig(
   if (enableGitignore) {
     if (typeof enableGitignore === 'object') {
       configs.push(
-        interopDefault(import('eslint-config-flat-gitignore')).then((r) =>
-          tseslint.config(r({ name: 'fabdeh/gitignore', ...enableGitignore }))
-        )
+        interopDefault(import('eslint-config-flat-gitignore')).then((r) => [r({
+          name: 'fabdeh/gitignore',
+          ...enableGitignore,
+        })])
       );
     } else {
       configs.push(
-        interopDefault(import('eslint-config-flat-gitignore')).then((r) =>
-          tseslint.config(r({ name: 'fabdeh/gitignore', strict: true }))
-        )
+        interopDefault(import('eslint-config-flat-gitignore')).then((r) => [r({
+          name: 'fabdeh/gitignore',
+          strict: true,
+        })])
       );
     }
   }
@@ -229,6 +230,7 @@ export function defineConfig(
         'prefer-const',
         'unused-imports/no-unused-imports',
       ], {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         builtinRules: () => import('eslint/use-at-your-own-risk').then((m) => m.builtinRules),
       });
   }

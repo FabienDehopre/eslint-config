@@ -1,7 +1,5 @@
 import type { FilesOptions, OverridesOptions, StylisticOptions, TypedConfig } from '../shared/types';
 
-import tseslint from 'typescript-eslint';
-
 import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../shared/globs';
 import { interopDefault } from '../shared/utils';
 
@@ -35,7 +33,7 @@ export async function jsonc(options: FilesOptions & OverridesOptions & Stylistic
     interopDefault(import('jsonc-eslint-parser')),
   ]);
 
-  return tseslint.config(
+  return [
     {
       name: 'fabdeh/jsonc/setup',
       plugins: {
@@ -91,6 +89,6 @@ export async function jsonc(options: FilesOptions & OverridesOptions & Stylistic
           : {},
         ...overrides,
       },
-    }
-  );
+    },
+  ];
 }
