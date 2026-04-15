@@ -40,7 +40,7 @@ import { interopDefault, isInEditorEnv, resolveSubOptions } from '../shared/util
  *
  * @param options - Configuration options.
  * @param userConfigs - Additional user configurations that can be awaited.
- * @returns A promise that resolves to a `ConfigArrayWithOptions`.
+ * @returns The merged ESLint configurations.
  * @example
  * ```typescript
  * import { defineWorkspaceConfig } from '@fabdeh/eslint-config';

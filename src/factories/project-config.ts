@@ -26,7 +26,7 @@ import { isInEditorEnv, resolveSubOptions } from '../shared/utils';
  * @param baseConfig - The base configuration to extend from.
  * @param options - Configuration options.
  * @param userConfigs - Additional user configurations that can be awaited.
- * @returns A promise that resolves to a `TypedConfig[]`.
+ * @returns The merged ESLint configurations.
  * @example
  * ```typescript
  * import { defineProjectConfig } from '@fabdeh/eslint-config';

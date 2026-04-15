@@ -44,7 +44,7 @@ import { getPlaywrightDirectory, interopDefault, isInEditorEnv, resolveSubOption
  *
  * @param options - Configuration options.
  * @param userConfigs - Additional user configurations that can be awaited.
- * @returns A promise that resolves to a `ConfigArrayWithOptions`.
+ * @returns The merged ESLint configurations.
  * @example
  * ```typescript
  * import { defineConfig } from '@fabdeh/eslint-config';
