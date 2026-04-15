@@ -1,4 +1,4 @@
-import type { Awaitable, DefineProjectConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../shared/types';
+import type { Awaitable, DefineProjectConfigOptions, TypedConfig, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../shared/types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -23,7 +23,7 @@ import { resolveSubOptions } from '../shared/utils';
  * @param baseConfig - The base configuration to extend from.
  * @param options - Configuration options.
  * @param userConfigs - Additional user configurations that can be awaited.
- * @returns A promise that resolves to a `TypedConfigArray`.
+ * @returns A promise that resolves to a `TypedConfig[]`.
  * @example
  * ```typescript
  * import baseConfig from '../../eslint.base.js';
@@ -35,7 +35,7 @@ export async function defineProjectConfig(
   baseConfig: Awaitable<TypedConfigArrayWithOptions>,
   options: DefineProjectConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<TypedConfigArray> {
+): Promise<TypedConfig[]> {
   const resolvedBaseConfig = await baseConfig;
   const workspaceOptions = resolvedBaseConfig[OPTIONS_SYMBOL];
   const {
@@ -51,7 +51,7 @@ export async function defineProjectConfig(
     throw new Error('NgRx rules can only be enabled if Angular rules are also enabled.');
   }
 
-  const configs: Awaitable<TypedConfigArray>[] = [];
+  const configs: Awaitable<TypedConfig[]>[] = [];
   const stylisticOptions = workspaceOptions.stylistic === false ? false : typeof workspaceOptions.stylistic === 'object' ? workspaceOptions.stylistic : {};
 
   if (options.ignores && options.ignores.length > 0) {
@@ -104,5 +104,5 @@ export async function defineProjectConfig(
     configs.push(tailwindcss({ ...tailwindcssOptions, stylistic: stylisticOptions }));
   }
 
-  return tseslint.config(...resolvedBaseConfig, ...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArray;
+  return tseslint.config(...resolvedBaseConfig, ...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfig[];
 }

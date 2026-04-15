@@ -1,5 +1,5 @@
 import type { TSESLint } from '@typescript-eslint/utils';
-import type { StylisticOptions, TypedConfig, TypedConfigArray } from '../shared/types';
+import type { StylisticOptions, TypedConfig } from '../shared/types';
 
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 import tseslint from 'typescript-eslint';
@@ -80,7 +80,7 @@ export function getJsDocRules(
  * @param options.stylistic - A boolean indicating whether to include stylistic rules. Defaults to true.
  * @returns A configuration array for JSDoc rules.
  */
-export function jsdoc(options: StylisticOptions = {}): TypedConfigArray {
+export function jsdoc(options: StylisticOptions = {}): TypedConfig[] {
   const { stylistic = true } = options;
   return tseslint.config(
     {

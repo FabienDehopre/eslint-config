@@ -1,4 +1,4 @@
-import type { DefineConfigOptions, TypedConfigArray } from '../src';
+import type { DefineConfigOptions, TypedConfig } from '../src';
 
 import { cp, readFile, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
@@ -21,7 +21,7 @@ describe('defineConfig factory fixtures', () => {
     await rm('_fixtures', { recursive: true, force: true });
   });
 
-  function runWithConfig(name: string, configs: DefineConfigOptions, ...items: TypedConfigArray): void {
+  function runWithConfig(name: string, configs: DefineConfigOptions, ...items: TypedConfig[]): void {
     test.concurrent(name, async ({ expect }) => {
       const from = resolve('fixtures/input');
       const output = resolve('fixtures/output', name);

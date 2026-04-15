@@ -1,4 +1,4 @@
-import type { Awaitable, DefineWorkspaceConfigOptions, TypedConfigArray, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../shared/types';
+import type { Awaitable, DefineWorkspaceConfigOptions, TypedConfig, TypedConfigArrayWithOptions, TypedConfigWithExtends } from '../shared/types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -54,7 +54,7 @@ export async function defineWorkspaceConfig(
   const stylisticOptions =
     options.stylistic === false ? false : typeof options.stylistic === 'object' ? options.stylistic : {};
 
-  const configs: Awaitable<TypedConfigArray>[] = [];
+  const configs: Awaitable<TypedConfig[]>[] = [];
   if (enableGitignore) {
     if (typeof enableGitignore === 'object') {
       configs.push(

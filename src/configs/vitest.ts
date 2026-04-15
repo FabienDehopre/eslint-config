@@ -2,7 +2,7 @@ import type {
   FilesOptions,
   OverridesOptions,
   PlaywrightOptions,
-  TypedConfigArray,
+  TypedConfig,
   UnitTestingOptions
 } from '../shared/types';
 
@@ -34,7 +34,7 @@ import { getJsDocRules } from './jsdoc';
  *   useTestingLibrary: false,
  * });
  */
-export async function vitest(options: FilesOptions & OverridesOptions & PlaywrightOptions & UnitTestingOptions = {}): Promise<TypedConfigArray> {
+export async function vitest(options: FilesOptions & OverridesOptions & PlaywrightOptions & UnitTestingOptions = {}): Promise<TypedConfig[]> {
   const {
     files = GLOB_VITEST,
     overrides = {},

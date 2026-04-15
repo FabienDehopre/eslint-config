@@ -3,7 +3,6 @@ import type {
   ConfigNames,
   DefineConfigOptions,
   TypedConfig,
-  TypedConfigArray,
   TypedConfigWithExtends
 } from '../shared/types';
 
@@ -86,7 +85,7 @@ export function defineConfig(
   const stylisticOptions =
     options.stylistic === false ? false : typeof options.stylistic === 'object' ? options.stylistic : {};
 
-  const configs: Awaitable<TypedConfigArray>[] = [];
+  const configs: Awaitable<TypedConfig[]>[] = [];
   if (enableGitignore) {
     if (typeof enableGitignore === 'object') {
       configs.push(
@@ -228,5 +227,5 @@ export function defineConfig(
   }
 
   return composer;
-  // return tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArray;
+  // return tseslint.config(...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfig[];
 }

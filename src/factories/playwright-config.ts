@@ -1,7 +1,7 @@
 import type {
   Awaitable,
   DefinePlaywrightConfigOptions,
-  TypedConfigArray,
+  TypedConfig,
   TypedConfigArrayWithOptions,
   TypedConfigWithExtends
 } from '../shared/types';
@@ -21,7 +21,7 @@ import { OPTIONS_SYMBOL, PLAYWRIGHT_PACKAGES } from '../shared/constants';
  * @param baseConfig - The base configuration to extend from.
  * @param options - Playwright-specific configuration options.
  * @param userConfigs - Additional user configurations that can be awaited.
- * @returns A promise that resolves to a `TypedConfigArray`.
+ * @returns A promise that resolves to a `TypedConfig[]`.
  * @example
  * ```typescript
  * import baseConfig from '../../eslint.base.js';
@@ -32,14 +32,14 @@ export async function definePlaywrightConfig(
   baseConfig: Awaitable<TypedConfigArrayWithOptions>,
   options: DefinePlaywrightConfigOptions = {},
   ...userConfigs: Awaitable<TypedConfigWithExtends | TypedConfigWithExtends[]>[]
-): Promise<TypedConfigArray> {
+): Promise<TypedConfig[]> {
   if (PLAYWRIGHT_PACKAGES.every((p) => !isPackageExists(p))) {
     throw new Error('Playwright rules require the "playwright" package to be installed.');
   }
 
   const resolvedBaseConfig = await baseConfig;
   const workspaceOptions = resolvedBaseConfig[OPTIONS_SYMBOL];
-  const configs: Awaitable<TypedConfigArray>[] = [];
+  const configs: Awaitable<TypedConfig[]>[] = [];
   if (options.ignores && options.ignores.length > 0) {
     configs.push(ignores(options.ignores, 'project'));
   }
@@ -50,5 +50,5 @@ export async function definePlaywrightConfig(
 
   configs.push(playwright(options));
 
-  return tseslint.config(...resolvedBaseConfig, ...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfigArray;
+  return tseslint.config(...resolvedBaseConfig, ...(await Promise.all(configs)), ...(await Promise.all(userConfigs))) as TypedConfig[];
 }

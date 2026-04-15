@@ -1,11 +1,11 @@
-import type { TypedConfigArray } from '../src/shared/types';
+import type { TypedConfig } from '../src/shared/types';
 
 export interface Suite<T> {
   name: string;
   configs: T;
 }
 
-export function serializeConfigs(configs: TypedConfigArray, ignoreConfigs: Set<string>): any[] {
+export function serializeConfigs(configs: TypedConfig[], ignoreConfigs: Set<string>): any[] {
   return configs.map((config) => {
     if (config.name && ignoreConfigs.has(config.name)) {
       return '<ignored>';

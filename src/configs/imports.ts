@@ -1,4 +1,4 @@
-import type { StylisticOptions, TypedConfigArray } from '../shared/types';
+import type { StylisticOptions, TypedConfig } from '../shared/types';
 
 import * as importX from 'eslint-plugin-import-x';
 import tseslint from 'typescript-eslint';
@@ -10,9 +10,9 @@ import { GLOB_SRC, GLOB_TS } from '../shared/globs';
  *
  * @param options - An object containing stylistic options.
  * @param options.stylistic - A boolean indicating whether to include stylistic rules. Defaults to true.
- * @returns A TypedConfigArray object with the specified import rules.
+ * @returns A TypedConfig[] object with the specified import rules.
  */
-export function imports(options: StylisticOptions = {}): TypedConfigArray {
+export function imports(options: StylisticOptions = {}): TypedConfig[] {
   const { stylistic = true } = options;
   return tseslint.config(
     {

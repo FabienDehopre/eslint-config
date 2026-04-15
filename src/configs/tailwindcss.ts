@@ -3,7 +3,7 @@ import type {
   OverridesOptions,
   StylisticOptions,
   TailwindCssOptions,
-  TypedConfigArray
+  TypedConfig
 } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
@@ -24,12 +24,12 @@ import { ensurePackages, interopDefault } from '../shared/utils';
  *   },
  * });
  */
-export async function tailwindcss(options: (FilesOptions & OverridesOptions & StylisticOptions & TailwindCssOptions) = {}): Promise<TypedConfigArray> {
+export async function tailwindcss(options: (FilesOptions & OverridesOptions & StylisticOptions & TailwindCssOptions) = {}): Promise<TypedConfig[]> {
   await ensurePackages(['eslint-plugin-better-tailwindcss']);
   const betterTailwindcssPlugin = await interopDefault(import('eslint-plugin-better-tailwindcss'));
   const { files: filesGlob, overrides, enableAllRules, parsers, stylistic = true, ...settings } = options;
   let files: { files?: string[] };
-  let parserConfigs: TypedConfigArray;
+  let parserConfigs: TypedConfig[];
   if (parsers) {
     files = { files: [...new Set(Object.keys(parsers))] };
     parserConfigs = Object.entries(parsers)

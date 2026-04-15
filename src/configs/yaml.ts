@@ -1,4 +1,4 @@
-import type { FilesOptions, OverridesOptions, StylisticOptions, TypedConfigArray } from '../shared/types';
+import type { FilesOptions, OverridesOptions, StylisticOptions, TypedConfig } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
@@ -14,9 +14,9 @@ import { interopDefault } from '../shared/utils';
  * @param options.stylistic - A boolean or object to specify stylistic rules. Defaults to `true`.
  * @param options.stylistic.indent - The number of spaces for indentation or 'tab'. Defaults to `2`.
  * @param options.stylistic.quotes - The type of quotes to use ('single', 'double', or 'backtick'). Defaults to `'single'`.
- * @returns A promise that resolves to a `TypedConfigArray` containing the ESLint configuration.
+ * @returns A promise that resolves to a `TypedConfig[]` containing the ESLint configuration.
  */
-export async function yaml(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<TypedConfigArray> {
+export async function yaml(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<TypedConfig[]> {
   const {
     files = [GLOB_YAML],
     overrides = {},

@@ -1,4 +1,4 @@
-import type { IsInEditorOptions, OverridesOptions, TypedConfigArray } from '../shared/types';
+import type { IsInEditorOptions, OverridesOptions, TypedConfig } from '../shared/types';
 
 import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
 import unusedImports from 'eslint-plugin-unused-imports';
@@ -24,7 +24,7 @@ import { GLOB_SRC } from '../shared/globs';
  */
 export function javascript(
   options: IsInEditorOptions & OverridesOptions = {}
-): TypedConfigArray {
+): TypedConfig[] {
   const {
     isInEditor = false,
     overrides = {},
