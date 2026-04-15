@@ -47,7 +47,9 @@ import { getPlaywrightDirectory, interopDefault, isInEditorEnv, resolveSubOption
  * @returns A promise that resolves to a `ConfigArrayWithOptions`.
  * @example
  * ```typescript
- * const config = await defineConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
+ * import { defineConfig } from '@fabdeh/eslint-config';
+ *
+ * export default defineConfig({ vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
  * ```
  */
 export function defineConfig(

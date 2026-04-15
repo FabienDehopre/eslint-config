@@ -25,9 +25,11 @@ import { isInEditorEnv } from '../shared/utils';
  * @returns A promise that resolves to a `TypedConfig[]`.
  * @example
  * ```typescript
+ * import { definePlaywrightConfig } from '@fabdeh/eslint-config';
+ *
  * import baseConfig from '../../eslint.base.js';
  *
- * const config = await definePlaywrightConfig(baseConfig, { ignores: ['playwright-report/**'] });
+ * export default definePlaywrightConfig(baseConfig, { ignores: ['playwright-report/**'] });
  */
 export function definePlaywrightConfig(
   baseConfig: FlatConfigComposerWithOptions<TypedConfig, ConfigNames>,

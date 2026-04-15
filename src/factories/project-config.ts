@@ -29,9 +29,11 @@ import { isInEditorEnv, resolveSubOptions } from '../shared/utils';
  * @returns A promise that resolves to a `TypedConfig[]`.
  * @example
  * ```typescript
+ * import { defineProjectConfig } from '@fabdeh/eslint-config';
+ *
  * import baseConfig from '../../eslint.base.js';
  *
- * const config = await defineProjectConfig(baseConfig, { vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
+ * export default defineProjectConfig(baseConfig, { vitest: true, typescript: { parserOptions: { project: './tsconfig.json' } } });
  * ```
  */
 export function defineProjectConfig(
