@@ -3,7 +3,7 @@ import type {
   NamingConventionOptions,
   OverridesOptions, ProjectTypeOptions, ProjectTypeScriptOptions,
   StylisticOptions,
-  TypedConfigArray,
+  TypedConfig,
   TypeScriptOptions,
   WorkspaceProjectType
 } from '../shared/types';
@@ -18,8 +18,8 @@ import { ensurePackages, getTsConfigFileName, getWorkspaceRoot, interopDefault }
 import { MEMBER_ORDERING_OPTIONS } from './rules-configs/member-ordering';
 import { namingConvention } from './rules-configs/naming-convention';
 
-export async function typescript(options?: NamingConventionOptions & OverridesOptions & ProjectTypeOptions<WorkspaceProjectType> & StylisticOptions & TypeScriptOptions): Promise<TypedConfigArray>;
-export async function typescript(options: OverridesOptions & ProjectTypeOptions & ProjectTypeScriptOptions, isWorkspaceProject: true): Promise<TypedConfigArray>;
+export async function typescript(options?: NamingConventionOptions & OverridesOptions & ProjectTypeOptions<WorkspaceProjectType> & StylisticOptions & TypeScriptOptions): Promise<TypedConfig[]>;
+export async function typescript(options: OverridesOptions & ProjectTypeOptions & ProjectTypeScriptOptions, isWorkspaceProject: true): Promise<TypedConfig[]>;
 
 /**
  * Generates a TypeScript ESLint configuration.
@@ -29,9 +29,9 @@ export async function typescript(options: OverridesOptions & ProjectTypeOptions 
  * @param options.parserOptions - Options for the TypeScript parser.
  * @param options.overrides - Additional rule overrides.
  * @param isWorkspaceProject - A boolean indicating whether the project is a workspace project. Defaults to false.
- * @returns A TypedConfigArray containing the TypeScript ESLint configuration.
+ * @returns A TypedConfig[] containing the TypeScript ESLint configuration.
  */
-export async function typescript(options: NamingConventionOptions & OverridesOptions & ProjectTypeOptions<WorkspaceProjectType> & StylisticOptions & TypeScriptOptions = {}, isWorkspaceProject = false): Promise<TypedConfigArray> {
+export async function typescript(options: NamingConventionOptions & OverridesOptions & ProjectTypeOptions<WorkspaceProjectType> & StylisticOptions & TypeScriptOptions = {}, isWorkspaceProject = false): Promise<TypedConfig[]> {
   const {
     enableErasableSyntaxOnly = false,
     overrides = {},

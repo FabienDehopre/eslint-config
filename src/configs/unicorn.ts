@@ -1,4 +1,4 @@
-import type { TypedConfigArray, UnicornOptions } from '../shared/types';
+import type { TypedConfig, UnicornOptions } from '../shared/types';
 
 import unicornPlugin from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
@@ -11,7 +11,7 @@ import { GLOB_SRC } from '../shared/globs';
  * @param [options] - The options to customize the Unicorn rules.
  * @returns The configuration array for the Unicorn plugin.
  */
-export function unicorn(options: UnicornOptions = {}): TypedConfigArray {
+export function unicorn(options: UnicornOptions = {}): TypedConfig[] {
   return tseslint.config({
     name: 'fabdeh/unicorn/rules',
     files: [GLOB_SRC],

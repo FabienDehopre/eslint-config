@@ -77,8 +77,6 @@ export type TypedConfigWithExtends = TypedConfig & {
   extends?: InfiniteDepthConfigWithExtends[];
 };
 
-export type TypedConfigArray = TypedConfig[];
-
 export type ExtractRuleOptionsType<RuleEntry> = RuleEntry extends Linter.RuleSeverityAndOptions<infer Options> ? Options : never;
 export type ArrayItemType<T> = T extends (infer U)[] ? U : never;
 
@@ -572,4 +570,4 @@ export type DefineConfigOptions = DefineWorkspaceConfigOptions & Omit<DefineProj
 /**
  * Return-type of the `defineWorkspaceConfig` function.
  */
-export type TypedConfigArrayWithOptions = TypedConfigArray & { [OPTIONS_SYMBOL]: DefineWorkspaceConfigOptions };
+export type TypedConfigArrayWithOptions = TypedConfig[] & { [OPTIONS_SYMBOL]: DefineWorkspaceConfigOptions };

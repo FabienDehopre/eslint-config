@@ -1,5 +1,5 @@
 import type { TSESLint } from '@typescript-eslint/utils';
-import type { FilesOptions, OverridesOptions, TypedConfigArray } from '../shared/types';
+import type { FilesOptions, OverridesOptions, TypedConfig } from '../shared/types';
 
 import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors';
 import tseslint from 'typescript-eslint';
@@ -16,7 +16,7 @@ import { interopDefault } from '../shared/utils';
  * @param options - An object containing file and override options.
  * @param options.files - An array of glob patterns to specify the Markdown files to lint.
  * @param options.overrides - An object containing rule overrides.
- * @returns A promise that resolves to a TypedConfigArray containing the ESLint configurations.
+ * @returns A promise that resolves to a TypedConfig[] containing the ESLint configurations.
  * @example
  * ```typescript
  * const config = await markdown({
@@ -27,7 +27,7 @@ import { interopDefault } from '../shared/utils';
  * });
  * ```
  */
-export async function markdown(options: FilesOptions & OverridesOptions = {}): Promise<TypedConfigArray> {
+export async function markdown(options: FilesOptions & OverridesOptions = {}): Promise<TypedConfig[]> {
   const {
     files = [GLOB_MARKDOWN],
     overrides = {},

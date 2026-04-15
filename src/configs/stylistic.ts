@@ -1,4 +1,4 @@
-import type { StylisticConfig, StylisticOptions, TypedConfigArray } from '../shared/types';
+import type { StylisticConfig, StylisticOptions, TypedConfig } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
@@ -20,7 +20,7 @@ export const STYLISTIC_CONFIG_DEFAULT: StylisticConfig = {
  * @example
  * const config = await stylistic({ semi: false });
  */
-export async function stylistic(options: StylisticOptions = {}): Promise<TypedConfigArray> {
+export async function stylistic(options: StylisticOptions = {}): Promise<TypedConfig[]> {
   const stylisticOptions: StylisticConfig = {
     ...STYLISTIC_CONFIG_DEFAULT,
     ...(typeof options.stylistic === 'boolean' ? {} : options.stylistic),

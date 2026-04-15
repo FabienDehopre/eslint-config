@@ -1,4 +1,4 @@
-import type { FilesOptions, OverridesOptions, PlaywrightOptions, TypedConfigArray } from '../shared/types';
+import type { FilesOptions, OverridesOptions, PlaywrightOptions, TypedConfig } from '../shared/types';
 
 import { join } from 'node:path';
 
@@ -23,7 +23,7 @@ import { getJsDocRules } from './jsdoc';
  *   },
  * });
  */
-export async function playwright(options: FilesOptions & OverridesOptions & PlaywrightOptions = {}): Promise<TypedConfigArray> {
+export async function playwright(options: FilesOptions & OverridesOptions & PlaywrightOptions = {}): Promise<TypedConfig[]> {
   const {
     e2eFolderPath = 'e2e',
     files = GLOB_TESTS.map((glob) => convertPathToPosix(join(e2eFolderPath, glob))),

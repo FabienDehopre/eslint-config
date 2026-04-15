@@ -1,4 +1,4 @@
-import type { TypedConfigArray } from '../shared/types';
+import type { TypedConfig } from '../shared/types';
 
 import nodePlugin from 'eslint-plugin-n';
 import tseslint from 'typescript-eslint';
@@ -10,7 +10,7 @@ import { GLOB_SRC } from '../shared/globs';
  *
  * @returns An array defining Node.js rules, plugins, and their configurations.
  */
-export function node(): TypedConfigArray {
+export function node(): TypedConfig[] {
   return tseslint.config(
     {
       name: 'fabdeh/node/rules',

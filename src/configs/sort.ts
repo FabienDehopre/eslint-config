@@ -1,4 +1,4 @@
-import type { TypedConfigArray } from '../shared/types';
+import type { TypedConfig } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
@@ -15,7 +15,7 @@ import tseslint from 'typescript-eslint';
  *
  * @returns The ESLint configuration array with sorting rules.
  */
-export function sortPackageJson(): TypedConfigArray {
+export function sortPackageJson(): TypedConfig[] {
   return tseslint.config({
     name: 'fabdeh/sort/package-json',
     files: ['**/package.json'],
@@ -127,7 +127,7 @@ export function sortPackageJson(): TypedConfigArray {
  *
  * @returns The TypeScript ESLint configuration array with sorting rules.
  */
-export function sortTsConfig(): TypedConfigArray {
+export function sortTsConfig(): TypedConfig[] {
   return tseslint.config({
     name: 'fabdeh/sort/tsconfig-json',
     files: ['**/tsconfig.json', '**/tsconfig.*.json'],

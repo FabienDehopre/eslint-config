@@ -1,4 +1,4 @@
-import type { FilesOptions, OverridesOptions, StylisticOptions, TypedConfigArray } from '../shared/types';
+import type { FilesOptions, OverridesOptions, StylisticOptions, TypedConfig } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
@@ -15,7 +15,7 @@ import { interopDefault } from '../shared/utils';
  * @param options.stylistic.indent - The indentation style for stylistic rules.
  * @returns A promise that resolves to the ESLint configuration array.
  */
-export async function toml(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<TypedConfigArray> {
+export async function toml(options: FilesOptions & OverridesOptions & StylisticOptions = {}): Promise<TypedConfig[]> {
   const {
     files = [GLOB_TOML],
     overrides = {},

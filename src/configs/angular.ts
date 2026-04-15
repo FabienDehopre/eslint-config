@@ -1,4 +1,4 @@
-import type { AngularOptions, TypedConfigArray } from '../shared/types';
+import type { AngularOptions, TypedConfig } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
@@ -15,7 +15,7 @@ import { interopDefault } from '../shared/utils';
  * @param options.prefix - The prefix to use for Angular component and directive selectors.
  * @returns A promise that resolves to an array of ESLint configurations.
  */
-export async function angular(options: AngularOptions = {}): Promise<TypedConfigArray> {
+export async function angular(options: AngularOptions = {}): Promise<TypedConfig[]> {
   const angularEslint = await interopDefault(import('angular-eslint'));
   const {
     enableAccessibilityRules = true,

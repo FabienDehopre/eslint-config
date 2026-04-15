@@ -1,5 +1,5 @@
 import type { TSESLint } from '@typescript-eslint/utils';
-import type { OverridesOptions, RegExpOptions, TypedConfigArray } from '../shared/types';
+import type { OverridesOptions, RegExpOptions, TypedConfig } from '../shared/types';
 
 import { configs } from 'eslint-plugin-regexp';
 import tseslint from 'typescript-eslint';
@@ -12,7 +12,7 @@ import { GLOB_SRC } from '../shared/globs';
  * @param options - The options
  * @returns The ESLint configuration for regexp linting
  */
-export function regexp(options: OverridesOptions & RegExpOptions = {}): TypedConfigArray {
+export function regexp(options: OverridesOptions & RegExpOptions = {}): TypedConfig[] {
   const { level, overrides } = options;
   const config = configs['flat/recommended'];
   const rules = Object.fromEntries(

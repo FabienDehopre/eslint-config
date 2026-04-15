@@ -1,4 +1,4 @@
-import type { TypedConfigArray } from '../shared/types';
+import type { TypedConfig } from '../shared/types';
 
 import process from 'node:process';
 
@@ -20,7 +20,7 @@ import { SORT_IMPORT_GROUPS, SORT_UNION_OR_INTERSECTION_GROUPS } from './rules-c
  * @returns The configuration array for the "perfectionist" plugin.
  * @see https://github.com/azat-io/eslint-plugin-perfectionist
  */
-export function perfectionist(): TypedConfigArray {
+export function perfectionist(): TypedConfig[] {
   const rootDir = getWorkspaceRoot(process.cwd(), process.cwd());
   return tseslint.config({
     name: 'fabdeh/perfectionist/rules',

@@ -1,4 +1,4 @@
-import type { NamingConventionOptions, NgrxOptions, TypedConfigArray } from '../shared/types';
+import type { NamingConventionOptions, NgrxOptions, TypedConfig } from '../shared/types';
 
 import { isPackageExists } from 'local-pkg';
 import tseslint from 'typescript-eslint';
@@ -37,7 +37,7 @@ const DEFAULT_SIGNALS_GLOB = [`**/*.store.${GLOB_TS_EXT}`];
  * });
  * ```
  */
-export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}): Promise<TypedConfigArray> {
+export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}): Promise<TypedConfig[]> {
   const ngrxPlugin = await interopDefault(import('@ngrx/eslint-plugin/v9'));
   const {
     store = isPackageExists('@ngrx/store'),
@@ -46,7 +46,7 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
     useRelaxedNamingConventionForCamelAndPascalCases = false,
   } = options;
 
-  const configs: TypedConfigArray = [];
+  const configs: TypedConfig[] = [];
   let addOperatorsRules = false;
   const registerPluginFiles = [];
   const ngrxOperatorsFiles = [];

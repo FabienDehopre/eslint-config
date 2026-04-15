@@ -1,4 +1,4 @@
-import type { TypedConfigArray } from '../shared/types';
+import type { TypedConfig } from '../shared/types';
 
 import tseslint from 'typescript-eslint';
 
@@ -9,7 +9,7 @@ import { interopDefault } from '../shared/utils';
  *
  * @returns An array defining PNPM workspace rules, plugins, and their configurations.
  */
-export async function pnpm(): Promise<TypedConfigArray> {
+export async function pnpm(): Promise<TypedConfig[]> {
   const [
     pluginPnpm,
     yamlParser,
