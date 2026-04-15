@@ -1,7 +1,6 @@
 import type { TypedConfig } from '../shared/types';
 
 import nodePlugin from 'eslint-plugin-n';
-import tseslint from 'typescript-eslint';
 
 import { GLOB_SRC } from '../shared/globs';
 
@@ -11,7 +10,7 @@ import { GLOB_SRC } from '../shared/globs';
  * @returns An array defining Node.js rules, plugins, and their configurations.
  */
 export function node(): TypedConfig[] {
-  return tseslint.config(
+  return [
     {
       name: 'fabdeh/node/rules',
       files: [GLOB_SRC],
@@ -31,6 +30,6 @@ export function node(): TypedConfig[] {
         'n/prefer-promises/fs': 'error',
         'n/process-exit-as-throw': 'error',
       },
-    }
-  );
+    },
+  ];
 }

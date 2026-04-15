@@ -52,7 +52,7 @@ export async function typescript(options: NamingConventionOptions & OverridesOpt
 
   const tsconfigRootDir = getWorkspaceRoot(process.cwd(), process.cwd());
   const defaultProject = getTsConfigFileName(tsconfigRootDir);
-  return tseslint.config(
+  return [
     {
       name: `fabdeh/${type}/typescript/setup`,
       files: [GLOB_TS],
@@ -177,6 +177,6 @@ export async function typescript(options: NamingConventionOptions & OverridesOpt
             ...erasableSyntaxOnlyRules,
             ...overrides,
           },
-        })
-  );
+        }),
+  ];
 }

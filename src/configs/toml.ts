@@ -1,7 +1,5 @@
 import type { FilesOptions, OverridesOptions, StylisticOptions, TypedConfig } from '../shared/types';
 
-import tseslint from 'typescript-eslint';
-
 import { GLOB_TOML } from '../shared/globs';
 import { interopDefault } from '../shared/utils';
 
@@ -24,7 +22,7 @@ export async function toml(options: FilesOptions & OverridesOptions & StylisticO
   const { indent = 2 } = typeof stylistic === 'object' ? stylistic : {};
   const tomlPlugin = await interopDefault(import('eslint-plugin-toml'));
 
-  return tseslint.config(
+  return [
     {
       name: 'fabdeh/toml/setup',
       plugins: {
@@ -62,6 +60,6 @@ export async function toml(options: FilesOptions & OverridesOptions & StylisticO
           : {},
         ...overrides,
       },
-    }
-  );
+    },
+  ];
 }

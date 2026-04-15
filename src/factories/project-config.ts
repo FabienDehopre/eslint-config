@@ -128,6 +128,7 @@ export function defineProjectConfig(
         'prefer-const',
         'unused-imports/no-unused-imports',
       ], {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         builtinRules: () => import('eslint/use-at-your-own-risk').then((m) => m.builtinRules),
       });
   }

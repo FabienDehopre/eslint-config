@@ -1,7 +1,5 @@
 import type { FilesOptions, OverridesOptions, StylisticOptions, TypedConfig } from '../shared/types';
 
-import tseslint from 'typescript-eslint';
-
 import { GLOB_YAML } from '../shared/globs';
 import { interopDefault } from '../shared/utils';
 
@@ -28,7 +26,7 @@ export async function yaml(options: FilesOptions & OverridesOptions & StylisticO
   } = typeof stylistic === 'object' ? stylistic : {};
   const yamlPlugin = await interopDefault(import('eslint-plugin-yml'));
 
-  return tseslint.config(
+  return [
     {
       name: 'fabdeh/yaml/setup',
       plugins: {
@@ -65,6 +63,6 @@ export async function yaml(options: FilesOptions & OverridesOptions & StylisticO
           : {},
         ...overrides,
       },
-    }
-  );
+    },
+  ];
 }

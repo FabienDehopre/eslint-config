@@ -1,7 +1,6 @@
 import type { StylisticOptions, TypedConfig } from '../shared/types';
 
 import * as importX from 'eslint-plugin-import-x';
-import tseslint from 'typescript-eslint';
 
 import { GLOB_SRC, GLOB_TS } from '../shared/globs';
 
@@ -14,7 +13,7 @@ import { GLOB_SRC, GLOB_TS } from '../shared/globs';
  */
 export function imports(options: StylisticOptions = {}): TypedConfig[] {
   const { stylistic = true } = options;
-  return tseslint.config(
+  return [
     {
       name: 'fabdeh/imports/rules',
       files: [GLOB_SRC],
@@ -53,6 +52,6 @@ export function imports(options: StylisticOptions = {}): TypedConfig[] {
         'import-x/named': 'off',
         'import-x/no-deprecated': 'off',
       },
-    }
-  );
+    },
+  ];
 }

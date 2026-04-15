@@ -2,7 +2,6 @@ import type { TSESLint } from '@typescript-eslint/utils';
 import type { OverridesOptions, RegExpOptions, TypedConfig } from '../shared/types';
 
 import { configs } from 'eslint-plugin-regexp';
-import tseslint from 'typescript-eslint';
 
 import { GLOB_SRC } from '../shared/globs';
 
@@ -20,7 +19,7 @@ export function regexp(options: OverridesOptions & RegExpOptions = {}): TypedCon
       .map(([ruleName, ruleLevel]) => [ruleName, level === 'warn' ? level : ruleLevel])
   ) as TSESLint.FlatConfig.Config['rules'];
 
-  return tseslint.config(
+  return [
     {
       name: 'fabdeh/regexp/rules',
       files: [GLOB_SRC],
@@ -31,6 +30,6 @@ export function regexp(options: OverridesOptions & RegExpOptions = {}): TypedCon
         ...rules,
         ...overrides,
       },
-    }
-  );
+    },
+  ];
 }

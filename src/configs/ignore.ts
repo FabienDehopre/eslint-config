@@ -1,7 +1,5 @@
 import type { TypedConfig } from '../shared/types';
 
-import tseslint from 'typescript-eslint';
-
 import { GLOB_EXCLUDE } from '../shared/globs';
 
 /**
@@ -12,8 +10,10 @@ import { GLOB_EXCLUDE } from '../shared/globs';
  * @returns A TypedConfig[] object containing the combined "ignore" patterns.
  */
 export function ignores(userIgnores: string[] = [], fromFactory?: 'project' | 'workspace'): TypedConfig[] {
-  return tseslint.config({
-    name: `fabdeh/ignores${fromFactory ? `/${fromFactory}` : ''}`,
-    ignores: [...(!fromFactory || fromFactory === 'workspace' ? GLOB_EXCLUDE : []), ...userIgnores],
-  });
+  return [
+    {
+      name: `fabdeh/ignores${fromFactory ? `/${fromFactory}` : ''}`,
+      ignores: [...(!fromFactory || fromFactory === 'workspace' ? GLOB_EXCLUDE : []), ...userIgnores],
+    },
+  ];
 }

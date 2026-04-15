@@ -6,8 +6,6 @@ import type {
   TypedConfig
 } from '../shared/types';
 
-import tseslint from 'typescript-eslint';
-
 import { GLOB_HTML, GLOB_SRC } from '../shared/globs';
 import { ensurePackages, interopDefault } from '../shared/utils';
 
@@ -45,7 +43,7 @@ export async function tailwindcss(options: (FilesOptions & OverridesOptions & St
     parserConfigs = [];
   }
 
-  return tseslint.config(
+  return [
     ...parserConfigs,
     {
       name: 'fabdeh/tailwindcss/rules',
@@ -67,6 +65,6 @@ export async function tailwindcss(options: (FilesOptions & OverridesOptions & St
             }
           : {}),
       },
-    }
-  );
+    },
+  ];
 }

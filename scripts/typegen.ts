@@ -45,6 +45,7 @@ async function writePluginRulesDeclarationsFile(pluginName: string, plugin: ESLi
 const configNamesSet = new Set<string>();
 const ruleOptionsSet = new Set<string>();
 await writePluginRulesDeclarationsFile('default', {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   rules: Object.fromEntries(builtinRules.entries()),
 });
 ruleOptionsSet.add('default');

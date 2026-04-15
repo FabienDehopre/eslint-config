@@ -30,7 +30,7 @@ export function javascript(
     overrides = {},
   } = options;
 
-  return tseslint.config(
+  return [
     {
       name: 'fabdeh/javascript/setup',
       languageOptions: {
@@ -271,6 +271,6 @@ export function javascript(
         '@typescript-eslint/no-this-alias': 'error',
         ...overrides,
       },
-    }
-  );
+    },
+  ];
 }
