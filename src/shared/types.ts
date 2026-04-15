@@ -196,16 +196,6 @@ export interface AngularOptions {
   prefix?: string[] | string;
 
   /**
-   * TypeScript-specific linting rule overrides.
-   */
-  tsOverrides?: TypedConfig['rules'];
-
-  /**
-   * HTML-specific linting rule overrides.
-   */
-  htmlOverrides?: TypedConfig['rules'];
-
-  /**
    * A class name pattern that allows service using `@Injectable` decorator to not use `providedIn` option.
    */
   ignoreClassNamePatternForInjectableProvidedIn?: string;
@@ -551,7 +541,7 @@ export interface DefineProjectConfigOptions extends IgnoresOptions, ProjectTypeO
    *
    * @default auto-detect based on the dependencies.
    */
-  angular?: AngularOptions | boolean;
+  angular?: boolean | (AngularOptions & OverridesOptions);
 
   /**
    * Options for the ngrx linting rules.
