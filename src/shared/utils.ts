@@ -144,6 +144,56 @@ export async function ensurePackages(packages: (string | undefined)[]): Promise<
   }
 }
 
+/**
+ * Detects whether the current process is running in an interactive editor environment.
+ *
+ * The check returns `false` in CI and Git hook\/`lint-staged` contexts to avoid
+ * editor-specific behavior in non-interactive executions.
+ *
+ * Editor detection is based on common environment variables from VS Code,
+ * JetBrains IDEs, Vim\/Neovim, and Zed.
+ *
+ * @returns `true` when execution appears to be inside a supported editor; otherwise `false`.
+ */
+export function isInEditorEnv(): boolean {
+  if (process.env['CI']) {
+    return false;
+  }
+
+  if (isInGitHooksOrLintStaged()) {
+    return false;
+  }
+
+  /* eslint-disable @typescript-eslint/no-unnecessary-condition,no-constant-binary-expression,@typescript-eslint/prefer-nullish-coalescing */
+  return !!(false ||
+    process.env['VSCODE_PID'] ||
+    process.env['VSCODE_CWD'] ||
+    process.env['JETBRAINS_IDE'] ||
+    process.env['VIM'] ||
+    process.env['NVIM'] ||
+    (process.env['ZED_ENVIRONMENT'] && !process.env['ZED_TERM'])
+  );
+  /* eslint-enable @typescript-eslint/no-unnecessary-condition,no-constant-binary-expression,@typescript-eslint/prefer-nullish-coalescing */
+}
+
+/**
+ * Detects whether the current process is running from a Git hook or `lint\-staged`.
+ *
+ * It checks common environment variables set by Git tooling and npm lifecycle scripts.
+ *
+ * @returns `true` when execution appears to be in a Git hook or `lint\-staged` context.
+ */
+export function isInGitHooksOrLintStaged(): boolean {
+  /* eslint-disable @typescript-eslint/no-unnecessary-condition,no-constant-binary-expression,@typescript-eslint/prefer-nullish-coalescing */
+  return !!(false ||
+    process.env['GIT_PARAMS'] ||
+    process.env['VSCODE_GIT_COMMAND'] ||
+    process.env['npm_lifecycle_script']?.startsWith('lint-staged') ||
+    process.env['npm_lifecycle_script']?.startsWith('nano-staged')
+  );
+  /* eslint-enable @typescript-eslint/no-unnecessary-condition,no-constant-binary-expression,@typescript-eslint/prefer-nullish-coalescing */
+}
+
 export type ResolvedOptions<T> = T extends boolean ? never : NonNullable<T>;
 
 /**

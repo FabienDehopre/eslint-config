@@ -62,6 +62,15 @@ export async function defineConfig(
     vitest: enableVitest = isPackageExists('vitest'),
   } = options;
 
+  let isInEditor = options.isInEditor;
+  if (isInEditor === undefined) {
+    isInEditor = isInEditorEnv();
+    if (isInEditor) {
+      // eslint-disable-next-line no-console
+      console.log('[@fabdeh/eslint-config] Detected running in editor, some rules are disabled.');
+    }
+  }
+
   if (enableNgrx && !enableAngular) {
     throw new Error('NgRx rules can only be enabled if Angular rules are also enabled.');
   }
@@ -88,7 +97,7 @@ export async function defineConfig(
 
   configs.push(
     ignores(options.ignores),
-    javascript({ overrides: options.javascript?.overrides }),
+    javascript({ isInEditor, overrides: options.javascript?.overrides }),
     comments(),
     node(),
     imports({ stylistic: stylisticOptions }),

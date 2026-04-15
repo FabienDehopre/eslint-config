@@ -114,6 +114,13 @@ export interface IgnoresOptions {
 }
 
 /**
+ * Options describing whether the config is being evaluated in an editor context.
+ */
+export interface IsInEditorOptions {
+  isInEditor?: boolean;
+}
+
+/**
  * Options for configuring the behavior of the Unicorn config.
  */
 export interface UnicornOptions {
@@ -408,7 +415,7 @@ export interface ProjectTypeScriptOptions {
  *
  * @see defineWorkspaceConfig function
  */
-export interface DefineWorkspaceConfigOptions extends IgnoresOptions {
+export interface DefineWorkspaceConfigOptions extends IgnoresOptions, IsInEditorOptions {
   /**
    * Enable gitignore support.
    *
