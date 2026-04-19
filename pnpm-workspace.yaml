@@ -9,11 +9,8 @@ minimumReleaseAgeExclude:
 shellEmulator: true
 
 trustPolicy: no-downgrade
-
-
 packages:
   - fixtures/*
-
 catalog:
   '@angular/core': ^21.2.6
   '@antfu/install-pkg': ^1.1.0
@@ -46,7 +43,7 @@ catalog:
   change-case: ^5.4.4
   changelogithub: ^14.0.0
   commitizen: ^4.3.1
-  eslint: ^10.1.0
+  eslint: ^9.38.0
   eslint-config-flat-gitignore: ^2.3.0
   eslint-flat-config-utils: ^3.0.2
   eslint-merge-processors: ^2.0.0
@@ -73,6 +70,7 @@ catalog:
   fs-extra: ^11.3.4
   glob: ^13.0.6
   globals: ^17.4.0
+  inquirer: ^9.0.0
   is-ci: ^4.1.0
   jiti: ^2.6.1
   jsonc-eslint-parser: ^3.1.0
@@ -89,8 +87,9 @@ catalog:
   vitest: ^4.1.2
   yaml-eslint-parser: ^2.0.0
   zod: ^3.25.0
-
 onlyBuiltDependencies:
   - esbuild
   - simple-git-hooks
   - unrs-resolver
+
+

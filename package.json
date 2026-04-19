@@ -55,7 +55,7 @@
     "test": "vitest"
   },
   "peerDependencies": {
-    "eslint": "^9.38.0 || ^10.0.0",
+    "eslint": "^9.38.0",
     "eslint-plugin-better-tailwindcss": "catalog:",
     "eslint-plugin-erasable-syntax-only": "catalog:"
   },
@@ -133,6 +133,7 @@
     "eslint-typegen": "catalog:",
     "execa": "catalog:",
     "fs-extra": "catalog:",
+    "inquirer": "catalog:",
     "is-ci": "catalog:",
     "jiti": "catalog:",
     "nano-staged": "catalog:",
