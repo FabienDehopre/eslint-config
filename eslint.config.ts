@@ -15,7 +15,7 @@ export default defineConfig(
   },
   {
     name: 'project/ignores',
-    ignores: ['**/fixtures/**', '**/_fixtures/**', '**/typegen/**'],
+    ignores: ['**/fixtures/**', '**/_fixtures/**', '**/typegen/**', '.agents/**', '.claude/**'],
   },
   {
     name: 'project/overrides',

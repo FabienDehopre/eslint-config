@@ -151,7 +151,7 @@
     "commit-msg": "pnpm commitlint --edit ${1}"
   },
   "nano-staged": {
-    "*": "eslint --fix"
+    "*": "eslint --fix --pass-on-no-patterns --no-error-on-unmatched-pattern"
   },
   "config": {
     "commitizen": {
