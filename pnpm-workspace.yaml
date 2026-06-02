@@ -4,8 +4,8 @@ minimumReleaseAgeExclude:
   - '@fabdeh/*'
 shellEmulator: true
 trustPolicy: no-downgrade
-trustPolicyExclude:
-  - cached-factory@0.1.0
+trustPolicyIgnoreAfter: 43200 # 30 days
+trustLockfile: true
 blockExoticSubdeps: true
 packages:
   - fixtures/*
