@@ -85,8 +85,7 @@ catalog:
   vitest: ^4.1.5
   yaml-eslint-parser: ^2.0.0
   zod: ^3.25.0
-onlyBuiltDependencies:
-  - esbuild
-  - simple-git-hooks
-  - unrs-resolver
-
+allowBuilds:
+  esbuild: false
+  simple-git-hooks: false
+  unrs-resolver: false
