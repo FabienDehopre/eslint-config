@@ -14,31 +14,22 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - name: Setup PNPM
-        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
         with:
           run_install: false
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: lts/*
+          check-latest: true
           cache: pnpm
           registry-url: 'https://registry.npmjs.org'
-      - name: Use latest corepack
-        run: |
-          echo "Before: corepack version => $(corepack --version || echo 'not installed')"
-          npm install -g corepack@latest
-          echo "After: corepack version => $(corepack --version)"
-          corepack enable
-          pnpm --version
-      - name: Install dependencies
-        run: pnpm install
-      - name: Get version tag
+          package-manager-cache: false # never uise caching in release publish
+      - run: pnpm install
+      - name: Get dist-tag
         id: get-version-tag
         run: |
           echo "dist-tag=$(node -p "require('semver/functions/prerelease')(require('./package.json').version) === null ? 'latest' : 'next'")" >> $GITHUB_OUTPUT
-      - name: Publish to NPM
-        run: pnpm publish --tag $DIST_TAG
+      - run: pnpm publish --tag $DIST_TAG
         env:
           NPM_CONFIG_PROVENANCE: true
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           DIST_TAG: ${{ steps.get-version-tag.outputs.dist-tag }}

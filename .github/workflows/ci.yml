@@ -19,24 +19,15 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
-      - name: Setup PNPM
-        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
         with:
           run_install: false
-      - name: Use Node.js LTS
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: lts/*
+          check-latest: true
           cache: pnpm
-      - name: Use latest corepack
-        run: |
-          echo "Before: corepack version => $(corepack --version || echo 'not installed')"
-          npm install -g corepack@latest
-          echo "After: corepack version => $(corepack --version)"
-          corepack enable
-          pnpm --version
-      - name: Install dependencies
-        run: pnpm install
+      - run: pnpm install --frozen-lockfile --recursive
       - name: Validate current commit (last commit) with commitlint
         if: github.event_name == 'push'
         run: pnpm commitlint --last --verbose
@@ -45,15 +36,9 @@ jobs:
         if: github.event_name == 'pull_request'
         run: pnpm commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
         continue-on-error: true
-      - name: Generate Rules Types
-        run: pnpm gen
-      - name: Do a Type Check
-        run: pnpm typecheck
-      - name: Build the project
-        run: pnpm build:ci
-      - name: Check code quality and style using ESLint
-        run: pnpm lint:ci
-      - name: Check exports
-        run: pnpm check-exports
-      - name: Run tests
-        run: pnpm test
+      - run: pnpm gen
+      - run: pnpm typecheck
+      - run: pnpm build:ci
+      - run: pnpm lint:ci
+      - run: pnpm check-exports
+      - run: pnpm test
