@@ -83,7 +83,7 @@
     "eslint-flat-config-utils": "catalog:",
     "eslint-merge-processors": "catalog:",
     "eslint-plugin-import-x": "catalog:",
-    "eslint-plugin-jest-dom": "catalog:",
+    "eslint-plugin-jest-dom-ya": "catalog:",
     "eslint-plugin-jsdoc": "catalog:",
     "eslint-plugin-jsonc": "catalog:",
     "eslint-plugin-n": "catalog:",

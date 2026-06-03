@@ -44,7 +44,7 @@ export async function vitest(options: FilesOptions & OverridesOptions & Playwrig
   } = options;
   const [vitestPlugin, jestDomPlugin, testingLibraryPlugin] = await Promise.all([
     interopDefault(import('@vitest/eslint-plugin')),
-    useJestDom ? interopDefault(import('eslint-plugin-jest-dom')) : Promise.resolve(undefined),
+    useJestDom ? interopDefault(import('eslint-plugin-jest-dom-ya')) : Promise.resolve(undefined),
     useTestingLibrary ? interopDefault(import('eslint-plugin-testing-library')) : Promise.resolve(undefined),
   ]);
   return [
