@@ -80,7 +80,7 @@ catalog:
   tailwindcss: ^4.3.0
   tsdown: ^0.22.1
   tsx: ^4.22.4
-  typescript: ^5.9.3
+  typescript: ^6.0.3
   typescript-eslint: ^8.60.0
   vitest: ^4.1.8
   yaml-eslint-parser: ^2.0.0
