@@ -2,6 +2,7 @@
   "version": "1.0.0",
   "name": "fixture-package",
   "private": true,
+  "type": "module",
   "scripts": {
     "zlint": "eslint .",
     "alint": "eslint . --fix"
