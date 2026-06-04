@@ -52,7 +52,7 @@ export async function vitest(options: FilesOptions & OverridesOptions & Playwrig
       name: 'fabdeh/vitest/rules',
       plugins: {
         vitest: vitestPlugin,
-        ...(jestDomPlugin ? { 'jest-dom': jestDomPlugin } : {}),
+        ...(jestDomPlugin ? { 'jest-dom-ya': jestDomPlugin } : {}),
         ...(testingLibraryPlugin ? { 'testing-library': testingLibraryPlugin } : {}),
       },
       languageOptions: {
