@@ -1,7 +1,7 @@
 {
   "name": "@fabdeh/eslint-config",
   "type": "module",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "packageManager": "pnpm@11.5.1",
   "description": "My personal eslint config preset",
   "author": {
