@@ -36,6 +36,7 @@ catalog:
   '@typescript-eslint/utils': ^8.60.0
   '@vitest/coverage-v8': ^4.1.8
   '@vitest/eslint-plugin': ^1.6.19
+  '@vitest/ui': ^4.1.8
   angular-eslint: ^21.4.0
   bumpp: ^11.1.0
   change-case: ^5.4.4

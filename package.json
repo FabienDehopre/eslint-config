@@ -52,7 +52,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.src.json && tsc --noEmit -p tsconfig.test.json",
     "gen": "tsx scripts/typegen.ts",
     "validate-pr-title": "tsx scripts/validate-pr-title.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "test:ui": "vitest --ui"
   },
   "peerDependencies": {
     "eslint": "^9.38.0 || ^10.0.0",
@@ -123,6 +124,7 @@
     "@types/fs-extra": "catalog:",
     "@types/node": "catalog:",
     "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
     "bumpp": "catalog:",
     "change-case": "catalog:",
     "changelogithub": "catalog:",
