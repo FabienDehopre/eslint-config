@@ -4,6 +4,7 @@
     "moduleDetection": "force",
     "module": "preserve",
     "moduleResolution": "bundler",
+    "types": ["node"],
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
