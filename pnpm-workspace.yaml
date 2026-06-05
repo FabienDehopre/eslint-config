@@ -1,4 +1,5 @@
 catalogMode: strict
+cleanupUnusedCatalogs: true
 minimumReleaseAge: 4320
 minimumReleaseAgeExclude:
   - '@fabdeh/*'
