@@ -15,7 +15,7 @@ allowBuilds:
   simple-git-hooks: false
   unrs-resolver: false
 overrides:
-  '@angular/core': 'catalog:'
+  '@angular/core': 'catalog:' # to remove once @ngrx/* deps support Angular 22
   inquirer: ^12.0.0
 catalog:
   '@angular/core': ^22.0.0
