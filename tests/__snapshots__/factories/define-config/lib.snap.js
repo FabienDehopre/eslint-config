@@ -1137,9 +1137,7 @@
     "files": [
       "pnpm-workspace.yaml",
     ],
-    "languageOptions": {
-      "parser": "yaml-eslint-parser",
-    },
+    "language": "yaml/yaml",
     "name": "fabdeh/pnpm/pnpm-workspace-yaml",
     "plugins": [
       "pnpm",
@@ -1154,9 +1152,7 @@
     "files": [
       "pnpm-workspace.yaml",
     ],
-    "languageOptions": {
-      "parser": "yaml-eslint-parser",
-    },
+    "language": "yaml/yaml",
     "name": "fabdeh/pnpm/pnpm-workspace-yaml-sort",
     "plugins": [
       "yaml",
