@@ -208,13 +208,6 @@ export interface AngularOptions {
   componentStylesMode?: 'array' | 'string';
 
   /**
-   * Indicates whether all component should use `OnPush` change strategy or not.
-   *
-   * @default true
-   */
-  preferOnPushOnly?: boolean;
-
-  /**
    * Disallow using code which is marked as experimental.
    *
    * @default true
