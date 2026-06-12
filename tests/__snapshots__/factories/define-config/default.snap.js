@@ -1099,7 +1099,7 @@
     "languageOptions": {
       "parser": "yaml-eslint-parser",
     },
-    "name": "antfu/pnpm/pnpm-workspace-yaml-sort",
+    "name": "fabdeh/pnpm/pnpm-workspace-yaml-sort",
     "plugins": [
       "yaml",
     ],
