@@ -94,6 +94,7 @@ export async function pnpm(options: IsInEditorOptions & PnpmOptions = {}): Promi
         language: 'yaml/yaml',
         rules: {
           'pnpm/yaml-enforce-settings': ['error', {
+            autofix: !isInEditor,
             settings: {
               shellEmulator: true,
               trustPolicy: 'no-downgrade',
