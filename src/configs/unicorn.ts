@@ -19,6 +19,7 @@ export function unicorn(options: UnicornOptions = {}): TypedConfig[] {
       rules: {
         ...(options.allRecommended
           ? unicornPlugin.configs.recommended.rules
+          // TODO: check new rules
           // TODO: compare with recommended rules
           : {
               'unicorn/catch-error-name': 'error',
