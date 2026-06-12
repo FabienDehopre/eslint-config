@@ -116,7 +116,7 @@ export async function pnpm(options: IsInEditorOptions & PnpmOptions = {}): Promi
       languageOptions: {
         parser: yamlParser,
       },
-      name: 'antfu/pnpm/pnpm-workspace-yaml-sort',
+      name: 'fabdeh/pnpm/pnpm-workspace-yaml-sort',
       plugins: {
         yaml: pluginYaml,
       },
