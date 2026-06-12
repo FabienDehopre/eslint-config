@@ -103,8 +103,7 @@
     "globals": "catalog:",
     "jsonc-eslint-parser": "catalog:",
     "local-pkg": "catalog:",
-    "typescript-eslint": "catalog:",
-    "yaml-eslint-parser": "catalog:"
+    "typescript-eslint": "catalog:"
   },
   "devDependencies": {
     "@angular/core": "catalog:",

@@ -35,11 +35,9 @@ export async function pnpm(options: IsInEditorOptions & PnpmOptions = {}): Promi
   const [
     pluginPnpm,
     pluginYaml,
-    yamlParser,
   ] = await Promise.all([
     interopDefault(import('eslint-plugin-pnpm')),
     interopDefault(import('eslint-plugin-yml')),
-    interopDefault(import('yaml-eslint-parser')),
   ]);
 
   const {
@@ -56,10 +54,10 @@ export async function pnpm(options: IsInEditorOptions & PnpmOptions = {}): Promi
       {
         name: 'fabdeh/pnpm/package-json',
         files: ['package.json', '**/package.json'],
-        language: 'jsonc/x',
         plugins: {
           pnpm: pluginPnpm,
         },
+        language: 'jsonc/x',
         rules: {
           ...(catalogs
             ? {
@@ -90,12 +88,10 @@ export async function pnpm(options: IsInEditorOptions & PnpmOptions = {}): Promi
       {
         name: 'fabdeh/pnpm/pnpm-workspace-yaml',
         files: ['pnpm-workspace.yaml'],
-        languageOptions: {
-          parser: yamlParser,
-        },
         plugins: {
           pnpm: pluginPnpm,
         },
+        language: 'yaml/yaml',
         rules: {
           'pnpm/yaml-enforce-settings': ['error', {
             settings: {
@@ -112,14 +108,12 @@ export async function pnpm(options: IsInEditorOptions & PnpmOptions = {}): Promi
 
   if (sort) {
     configs.push({
-      files: ['pnpm-workspace.yaml'],
-      languageOptions: {
-        parser: yamlParser,
-      },
       name: 'fabdeh/pnpm/pnpm-workspace-yaml-sort',
+      files: ['pnpm-workspace.yaml'],
       plugins: {
         yaml: pluginYaml,
       },
+      language: 'yaml/yaml',
       rules: {
         'yaml/sort-keys': [
           'error',

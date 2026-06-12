@@ -222,9 +222,6 @@ catalogs:
     vitest:
       specifier: ^4.1.8
       version: 4.1.8
-    yaml-eslint-parser:
-      specifier: ^2.0.0
-      version: 2.0.0
     zod:
       specifier: ^3.25.0
       version: 3.25.76
@@ -342,9 +339,6 @@ importers:
       typescript-eslint:
         specifier: 'catalog:'
         version: 8.61.0(eslint@10.4.1(jiti@2.7.0))(typescript@6.0.3)
-      yaml-eslint-parser:
-        specifier: 'catalog:'
-        version: 2.0.0
     devDependencies:
       '@angular/core':
         specifier: ^22.0.0
