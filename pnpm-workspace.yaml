@@ -18,7 +18,8 @@ overrides:
   '@angular/core': 'catalog:' # to remove once @ngrx/* deps support Angular 22
   inquirer: ^12.0.0
 catalog:
-  '@angular/core': ^22.0.0
+  '@angular/cli': ^22.0.1
+  '@angular/core': ^22.0.1
   '@antfu/install-pkg': ^1.1.0
   '@arethetypeswrong/cli': ^0.18.3
   '@clack/prompts': ^1.5.1
@@ -38,23 +39,23 @@ catalog:
   '@testing-library/angular': ^19.4.1
   '@testing-library/jest-dom': ^6.9.1
   '@types/fs-extra': ^11.0.4
-  '@types/node': ^24.13.1
+  '@types/node': ^24.13.2
   '@typescript-eslint/eslint-plugin': ^8.61.0
   '@typescript-eslint/parser': ^8.61.0
   '@typescript-eslint/utils': ^8.61.0
-  '@vitest/coverage-v8': ^4.1.8
-  '@vitest/eslint-plugin': ^1.6.19
-  '@vitest/ui': ^4.1.8
+  '@vitest/coverage-v8': ^4.1.9
+  '@vitest/eslint-plugin': ^1.6.20
+  '@vitest/ui': ^4.1.9
   angular-eslint: ^22.0.0
   bumpp: ^11.1.0
   change-case: ^5.4.4
   changelogithub: ^14.0.0
-  commitizen: ^4.3.1
-  eslint: ^10.4.1
+  commitizen: ^4.3.2
+  eslint: ^10.5.0
   eslint-config-flat-gitignore: ^2.3.0
   eslint-flat-config-utils: ^3.2.0
   eslint-merge-processors: ^2.0.0
-  eslint-plugin-better-tailwindcss: ^4.5.0
+  eslint-plugin-better-tailwindcss: ^4.6.0
   eslint-plugin-erasable-syntax-only: ^0.4.1
   eslint-plugin-import-x: ^4.16.2
   #  eslint-plugin-jest-dom: ^5.5.0 # not compatible with eslint v10, see https://github.com/testing-library/eslint-plugin-jest-dom/issues/417
@@ -84,12 +85,12 @@ catalog:
   local-pkg: ^1.2.1
   nano-staged: ^1.0.2
   playwright: ^1.60.0
-  semver: ^7.8.3
+  semver: ^7.8.4
   simple-git-hooks: ^2.13.1
-  tailwindcss: ^4.3.0
+  tailwindcss: ^4.3.1
   tsdown: ^0.22.2
   tsx: ^4.22.4
   typescript: ^6.0.3
   typescript-eslint: ^8.61.0
-  vitest: ^4.1.8
+  vitest: ^4.1.9
   zod: ^3.25.0
