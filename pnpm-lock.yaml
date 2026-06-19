@@ -232,6 +232,7 @@ catalogs:
 overrides:
   '@angular/core': ^22.0.1
   inquirer: ^12.0.0
+  pacote: ^21.5.1
 
 importers:
 
@@ -4066,8 +4067,8 @@ packages:
   package-manager-detector@1.6.0:
     resolution: {integrity: sha512-61A5ThoTiDG/C8s8UMZwSorAGwMJ0ERVGj2OjoW5pAalsNOg15+iQiPzrLJ4jhZ1HJzmC2PIHT2oEiH3R5fzNA==}
 
-  pacote@21.5.0:
-    resolution: {integrity: sha512-VtZ0SB8mb5Tzw3dXDfVAIjhyVKUHZkS/ZH9/5mpKenwC9sFOXNI0JI7kEF7IMkwOnsWMFrvAZHzx1T5fmrp9FQ==}
+  pacote@21.5.1:
+    resolution: {integrity: sha512-KvcJ9iy3crysCsgqc4+PknH/w6jkrp8JN36mpZBPwNaDRwTfMZD37YzRazNstiZUOhuF5pno9f78n9mEJBavwg==}
     engines: {node: ^20.17.0 || >=22.9.0}
     hasBin: true
 
@@ -5185,7 +5186,7 @@ snapshots:
       jsonc-parser: 3.3.1
       listr2: 10.2.1
       npm-package-arg: 13.0.2
-      pacote: 21.5.0
+      pacote: 21.5.1
       parse5-html-rewriting-stream: 8.0.1
       semver: 7.7.4
       yargs: 18.0.0
@@ -8842,7 +8843,7 @@ snapshots:
 
   package-manager-detector@1.6.0: {}
 
-  pacote@21.5.0:
+  pacote@21.5.1:
     dependencies:
       '@gar/promise-retry': 1.0.3
       '@npmcli/git': 7.0.2
