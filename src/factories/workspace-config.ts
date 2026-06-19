@@ -7,8 +7,8 @@ import type {
   TypedConfigWithExtends
 } from '../shared/types';
 
+import { up as findUp } from 'empathic/find';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
-import { findUpSync } from 'find-up-simple';
 import { isPackageExists } from 'local-pkg';
 
 import {
@@ -55,7 +55,7 @@ export function defineWorkspaceConfig(
   const {
     gitignore: enableGitignore = true,
     // eslint-disable-next-line @angular-eslint/no-experimental
-    pnpm: enableCatalogs = !!findUpSync('pnpm-workspace.yaml'),
+    pnpm: enableCatalogs = !!findUp('pnpm-workspace.yaml'),
     regexp: enableRegexp = true,
     typescript: enableTypescript = isPackageExists('typescript'),
     unicorn: enableUnicorn = true,
