@@ -52,6 +52,7 @@ catalog:
   change-case: ^5.4.4
   changelogithub: ^14.0.0
   commitizen: ^4.3.2
+  empathic: ^2.0.1
   eslint: ^10.5.0
   eslint-config-flat-gitignore: ^2.3.0
   eslint-flat-config-utils: ^3.2.0

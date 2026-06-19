@@ -80,6 +80,7 @@
     "@typescript-eslint/utils": "catalog:",
     "@vitest/eslint-plugin": "catalog:",
     "angular-eslint": "catalog:",
+    "empathic": "catalog:",
     "eslint-config-flat-gitignore": "catalog:",
     "eslint-flat-config-utils": "catalog:",
     "eslint-merge-processors": "catalog:",
