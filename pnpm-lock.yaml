@@ -230,7 +230,7 @@ catalogs:
       version: 3.25.76
 
 overrides:
-  '@angular/core': ^22.0.1
+  '@angular/core': ^22.0.2
   inquirer: ^12.0.0
   pacote: ^21.5.1
 
@@ -348,7 +348,7 @@ importers:
         specifier: 'catalog:'
         version: 22.0.2(@types/node@24.13.2)(chokidar@5.0.0)
       '@angular/core':
-        specifier: ^22.0.1
+        specifier: ^22.0.2
         version: 22.0.2(rxjs@7.8.2)
       '@arethetypeswrong/cli':
         specifier: 'catalog:'
@@ -619,7 +619,7 @@ packages:
     resolution: {integrity: sha512-O9Qk60/OQQuZXMeXRfOpsq+/B609nd5KIxjSZFddRQUfSMZrdvVDNK0irjgYVKGDkMx3dqCiQ8a4nAIdGy7V6A==}
     engines: {node: ^22.22.3 || ^24.15.0 || >=26.0.0}
     peerDependencies:
-      '@angular/core': ^22.0.1
+      '@angular/core': ^22.0.2
       rxjs: ^6.5.3 || ^7.4.0
 
   '@angular/core@22.0.2':
@@ -641,7 +641,7 @@ packages:
     peerDependencies:
       '@angular/animations': 22.0.0
       '@angular/common': 22.0.0
-      '@angular/core': ^22.0.1
+      '@angular/core': ^22.0.2
     peerDependenciesMeta:
       '@angular/animations':
         optional: true
@@ -651,7 +651,7 @@ packages:
     engines: {node: ^22.22.3 || ^24.15.0 || >=26.0.0}
     peerDependencies:
       '@angular/common': 22.0.0
-      '@angular/core': ^22.0.1
+      '@angular/core': ^22.0.2
       '@angular/platform-browser': 22.0.0
       rxjs: ^6.5.3 || ^7.4.0
 
@@ -1409,7 +1409,7 @@ packages:
   '@ngrx/effects@21.1.1':
     resolution: {integrity: sha512-JQUv2tYyjkbdsE40WYtJDsiI+3qtn4V5m0Ybr2CYw9zKpVQshDV5MLLAni+SuijlHAWJkw8x4wwnYmNyG/Rmng==}
     peerDependencies:
-      '@angular/core': ^22.0.1
+      '@angular/core': ^22.0.2
       '@ngrx/store': 21.1.1
       rxjs: ^6.5.3 || ^7.5.0
 
@@ -1429,7 +1429,7 @@ packages:
   '@ngrx/signals@21.1.1':
     resolution: {integrity: sha512-AXxsvO39cJ4gu2GMvLyUHwx+3qHi35Bn7OUqyIfJW0fffi/Af7ML6h0MPMWDHVROo55FBgxzJrYRswwzdew9VA==}
     peerDependencies:
-      '@angular/core': ^22.0.1
+      '@angular/core': ^22.0.2
       rxjs: ^6.5.3 || ^7.4.0
     peerDependenciesMeta:
       rxjs:
@@ -1438,7 +1438,7 @@ packages:
   '@ngrx/store@21.1.1':
     resolution: {integrity: sha512-B0/IyBTqBExmwPAmrpcJrhlrn+FeeitvOW8ltf7O3kJb2vRKduV5Oi34GLiwYQ8eAukTbKyWQv/VV02gxLeEMg==}
     peerDependencies:
-      '@angular/core': ^22.0.1
+      '@angular/core': ^22.0.2
       rxjs: ^6.5.3 || ^7.5.0
 
   '@npmcli/agent@4.0.2':
@@ -1758,7 +1758,7 @@ packages:
     resolution: {integrity: sha512-C9gIfKf3cpkLqNoUy0pbz8/YpmxyFQTZP6Qzo9HrolQPyVSMdc0+ev3vewCouZDyQQwfRkJNlpgjaHHyhL9oqw==}
     peerDependencies:
       '@angular/common': '>= 21.0.0'
-      '@angular/core': ^22.0.1
+      '@angular/core': ^22.0.2
       '@angular/platform-browser': '>= 21.0.0'
       '@angular/router': '>= 21.0.0'
       '@testing-library/dom': ^10.0.0

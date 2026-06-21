@@ -20,7 +20,7 @@ overrides:
   pacote: ^21.5.1 # to remove once @angular/cli and angular-eslint uses pacote >=21.5.1 to avoid DoS vulnerability
 catalog:
   '@angular/cli': ^22.0.2
-  '@angular/core': ^22.0.1
+  '@angular/core': ^22.0.2
   '@antfu/install-pkg': ^1.1.0
   '@arethetypeswrong/cli': ^0.18.3
   '@clack/prompts': ^1.5.1
@@ -95,6 +95,3 @@ catalog:
   typescript-eslint: ^8.61.1
   vitest: ^4.1.9
   zod: ^3.25.0
-catalogs:
-  conflicts_@angular/core_h22_0_2:
-    '@angular/core': ^22.0.2
