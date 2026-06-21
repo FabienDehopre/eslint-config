@@ -6,8 +6,8 @@ import type {
   TypedConfigWithExtends
 } from '../shared/types';
 
+import { up as findUp } from 'empathic/find';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
-import { findUpSync } from 'find-up-simple';
 import { isPackageExists } from 'local-pkg';
 
 import {
@@ -63,7 +63,7 @@ export function defineConfig(
     ngrx: enableNgrx = NGRX_PACKAGES.some((p) => isPackageExists(p)),
     playwright: enablePlaywright = PLAYWRIGHT_PACKAGES.some((p) => isPackageExists(p)),
     // eslint-disable-next-line @angular-eslint/no-experimental
-    pnpm: enableCatalogs = !!findUpSync('pnpm-workspace.yaml'),
+    pnpm: enableCatalogs = !!findUp('pnpm-workspace.yaml'),
     regexp: enableRegexp = true,
     tailwindcss: enableTailwind = false,
     typescript: enableTypescript = isPackageExists('typescript'),

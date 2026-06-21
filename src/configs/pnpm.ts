@@ -2,7 +2,7 @@ import type { IsInEditorOptions, PnpmOptions, TypedConfig } from '../shared/type
 
 import { readFile } from 'node:fs/promises';
 
-import { findUp } from 'find-up-simple';
+import { up as findUp } from 'empathic/find';
 
 import { interopDefault } from '../shared/utils';
 
@@ -16,7 +16,7 @@ import { interopDefault } from '../shared/utils';
  * @returns `true` when catalog configuration is present; otherwise `false`.
  */
 async function detectCatalogUsage(): Promise<boolean> {
-  const workspaceFile = await findUp('pnpm-workspace.yaml');
+  const workspaceFile = findUp('pnpm-workspace.yaml');
   if (!workspaceFile) {
     return false;
   }
