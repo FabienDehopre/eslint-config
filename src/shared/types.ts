@@ -174,6 +174,14 @@ export interface NamingConventionOptions {
    * @default false
    */
   useRelaxedNamingConventionForCamelAndPascalCases?: boolean;
+
+  /**
+   * Indicates whether function names should allow PascalCase in addition to camelCase.
+   * Enable this when using JSX/TSX syntax.
+   *
+   * @default false
+   */
+  allowJsx?: boolean;
 }
 
 /**

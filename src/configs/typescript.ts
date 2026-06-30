@@ -39,6 +39,7 @@ export async function typescript(options: NamingConventionOptions & OverridesOpt
     stylistic = true,
     type = 'app',
     useRelaxedNamingConventionForCamelAndPascalCases = false,
+    allowJsx = false,
   } = options;
 
   let erasableSyntaxOnlyPlugin: TSESLint.FlatConfig.Plugin | undefined;
@@ -142,7 +143,7 @@ export async function typescript(options: NamingConventionOptions & OverridesOpt
               : { '@typescript-eslint/explicit-module-boundary-types': 'error' }),
             '@typescript-eslint/member-ordering': ['error', MEMBER_ORDERING_OPTIONS],
             '@typescript-eslint/method-signature-style': 'error',
-            '@typescript-eslint/naming-convention': ['error', ...namingConvention(!useRelaxedNamingConventionForCamelAndPascalCases)],
+            '@typescript-eslint/naming-convention': ['error', ...namingConvention(!useRelaxedNamingConventionForCamelAndPascalCases, allowJsx)],
             '@typescript-eslint/no-base-to-string': 'error',
             '@typescript-eslint/no-confusing-non-null-assertion': 'error',
             '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
