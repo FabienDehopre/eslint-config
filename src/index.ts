@@ -1,5 +1,6 @@
 export * from './config-presets';
 export * from './configs';
+export * from './factories/playwright-config';
 export * from './factories/project-config';
 export * from './factories/standard-config';
 export * from './factories/workspace-config';
