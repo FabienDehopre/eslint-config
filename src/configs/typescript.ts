@@ -125,7 +125,12 @@ export async function typescript(options: NamingConventionOptions & OverridesOpt
               fixStyle: 'separate-type-imports',
               prefer: 'type-imports',
             }],
-            '@typescript-eslint/dot-notation': 'error',
+            '@typescript-eslint/dot-notation': [
+              'error',
+              {
+                allowIndexSignaturePropertyAccess: true,
+              },
+            ],
             ...(type === 'lib'
               ? {
                   '@typescript-eslint/explicit-function-return-type': [
