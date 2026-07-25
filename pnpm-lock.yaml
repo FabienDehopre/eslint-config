@@ -10,8 +10,8 @@ catalogs:
       specifier: ^22.0.7
       version: 22.0.7
     '@antfu/install-pkg':
-      specifier: ^1.1.0
-      version: 1.1.0
+      specifier: ^2.0.1
+      version: 2.0.1
     '@arethetypeswrong/cli':
       specifier: ^0.18.5
       version: 0.18.5
@@ -60,9 +60,12 @@ catalogs:
     '@testing-library/angular':
       specifier: ^19.4.1
       version: 19.4.1
+    '@testing-library/dom':
+      specifier: ^10.4.1
+      version: 10.4.1
     '@testing-library/jest-dom':
-      specifier: ^6.9.1
-      version: 6.9.1
+      specifier: ^7.0.0
+      version: 7.0.0
     '@types/fs-extra':
       specifier: ^11.0.4
       version: 11.0.4
@@ -91,8 +94,8 @@ catalogs:
       specifier: ^22.1.0
       version: 22.1.0
     bumpp:
-      specifier: ^11.1.0
-      version: 11.1.0
+      specifier: ^12.0.0
+      version: 12.0.0
     change-case:
       specifier: ^5.4.4
       version: 5.4.4
@@ -172,8 +175,8 @@ catalogs:
       specifier: ^2.3.1
       version: 2.3.1
     execa:
-      specifier: ^9.6.1
-      version: 9.6.1
+      specifier: ^10.0.0
+      version: 10.0.0
     fs-extra:
       specifier: ^11.3.6
       version: 11.3.6
@@ -231,9 +234,9 @@ catalogs:
 
 overrides:
   '@angular/core': ^22.0.7
+  conventional-changelog-conventionalcommits: ^9.3.1
   inquirer: ^12.0.0
   pacote: ^21.5.1
-  conventional-changelog-conventionalcommits: ^9.3.1
 
 importers:
 
@@ -241,7 +244,7 @@ importers:
     dependencies:
       '@antfu/install-pkg':
         specifier: 'catalog:'
-        version: 1.1.0
+        version: 2.0.1
       '@clack/prompts':
         specifier: 'catalog:'
         version: 1.7.0
@@ -387,9 +390,12 @@ importers:
       '@testing-library/angular':
         specifier: 'catalog:'
         version: 19.4.1(@angular/common@22.0.0(@angular/core@22.0.7(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.7(rxjs@7.8.2))(@angular/platform-browser@22.0.0(@angular/common@22.0.0(@angular/core@22.0.7(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.7(rxjs@7.8.2)))(@angular/router@22.0.0(@angular/common@22.0.0(@angular/core@22.0.7(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.7(rxjs@7.8.2))(@angular/platform-browser@22.0.0(@angular/common@22.0.0(@angular/core@22.0.7(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.7(rxjs@7.8.2)))(rxjs@7.8.2))(@testing-library/dom@10.4.1)
+      '@testing-library/dom':
+        specifier: 'catalog:'
+        version: 10.4.1
       '@testing-library/jest-dom':
         specifier: 'catalog:'
-        version: 6.9.1
+        version: 7.0.0(@testing-library/dom@10.4.1)
       '@types/fs-extra':
         specifier: 'catalog:'
         version: 11.0.4
@@ -404,7 +410,7 @@ importers:
         version: 4.1.10(vitest@4.1.10)
       bumpp:
         specifier: 'catalog:'
-        version: 11.1.0
+        version: 12.0.0
       change-case:
         specifier: 'catalog:'
         version: 5.4.4
@@ -428,7 +434,7 @@ importers:
         version: 2.3.1(eslint@10.7.0(jiti@2.7.0))
       execa:
         specifier: 'catalog:'
-        version: 9.6.1
+        version: 10.0.0
       fs-extra:
         specifier: 'catalog:'
         version: 11.3.6
@@ -656,8 +662,8 @@ packages:
       '@angular/platform-browser': 22.0.0
       rxjs: ^6.5.3 || ^7.4.0
 
-  '@antfu/install-pkg@1.1.0':
-    resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
+  '@antfu/install-pkg@2.0.1':
+    resolution: {integrity: sha512-iCKVQcIC0e3oDxEfs3SHQGW+ovhBMZmS1TE+bTk50rVyMCBmCfClv7Qi3HQKlumYwvjb/iIMeWCW2i67q6kFfQ==}
 
   '@apidevtools/json-schema-ref-parser@14.2.1':
     resolution: {integrity: sha512-HmdFw9CDYqM6B25pqGBpNeLCKvGPlIx1EbLrVL0zPvj50CJQUHyBNBw45Muk0kEIkogo1VZvOKHajdMuAzSxRg==}
@@ -1745,9 +1751,11 @@ packages:
     resolution: {integrity: sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg==}
     engines: {node: '>=18'}
 
-  '@testing-library/jest-dom@6.9.1':
-    resolution: {integrity: sha512-zIcONa+hVtVSSep9UT3jZ5rizo2BsxgyDYU7WFD5eICBE7no3881HGeb/QkGfsJs6JTkY1aQhT7rIPC7e+0nnA==}
-    engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
+  '@testing-library/jest-dom@7.0.0':
+    resolution: {integrity: sha512-HKAH9C6mBo5yBG6yRO5i43L2iisencAo5z+o5P/saHUoY+miC5ivXRxHBJcFyB5ypPNxHJdK3BoF/3O4DIptMg==}
+    engines: {node: '>=22', npm: '>=6', yarn: '>=1'}
+    peerDependencies:
+      '@testing-library/dom': '>=10 <11'
 
   '@tufjs/canonical-json@2.0.0':
     resolution: {integrity: sha512-yVtV8zsdo8qFHe+/3kw81dSLyF7D576A5cCFCi4X7B39tWT7SekaEFUnvnWJHz+9qO7qJTah1JbrDjWKqFtdWA==}
@@ -2342,9 +2350,9 @@ packages:
     resolution: {integrity: sha512-hMQUl2bUFG339QygPM97E+mc8OY1IAchORZxm4a/frcYwKzozMzRVDBwHW0NjOqGElLm2O37AVQE8ikxlZHrMQ==}
     engines: {node: '>=18.20'}
 
-  bumpp@11.1.0:
-    resolution: {integrity: sha512-jdwOGMyX8JIqpQ0N2RMRR87DHZaoJnUtui5lU9LqFfFK5JC0H8qY9uWqXoa+dEWt/K7rOmmsoyiZB8RBM7RPBQ==}
-    engines: {node: '>=20.19.0'}
+  bumpp@12.0.0:
+    resolution: {integrity: sha512-2uuObtROJvEGZJk4T6t3fDgUAmgDYF0PeSZt23GCn1ItxECvR+ROVJNYT7r1lS8nIMJae6IkIgcDEIbT5iwWAA==}
+    engines: {node: ^22.18.0 || ^24.11.0 || >=26.0.0}
     hasBin: true
 
   bundle-name@4.1.0:
@@ -3061,6 +3069,10 @@ packages:
   eventsource@3.0.7:
     resolution: {integrity: sha512-CRT1WTyuQoD771GW56XEZFQ/ZoSfWid1alKGDYMmkt2yl8UXrVR4pspqWNEcqKvVIzg6PAltWjxcSSPrboA4iA==}
     engines: {node: '>=18.0.0'}
+
+  execa@10.0.0:
+    resolution: {integrity: sha512-Cxl6MKxB1dr1H0FHmiizJ+lavKF7pV+fcDZFyqMB8d5m7qUPm/OtZYcD5vPWePKxSnTQ57KuBd9mtdZ3oNCvyQ==}
+    engines: {node: '>=22'}
 
   execa@9.6.1:
     resolution: {integrity: sha512-9Be3ZoN4LmYR90tUoVu2te2BsbzHfhJyfEiAVfz7N5/zv+jduIfLrV2xdQXOHbaD6KgpGdO9PRPM1Y4Q9QkPkA==}
@@ -4971,6 +4983,11 @@ packages:
       jsdom:
         optional: true
 
+  which-command@0.1.0:
+    resolution: {integrity: sha512-XZyoF5/5hZtXitIwzrU4NKK+Wtbb9aB9CezUEw2Q0wlYK8NUYQxC1rRXgNueYLtBAJwXIb+/tFVk4dozciNJMA==}
+    engines: {node: '>=22'}
+    hasBin: true
+
   which@1.3.1:
     resolution: {integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==}
     hasBin: true
@@ -5322,7 +5339,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@antfu/install-pkg@1.1.0':
+  '@antfu/install-pkg@2.0.1':
     dependencies:
       package-manager-detector: 1.8.0
       tinyexec: 1.2.4
@@ -6330,9 +6347,10 @@ snapshots:
       picocolors: 1.1.1
       pretty-format: 27.5.1
 
-  '@testing-library/jest-dom@6.9.1':
+  '@testing-library/jest-dom@7.0.0(@testing-library/dom@10.4.1)':
     dependencies:
       '@adobe/css-tools': 4.5.0
+      '@testing-library/dom': 10.4.1
       aria-query: 5.3.2
       css.escape: 1.5.1
       dom-accessibility-api: 0.6.3
@@ -6881,16 +6899,16 @@ snapshots:
 
   builtin-modules@5.3.0: {}
 
-  bumpp@11.1.0:
+  bumpp@12.0.0:
     dependencies:
       args-tokenizer: 0.3.0
       cac: 7.0.0
       jsonc-parser: 3.3.1
       package-manager-detector: 1.8.0
-      semver: 7.8.5
       tinyexec: 1.2.4
       tinyglobby: 0.2.17
       unconfig: 7.5.0
+      verkit: 0.1.2
       yaml: 2.9.0
 
   bundle-name@4.1.0:
@@ -7696,6 +7714,22 @@ snapshots:
   eventsource@3.0.7:
     dependencies:
       eventsource-parser: 3.1.0
+
+  execa@10.0.0:
+    dependencies:
+      '@sindresorhus/merge-streams': 4.0.0
+      figures: 6.1.0
+      get-stream: 9.0.1
+      human-signals: 8.0.1
+      is-plain-obj: 4.1.0
+      is-stream: 4.0.1
+      npm-run-path: 6.0.0
+      path-key: 4.0.0
+      pretty-ms: 9.3.0
+      signal-exit: 4.1.0
+      strip-final-newline: 4.0.0
+      which-command: 0.1.0
+      yoctocolors: 2.1.2
 
   execa@9.6.1:
     dependencies:
@@ -9781,6 +9815,8 @@ snapshots:
       '@vitest/ui': 4.1.10(vitest@4.1.10)
     transitivePeerDependencies:
       - msw
+
+  which-command@0.1.0: {}
 
   which@1.3.1:
     dependencies:

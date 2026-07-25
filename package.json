@@ -120,6 +120,7 @@
     "@ngrx/signals": "catalog:",
     "@ngrx/store": "catalog:",
     "@testing-library/angular": "catalog:",
+    "@testing-library/dom": "catalog:",
     "@testing-library/jest-dom": "catalog:",
     "@types/fs-extra": "catalog:",
     "@types/node": "catalog:",
