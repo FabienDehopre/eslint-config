@@ -1064,6 +1064,7 @@
       "better-tailwindcss",
     ],
     "rules": [
+      "better-tailwindcss/no-concatenated-classes",
       "better-tailwindcss/no-conflicting-classes",
       "better-tailwindcss/no-unknown-classes",
       "better-tailwindcss/enforce-consistent-class-order",
