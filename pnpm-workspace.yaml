@@ -18,7 +18,6 @@ overrides:
   '@angular/core': 'catalog:' # to remove once @ngrx/* deps support Angular 22
   conventional-changelog-conventionalcommits: ^9.3.1 # v10 is ESM-only, breaks commitlint's CJS require.resolve
   inquirer: ^12.0.0
-  pacote: ^21.5.1 # to remove once @angular/cli and angular-eslint uses pacote >=21.5.1 to avoid DoS vulnerability
 catalog:
   '@angular/cli': ^22.1.2
   '@angular/core': ^22.1.0
