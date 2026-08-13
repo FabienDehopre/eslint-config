@@ -65,6 +65,7 @@ export async function angular(options: AngularOptions & OverridesOptions = {}): 
               'Output',
               'Pipe',
               'Self',
+              'Service',
               'SkipSelf',
               'ViewChild',
               'ViewChildren',
