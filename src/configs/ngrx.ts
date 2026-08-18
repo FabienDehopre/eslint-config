@@ -135,16 +135,22 @@ export async function ngrx(options: NamingConventionOptions & NgrxOptions = {}):
         ...ngrxPlugin.configs.signals.find((c) => c.name === 'ngrx/signals')?.rules,
         '@typescript-eslint/naming-convention': [
           'error',
-          ...namingConvention(!useRelaxedNamingConventionForCamelAndPascalCases),
+          ...namingConvention(!useRelaxedNamingConventionForCamelAndPascalCases, false),
           {
             selector: ['objectLiteralProperty', 'objectLiteralMethod'],
-            format: ['camelCase'],
+            format: [useRelaxedNamingConventionForCamelAndPascalCases ? 'camelCase' : 'strictCamelCase'],
+            leadingUnderscore: 'allow',
+          },
+          {
+            selector: 'parameter',
+            modifiers: ['destructured'],
+            format: [useRelaxedNamingConventionForCamelAndPascalCases ? 'camelCase' : 'strictCamelCase'],
             leadingUnderscore: 'allow',
           },
           {
             selector: 'variable',
             modifiers: ['const', 'global', 'exported'],
-            format: ['PascalCase'],
+            format: [useRelaxedNamingConventionForCamelAndPascalCases ? 'PascalCase' : 'StrictPascalCase'],
             leadingUnderscore: 'forbid',
             trailingUnderscore: 'forbid',
             suffix: ['Store'],
