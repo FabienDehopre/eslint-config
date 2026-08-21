@@ -33,3 +33,17 @@ pnpm gen         # regenerate src/typegen/*.d.ts only
 3. Import and wire it into the relevant factories in `src/factories/`.
 4. Run `pnpm gen` to regenerate types.
 5. Add snapshot test coverage in `tests/define-config-factory-snap.test.ts` and update snapshots with `pnpm test -u`.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live as GitHub issues on `FabienDehopre/eslint-config`, managed with the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default five-label vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
