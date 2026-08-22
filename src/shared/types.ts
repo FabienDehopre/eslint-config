@@ -124,7 +124,8 @@ export interface IsInEditorOptions {
  */
 export interface UnicornOptions {
   /**
-   * If set to `true`, enables all recommended settings from unicorn plugin.
+   * If set to `true`, enables all recommended settings from unicorn plugin, on top of (not instead of)
+   * the curated rule set, so no curated rule is downgraded by the plugin's own recommended set.
    *
    * @default false
    */

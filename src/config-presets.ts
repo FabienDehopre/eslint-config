@@ -11,12 +11,12 @@ export const CONFIG_PRESET_FULL_ON: DefineConfigOptions = {
   pnpm: true,
   regexp: true,
   stylistic: { experimental: true },
-  tailwindcss: true,
+  tailwindcss: { enableAllRules: true },
   toml: true,
   typescript: {
     enableErasableSyntaxOnly: true,
   },
-  unicorn: true,
+  unicorn: { allRecommended: true },
   vitest: true,
   yaml: true,
 };

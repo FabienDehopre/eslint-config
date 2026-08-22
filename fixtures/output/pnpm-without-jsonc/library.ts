@@ -1,8 +1,8 @@
 import { existsSync } from 'node:fs';
-import { join } from 'node:path';
+import path from 'node:path';
 
 const API = {
-  path: join('src', 'lib'),
+  path: path.join('src', 'lib'),
   exists: existsSync('.'),
 };
 

@@ -1,4 +1,4 @@
-import { basename } from 'node:path';
+import path from 'node:path';
 
 const parts = [
   'alpha',
@@ -13,7 +13,7 @@ const mapped = parts.map((part) => {
 });
 
 const tools = {
-  basename,
+  basename: path.basename,
   mapped,
 };
 

@@ -74,7 +74,11 @@ The `boolean | object` shape every integration option accepts, normalised by `re
 - `undefined` falls through to that integration's own default, which may be a probe rather than `false`.
 
 **Preset**:
-A ready-made options object expressing a stance across every integration at once: `CONFIG_PRESET_FULL_ON` (maximum strictness) and `CONFIG_PRESET_FULL_OFF` (everything disabled). Public API.
+A ready-made options object expressing a stance across every integration at once: `CONFIG_PRESET_FULL_ON` (maximum strictness) and `CONFIG_PRESET_FULL_OFF` (everything disabled). Public API. `CONFIG_PRESET_FULL_ON` reaches for the stricter option wherever one exists, and never leaves a rule weaker than the defaults do: it only turns a default-on rule off where a stricter option supersedes it (experimental `@stylistic` replaces granular spacing and newline rules with `exp-list-style` and `exp-jsx-props-style`). `tests/define-config-factory-snap.test.ts` asserts this, with the superseded rules listed explicitly.
+
+**Curated rule set**:
+The hand-picked rules a config module enables when the consumer has not asked for a plugin's own recommended set — for example the list in `src/configs/unicorn.ts`. It carries the project's rule options (such as the upper-case markdown exception on `unicorn/filename-case`) and stays in force when the recommended set is switched on, so the curated stance is added to, never replaced.
+_Avoid_: default rules (ambiguous with **Default-on config**)
 
 **NgRx precondition**:
 NgRx rules may only be enabled alongside Angular rules. NgRx is an Angular-only library, so NgRx rules on their own are meaningless; both `defineConfig` and `defineProjectConfig` throw rather than produce a config that could never match anything.

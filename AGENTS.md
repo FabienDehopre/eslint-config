@@ -2,7 +2,7 @@
 
 ```bash
 pnpm build       # gen + tsdown (dist is gitignored)
-pnpm test        # vitest
+pnpm test        # vitest (run `pnpm build` first when `src/configs/` changed)
 pnpm test -u     # update snapshots
 pnpm typecheck   # tsc --noEmit (src + test tsconfigs)
 pnpm lint        # build + eslint --fix
@@ -21,6 +21,8 @@ pnpm gen         # regenerate src/typegen/*.d.ts only
 
 **⚠ Always run `pnpm gen` after modifying any file in `src/configs/`.** It re-runs `scripts/typegen.ts`, which imports every config, extracts plugins, and writes `src/typegen/*.d.ts` + `src/typegen/index.d.ts`. These files are gitignored, so regenerate them whenever configs change or the build will type-check against stale rule types.
 
+**⚠ Always run `pnpm build` before `pnpm test` after modifying any file in `src/configs/`.** `tests/define-config-factory-fixtures.test.ts` runs the real `eslint --fix` inside a fixture project that resolves `@fabdeh/eslint-config` to `dist/`, so an unbuilt change is silently tested against the previous build.
+
 ## Patterns and conventions
 
 - **Options shape**: Boolean options are normalised with `resolveSubOptions()` from `src/shared/utils.ts` — pass `true`/`false` or an object; `resolveSubOptions` returns `{}` for booleans.
@@ -32,7 +34,8 @@ pnpm gen         # regenerate src/typegen/*.d.ts only
 2. Export it from `src/configs/index.ts`.
 3. Import and wire it into the relevant factories in `src/factories/`.
 4. Run `pnpm gen` to regenerate types.
-5. Add snapshot test coverage in `tests/define-config-factory-snap.test.ts` and update snapshots with `pnpm test -u`.
+5. Add an entry to **both** presets in `src/config-presets.ts`: the strictest available options in `CONFIG_PRESET_FULL_ON`, `false` in `CONFIG_PRESET_FULL_OFF`. Do the same when adding a *stricter option* to an existing config.
+6. Add snapshot test coverage in `tests/define-config-factory-snap.test.ts` and update snapshots with `pnpm test -u`.
 
 ## Agent skills
 
