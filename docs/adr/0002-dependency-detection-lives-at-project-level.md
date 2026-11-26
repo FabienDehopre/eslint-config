@@ -6,4 +6,5 @@ Framework integrations (Angular, NgRx, Vitest, Playwright, TypeScript) switch th
 
 - `defineWorkspaceConfig` has a smaller option surface than `defineConfig` by design. The missing options are not an oversight; they would apply framework rules to a root that has no framework code.
 - Detection resolves packages from the config package's own location, so it answers "is this dependency reachable from here", not "does this specific project depend on it". Splitting detection down to the project level is what keeps that from applying one project's framework rules across the whole workspace.
+- Workspace-wide tools are the exception: TypeScript and Prettier are detected in `defineWorkspaceConfig`, because their result feeds inherited options (`typescript`, `stylistic`) that every Project reads from the Base config. `defineProjectConfig` does not re-detect them. See ADR 0003 for Prettier.
 - NgRx rules require Angular rules and the factories throw otherwise. NgRx is an Angular-only library, so an NgRx-without-Angular configuration is always a mistake rather than a niche setup worth supporting.

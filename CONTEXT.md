@@ -61,7 +61,7 @@ A cohesive bundle of rules for one tool, language or framework, produced by a co
 _Avoid_: feature, plugin (a plugin is the upstream ESLint package; an integration is this repo's opinionated wrapping of it)
 
 **Auto-detected integration**:
-An integration that switches itself on by probing the environment — usually `isPackageExists` against a dependency, sometimes a filesystem probe (`pnpm-workspace.yaml`, `.gitignore`, `playwright.config.ts`). Detection runs in `defineConfig` and `defineProjectConfig`, never in `defineWorkspaceConfig`.
+An integration that switches itself on by probing the environment — usually `isPackageExists` against a dependency, sometimes a filesystem probe (`pnpm-workspace.yaml`, `.gitignore`, `playwright.config.ts`). Framework integrations are detected in `defineConfig` and `defineProjectConfig`, never in `defineWorkspaceConfig`. Workspace-wide tools (TypeScript, Prettier) are the exception: they are detected at Workspace level and reach Projects as inherited options.
 
 **Default-on config**:
 An integration enabled unconditionally unless explicitly disabled, with no probe involved: JSONC, YAML, TOML, Markdown, Unicorn, RegExp, imports, comments, node, perfectionist.
@@ -79,6 +79,14 @@ A ready-made options object expressing a stance across every integration at once
 **Curated rule set**:
 The hand-picked rules a config module enables when the consumer has not asked for a plugin's own recommended set — for example the list in `src/configs/unicorn.ts`. It carries the project's rule options (such as the upper-case markdown exception on `unicorn/filename-case`) and stays in force when the recommended set is switched on, so the curated stance is added to, never replaced.
 _Avoid_: default rules (ambiguous with **Default-on config**)
+
+**Stylistic rules**:
+Every rule that only checks how code is laid out (spacing, quotes, commas, line breaks, number-literal case), in every language the package lints: JavaScript, TypeScript, JSON, YAML and TOML. The `stylistic` option switches all of them together. `stylistic: false` is the Prettier switch: it leaves no rule that could fight a formatter, at the cost of the few layout rules Prettier does not cover (such as `spaced-comment` and `lines-between-class-members`).
+_Avoid_: formatting rules, style rules, Prettier mode
+
+**Prettier in use**:
+The probe that turns stylistic rules off by default. Prettier counts as in use only when both hold: the `prettier` package resolves, and a Prettier config file or `.prettierignore` is found walking up from the current directory. The package alone is not enough, because it can be hoisted in by another tool. An explicit `stylistic` value always wins over the probe; an explicit "on" while Prettier is in use is allowed but warned about.
+_Avoid_: Prettier detected, Prettier mode
 
 **NgRx precondition**:
 NgRx rules may only be enabled alongside Angular rules. NgRx is an Angular-only library, so NgRx rules on their own are meaningless; both `defineConfig` and `defineProjectConfig` throw rather than produce a config that could never match anything.
